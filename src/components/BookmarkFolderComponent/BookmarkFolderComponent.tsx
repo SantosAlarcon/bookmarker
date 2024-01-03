@@ -45,7 +45,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 		</div>
 	    </summary>
 	    {props.children.links && (
-		<div class={styles.bookmark__folder__links}>
+		<div className={styles.bookmark__folder__links}>
 		    {props.children.links.map((link: BookmarkItem) => (
 			<BookmarkItemComponent key={link.id}>{link}</BookmarkItemComponent>
 		    ))}

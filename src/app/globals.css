@@ -38,6 +38,9 @@
   --callout-border-rgb: 172, 175, 176;
   --card-rgb: 180, 185, 188;
   --card-border-rgb: 131, 134, 135;
+
+    --main-color: hsl(201.57deg 39.21% 44.51%);
+    --main-color-hover: hsl(201.57deg 39.21% 64.51%);
 }
 
 @media (prefers-color-scheme: dark) {
