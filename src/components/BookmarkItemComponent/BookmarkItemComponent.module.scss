@@ -1,0 +1,17 @@
+.bookmark__item__container {
+	padding: .75rem .5rem;
+	background-color: #fff5;
+	border-radius: 1rem;
+}
+
+.bookmark__item__link {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.bookmark__item__title {
+    flex-basis: 96%;
+}

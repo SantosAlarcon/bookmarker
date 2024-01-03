@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Gabarito } from "next/font/google"
 import "./globals.css"
 
-const inter = Inter({ subsets: ["latin"] })
+const gabarito = Gabarito({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Bookmarker",
@@ -46,7 +46,7 @@ export default function RootLayout({
           content="https://yourdomain.com/icons/apple-touch-icon.png"
         />*/}
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={gabarito.className}>{children}</body>
     </html>
   )
 }
