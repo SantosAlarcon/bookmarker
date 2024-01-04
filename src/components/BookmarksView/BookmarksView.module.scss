@@ -1,4 +1,8 @@
 .bookmarks__view__container {
 	padding: 5rem;
-    width: 100%;
+	width: 100%;
+
+	& summary {
+		list-style: none;
+	}
 }
