@@ -4,17 +4,22 @@ import Image from "next/image"
 import styles from "./Header.module.scss"
 import { toast } from "sonner"
 import NewBookmarkDialog from "../NewBookmarkDialog/NewBookmarkDialog"
+import NewFolderDialog from "../NewFolderDialog/NewFolderDialog"
+import { useRouter } from "next/navigation"
 
 const Header = () => {
+    const router = useRouter();
+
   const handleNewBookmark = async () => {
-    toast.info("Se va a crear un nuevo marcador...")
+    router.push("?showNewBookmarkDialog=y")
   }
   const handleNewFolder = async () => {
-    toast.info("Se va a crear una nueva carpeta...")
+    router.push("?showNewFolderDialog=y")
   }
   return (
     <>
       <NewBookmarkDialog title="New bookmark"></NewBookmarkDialog>
+      <NewFolderDialog title="New Folder"></NewFolderDialog>
       <header className={styles.header__container}>
         <div className={styles.header__logo}>
           <Image
