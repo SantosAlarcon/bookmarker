@@ -1,7 +1,7 @@
 "use client"
-import { useSearchParams } from "next/navigation"
+import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation"
 import styles from "./NewBookmarkDialog.module.scss"
-import React, { JSXElementConstructor, useEffect, useRef } from "react"
+import React, { MutableRefObject, useEffect, useRef } from "react"
 
 type Props = {
 	title: string
@@ -10,10 +10,10 @@ type Props = {
 	children: React.ReactNode
 }
 
-const NewBookmarkDialog = ({ title, onClose, onCreate, children }: Props) => {
-	const searchParams = useSearchParams()
+const NewBookmarkDialog = ({ title }: Props) => {
+	const searchParams: ReadonlyURLSearchParams | null  = useSearchParams()
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const showDialog = searchParams.get("showDialog")
+	const showDialog = searchParams.get("showNewBookmarkDialog")
 
 	useEffect(() => {
 		if (showDialog === "y") {
@@ -23,13 +23,12 @@ const NewBookmarkDialog = ({ title, onClose, onCreate, children }: Props) => {
 		}
 	}, [showDialog])
 
-	const closeDialog = () => {
+	const closeDialog = async () => {
 		dialogRef.current?.close()
-		onClose()
 	}
 
-	const createBookmark = () => {
-		onCreate()
+	const createBookmark = async () => {
+		alert("Creando tarea...")
 		closeDialog()
 	}
 
@@ -39,13 +38,33 @@ const NewBookmarkDialog = ({ title, onClose, onCreate, children }: Props) => {
 			className={styles.new__bookmark__dialog__container}
 			onClose={closeDialog}
 		>
-			<NewBookmarkDialogContent
-				title={title}
-				onCreate={createBookmark}
-				onClose={closeDialog}
-			>
-				{children}
-			</NewBookmarkDialogContent>
+            <div className={styles.new__bookmark__dialog__title}>
+                <h4 className={styles.new__bookmark__dialog__title__text}>{title}</h4>
+            </div>
+            <div className={styles.new__bookmark__dialog__content}>
+                <form className={styles.new__bookmark__dialog__form}>
+                    <label for="title" classname={styles.new__bookmark__dialog__form__label}>
+                        <input type="text" name="title" placeholder="Bookmark title" required />
+                    </label>
+                    <label for="url" classname={styles.new__bookmark__dialog__form__label}>
+                        <input type="text" name="url" placeholder="Bookmark URL" required />
+                    </label>
+                </form>
+            </div>
+            <div className={styles.new__bookmark__dialog__buttons}>
+                {/*<button formAction={async () => {
+                    "use server"
+                    await createBookmark()
+                }}>
+                    Create
+                </button>*/}
+                <button>
+                    Crear
+                </button>
+                <button>
+                    Close
+                </button>
+            </div>
 		</dialog>
 	) : null;
 
