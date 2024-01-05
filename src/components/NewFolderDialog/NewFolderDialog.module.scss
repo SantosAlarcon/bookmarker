@@ -4,7 +4,7 @@
     margin: 0 auto;
     border-radius: 1rem;
     border: 1px solid;
-    top: calc(100vh - 30rem);
+    top: 30vh;
     transition: all 300ms ease-in-out;
     box-shadow: 5px 0 3rem #0005;
 
@@ -59,7 +59,7 @@
 .new__folder__dialog__form__favorite {
     display: flex;
     gap: .5rem;
-    justify-content: start;
+    justify-content: flex-start;
     flex-direction: row-reverse;
     align-items: center;
 

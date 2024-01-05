@@ -1,6 +1,6 @@
 "use client"
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation"
-import styles from "./NewFolderDialog.module.scss"
+import styles from "./EditFolderDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
 import { type FolderItem } from "@/types/types"
 import { toast } from "sonner"
@@ -13,13 +13,13 @@ type Props = {
 	children: React.ReactNode
 }
 
-const NewFolderDialog = ({ title }: Props) => {
+const EditFolderDialog = ({ title }: Props) => {
 	const [newFolder, setNewFolder] = useState({
 		title: "",
 	})
 	const searchParams: ReadonlyURLSearchParams | null = useSearchParams()
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const showDialog = searchParams.get("showNewFolderDialog")
+	const showDialog = searchParams.get("showEditFolderDialog")
 	const router = useRouter()
 
 	useEffect(() => {
@@ -44,18 +44,18 @@ const NewFolderDialog = ({ title }: Props) => {
 		showDialog === "y" ? (
 			<dialog
 				ref={dialogRef}
-				className={styles.new__folder__dialog__container}
+				className={styles.edit__folder__dialog__container}
 				onClose={closeDialog}
 			>
-				<div className={styles.new__folder__dialog__title}>
+				<div className={styles.edit__folder__dialog__title}>
 					<img src="/add-folder-icon.svg" alt="Add folder icon" />
-					<h4 className={styles.new__folder__dialog__title__text}>{title}</h4>
+					<h4 className={styles.edit__folder__dialog__title__text}>{title}</h4>
 				</div>
-				<div className={styles.new__folder__dialog__content}>
-					<form className={styles.new__folder__dialog__form}>
+				<div className={styles.edit__folder__dialog__content}>
+					<form className={styles.edit__folder__dialog__form}>
 						<label
 							htmlFor="title"
-							className={styles.new__folder__dialog__form__label}
+							className={styles.edit__folder__dialog__form__label}
 						>
 							Title
 							<input
@@ -70,7 +70,7 @@ const NewFolderDialog = ({ title }: Props) => {
 						</label>
 					</form>
 				</div>
-				<div className={styles.new__folder__dialog__buttons}>
+				<div className={styles.edit__folder__dialog__buttons}>
 					<button
 						disabled={newFolder.title ? false : true}
 						onClick={() => createFolder()}
@@ -85,4 +85,4 @@ const NewFolderDialog = ({ title }: Props) => {
 	return dialog
 }
 
-export default NewFolderDialog
+export default EditFolderDialog

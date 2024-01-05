@@ -3,7 +3,7 @@ export type BookmarkFolder = {
     title: string,
     description?: string,
     icon?: string
-    links: BookmarkItem[]
+    children: [BookmarkFolder | BookmarkItem]
 }
 
 export type BookmarkItem = {

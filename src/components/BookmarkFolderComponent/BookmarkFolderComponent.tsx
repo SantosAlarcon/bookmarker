@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import styles from "./BookmarkFolderComponent.module.scss"
-import { BookmarkItem } from "@/types/types"
+import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import Image from "next/image"
 import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent"
 
@@ -8,7 +8,8 @@ interface BFCProps {
     children: {
         icon: string,
         title: string,
-        description: string, links: BookmarkItem[]
+        description: string, 
+	children: [BookmarkFolder | BookmarkItem]
     }
 }
 
@@ -29,7 +30,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 				alt="Marker"
 				src="/triangle.svg"
 				className={styles.bookmark__folder__mark__icon}
-				style={expanded && {rotate: "90deg"}}
+				style={expanded ? {rotate: "90deg"} : {rotate: "0deg"}}
 			    />
 			</div>
 			<div className={styles.bookmark__folder__icon}>
@@ -45,12 +46,16 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 		</summary>
 
 		{/* Render links */}
-		{props?.children.links && (
-		    <div className={styles.bookmark__folder__links}>
-			{props.children.links.map((link: BookmarkItem) => (
-			    <BookmarkItemComponent key={link.id}>{link}</BookmarkItemComponent>
-			))}
-		    </div>
+		{props.children.children?.length > 0 && (
+		    <ul className={styles.bookmark__folder__links}>
+			{props.children.children?.map((childItem) => {
+			    if ("children" in childItem) {
+				<li><BookmarkFolderComponent key={childItem.id}>{childItem}</BookmarkFolderComponent></li>
+			    } else {
+				<li><BookmarkItemComponent key={childItem.id}>{childItem}</BookmarkItemComponent></li>
+			    }
+			})}
+		    </ul>
 		)}
 	    </details>
 	</div>

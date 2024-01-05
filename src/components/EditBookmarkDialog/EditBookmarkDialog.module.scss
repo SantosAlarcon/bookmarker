@@ -1,4 +1,4 @@
-.new__bookmark__dialog__container {
+.edit__bookmark__dialog__container {
     width: 765px;
     padding: 1rem;
     margin: 0 auto;
@@ -13,7 +13,7 @@
     }
 }
 
-.new__bookmark__dialog__title {
+.edit__bookmark__dialog__title {
     padding-bottom: 1rem;
     border-bottom: 1px solid #fff6;
     display: flex;
@@ -27,7 +27,7 @@
     }
 }
 
-.new__bookmark__dialog__form {
+.edit__bookmark__dialog__form {
     display: flex;
     gap: 1.5rem;
     flex-direction: column;
@@ -50,13 +50,13 @@
     }
 }
 
-.new__bookmark__dialog__form__label {
+.edit__bookmark__dialog__form__label {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.new__bookmark__dialog__form__favorite {
+.edit__bookmark__dialog__form__favorite {
     display: flex;
     gap: .5rem;
     justify-content: flex-start;
@@ -95,7 +95,7 @@
     }
 }
 
-.new__bookmark__dialog__buttons {
+.edit__bookmark__dialog__buttons {
     display: flex;
     justify-content: center;
     gap: 1rem;

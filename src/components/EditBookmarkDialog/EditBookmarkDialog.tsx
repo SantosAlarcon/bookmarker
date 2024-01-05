@@ -4,7 +4,7 @@ import {
 	useRouter,
 	useSearchParams,
 } from "next/navigation"
-import styles from "./NewBookmarkDialog.module.scss"
+import styles from "./EditBookmarkDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
 import { type BookmarkItem } from "@/types/types"
 import { toast } from "sonner"
@@ -16,7 +16,7 @@ type Props = {
 	children: React.ReactNode
 }
 
-const NewBookmarkDialog = ({ title }: Props) => {
+const EditBookmarkDialog = ({ title }: Props) => {
 	const [newBookmark, setNewBookmark] = useState({
 		title: "",
 		url: "",
@@ -24,7 +24,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 	})
 	const searchParams: ReadonlyURLSearchParams | null = useSearchParams()
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const showDialog = searchParams.get("showNewBookmarkDialog")
+	const showDialog = searchParams.get("showEditBookmarkDialog")
 	const router = useRouter()
 
 	useEffect(() => {
@@ -62,18 +62,20 @@ const NewBookmarkDialog = ({ title }: Props) => {
 		showDialog === "y" ? (
 			<dialog
 				ref={dialogRef}
-				className={styles.new__bookmark__dialog__container}
+				className={styles.edit__bookmark__dialog__container}
 				onClose={closeDialog}
 			>
-				<div className={styles.new__bookmark__dialog__title}>
+				<div className={styles.edit__bookmark__dialog__title}>
 					<img src="/add-bookmark-icon.svg" alt="Add bookmark icon" />
-					<h4 className={styles.new__bookmark__dialog__title__text}>{title}</h4>
+					<h4 className={styles.edit__bookmark__dialog__title__text}>
+						{title}
+					</h4>
 				</div>
-				<div className={styles.new__bookmark__dialog__content}>
-					<form className={styles.new__bookmark__dialog__form}>
+				<div className={styles.edit__bookmark__dialog__content}>
+					<form className={styles.edit__bookmark__dialog__form}>
 						<label
 							htmlFor="title"
-							className={styles.new__bookmark__dialog__form__label}
+							className={styles.edit__bookmark__dialog__form__label}
 						>
 							Title
 							<input
@@ -88,7 +90,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 						</label>
 						<label
 							htmlFor="url"
-							className={styles.new__bookmark__dialog__form__label}
+							className={styles.edit__bookmark__dialog__form__label}
 						>
 							URL
 							<input
@@ -103,7 +105,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 						</label>
 						<label
 							htmlFor="favorite"
-							className={styles.new__bookmark__dialog__form__favorite}
+							className={styles.edit__bookmark__dialog__form__favorite}
 						>
 							Favorite
 							<input
@@ -119,7 +121,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 						</label>
 					</form>
 				</div>
-				<div className={styles.new__bookmark__dialog__buttons}>
+				<div className={styles.edit__bookmark__dialog__buttons}>
 					<button
 						disabled={newBookmark.title && newBookmark.url ? false : true}
 						onClick={() => createBookmark()}
@@ -134,4 +136,4 @@ const NewBookmarkDialog = ({ title }: Props) => {
 	return dialog
 }
 
-export default NewBookmarkDialog
+export default EditBookmarkDialog

@@ -5,7 +5,10 @@ import styles from "./Header.module.scss"
 import { toast } from "sonner"
 import NewBookmarkDialog from "../NewBookmarkDialog/NewBookmarkDialog"
 import NewFolderDialog from "../NewFolderDialog/NewFolderDialog"
+import EditFolderDialog from "../EditFolderDialog/EditFolderDialog"
+import EditBookmarkDialog from "../EditBookmarkDialog/EditBookmarkDialog"
 import { useRouter } from "next/navigation"
+
 
 const Header = () => {
     const router = useRouter();
@@ -19,7 +22,9 @@ const Header = () => {
   return (
     <>
       <NewBookmarkDialog title="New bookmark"></NewBookmarkDialog>
+      <EditBookmarkDialog title="New bookmark"></EditBookmarkDialog>
       <NewFolderDialog title="New Folder"></NewFolderDialog>
+      <EditFolderDialog title="New Folder"></EditFolderDialog>
       <header className={styles.header__container}>
         <div className={styles.header__logo}>
           <Image
