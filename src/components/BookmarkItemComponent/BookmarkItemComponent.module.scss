@@ -23,6 +23,12 @@
   flex-basis: 96%;
 }
 
-.bookmark__item__favourite {
-    cursor: pointer;
+.bookmark__item__menu {
+
+    & > button {
+        background: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
 }

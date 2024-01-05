@@ -1,7 +1,8 @@
 import Link from "next/link"
 import styles from "./BookmarkItemComponent.module.scss"
 import Image from "next/image"
-import { useState } from "react"
+import { contextMenu } from "react-contexify"
+import {displayBookmarkMenu} from "../BookmarkContextMenu/BookmarkContextMenu"
 
 interface BICProps {
     children: {
@@ -10,16 +11,10 @@ interface BICProps {
         title: string
         description: string
         url: string
-        favourite: boolean
     }
 }
 
 const BookmarkItemComponent = (props: BICProps) => {
-    const [favourited, setFavourited] = useState(props.children.favourite)
-
-    const changeFavourited = (id: string) => {
-        setFavourited(!favourited);
-    }
 
     return (
         <div
@@ -35,12 +30,12 @@ const BookmarkItemComponent = (props: BICProps) => {
                         src={props.children.favicon}
                     />
                 ) : (
-                    <img width={16} height={16} alt="Folder icon" src="/bookmark.svg" />
+                    <Image width={16} height={16} alt="Folder icon" src="/bookmark.svg" />
                 )}
             </div>
             <Link
                 className={styles.bookmark__item__link}
-                href={props.children.url}
+                href={`${props.children.url}`}
                 target="_blank"
             >
                 <div className={styles.bookmark__item__title}>
@@ -49,20 +44,18 @@ const BookmarkItemComponent = (props: BICProps) => {
                     </h4>
                 </div>
             </Link>
+            
             <div
-                className={styles.bookmark__item__favourite}
-                onClick={() => changeFavourited(props.children.id)}
+                className={styles.bookmark__item__menu}
             >
-                {props.children.favourite ? (
-                    <Image width={16} height={16} alt="Favorite icon" src="/star.svg" />
-                ) : (
+                <button onClick={(e) => displayBookmarkMenu(e)}>
                     <Image
                         width={16}
                         height={16}
-                        alt="Unfavourite icon"
-                        src="/empty-star.svg"
+                        alt="Menu icon"
+                        src="/three-dots-vertical.svg"
                     />
-                )}
+                </button>
             </div>
         </div>
     )

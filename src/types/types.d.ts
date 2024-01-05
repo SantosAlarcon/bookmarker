@@ -2,7 +2,7 @@ export type BookmarkFolder = {
     id: string,
     title: string,
     description?: string,
-    icon?: string
+    favicon?: string
     children: [BookmarkFolder | BookmarkItem]
 }
 
@@ -11,7 +11,6 @@ export type BookmarkItem = {
     title: string,
     url: string,
     description?: string,
-    favourite: boolean,
-    icon?: string
-    bookmarkFolder: BookmarkFolder | null
+    favicon?: string
+    parentFolder: BookmarkFolder | null
 }

@@ -1,18 +1,18 @@
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
 import styles from "./BookmarksView.module.scss";
-import { type BookmarkFolder } from "@/types/types";
 import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderComponent";
 import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton";
 import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent";
+import getAllBookmarks from "@/lib/bookmarks/getAllBookmarks";
 
 const BookmarksView = () => {
 	const [bookmarks, setBookmarks] = useState(null);
 
 	const getBookmarks = async () => {
-		const response = await fetch("/api/bookmarks");
-		const data = await response.json();
-		setBookmarks(data);
+		const response = await getAllBookmarks();
+        console.log(response);
+		setBookmarks(response);
 	};
 
 	useEffect(() => {
@@ -23,7 +23,7 @@ const BookmarksView = () => {
 		<main className={styles.bookmarks__view__container}>
 			{bookmarks ? (
 				bookmarks.map((bookmark) => {
-					if (bookmark?.links) {
+					if ("children" in bookmark) { // Si tiene la clave 'children', es tratado como una carpeta.
 						return (
 							<BookmarkFolderComponent key={bookmark.id}>
 								{bookmark}
