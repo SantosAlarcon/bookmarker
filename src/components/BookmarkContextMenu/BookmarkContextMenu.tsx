@@ -1,11 +1,9 @@
 "use client"
 import Image from "next/image"
-import React from "react"
+import React, { useReducer } from "react"
 import { Menu, Item, ItemParams, contextMenu } from "react-contexify"
 import "react-contexify/ReactContexify.css"
-import { createPortal } from "react-dom"
-import { useRouter } from "next/navigation"
-import EditBookmarkDialog from "../EditBookmarkDialog/EditBookmarkDialog"
+import modalVisibilityReducer, { modalVisibility } from "@/reducers/modalReducer"
 
 interface ItemProps {
 	key: string
@@ -14,7 +12,8 @@ interface ItemProps {
 type ItemData = any
 
 const BookmarkContextMenu = () => {
-	const router = useRouter()
+    const [state, dispatch] = useReducer(modalVisibilityReducer, modalVisibility);
+
 	const handleItemClick = ({
 		id,
 		event,
@@ -24,14 +23,15 @@ const BookmarkContextMenu = () => {
 	}: ItemParams<ItemProps, ItemData>) => {
 		switch (id) {
 			case "edit":
-				<EditBookmarkDialog open={true}>{props}</EditBookmarkDialog>
-				break
+                dispatch({type: "displayEditBookmarkModal"});
+                break
 			case "remove":
 				break
 		}
 	}
 
-	return createPortal(
+	return (
+        <>
 		<Menu id="bookmarkMenu" animation="fade">
 			<Item id="edit" onClick={handleItemClick}>
 				<Image src="/edit-icon.svg" width={16} height={16} alt="Edit icon" />
@@ -41,8 +41,8 @@ const BookmarkContextMenu = () => {
 				<Image src="/trash-icon.svg" width={16} height={16} alt="Remove icon" />
 				&nbsp;&nbsp;Remove
 			</Item>
-		</Menu>,
-		document.body
+		</Menu>
+        </>
 	)
 }
 

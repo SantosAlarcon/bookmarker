@@ -9,12 +9,14 @@ const modalVisibility = {
 	deleteFolderModal: false,
 }
 
-export const modalVisibilityContext = createContext(null);
+export const ModalVisibilityContext = createContext(modalVisibility);
 
-export default modalVisibilityProvider({ children }) {
+const ModalVisibilityProvider = ({ children }) => {
 	return (
-		<modalVisibilityContext.Provider value={modalVisibility}>
+		<ModalVisibilityContext.Provider value={modalVisibility}>
 			{children}
-		</modalVisibilityContext.Provider>
+		</ModalVisibilityContext.Provider>
 	)
 }
+
+export default ModalVisibilityProvider;

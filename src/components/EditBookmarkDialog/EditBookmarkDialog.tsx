@@ -1,121 +1,124 @@
 "use client"
-import {
-	useRouter,
-} from "next/navigation"
+import { useRouter } from "next/navigation"
 import styles from "./EditBookmarkDialog.module.scss"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useReducer, useRef, useState } from "react"
 import Image from "next/image"
+import modalVisibilityReducer, {
+  modalVisibility,
+} from "@/reducers/modalReducer"
 
 type Props = {
-	title: string
-	open: boolean
-	id: string
-	children: React.ReactNode
+  title: string
+  id: string
+  children: React.ReactNode
 }
 
-const EditBookmarkDialog = ({ title, id, open }: Props) => {
-	const [newBookmark, setNewBookmark] = useState({
-		title: "",
-		url: "",
-	})
-	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const router = useRouter()
+const EditBookmarkDialog = ({ title }: Props) => {
+  const [newBookmark, setNewBookmark] = useState({
+    title: "",
+    url: "",
+  })
+  const dialogRef = useRef<null | HTMLDialogElement>(null)
+  const router = useRouter()
+  const [state, dispatch] = useReducer(modalVisibilityReducer, modalVisibility)
 
-	useEffect(() => {
-		if (open) {
-			dialogRef.current?.showModal()
-		} else {
-		dialogRef.current?.close()
-		}
-	}, [open])
+  useEffect(() => {
+    if (state.editBookmarkModal === true) {
+      dialogRef.current?.showModal()
+    } else {
+      dialogRef.current?.close()
+    }
+    console.log(state.editBookmarkModal)
+  }, [state])
 
-	const closeDialog = async () => {
-		dialogRef.current?.close()
-		setNewBookmark({
-			title: "",
-			url: "",
-		})
-		router.push("/")
-	}
+  const closeDialog = async () => {
+    dispatch({ type: "hideEditBookmarkModal" })
+    dialogRef.current?.close()
+    setNewBookmark({
+      title: "",
+      url: "",
+    })
+    router.push("/")
+  }
 
-	const editBookmark = async () => {
-		const regExpURL: RegExp = new RegExp(
-			"^(?:https?)://(?<host>[w-]+(?:.[w-]+)*)(?::d+)?(?<path>.*)$"
-		)
+  const editBookmark = async () => {
+    const regExpURL: RegExp = new RegExp(
+      "^(?:https?)://(?<host>[w-]+(?:.[w-]+)*)(?::d+)?(?<path>.*)$"
+    )
 
-		if (!regExpURL.test(newBookmark.url)) {
-			alert("El formato de la URL es incorrecta")
-		} else {
-			/*alert("Creando tarea...")
-										  closeDialog()*/
-		}
-	}
+    if (!regExpURL.test(newBookmark.url)) {
+      alert("El formato de la URL es incorrecta")
+    } else {
+      /*alert("Creando tarea...")
+    closeDialog()*/
+    }
+  }
 
-	const dialog: JSX.Element | null =
-		open ? (
-			<dialog
-				ref={dialogRef}
-				className={styles.edit__bookmark__dialog__container}
-				onClose={closeDialog}
-			>
-				<div className={styles.edit__bookmark__dialog__title}>
-					<Image
-						src="/edit-icon.svg"
-						alt="Edit bookmark icon"
-						width={16}
-						height={16}
-					/>
-					<h4 className={styles.edit__bookmark__dialog__title__text}>
-						{title}
-					</h4>
-				</div>
-				<div className={styles.edit__bookmark__dialog__content}>
-					<form className={styles.edit__bookmark__dialog__form}>
-						<label
-							htmlFor="title"
-							className={styles.edit__bookmark__dialog__form__label}
-						>
-							Title
-							<input
-								type="text"
-								name="title"
-								placeholder="Bookmark title"
-								onChange={() =>
-									setNewBookmark({ ...newBookmark, title: event.target.value })
-								}
-								required
-							/>
-						</label>
-						<label
-							htmlFor="url"
-							className={styles.edit__bookmark__dialog__form__label}
-						>
-							URL
-							<input
-								type="url"
-								name="url"
-								placeholder="Bookmark URL"
-								onChange={() =>
-									setNewBookmark({ ...newBookmark, url: event.target.value })
-								}
-								required
-							/>
-						</label>
-					</form>
-				</div>
-				<div className={styles.edit__bookmark__dialog__buttons}>
-					<button
-						disabled={newBookmark.title && newBookmark.url ? false : true}
-						onClick={() => editBookmark()}
-					>
-						Modify
-					</button>
-					<button onClick={() => closeDialog()}>Close</button>
-				</div>
-			</dialog>
-		) : null
+  const dialog: JSX.Element | null =
+    state.editBookmarkModal === true ? (
+      <dialog
+        ref={dialogRef}
+        className={styles.edit__bookmark__dialog__container}
+        onClose={closeDialog}
+      >
+        <div className={styles.edit__bookmark__dialog__title}>
+          <Image
+            src="/edit-icon.svg"
+            alt="Edit bookmark icon"
+            width={16}
+            height={16}
+          />
+          <h4 className={styles.edit__bookmark__dialog__title__text}>
+            {title}
+          </h4>
+        </div>
+        <div className={styles.edit__bookmark__dialog__content}>
+          <form className={styles.edit__bookmark__dialog__form}>
+            <label
+              htmlFor="title"
+              className={styles.edit__bookmark__dialog__form__label}
+            >
+              Title
+              <input
+                type="text"
+                name="title"
+                placeholder="Bookmark title"
+                onChange={() =>
+                  setNewBookmark({ ...newBookmark, title: event.target.value })
+                }
+                required
+              />
+            </label>
+            <label
+              htmlFor="url"
+              className={styles.edit__bookmark__dialog__form__label}
+            >
+              URL
+              <input
+                type="url"
+                name="url"
+                placeholder="Bookmark URL"
+                onChange={() =>
+                  setNewBookmark({ ...newBookmark, url: event.target.value })
+                }
+                required
+              />
+            </label>
+          </form>
+        </div>
+        <div className={styles.edit__bookmark__dialog__buttons}>
+          <button
+            disabled={newBookmark.title && newBookmark.url ? false : true}
+            onClick={() => editBookmark()}
+          >
+            Modify
+          </button>
+          <button onClick={() => closeDialog()}>Close</button>
+        </div>
+      </dialog>
+    ) : null
 
-	return dialog
+  return dialog
 }
 
 export default EditBookmarkDialog
