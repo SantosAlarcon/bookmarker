@@ -1,51 +1,44 @@
 "use client"
 import {
-	ReadonlyURLSearchParams,
 	useRouter,
-	useSearchParams,
 } from "next/navigation"
 import styles from "./EditBookmarkDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
-import { type BookmarkItem } from "@/types/types"
-import { toast } from "sonner"
+import Image from "next/image"
 
 type Props = {
 	title: string
-	onClose: () => void
-	onCreate: () => void
+	open: boolean
+	id: string
 	children: React.ReactNode
 }
 
-const EditBookmarkDialog = ({ title }: Props) => {
+const EditBookmarkDialog = ({ title, id, open }: Props) => {
 	const [newBookmark, setNewBookmark] = useState({
 		title: "",
 		url: "",
-		favorite: false,
 	})
-	const searchParams: ReadonlyURLSearchParams | null = useSearchParams()
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const showDialog = searchParams.get("showEditBookmarkDialog")
 	const router = useRouter()
 
 	useEffect(() => {
-		if (showDialog === "y") {
+		if (open) {
 			dialogRef.current?.showModal()
 		} else {
-			dialogRef.current?.close()
+		dialogRef.current?.close()
 		}
-	}, [showDialog])
+	}, [open])
 
 	const closeDialog = async () => {
 		dialogRef.current?.close()
 		setNewBookmark({
 			title: "",
 			url: "",
-			favorite: false,
 		})
-		router.back()
+		router.push("/")
 	}
 
-	const createBookmark = async () => {
+	const editBookmark = async () => {
 		const regExpURL: RegExp = new RegExp(
 			"^(?:https?)://(?<host>[w-]+(?:.[w-]+)*)(?::d+)?(?<path>.*)$"
 		)
@@ -54,19 +47,24 @@ const EditBookmarkDialog = ({ title }: Props) => {
 			alert("El formato de la URL es incorrecta")
 		} else {
 			/*alert("Creando tarea...")
-				  closeDialog()*/
+										  closeDialog()*/
 		}
 	}
 
 	const dialog: JSX.Element | null =
-		showDialog === "y" ? (
+		open ? (
 			<dialog
 				ref={dialogRef}
 				className={styles.edit__bookmark__dialog__container}
 				onClose={closeDialog}
 			>
 				<div className={styles.edit__bookmark__dialog__title}>
-					<img src="/add-bookmark-icon.svg" alt="Add bookmark icon" />
+					<Image
+						src="/edit-icon.svg"
+						alt="Edit bookmark icon"
+						width={16}
+						height={16}
+					/>
 					<h4 className={styles.edit__bookmark__dialog__title__text}>
 						{title}
 					</h4>
@@ -103,30 +101,14 @@ const EditBookmarkDialog = ({ title }: Props) => {
 								required
 							/>
 						</label>
-						<label
-							htmlFor="favorite"
-							className={styles.edit__bookmark__dialog__form__favorite}
-						>
-							Favorite
-							<input
-								type="checkbox"
-								name="favorite"
-								onChange={() =>
-									setNewBookmark({
-										...newBookmark,
-										favorite: event.target.value,
-									})
-								}
-							/>
-						</label>
 					</form>
 				</div>
 				<div className={styles.edit__bookmark__dialog__buttons}>
 					<button
 						disabled={newBookmark.title && newBookmark.url ? false : true}
-						onClick={() => createBookmark()}
+						onClick={() => editBookmark()}
 					>
-						Crear
+						Modify
 					</button>
 					<button onClick={() => closeDialog()}>Close</button>
 				</div>

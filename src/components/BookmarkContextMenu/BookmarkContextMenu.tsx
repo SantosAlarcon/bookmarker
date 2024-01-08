@@ -1,55 +1,63 @@
+"use client"
+import Image from "next/image"
 import React from "react"
-import { Menu, Item, useContextMenu, ItemParams, contextMenu } from "react-contexify"
+import { Menu, Item, ItemParams, contextMenu } from "react-contexify"
 import "react-contexify/ReactContexify.css"
-
-const MENU_ID = "bookmarkMenu"
+import { createPortal } from "react-dom"
+import { useRouter } from "next/navigation"
+import EditBookmarkDialog from "../EditBookmarkDialog/EditBookmarkDialog"
 
 interface ItemProps {
-    key: string
+	key: string
 }
 
 type ItemData = any
 
 const BookmarkContextMenu = () => {
-    const { show } = useContextMenu({
-        id: MENU_ID,
-    })
+	const router = useRouter()
+	const handleItemClick = ({
+		id,
+		event,
+		props,
+		data,
+		triggerEvent,
+	}: ItemParams<ItemProps, ItemData>) => {
+		switch (id) {
+			case "edit":
+				<EditBookmarkDialog open={true}>{props}</EditBookmarkDialog>
+				break
+			case "remove":
+				break
+		}
+	}
 
-    const displayBookmarkMenu = (event: React.MouseEvent) => {
-        event.preventDefault();
-        contextMenu.show({
-            event,
-            id: MENU_ID
-        })
-    }
-
-    const handleItemClick = ({
-        id,
-        event,
-        props,
-        data,
-        triggerEvent,
-    }: ItemParams<ItemProps, ItemData>) => {
-        switch (id) {
-            case "edit":
-                break
-            case "remove":
-                break
-        }
-    }
-
-    return (
-        <div>
-            <Menu id={MENU_ID} animation="fade">
-                <Item id="edit" onClick={handleItemClick}>
-                    Edit
-                </Item>
-                <Item id="remove" onClick={handleItemClick}>
-                    Remove
-                </Item>
-            </Menu>
-        </div>
-    )
+	return createPortal(
+		<Menu id="bookmarkMenu" animation="fade">
+			<Item id="edit" onClick={handleItemClick}>
+				<Image src="/edit-icon.svg" width={16} height={16} alt="Edit icon" />
+				&nbsp;&nbsp;Edit
+			</Item>
+			<Item id="remove" onClick={handleItemClick}>
+				<Image src="/trash-icon.svg" width={16} height={16} alt="Remove icon" />
+				&nbsp;&nbsp;Remove
+			</Item>
+		</Menu>,
+		document.body
+	)
 }
 
 export default BookmarkContextMenu
+
+/* Function that displays the bookmark context menu. */
+export const displayBookmarkMenu = (
+	event: React.MouseEvent,
+	id: string,
+	props: any
+) => {
+	event.preventDefault()
+	contextMenu.show({
+		id,
+		event,
+		props: props.children,
+	})
+}
