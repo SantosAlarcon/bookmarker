@@ -8,6 +8,7 @@ import styles from "./NewBookmarkDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
 import { type BookmarkItem } from "@/types/types"
 import { toast } from "sonner"
+import Image from "next/image"
 
 type Props = {
 	title: string
@@ -20,7 +21,6 @@ const NewBookmarkDialog = ({ title }: Props) => {
 	const [newBookmark, setNewBookmark] = useState({
 		title: "",
 		url: "",
-		favorite: false,
 	})
 	const searchParams: ReadonlyURLSearchParams | null = useSearchParams()
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
@@ -40,7 +40,6 @@ const NewBookmarkDialog = ({ title }: Props) => {
 		setNewBookmark({
 			title: "",
 			url: "",
-			favorite: false,
 		})
 		router.back()
 	}
@@ -66,7 +65,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 				onClose={closeDialog}
 			>
 				<div className={styles.new__bookmark__dialog__title}>
-					<img src="/add-bookmark-icon.svg" alt="Add bookmark icon" />
+					<Image width={24} height={24} src="/add-bookmark-icon.svg" alt="Add bookmark icon" />
 					<h4 className={styles.new__bookmark__dialog__title__text}>{title}</h4>
 				</div>
 				<div className={styles.new__bookmark__dialog__content}>
@@ -99,22 +98,6 @@ const NewBookmarkDialog = ({ title }: Props) => {
 									setNewBookmark({ ...newBookmark, url: event.target.value })
 								}
 								required
-							/>
-						</label>
-						<label
-							htmlFor="favorite"
-							className={styles.new__bookmark__dialog__form__favorite}
-						>
-							Favorite
-							<input
-								type="checkbox"
-								name="favorite"
-								onChange={() =>
-									setNewBookmark({
-										...newBookmark,
-										favorite: event.target.value,
-									})
-								}
 							/>
 						</label>
 					</form>

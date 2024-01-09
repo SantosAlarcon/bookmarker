@@ -5,8 +5,10 @@ import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderCo
 import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton"
 import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent"
 import getAllBookmarks from "@/lib/bookmarks/getAllBookmarks"
-import EditFolderDialog from "../EditFolderDialog/EditFolderDialog"
-import EditBookmarkDialog from "../EditBookmarkDialog/EditBookmarkDialog"
+import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog"
+import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog"
+import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDialog"
+import { BookmarkItem, BookmarkFolder } from "@/types/types"
 
 const BookmarksView = () => {
 	const [bookmarks, setBookmarks] = useState(null)
@@ -22,11 +24,14 @@ const BookmarksView = () => {
 
 	return (
 		<>
+			<EditBookmarkDialog title="Edit bookmark" open={false} />
+			<EditFolderDialog title="Edit folder" open={false} />
+			<ConfirmDeleteDialog title="Confirm deletion" />
 			<main className={styles.bookmarks__view__container}>
 				{bookmarks
-					? bookmarks.map((bookmark) => {
+					? bookmarks.map((bookmark: BookmarkItem | BookmarkFolder) => {
 						if ("children" in bookmark) {
-							// Si tiene la clave 'children', es tratado como una carpeta.
+							// If the item contains the "children" key, it is treated as a folder
 							return (
 								<BookmarkFolderComponent key={bookmark.id}>
 									{bookmark}
@@ -45,8 +50,6 @@ const BookmarksView = () => {
 						<BookmarkSkeleton key={i} />
 					))}
 			</main>
-			<EditBookmarkDialog title="Edit bookmark" open={false} />
-			<EditFolderDialog title="Edit folder" open={false} />
 		</>
 	)
 }

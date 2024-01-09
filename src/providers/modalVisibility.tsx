@@ -4,9 +4,8 @@ import React, { createContext } from "react"
 
 const modalVisibility = {
 	editBookmarkModal: false,
-	deleteBookmarkModal: false,
+	confirmDeleteModal: false,
 	editFolderModal: false,
-	deleteFolderModal: false,
 }
 
 export const ModalVisibilityContext = createContext(modalVisibility);
