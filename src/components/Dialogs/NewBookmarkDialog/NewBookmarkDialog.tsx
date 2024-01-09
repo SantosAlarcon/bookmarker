@@ -1,49 +1,43 @@
 "use client"
-import {
-	ReadonlyURLSearchParams,
-	useRouter,
-	useSearchParams,
-} from "next/navigation"
 import styles from "./NewBookmarkDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
 import { type BookmarkItem } from "@/types/types"
 import { toast } from "sonner"
 import Image from "next/image"
+import { modalStore } from "@/store"
 
 type Props = {
 	title: string
-	onClose: () => void
-	onCreate: () => void
 	children: React.ReactNode
 }
 
 const NewBookmarkDialog = ({ title }: Props) => {
+    const hideNewBookmarkDialog = modalStore((state) => state.hideNewBookmarkModal);
+    const newBookmarkModal = modalStore((state) => state.newBookmarkModal);
 	const [newBookmark, setNewBookmark] = useState({
 		title: "",
 		url: "",
 	})
-	const searchParams: ReadonlyURLSearchParams | null = useSearchParams()
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const showDialog = searchParams.get("showNewBookmarkDialog")
-	const router = useRouter()
 
 	useEffect(() => {
-		if (showDialog === "y") {
+		if (newBookmarkModal) {
 			dialogRef.current?.showModal()
 		} else {
 			dialogRef.current?.close()
 		}
-	}, [showDialog])
+	}, [newBookmarkModal])
 
 	const closeDialog = async () => {
 		dialogRef.current?.close()
+        hideNewBookmarkDialog()
 		setNewBookmark({
 			title: "",
 			url: "",
 		})
-		router.back()
 	}
 
+    /* This function implements the logic for creating a new bookmark */
 	const createBookmark = async () => {
 		const regExpURL: RegExp = new RegExp(
 			"^(?:https?)://(?<host>[w-]+(?:.[w-]+)*)(?::d+)?(?<path>.*)$"
@@ -58,7 +52,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 	}
 
 	const dialog: JSX.Element | null =
-		showDialog === "y" ? (
+		newBookmarkModal ? (
 			<dialog
 				ref={dialogRef}
 				className={styles.new__bookmark__dialog__container}

@@ -4,6 +4,8 @@ type ModalState = {
   deleteConfirmModal: boolean
   editFolderModal: boolean
   editBookmarkModal: boolean
+  newBookmarkModal: boolean
+  newFolderModal: boolean
   editFolderData: {
     title: string
     description: string
@@ -15,6 +17,14 @@ type ModalState = {
 }
 
 type Action = {
+  showNewBookmarkModal: (
+    newBookmarkModal: ModalState["newBookmarkModal"]
+  ) => void
+  hideNewBookmarkModal: (
+    newBookmarkModal: ModalState["newBookmarkModal"]
+  ) => void
+  showNewFolderModal: (newFolderModal: ModalState["newFolderModal"]) => void
+  hideNewFolderModal: (newFolderModal: ModalState["newFolderModal"]) => void
   showDeleteConfirmModal: (
     deleteConfirmModal: ModalState["deleteConfirmModal"]
   ) => void
@@ -37,6 +47,8 @@ export const modalStore = create<ModalState & Action>((set) => ({
   deleteConfirmModal: false,
   editFolderModal: false,
   editBookmarkModal: false,
+  newBookmarkModal: false,
+  newFolderModal: false,
   editFolderData: {
     title: "",
     description: "",
@@ -45,6 +57,10 @@ export const modalStore = create<ModalState & Action>((set) => ({
     title: "",
     url: "",
   },
+  showNewBookmarkModal: () => set({ newBookmarkModal: true }),
+  hideNewBookmarkModal: () => set({ newBookmarkModal: false }),
+  showNewFolderModal: () => set({ newFolderModal: true }),
+  hideNewFolderModal: () => set({ newFolderModal: false }),
   showDeleteConfirmModal: () => set({ deleteConfirmModal: true }),
   hideDeleteConfirmModal: () => set({ deleteConfirmModal: false }),
   showEditBookmarkModal: () => set({ editBookmarkModal: true }),

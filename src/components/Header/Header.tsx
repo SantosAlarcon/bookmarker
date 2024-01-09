@@ -6,15 +6,18 @@ import { toast } from "sonner"
 import NewBookmarkDialog from "../Dialogs/NewBookmarkDialog/NewBookmarkDialog"
 import NewFolderDialog from "../Dialogs/NewFolderDialog/NewFolderDialog"
 import { useRouter } from "next/navigation"
+import { modalStore } from "@/store"
 
 const Header = () => {
 	const router = useRouter()
+    const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal);
+    const showNewFolderModal = modalStore((state) => state.showNewFolderModal);
 
 	const handleNewBookmark = async () => {
-		router.push("?showNewBookmarkDialog=y")
+        showNewBookmarkModal();
 	}
 	const handleNewFolder = async () => {
-		router.push("?showNewFolderDialog=y")
+        showNewFolderModal();
 	}
 	return (
 		<>

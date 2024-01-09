@@ -1,11 +1,10 @@
 "use client"
-import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation"
 import styles from "./NewFolderDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
 import { type FolderItem } from "@/types/types"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { modalStore } from "@/store"
 
 type Props = {
 	title: string
@@ -13,30 +12,29 @@ type Props = {
 }
 
 const NewFolderDialog = ({ title }: Props) => {
+    const showNewFolderDialog = modalStore((state) => state.newFolderModal);
+    const hideNewFolderDialog = modalStore((state) => state.hideNewFolderModal);
 	const [newFolder, setNewFolder] = useState({
 		title: "",
 		descripcion: "",
 	})
-	const searchParams: ReadonlyURLSearchParams | null = useSearchParams()
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const showDialog: string | null = searchParams.get("showNewFolderDialog")
-	const router = useRouter()
 
 	useEffect(() => {
-		if (showDialog === "y") {
+		if (showNewFolderDialog) {
 			dialogRef.current?.showModal()
 		} else {
 			dialogRef.current?.close()
 		}
-	}, [showDialog])
+	}, [showNewFolderDialog])
 
 	const closeDialog = async () => {
 		dialogRef.current?.close()
+        hideNewFolderDialog();
 		setNewFolder({
 			title: "",
 			descripcion: "",
 		})
-		router.back()
 	}
 
         /* THis function implements the logic to create a folder and close the dialog. */
@@ -46,7 +44,7 @@ const NewFolderDialog = ({ title }: Props) => {
 	}
 
 	const dialog: JSX.Element | null =
-		showDialog === "y" ? (
+		showNewFolderDialog ? (
 			<dialog
 				ref={dialogRef}
 				className={styles.new__folder__dialog__container}

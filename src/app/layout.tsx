@@ -2,7 +2,6 @@ import type { Metadata } from "next"
 import { Gabarito } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "sonner"
-import BookmarkContextMenu from "@/components/BookmarkContextMenu/BookmarkContextMenu"
 
 const gabarito = Gabarito({ subsets: ["latin"] })
 
@@ -50,7 +49,6 @@ export default function RootLayout({
 			</head>
 			<body className={gabarito.className}>{children}</body>
 			<Toaster position="top-center" richColors />
-			<BookmarkContextMenu />
 		</html>
 	)
 }
