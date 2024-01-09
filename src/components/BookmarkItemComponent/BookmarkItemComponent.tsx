@@ -1,7 +1,8 @@
 import Link from "next/link"
 import styles from "./BookmarkItemComponent.module.scss"
 import Image from "next/image"
-import { displayBookmarkMenu } from "../BookmarkContextMenu/BookmarkContextMenu"
+import RemoveButton from "../Buttons/RemoveButton/RemoveButton"
+import EditBookmarkButton from "../Buttons/EditBookmarkButton/EditBookmarkButton"
 
 interface BICProps {
   children: {
@@ -14,7 +15,6 @@ interface BICProps {
 }
 
 const BookmarkItemComponent = (props: BICProps) => {
-  
   return (
     <div
       className={styles.bookmark__item__container}
@@ -43,17 +43,8 @@ const BookmarkItemComponent = (props: BICProps) => {
           </h4>
         </div>
       </Link>
-
-      <div className={styles.bookmark__item__menu}>
-        <button onClick={(e) => displayBookmarkMenu(e, "bookmarkMenu", props)}>
-          <Image
-            width={16}
-            height={16}
-            alt="Menu icon"
-            src="/three-dots-vertical.svg"
-          />
-        </button>
-      </div>
+      <EditBookmarkButton>{props.children}</EditBookmarkButton>
+      <RemoveButton>{props.children}</RemoveButton>
     </div>
   )
 }

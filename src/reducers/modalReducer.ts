@@ -26,12 +26,12 @@ export const modalVisibilityReducer = (state, action) => {
 				...state,
 				editFolderModal: false,
 			}
-		case "displayConfirmDeleteModal":
+		case "SHOW_CONFIRM_DELETE_MODAL":
 			return {
 				...state,
 				confirmDeleteModal: true,
 			}
-		case "hideConfirmDeleteModal":
+		case "HIDE_CONFIRM_DELETE_MODAL":
 			return {
 				...state,
 				confirmDeleteModal: false,

@@ -1,11 +1,8 @@
 "use client"
-import { useRouter } from "next/navigation"
 import styles from "./EditBookmarkDialog.module.scss"
-import React, { useEffect, useReducer, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import modalVisibilityReducer, {
-	modalVisibility,
-} from "@/reducers/modalReducer"
+import { modalStore } from "@/store"
 
 type Props = {
 	title: string
@@ -13,32 +10,44 @@ type Props = {
 	children: React.ReactNode
 }
 
+interface EditBookmarkState {
+    title: string,
+    url: string
+}
+
+
 const EditBookmarkDialog = ({ title }: Props) => {
-	const [newBookmark, setNewBookmark] = useState({
-		title: "",
-		url: "",
+    const editBookmarkData = modalStore((state) => state.editBookmarkData);
+    const editBookmarkModal = modalStore((state) => state.editBookmarkModal);
+    const hideEditBookmarkDialog = modalStore((state) => state.hideEditBookmarkModal);
+	const [newBookmark, setNewBookmark] = useState<EditBookmarkState>({
+		title: editBookmarkData.title,
+		url: editBookmarkData.url,
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const router = useRouter()
-	const [state, dispatch] = useReducer(modalVisibilityReducer, modalVisibility)
-	const { editBookmarkModal } = state
 
 	useEffect(() => {
-		if (editBookmarkModal === true) {
+		if (editBookmarkModal) {
 			dialogRef.current?.showModal()
 		} else {
 			dialogRef.current?.close()
 		}
 	}, [editBookmarkModal])
 
+    useEffect(() => {
+        setNewBookmark({
+            title: editBookmarkData.title,
+            url: editBookmarkData.url
+        })
+    }, [editBookmarkData])
+
 	const closeDialog = async () => {
-		dispatch({ type: "hideEditBookmarkModal" })
 		dialogRef.current?.close()
+        hideEditBookmarkDialog()
 		setNewBookmark({
 			title: "",
 			url: "",
 		})
-		router.push("/")
 	}
 
 	const editBookmark = async () => {
@@ -86,6 +95,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
 								onChange={() =>
 									setNewBookmark({ ...newBookmark, title: event.target.value })
 								}
+                                value={newBookmark.title}
 								required
 							/>
 						</label>
@@ -101,6 +111,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
 								onChange={() =>
 									setNewBookmark({ ...newBookmark, url: event.target.value })
 								}
+                                value={newBookmark.url}
 								required
 							/>
 						</label>

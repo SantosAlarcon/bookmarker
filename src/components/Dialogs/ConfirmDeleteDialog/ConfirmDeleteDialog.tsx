@@ -6,15 +6,16 @@ import modalVisibilityReducer, {
 	modalVisibility,
 } from "@/reducers/modalReducer"
 import { toast } from "sonner"
+import { modalStore } from "@/store"
 
 type Props = {
 	title: string
 }
 
 const ConfirmDeleteDialog = ({ title }: Props) => {
-	const [state, modalDeleteDispatch] = useReducer(modalVisibilityReducer, modalVisibility)
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const confirmDeleteModal = state.confirmDeleteModal
+    const confirmDeleteModal = modalStore((state) => state.deleteConfirmModal);
+    const closeDeleteModal = modalStore((state) => state.hideDeleteConfirmModal);
 
 	useEffect(() => {
 		if (confirmDeleteModal === true) {
@@ -22,18 +23,16 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 		} else {
 			dialogRef.current?.close()
 		}
-		console.log(`>> ${confirmDeleteModal}`)
 	}, [confirmDeleteModal])
 
 	const closeDialog = async () => {
-		modalDeleteDispatch({ type: "hideConfirmDeleteModal" })
+        closeDeleteModal();
 		dialogRef.current?.close()
 	}
 
 	/* This function implements deletion logic and closes the medal */
 	const confirmDeletion = () => {
-		modalDeleteDispatch({ type: "hideConfirmDeleteModal" })
-		dialogRef.current?.close()
+        closeDialog();
 		toast.success("Bookmark deleted successfully!")
 	}
 

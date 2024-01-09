@@ -1,55 +1,70 @@
 "use client"
-import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation"
 import styles from "./EditFolderDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
-import { type FolderItem } from "@/types/types"
 import { toast } from "sonner"
-import { useRouter } from "next/navigation"
 import Image from "next/image"
+import { modalStore } from "@/store"
 
 type Props = {
 	title: string
-	onClose: () => void
-	onCreate: () => void
 	children: React.ReactNode
 }
 
+interface EditFolderState {
+    title: string,
+    description: string
+}
+
 const EditFolderDialog = ({ title }: Props) => {
-	const [newFolder, setNewFolder] = useState({
-		title: "",
+    const editFolderData = modalStore((state) => state.editFolderData);
+    const hideEditFolderDialog = modalStore((state) => state.hideEditFolderModal)
+    const editFolderModal = modalStore((state) => state.editFolderModal)
+	const [newFolder, setNewFolder] = useState<EditFolderState>({
+		title: editFolderData.title,
+        description: editFolderData.description
 	})
-	const searchParams: ReadonlyURLSearchParams | null = useSearchParams()
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-	const showDialog = searchParams.get("showEditFolderDialog")
-	const router = useRouter()
 
 	useEffect(() => {
-		if (showDialog === "y") {
+		if (editFolderModal) {
 			dialogRef.current?.showModal()
 		} else {
 			dialogRef.current?.close()
 		}
-	}, [showDialog])
+	}, [editFolderModal])
+
+    useEffect(() => {
+        setNewFolder({
+            title: editFolderData.title,
+            description: editFolderData.description
+        })
+    }, [editFolderData])
 
 	const closeDialog = async () => {
 		dialogRef.current?.close()
+        hideEditFolderDialog();
 		setNewFolder({
 			title: "",
+            description: ""
 		})
-		router.back()
 	}
 
-	const createFolder = async () => { }
+    /* This function implements the logic to modify folder metadata */
+	const editFolder = async () => {
+		dialogRef.current?.close()
+        hideEditFolderDialog();
+        toast.success("Folder data has been updated succesfully");
+    }
 
 	const dialog: JSX.Element | null =
-		showDialog === "y" ? (
+		editFolderModal ? (
 			<dialog
 				ref={dialogRef}
 				className={styles.edit__folder__dialog__container}
 				onClose={closeDialog}
 			>
 				<div className={styles.edit__folder__dialog__title}>
-					<Image src="/add-folder-icon.svg" alt="Add folder icon" />
+					<Image src="/edit-icon.svg" alt="Edit icon" width={16} height={16} />
 					<h4 className={styles.edit__folder__dialog__title__text}>{title}</h4>
 				</div>
 				<div className={styles.edit__folder__dialog__content}>
@@ -63,8 +78,25 @@ const EditFolderDialog = ({ title }: Props) => {
 								type="text"
 								name="title"
 								placeholder="Folder title"
+                                value={newFolder.title}
 								onChange={() =>
 									setNewFolder({ ...newFolder, title: event.target.value })
+								}
+								required
+							/>
+						</label>
+						<label
+							htmlFor="description"
+							className={styles.edit__folder__dialog__form__label}
+						>
+							Description
+							<input
+								type="text"
+								name="description"
+								placeholder="Folder description"
+                                value={newFolder.description}
+								onChange={() =>
+									setNewFolder({ ...newFolder, description: event.target.value })
 								}
 								required
 							/>
@@ -73,10 +105,10 @@ const EditFolderDialog = ({ title }: Props) => {
 				</div>
 				<div className={styles.edit__folder__dialog__buttons}>
 					<button
-						disabled={newFolder.title ? false : true}
-						onClick={() => createFolder()}
+						disabled={newFolder.title && newFolder.description ? false : true}
+						onClick={() => editFolder()}
 					>
-						Crear
+                        Modify
 					</button>
 					<button onClick={() => closeDialog()}>Close</button>
 				</div>

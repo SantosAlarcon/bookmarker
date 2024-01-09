@@ -111,7 +111,7 @@
         transition: all 150ms ease-in-out;
 
         &::first-child {
-            background-color: var(--main-color-dark);
+            background-color: var(--main-color-dark) !important;
         }
 
         &:hover {
