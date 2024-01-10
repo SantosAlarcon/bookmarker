@@ -123,3 +123,9 @@
         background-color: hsl(0, 70%, 40%) !important;
     }
 }
+
+.confirm__delete__dialog__content {
+    &__text {
+	padding: 1rem 0;
+    }
+}

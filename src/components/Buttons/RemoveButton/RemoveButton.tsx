@@ -4,10 +4,20 @@ import React from "react"
 import styles from "./RemoveButton.module.scss"
 import { modalStore } from "@/store"
 
-const RemoveButton = () => {
+interface RemoveProps {
+    children: {
+	id: string,
+	title: string
+    }
+}
+
+const RemoveButton = ({children}: RemoveProps) => {
     const showDeleteConfirmDialog = modalStore((state) => state.showDeleteConfirmModal);
+    const setDeleteProps = modalStore((state) => state.setDeleteProps);
+    const {id, title} = children;
 
     const handleClick = () => {
+	setDeleteProps(id, title);
         showDeleteConfirmDialog();
     }
 

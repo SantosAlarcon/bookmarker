@@ -3,6 +3,7 @@ import styles from "./EditBookmarkDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { modalStore } from "@/store"
+import { toast } from "sonner"
 
 type Props = {
 	title: string
@@ -52,14 +53,14 @@ const EditBookmarkDialog = ({ title }: Props) => {
 
 	const editBookmark = async () => {
 		const regExpURL: RegExp = new RegExp(
-			"^(?:https?)://(?<host>[w-]+(?:.[w-]+)*)(?::d+)?(?<path>.*)$"
+			"(?:https?):\/\/(?:www\.)?[a-z0-9-]+\.[a-z]{2,6}(?::\d+)?(\/|\/[a-z0-9-_.?&=#]+)?"
 		)
 
 		if (!regExpURL.test(newBookmark.url)) {
 			alert("El formato de la URL es incorrecta")
 		} else {
-			/*alert("Creando tarea...")
-		  closeDialog()*/
+			await closeDialog()
+			toast.success("Bookmark updated successfully")
 		}
 	}
 

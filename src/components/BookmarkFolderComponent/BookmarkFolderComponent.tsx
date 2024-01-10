@@ -12,12 +12,13 @@ interface BFCProps {
     favicon: string
     title: string
     description: string
-    children: [BookmarkFolder | BookmarkItem]
+    children: [BookmarkFolder & BookmarkItem]
   }
 }
 
 const BookmarkFolderComponent = (props: BFCProps) => {
   const [expanded, setExpanded] = useState(false)
+
   return (
     <div className={styles.bookmark__folder__container}>
       <details open={expanded}>
@@ -65,21 +66,22 @@ const BookmarkFolderComponent = (props: BFCProps) => {
         {/* Render children links if there any */}
         {props.children.children?.length > 0 && (
           <ul className={styles.bookmark__folder__links}>
-            {props.children.children?.map((childItem) => {
-              if ("children" in childItem) {
-                ;<li>
-                  <BookmarkFolderComponent key={childItem.id}>
-                    {childItem}
-                  </BookmarkFolderComponent>
-                </li>
-              } else {
-                ;<li>
-                  <BookmarkItemComponent key={childItem.id}>
-                    {childItem}
-                  </BookmarkItemComponent>
-                </li>
-              }
-            })}
+            {props.children?.children.map((child: BookmarkFolder | BookmarkItem) => {
+			    if ("children" in child) {
+			      return (
+			        <BookmarkFolderComponent
+			          key={child.id}
+			        >{child}</BookmarkFolderComponent>
+			      )
+			    } else {
+			      return (
+			        <BookmarkItemComponent
+			          key={child.id}
+			        >{child}</BookmarkItemComponent>
+			      )
+			    }
+	    }
+            )}
           </ul>
         )}
       </details>

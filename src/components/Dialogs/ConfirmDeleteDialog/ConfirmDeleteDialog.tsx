@@ -1,10 +1,7 @@
 "use client"
 import styles from "./ConfirmDeleteDialog.module.scss"
-import React, { useEffect, useReducer, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import Image from "next/image"
-import modalVisibilityReducer, {
-	modalVisibility,
-} from "@/reducers/modalReducer"
 import { toast } from "sonner"
 import { modalStore } from "@/store"
 
@@ -14,8 +11,10 @@ type Props = {
 
 const ConfirmDeleteDialog = ({ title }: Props) => {
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
-    const confirmDeleteModal = modalStore((state) => state.deleteConfirmModal);
-    const closeDeleteModal = modalStore((state) => state.hideDeleteConfirmModal);
+	const confirmDeleteModal = modalStore((state) => state.deleteConfirmModal)
+	const closeDeleteModal = modalStore((state) => state.hideDeleteConfirmModal)
+	const deleteProps = modalStore((state) => state.deleteProps);
+
 
 	useEffect(() => {
 		if (confirmDeleteModal === true) {
@@ -26,14 +25,14 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 	}, [confirmDeleteModal])
 
 	const closeDialog = async () => {
-        closeDeleteModal();
+		closeDeleteModal()
 		dialogRef.current?.close()
 	}
 
-	/* This function implements deletion logic and closes the medal */
+	/* This function implements deletion logic and closes the medal. Use the ID of the item to delete it */
 	const confirmDeletion = () => {
-        closeDialog();
-		toast.success("Bookmark deleted successfully!")
+		closeDialog()
+		toast.success(`'${deleteProps?.title}' deleted successfully!`)
 	}
 
 	const dialog: HTMLDialogElement | null =
@@ -56,11 +55,12 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 				</div>
 				<div className={styles.confirm__delete__dialog__content}>
 					<p className={styles.confirm__delete__dialog__content__text}>
-						Are you sure to delete this item?
+						Are you sure to delete <b>{deleteProps?.title}</b>?
 					</p>
 				</div>
 				<div className={styles.confirm__delete__dialog__buttons}>
-					<button className={styles.confirm__delete__dialog__buttons__delete}
+					<button
+						className={styles.confirm__delete__dialog__buttons__delete}
 						onClick={() => confirmDeletion()}
 					>
 						Delete
