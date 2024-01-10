@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react"
 import Image from "next/image"
 import { toast } from "sonner"
 import { modalStore } from "@/store/modalStore"
+import deleteBookmark from "@/lib/bookmarks/deleteBookmark"
 
 type Props = {
 	title: string
@@ -30,7 +31,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 	}
 
 	/* This function implements deletion logic and closes the medal. Use the ID of the item to delete it */
-	const confirmDeletion = () => {
+	const confirmDeletion = async () => {
 		closeDialog()
 		toast.success(`'${deleteProps?.title}' deleted successfully!`)
 	}

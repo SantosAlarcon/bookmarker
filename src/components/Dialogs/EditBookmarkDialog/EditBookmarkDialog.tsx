@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
 import { toast } from "sonner"
+import updateBookmark from "@/lib/bookmarks/updateBookmark"
 
 type Props = {
 	title: string
@@ -17,7 +18,7 @@ interface EditBookmarkState {
 }
 
 
-const EditBookmarkDialog = ({ title }: Props) => {
+const EditBookmarkDialog = ({ title, id }: Props) => {
     const editBookmarkData = modalStore((state) => state.editBookmarkData);
     const editBookmarkModal = modalStore((state) => state.editBookmarkModal);
     const hideEditBookmarkDialog = modalStore((state) => state.hideEditBookmarkModal);
@@ -59,7 +60,8 @@ const EditBookmarkDialog = ({ title }: Props) => {
 		if (!regExpURL.test(newBookmark.url)) {
 			alert("El formato de la URL es incorrecta")
 		} else {
-			await closeDialog()
+            await updateBookmark(id, newBookmark)
+			closeDialog()
 			toast.success("Bookmark updated successfully")
 		}
 	}

@@ -5,6 +5,7 @@ import { type FolderItem } from "@/types/types"
 import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
+import createNewFolder from "@/lib/folders/createNewFolder"
 
 type Props = {
 	title: string
@@ -16,7 +17,7 @@ const NewFolderDialog = ({ title }: Props) => {
 	const hideNewFolderDialog = modalStore((state) => state.hideNewFolderModal)
 	const [newFolder, setNewFolder] = useState({
 		title: "",
-		descripcion: "",
+		description: "",
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
@@ -33,12 +34,13 @@ const NewFolderDialog = ({ title }: Props) => {
 		hideNewFolderDialog()
 		setNewFolder({
 			title: "",
-			descripcion: "",
+			description: "",
 		})
 	}
 
 	/* THis function implements the logic to create a folder and close the dialog. */
 	const createFolder = async () => {
+        createNewFolder(newFolder.title, newFolder.description);
 		closeDialog()
 		toast.success("Folder created successfully!")
 	}
@@ -94,7 +96,7 @@ const NewFolderDialog = ({ title }: Props) => {
 			</div>
 			<div className={styles.new__folder__dialog__buttons}>
 				<button
-					disabled={newFolder.title && newFolder.descripcion ? false : true}
+					disabled={newFolder.title && newFolder.description ? false : true}
 					onClick={() => createFolder()}
 				>
 					Crear

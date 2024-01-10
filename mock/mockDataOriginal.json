@@ -1,0 +1,72 @@
+[
+	{
+		"id": "890e5294-b54f-42ad-9142-9eb1da8f3be0",
+		"title": "Blogs de Linux",
+		"description": "Páginas Web y blogs de Linux centrados en el ecosistema de Linux",
+		"children": [
+			{
+				"id": "a4af627c-27f5-401a-90b2-ac2fd6333560",
+				"favicon": "https://www.muylinux.com/wp-content/uploads/2022/05/cropped-ML_FAVICON_2022-32x32.png",
+				"title": "MuyLinux",
+				"url": "https://www.muylinux.com",
+				"parentFolder": "890e5294-b54f-42ad-9142-9eb1da8f3be0"
+			},
+			{
+				"id": "7d20d9e7-44ef-4864-8586-5d96525d2d1a",
+				"favicon": "https://secure.gravatar.com/blavatar/b144974e36c71ddcf745e5f4f9e263deeb0396b47ad662fdc855dabf9bda8d7e?s=32",
+				"title": "Victorhck in the free world",
+				"url": "https://victorhckinthefreeworld.com/",
+				"parentFolder": "890e5294-b54f-42ad-9142-9eb1da8f3be0"
+			},
+			{
+				"id": "adc2542e-c117-4819-bd07-b6f32bd8723e",
+				"favicon": "https://comoserdebianitaynomorirenelintento.blogspot.com/favicon.ico",
+				"title": "Cómo ser debianita y no morir en el intento",
+				"url": "https://comoserdebianitaynomorirenelintento.blogspot.com/",
+				"parentFolder": "890e5294-b54f-42ad-9142-9eb1da8f3be0"
+			}
+		]
+	},
+	{
+		"id": "790e5294-b54f-42ad-9142-9eb1da8f3be0",
+		"title": "Tiendas de confianza",
+		"description": "Tiendas online de buena reputación donde comprar en más de una ocasión",
+		"children": [
+			{
+				"id": "bd6ab708-8499-4e59-9cfe-8cd84c5bbb58",
+				"favicon": "https://ae01.alicdn.com/images/eng/wholesale/icon/aliexpress.ico",
+				"title": "AliExpress",
+				"url": "https://www.aliexpress.com/",
+                "parentFolder": "790e5294-b54f-42ad-9142-9eb1da8f3be0"
+			},
+			{
+				"id": "141ecbde-8978-441c-8713-581d5fc88102",
+				"favicon": "https://upload.wikimedia.org/wikipedia/commons/d/de/Amazon_icon.png",
+				"title": "Amazon",
+				"url": "https://www.amazon.es",
+                "parentFolder": "790e5294-b54f-42ad-9142-9eb1da8f3be0"
+			},
+			{
+				"id": "b9055756-4804-4198-9ba4-f0769aed69e1",
+				"favicon": "https://cdn.pccomponentes.com/img/favicons/favicon.png",
+				"title": "PcComponentes",
+				"url": "https://www.pccomponentes.com/",
+                "parentFolder": "790e5294-b54f-42ad-9142-9eb1da8f3be0"
+			}
+		]
+	},
+	{
+		"id": "e7750569-88fe-4bf1-baf7-6ed3bf2ecb4e",
+		"favicon": "https://hololivepro.com/wp-content/themes/hololive_production/images/favicon.ico",
+		"title": "HoloLive production",
+		"url": "https://hololivepro.com/en/",
+		"parentFolder": null
+	},
+	{
+		"id": "a9346e07-5ab6-4199-9283-97bcd4c81c74",
+		"favicon": "https://www.noticias3d.com/icons/favicon.ico",
+		"title": "Noticias3D",
+		"url": "https://www.noticias3d.com",
+		"parentFolder": null
+	}
+]

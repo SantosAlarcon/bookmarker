@@ -53,6 +53,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 		} else {
 			await createNewBookmark(newBookmark)
 			closeDialog()
+            toast.success("The new bookmark added successfully :)")
 		}
 	}
 
