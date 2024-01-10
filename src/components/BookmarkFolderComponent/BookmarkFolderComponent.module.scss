@@ -38,12 +38,12 @@
     display: flex;
     flex-direction: column;
     padding: 0.5rem 1rem;
+
+    &__link {
+	list-style: none;
+    }
 }
 
 .bookmark__folder__title {
     flex-basis: 95%;
-}
-
-.bookmark__folder__links>* {
-    margin: 0.5rem 0;
 }

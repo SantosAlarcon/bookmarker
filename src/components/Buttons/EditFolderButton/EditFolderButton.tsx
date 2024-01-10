@@ -2,7 +2,7 @@
 import Image from "next/image"
 import React from "react"
 import styles from "./EditButton.module.scss"
-import { modalStore } from "@/store"
+import { modalStore } from "@/store/modalStore"
 
 interface EditFolderProps {
     children: {

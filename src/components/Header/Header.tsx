@@ -6,7 +6,7 @@ import { toast } from "sonner"
 import NewBookmarkDialog from "../Dialogs/NewBookmarkDialog/NewBookmarkDialog"
 import NewFolderDialog from "../Dialogs/NewFolderDialog/NewFolderDialog"
 import { useRouter } from "next/navigation"
-import { modalStore } from "@/store"
+import { modalStore } from "@/store/modalStore"
 
 const Header = () => {
 	const router = useRouter()

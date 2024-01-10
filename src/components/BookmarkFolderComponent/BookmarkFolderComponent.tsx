@@ -9,7 +9,7 @@ import EditFolderButton from "../Buttons/EditFolderButton/EditFolderButton"
 interface BFCProps {
   children: {
     id: string
-    favicon: string
+    favicon: string | null
     title: string
     description: string
     children: [BookmarkFolder & BookmarkItem]
@@ -69,15 +69,15 @@ const BookmarkFolderComponent = (props: BFCProps) => {
             {props.children?.children.map((child: BookmarkFolder | BookmarkItem) => {
 			    if ("children" in child) {
 			      return (
-			        <BookmarkFolderComponent
+			        <li key={child.id} className={styles.bookmark__folder__links__link}><BookmarkFolderComponent
 			          key={child.id}
-			        >{child}</BookmarkFolderComponent>
+			        >{child}</BookmarkFolderComponent></li>
 			      )
 			    } else {
 			      return (
-			        <BookmarkItemComponent
+			        <li key={child.id} className={styles.bookmark__folder__links__link}><BookmarkItemComponent
 			          key={child.id}
-			        >{child}</BookmarkItemComponent>
+			        >{child}</BookmarkItemComponent></li>
 			      )
 			    }
 	    }

@@ -3,7 +3,7 @@ import styles from "./EditFolderDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import Image from "next/image"
-import { modalStore } from "@/store"
+import { modalStore } from "@/store/modalStore"
 
 type Props = {
 	title: string

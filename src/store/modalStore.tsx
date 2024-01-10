@@ -28,7 +28,7 @@ type Action = {
 		newBookmarkModal: ModalState["newBookmarkModal"]
 	) => void
 	showNewFolderModal: (newFolderModal: ModalState["newFolderModal"]) => void
-	hideNewFolderModal: (newFolderModal: ModalState["newFolderModal"]) => void
+	hideNewFolderModal: () => void
 	showDeleteConfirmModal: (
 		deleteConfirmModal: ModalState["deleteConfirmModal"]
 	) => void

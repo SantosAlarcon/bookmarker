@@ -3,7 +3,7 @@ import styles from "./ConfirmDeleteDialog.module.scss"
 import React, { useEffect, useRef } from "react"
 import Image from "next/image"
 import { toast } from "sonner"
-import { modalStore } from "@/store"
+import { modalStore } from "@/store/modalStore"
 
 type Props = {
 	title: string

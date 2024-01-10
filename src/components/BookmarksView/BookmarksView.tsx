@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, Suspense } from "react"
+import React, { useState, useEffect} from "react"
 import styles from "./BookmarksView.module.scss"
 import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderComponent"
 import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton"
@@ -24,8 +24,8 @@ const BookmarksView = () => {
 
 	return (
 		<>
-			<EditBookmarkDialog title="Edit bookmark" open={false} />
-			<EditFolderDialog title="Edit folder" open={false} />
+			<EditBookmarkDialog title="Edit bookmark" />
+			<EditFolderDialog title="Edit folder" />
 			<ConfirmDeleteDialog title="Confirm deletion" />
 			<main className={styles.bookmarks__view__container}>
 				{bookmarks

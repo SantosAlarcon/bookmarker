@@ -9,7 +9,6 @@ interface BICProps {
     id: string
     favicon: string
     title: string
-    description: string
     url: string
   }
 }
@@ -18,7 +17,6 @@ const BookmarkItemComponent = (props: BICProps) => {
   return (
     <div
       className={styles.bookmark__item__container}
-      title={props.children.description}
     >
       <div className={styles.bookmark__item__icon}>
         {props?.children.favicon ? (

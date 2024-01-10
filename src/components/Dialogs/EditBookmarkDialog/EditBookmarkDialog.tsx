@@ -2,7 +2,7 @@
 import styles from "./EditBookmarkDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { modalStore } from "@/store"
+import { modalStore } from "@/store/modalStore"
 import { toast } from "sonner"
 
 type Props = {
