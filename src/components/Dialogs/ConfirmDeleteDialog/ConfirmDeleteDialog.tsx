@@ -16,7 +16,6 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 	const closeDeleteModal = modalStore((state) => state.hideDeleteConfirmModal)
 	const deleteProps = modalStore((state) => state.deleteProps);
 
-
 	useEffect(() => {
 		if (confirmDeleteModal === true) {
 			dialogRef.current?.showModal()
@@ -32,6 +31,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 
 	/* This function implements deletion logic and closes the medal. Use the ID of the item to delete it */
 	const confirmDeletion = async () => {
+        deleteBookmark(deleteProps.id)
 		closeDialog()
 		toast.success(`'${deleteProps?.title}' deleted successfully!`)
 	}

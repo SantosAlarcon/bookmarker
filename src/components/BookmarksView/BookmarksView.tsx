@@ -20,7 +20,7 @@ const BookmarksView = () => {
 
 	useEffect(() => {
 		getBookmarks()
-	}, [])
+	}, [bookmarks])
 
 	return (
 		<>
