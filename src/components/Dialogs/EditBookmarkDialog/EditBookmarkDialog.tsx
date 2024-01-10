@@ -14,7 +14,8 @@ type Props = {
 
 interface EditBookmarkState {
     title: string,
-    url: string
+    url: string,
+    parentFolder: string | null
 }
 
 
@@ -25,6 +26,7 @@ const EditBookmarkDialog = ({ title, id }: Props) => {
 	const [newBookmark, setNewBookmark] = useState<EditBookmarkState>({
 		title: editBookmarkData.title,
 		url: editBookmarkData.url,
+        parentFolder: editBookmarkData.parentFolder
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
@@ -39,7 +41,8 @@ const EditBookmarkDialog = ({ title, id }: Props) => {
     useEffect(() => {
         setNewBookmark({
             title: editBookmarkData.title,
-            url: editBookmarkData.url
+            url: editBookmarkData.url,
+            parentFolder: editBookmarkData.parentFolder
         })
     }, [editBookmarkData])
 
@@ -49,6 +52,7 @@ const EditBookmarkDialog = ({ title, id }: Props) => {
 		setNewBookmark({
 			title: "",
 			url: "",
+            parentFolder: null
 		})
 	}
 

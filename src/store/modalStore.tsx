@@ -13,6 +13,7 @@ type ModalState = {
 	editBookmarkData: {
 		title: string
 		url: string
+        parentFolder: string | null
 	}
 	deleteProps: {
 		id: string
@@ -44,7 +45,7 @@ type Action = {
 	showEditFolderModal: (editFolderModal: ModalState["editFolderModal"]) => void
 	hideEditFolderModal: (editFolderModal: ModalState["editFolderModal"]) => void
 	modifyEditFolderData: (title: string, description: string) => void
-	modifyEditBookmarkData: (title: string, url: string) => void
+	modifyEditBookmarkData: (title: string, url: string, parentFolder: string | null) => void
 	setDeleteProps: (id: string, title: string) => void
 }
 
@@ -61,6 +62,7 @@ export const modalStore = create<ModalState & Action>((set) => ({
 	editBookmarkData: {
 		title: "",
 		url: "",
+        parentFolder: null
 	},
 	deleteProps: {
 		id: "",
@@ -78,7 +80,7 @@ export const modalStore = create<ModalState & Action>((set) => ({
 	hideEditFolderModal: () => set({ editFolderModal: false }),
 	modifyEditFolderData: (title, description) =>
 		set({ editFolderData: { title: title, description: description } }),
-	modifyEditBookmarkData: (title, url) =>
-		set({ editBookmarkData: { title: title, url: url } }),
+	modifyEditBookmarkData: (title, url, parentFolder) =>
+		set({ editBookmarkData: { title: title, url: url, parentFolder: parentFolder } }),
 	setDeleteProps: (id, title) => set({ deleteProps: { id: id, title: title } }),
 }))
