@@ -12,7 +12,7 @@ const updateBookmark = async (id: string, bookmark: updateInfo) => {
         id: id,
         title: bookmark.title,
         url: bookmark.url,
-        favicon: getFavicon(bookmark.url),
+        favicon: await getFavicon(bookmark.url),
         parentFolder: bookmark.parentFolder
     }
     await fetch("/api/bookmarks", {

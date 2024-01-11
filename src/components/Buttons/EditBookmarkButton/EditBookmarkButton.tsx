@@ -8,17 +8,18 @@ interface EditBookmarkProps {
     children: {
         id: string,
         title: string,
-        url: string
+        url: string,
+	parentFolder: string | null
     }
 }
 
 const EditBookmarkButton = ({children}: EditBookmarkProps) => {
     const showEditBookmarkDialog = modalStore((state) => state.showEditBookmarkModal);
     const modifyEditBookmarkData = modalStore((state) => state.modifyEditBookmarkData);
-    const {id, title, url} = children;
+    const {id, title, url, parentFolder} = children;
 
     const handleClick = () => {
-        modifyEditBookmarkData(title, url);
+        modifyEditBookmarkData(id, title, url, parentFolder);
         showEditBookmarkDialog();
     }
 

@@ -11,5 +11,5 @@ export type BookmarkItem = {
     title: string,
     url: string,
     favicon?: string | null
-    parentFolder: BookmarkFolder | null
+    parentFolder: string | null
 }

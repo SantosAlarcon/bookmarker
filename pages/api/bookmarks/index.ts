@@ -1,11 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import fs from "fs"
+
+// Import mock data from the JSON file as array with objects
 import data from "../../../mock/mockData.json"
 
+/* This function modifies the mockData.json file and applies tabulation to make it readable. */
 const saveMockDataJSON = (data: object) => {
   fs.writeFile(
     "./mock/mockData.json",
-    JSON.stringify(data),
+    JSON.stringify(data, null, '\t'),
     { encoding: "utf-8" },
     (err) => {
       if (err) {

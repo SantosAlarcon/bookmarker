@@ -13,20 +13,21 @@ type Props = {
 }
 
 interface EditBookmarkState {
-    title: string,
-    url: string,
-    parentFolder: string | null
+	title: string
+	url: string
+	parentFolder: string | null
 }
 
-
-const EditBookmarkDialog = ({ title, id }: Props) => {
-    const editBookmarkData = modalStore((state) => state.editBookmarkData);
-    const editBookmarkModal = modalStore((state) => state.editBookmarkModal);
-    const hideEditBookmarkDialog = modalStore((state) => state.hideEditBookmarkModal);
+const EditBookmarkDialog = ({ title }: Props) => {
+	const editBookmarkData = modalStore((state) => state.editBookmarkData)
+	const editBookmarkModal = modalStore((state) => state.editBookmarkModal)
+	const hideEditBookmarkDialog = modalStore(
+		(state) => state.hideEditBookmarkModal
+	)
 	const [newBookmark, setNewBookmark] = useState<EditBookmarkState>({
 		title: editBookmarkData.title,
 		url: editBookmarkData.url,
-        parentFolder: editBookmarkData.parentFolder
+		parentFolder: editBookmarkData.parentFolder,
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
@@ -38,33 +39,33 @@ const EditBookmarkDialog = ({ title, id }: Props) => {
 		}
 	}, [editBookmarkModal])
 
-    useEffect(() => {
-        setNewBookmark({
-            title: editBookmarkData.title,
-            url: editBookmarkData.url,
-            parentFolder: editBookmarkData.parentFolder
-        })
-    }, [editBookmarkData])
+	useEffect(() => {
+		setNewBookmark({
+			title: editBookmarkData.title,
+			url: editBookmarkData.url,
+			parentFolder: editBookmarkData.parentFolder,
+		})
+	}, [editBookmarkData])
 
 	const closeDialog = async () => {
 		dialogRef.current?.close()
-        hideEditBookmarkDialog()
+		hideEditBookmarkDialog()
 		setNewBookmark({
 			title: "",
 			url: "",
-            parentFolder: null
+			parentFolder: null,
 		})
 	}
 
 	const editBookmark = async () => {
 		const regExpURL: RegExp = new RegExp(
-			"(?:https?):\/\/(?:www\.)?[a-z0-9-]+\.[a-z]{2,6}(?::\d+)?(\/|\/[a-z0-9-_.?&=#]+)?"
+			"(?:https?)://(?:www.)?[a-z0-9-]+.[a-z]{2,6}(?::d+)?(/|/[a-z0-9-_.?&=#]+)?"
 		)
 
 		if (!regExpURL.test(newBookmark.url)) {
 			alert("El formato de la URL es incorrecta")
 		} else {
-            await updateBookmark(id, newBookmark)
+			await updateBookmark(editBookmarkData.id, newBookmark)
 			closeDialog()
 			toast.success("Bookmark updated successfully")
 		}
@@ -102,7 +103,7 @@ const EditBookmarkDialog = ({ title, id }: Props) => {
 								onChange={() =>
 									setNewBookmark({ ...newBookmark, title: event.target.value })
 								}
-                                value={newBookmark.title}
+								value={newBookmark.title}
 								required
 							/>
 						</label>
@@ -118,7 +119,7 @@ const EditBookmarkDialog = ({ title, id }: Props) => {
 								onChange={() =>
 									setNewBookmark({ ...newBookmark, url: event.target.value })
 								}
-                                value={newBookmark.url}
+								value={newBookmark.url}
 								required
 							/>
 						</label>

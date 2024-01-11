@@ -9,18 +9,23 @@ import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog"
 import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog"
 import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDialog"
 import { BookmarkItem, BookmarkFolder } from "@/types/types"
+import { bookmarksStore } from "@/store/bookmarksStore"
 
 const BookmarksView = () => {
 	const [bookmarks, setBookmarks] = useState(null)
+	const bookmarksList = bookmarksStore((state) => state.bookmarksList)
+	const setBookmarksList = bookmarksStore((state) => state.setBookmarksList)
 
 	const getBookmarks = async () => {
 		const response = await getAllBookmarks()
 		setBookmarks(response)
+		setBookmarksList(response)
+		console.log(bookmarksList)
 	}
 
 	useEffect(() => {
 		getBookmarks()
-	}, [bookmarks])
+	}, [])
 
 	return (
 		<>

@@ -1,4 +1,6 @@
+import { BookmarkFolder, BookmarkItem } from "@/types/types"
 import { create } from "zustand"
+import zukeeper from "zukeeper"
 
 type ModalState = {
 	deleteConfirmModal: boolean
@@ -7,13 +9,16 @@ type ModalState = {
 	newBookmarkModal: boolean
 	newFolderModal: boolean
 	editFolderData: {
+		id: string
 		title: string
 		description: string
+		children: [BookmarkFolder & BookmarkItem]
 	}
 	editBookmarkData: {
+		id: string
 		title: string
 		url: string
-        parentFolder: string | null
+		parentFolder: string | null
 	}
 	deleteProps: {
 		id: string
@@ -22,47 +27,48 @@ type ModalState = {
 }
 
 type Action = {
-	showNewBookmarkModal: (
-		newBookmarkModal: ModalState["newBookmarkModal"]
-	) => void
-	hideNewBookmarkModal: (
-		newBookmarkModal: ModalState["newBookmarkModal"]
-	) => void
-	showNewFolderModal: (newFolderModal: ModalState["newFolderModal"]) => void
+	showNewBookmarkModal: () => void
+	hideNewBookmarkModal: () => void
+	showNewFolderModal: () => void
 	hideNewFolderModal: () => void
-	showDeleteConfirmModal: (
-		deleteConfirmModal: ModalState["deleteConfirmModal"]
+	showDeleteConfirmModal: () => void
+	hideDeleteConfirmModal: () => void
+	showEditBookmarkModal: () => void
+	hideEditBookmarkModal: () => void
+	showEditFolderModal: () => void
+	hideEditFolderModal: () => void
+	modifyEditFolderData: (
+		id: string,
+		title: string,
+		description: string,
+		children: [BookmarkFolder & BookmarkItem]
 	) => void
-	hideDeleteConfirmModal: (
-		deleteConfirmModal: ModalState["deleteConfirmModal"]
+	modifyEditBookmarkData: (
+		id: string,
+		title: string,
+		url: string,
+		parentFolder: string | null
 	) => void
-	showEditBookmarkModal: (
-		editBookmarkModal: ModalState["editBookmarkModal"]
-	) => void
-	hideEditBookmarkModal: (
-		editBookmarkModal: ModalState["editBookmarkModal"]
-	) => void
-	showEditFolderModal: (editFolderModal: ModalState["editFolderModal"]) => void
-	hideEditFolderModal: (editFolderModal: ModalState["editFolderModal"]) => void
-	modifyEditFolderData: (title: string, description: string) => void
-	modifyEditBookmarkData: (title: string, url: string, parentFolder: string | null) => void
 	setDeleteProps: (id: string, title: string) => void
 }
 
-export const modalStore = create<ModalState & Action>((set) => ({
+export const modalStore = create<ModalState & Action>(zukeeper((set) => ({
 	deleteConfirmModal: false,
 	editFolderModal: false,
 	editBookmarkModal: false,
 	newBookmarkModal: false,
 	newFolderModal: false,
 	editFolderData: {
+		id: "",
 		title: "",
 		description: "",
+		children: [],
 	},
 	editBookmarkData: {
+		id: "",
 		title: "",
 		url: "",
-        parentFolder: null
+		parentFolder: null,
 	},
 	deleteProps: {
 		id: "",
@@ -78,9 +84,23 @@ export const modalStore = create<ModalState & Action>((set) => ({
 	hideEditBookmarkModal: () => set({ editBookmarkModal: false }),
 	showEditFolderModal: () => set({ editFolderModal: true }),
 	hideEditFolderModal: () => set({ editFolderModal: false }),
-	modifyEditFolderData: (title, description) =>
-		set({ editFolderData: { title: title, description: description } }),
-	modifyEditBookmarkData: (title, url, parentFolder) =>
-		set({ editBookmarkData: { title: title, url: url, parentFolder: parentFolder } }),
+	modifyEditFolderData: (id, title, description, children) =>
+		set({
+			editFolderData: {
+				id: id,
+				title: title,
+				description: description,
+				children: children,
+			},
+		}),
+	modifyEditBookmarkData: (id, title, url, parentFolder) =>
+		set({
+			editBookmarkData: {
+				id: id,
+				title: title,
+				url: url,
+				parentFolder: parentFolder,
+			},
+		}),
 	setDeleteProps: (id, title) => set({ deleteProps: { id: id, title: title } }),
-}))
+})))
