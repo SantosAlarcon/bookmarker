@@ -1,11 +1,11 @@
 "use client"
 import styles from "./NewBookmarkDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
-import { type BookmarkItem } from "@/types/types"
 import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
 import createNewBookmark from "@/app/lib/bookmarks/createNewBookmark"
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 
 type Props = {
 	title: string
@@ -52,6 +52,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 			alert("El formato de la URL es incorrecta")
 		} else {
 			await createNewBookmark(newBookmark)
+            updateBookmarkList()
 			closeDialog()
             toast.success("The new bookmark added successfully :)")
 		}
@@ -111,7 +112,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 					disabled={newBookmark.title && newBookmark.url ? false : true}
 					onClick={() => createBookmark()}
 				>
-					Crear
+					Create
 				</button>
 				<button onClick={() => closeDialog()}>Close</button>
 			</div>

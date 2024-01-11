@@ -6,6 +6,7 @@ import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
 import updateFolder from "@/app/lib/folders/updateFolder"
 import { BookmarkFolder, BookmarkItem } from "@/types/types"
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 
 type Props = {
 	title: string
@@ -57,8 +58,8 @@ const EditFolderDialog = ({ title }: Props) => {
 	/* This function implements the logic to modify folder metadata */
 	const editFolder = async () => {
 		updateFolder(editFolderData.id, newFolder)
-		dialogRef.current?.close()
-		hideEditFolderDialog()
+        updateBookmarkList()
+        closeDialog()
 		toast.success("Folder data has been updated succesfully")
 	}
 

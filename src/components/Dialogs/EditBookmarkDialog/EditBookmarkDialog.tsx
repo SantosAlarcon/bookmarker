@@ -5,6 +5,7 @@ import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
 import { toast } from "sonner"
 import updateBookmark from "@/app/lib/bookmarks/updateBookmark"
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 
 type Props = {
 	title: string
@@ -64,6 +65,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
 			alert("El formato de la URL es incorrecta")
 		} else {
 			await updateBookmark(editBookmarkData.id, newBookmark)
+            updateBookmarkList();
 			closeDialog()
 			toast.success("Bookmark updated successfully")
 		}

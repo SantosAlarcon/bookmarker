@@ -1,5 +1,5 @@
 import getFavicon from "@/app/utils/getFavicon"
-import { type BookmarkFolder, type BookmarkItem } from "@/types/types"
+import { type BookmarkItem } from "@/types/types"
 
 interface NewBookmarkProps {
 		title: string

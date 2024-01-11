@@ -110,7 +110,7 @@
         background-color: var(--main-color);
         transition: all 150ms ease-in-out;
 
-        &::first-child {
+        &:nth-child(1) {
             background-color: var(--main-color-dark);
         }
 

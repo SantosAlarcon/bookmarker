@@ -100,7 +100,14 @@
 	{
 		"id": "b4bfacfe-6459-48e2-b4fe-c34cb9c482f6",
 		"title": "Empleo",
-		"description": "Páginas en las que importa mucho traballar2",
+		"description": "Páginas en las que importa mucho traballar",
 		"children": []
+	},
+	{
+		"id": "475cab36-1e03-4d30-9289-4561744f3a29",
+		"title": "InfoJobs",
+		"url": "https://www.infojobs.net",
+		"favicon": "https://www.infojobs.net/favicon.ico",
+		"parentFolder": null
 	}
 ]

@@ -2,11 +2,11 @@
 import React from "react"
 import Image from "next/image"
 import styles from "./Header.module.scss"
-import { toast } from "sonner"
 import NewBookmarkDialog from "../Dialogs/NewBookmarkDialog/NewBookmarkDialog"
 import NewFolderDialog from "../Dialogs/NewFolderDialog/NewFolderDialog"
 import { useRouter } from "next/navigation"
 import { modalStore } from "@/store/modalStore"
+import { getFolderNames } from "@/app/utils/getFolderNames"
 
 const Header = () => {
 	const router = useRouter()
@@ -17,6 +17,7 @@ const Header = () => {
         showNewBookmarkModal();
 	}
 	const handleNewFolder = async () => {
+        console.log(await getFolderNames());
         showNewFolderModal();
 	}
 	return (

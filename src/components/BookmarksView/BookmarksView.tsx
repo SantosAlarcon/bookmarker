@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect} from "react"
+import React, { useEffect } from "react"
 import styles from "./BookmarksView.module.scss"
 import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderComponent"
 import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton"
@@ -12,48 +12,49 @@ import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import { bookmarksStore } from "@/store/bookmarksStore"
 
 const BookmarksView = () => {
-	const bookmarksList = bookmarksStore((state) => state.bookmarksList)
-	const setBookmarksList = bookmarksStore((state) => state.setBookmarksList)
+    const bookmarksList = bookmarksStore((state) => state.bookmarksList)
+    const setBookmarksList = bookmarksStore((state) => state.setBookmarksList)
 
-	const getBookmarks = async () => {
-		const response = await getAllBookmarks()
+    const getBookmarks = async () => {
+        const response = await getAllBookmarks()
         setBookmarksList(response)
-	}
+    }
 
-	useEffect(() => {
-		getBookmarks()
-	}, [])
+    // In the first render, get all the bookmarks from the JSON file/DB.
+    useEffect(() => {
+        getBookmarks()
+    }, [])
 
-	return (
-		<>
-			<EditBookmarkDialog title="Edit bookmark" />
-			<EditFolderDialog title="Edit folder" />
-			<ConfirmDeleteDialog title="Confirm deletion" />
-			<main className={styles.bookmarks__view__container}>
-				{bookmarksList.length > 0
-					? bookmarksList.map((bookmark: BookmarkItem | BookmarkFolder) => {
-						if ("children" in bookmark) {
-							// If the item contains the "children" key, it is treated as a folder
-							return (
-								<BookmarkFolderComponent key={bookmark.id}>
-									{bookmark}
-								</BookmarkFolderComponent>
-							)
-						} else {
-							return (
-								<BookmarkItemComponent key={bookmark.id}>
-									{bookmark}
-								</BookmarkItemComponent>
-							)
-						}
-					})
-					: // If not bookmarks are loaded, it shows skeleton component
-					Array.from({ length: 10 }).map((_, i) => (
-						<BookmarkSkeleton key={i} />
-					))}
-			</main>
-		</>
-	)
+    return (
+        <>
+            <EditBookmarkDialog title="Edit bookmark" />
+            <EditFolderDialog title="Edit folder" />
+            <ConfirmDeleteDialog title="Confirm deletion" />
+            <main className={styles.bookmarks__view__container}>
+                {bookmarksList.length > 0
+                    ? bookmarksList.map((bookmark: BookmarkItem | BookmarkFolder) => {
+                        if ("children" in bookmark) {
+                            // If the item contains the "children" key, it is treated as a folder
+                            return (
+                                <BookmarkFolderComponent key={bookmark.id}>
+                                    {bookmark}
+                                </BookmarkFolderComponent>
+                            )
+                        } else {
+                            return (
+                                <BookmarkItemComponent key={bookmark.id}>
+                                    {bookmark}
+                                </BookmarkItemComponent>
+                            )
+                        }
+                    })
+                    : // If not bookmarks are loaded, it shows skeleton component
+                    Array.from({ length: 10 }).map((_, i) => (
+                        <BookmarkSkeleton key={i} />
+                    ))}
+            </main>
+        </>
+    )
 }
 
 export default BookmarksView

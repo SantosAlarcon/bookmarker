@@ -1,11 +1,11 @@
 "use client"
 import styles from "./NewFolderDialog.module.scss"
 import React, { useEffect, useRef, useState } from "react"
-import { type FolderItem } from "@/types/types"
 import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
 import createNewFolder from "@/app/lib/folders/createNewFolder"
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 
 type Props = {
 	title: string
@@ -41,6 +41,7 @@ const NewFolderDialog = ({ title }: Props) => {
 	/* THis function implements the logic to create a folder and close the dialog. */
 	const createFolder = async () => {
         createNewFolder(newFolder.title, newFolder.description);
+        updateBookmarkList()
 		closeDialog()
 		toast.success("Folder created successfully!")
 	}
