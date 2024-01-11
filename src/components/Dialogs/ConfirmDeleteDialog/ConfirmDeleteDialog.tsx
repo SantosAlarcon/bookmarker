@@ -4,7 +4,7 @@ import React, { useEffect, useRef } from "react"
 import Image from "next/image"
 import { toast } from "sonner"
 import { modalStore } from "@/store/modalStore"
-import deleteBookmark from "@/lib/bookmarks/deleteBookmark"
+import deleteBookmark from "@/app/lib/bookmarks/deleteBookmark"
 
 type Props = {
 	title: string
@@ -36,7 +36,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 		toast.success(`'${deleteProps?.title}' deleted successfully!`)
 	}
 
-	const dialog: HTMLDialogElement | null =
+	const dialog: JSX.Element | null =
 		confirmDeleteModal === true ? (
 			<dialog
 				ref={dialogRef}

@@ -5,7 +5,7 @@ import { type BookmarkItem } from "@/types/types"
 import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
-import createNewBookmark from "@/lib/bookmarks/createNewBookmark"
+import createNewBookmark from "@/app/lib/bookmarks/createNewBookmark"
 
 type Props = {
 	title: string

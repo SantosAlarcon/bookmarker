@@ -1,4 +1,3 @@
-
 import getFavicon from "@/app/utils/getFavicon";
 import { BookmarkFolder, BookmarkItem } from "@/types/types";
 

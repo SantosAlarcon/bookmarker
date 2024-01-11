@@ -11,6 +11,6 @@ type Action = {
 
 export const bookmarksStore = create<State & Action>(zukeeper(((set) => ({
     bookmarksList: [],
-    setBookmarksList: (bookmarks: object[]) => set({ bookmarks: bookmarks })
+    setBookmarksList: (bookmarks: object[]) => set({ bookmarksList: bookmarks })
 }))))
 

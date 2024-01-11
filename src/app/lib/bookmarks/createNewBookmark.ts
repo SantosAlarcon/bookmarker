@@ -1,10 +1,10 @@
+import getFavicon from "@/app/utils/getFavicon"
 import { type BookmarkFolder, type BookmarkItem } from "@/types/types"
-import getFavicon from "@/utils/getFavicon"
 
 interface NewBookmarkProps {
 		title: string
 		url: string
-		parentFolder: BookmarkFolder | null
+		parentFolder: string | null
 }
 
 const createNewBookmark = async ({ title, url, parentFolder }: NewBookmarkProps) => {

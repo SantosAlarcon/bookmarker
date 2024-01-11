@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect} from "react"
+import React, { useEffect} from "react"
 import styles from "./BookmarksView.module.scss"
 import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderComponent"
 import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton"
@@ -12,15 +12,12 @@ import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import { bookmarksStore } from "@/store/bookmarksStore"
 
 const BookmarksView = () => {
-	const [bookmarks, setBookmarks] = useState(null)
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList)
 	const setBookmarksList = bookmarksStore((state) => state.setBookmarksList)
 
 	const getBookmarks = async () => {
 		const response = await getAllBookmarks()
-		setBookmarks(response)
-		setBookmarksList(response)
-		console.log(bookmarksList)
+        setBookmarksList(response)
 	}
 
 	useEffect(() => {
@@ -33,8 +30,8 @@ const BookmarksView = () => {
 			<EditFolderDialog title="Edit folder" />
 			<ConfirmDeleteDialog title="Confirm deletion" />
 			<main className={styles.bookmarks__view__container}>
-				{bookmarks
-					? bookmarks.map((bookmark: BookmarkItem | BookmarkFolder) => {
+				{bookmarksList.length > 0
+					? bookmarksList.map((bookmark: BookmarkItem | BookmarkFolder) => {
 						if ("children" in bookmark) {
 							// If the item contains the "children" key, it is treated as a folder
 							return (

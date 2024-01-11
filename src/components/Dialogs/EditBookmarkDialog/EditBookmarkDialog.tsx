@@ -4,12 +4,10 @@ import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
 import { toast } from "sonner"
-import updateBookmark from "@/lib/bookmarks/updateBookmark"
+import updateBookmark from "@/app/lib/bookmarks/updateBookmark"
 
 type Props = {
 	title: string
-	id: string
-	children: React.ReactNode
 }
 
 interface EditBookmarkState {

@@ -5,7 +5,7 @@ import { type FolderItem } from "@/types/types"
 import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
-import createNewFolder from "@/lib/folders/createNewFolder"
+import createNewFolder from "@/app/lib/folders/createNewFolder"
 
 type Props = {
 	title: string

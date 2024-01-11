@@ -4,12 +4,11 @@ import React, { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
-import updateFolder from "@/lib/folders/updateFolder"
+import updateFolder from "@/app/lib/folders/updateFolder"
 import { BookmarkFolder, BookmarkItem } from "@/types/types"
 
 type Props = {
 	title: string
-	children: React.ReactNode
 }
 
 interface EditFolderState {
