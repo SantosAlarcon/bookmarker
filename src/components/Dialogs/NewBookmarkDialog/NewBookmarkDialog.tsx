@@ -9,7 +9,6 @@ import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 
 type Props = {
 	title: string
-	children: React.ReactNode
 }
 
 const NewBookmarkDialog = ({ title }: Props) => {
@@ -20,7 +19,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 	const [newBookmark, setNewBookmark] = useState({
 		title: "",
 		url: "",
-		parentFolder: null
+		parentFolder: null,
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
@@ -38,7 +37,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 		setNewBookmark({
 			title: "",
 			url: "",
-			parentFolder: null
+			parentFolder: null,
 		})
 	}
 
@@ -52,9 +51,9 @@ const NewBookmarkDialog = ({ title }: Props) => {
 			alert("El formato de la URL es incorrecta")
 		} else {
 			await createNewBookmark(newBookmark)
-            updateBookmarkList()
+			updateBookmarkList()
 			closeDialog()
-            toast.success("The new bookmark added successfully :)")
+			toast.success("The new bookmark added successfully :)")
 		}
 	}
 
@@ -85,6 +84,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 							name="title"
 							placeholder="Bookmark title"
 							onChange={() =>
+								// @ts-ignore
 								setNewBookmark({ ...newBookmark, title: event.target.value })
 							}
 							required
@@ -100,6 +100,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 							name="url"
 							placeholder="Bookmark URL"
 							onChange={() =>
+								// @ts-ignore
 								setNewBookmark({ ...newBookmark, url: event.target.value })
 							}
 							required

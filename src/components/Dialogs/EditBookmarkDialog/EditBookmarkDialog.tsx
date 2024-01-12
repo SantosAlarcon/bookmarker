@@ -65,7 +65,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
 			alert("El formato de la URL es incorrecta")
 		} else {
 			await updateBookmark(editBookmarkData.id, newBookmark)
-            updateBookmarkList();
+			updateBookmarkList()
 			closeDialog()
 			toast.success("Bookmark updated successfully")
 		}
@@ -101,6 +101,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
 								name="title"
 								placeholder="Bookmark title"
 								onChange={() =>
+									// @ts-ignore
 									setNewBookmark({ ...newBookmark, title: event.target.value })
 								}
 								value={newBookmark.title}
@@ -117,6 +118,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
 								name="url"
 								placeholder="Bookmark URL"
 								onChange={() =>
+									// @ts-ignore
 									setNewBookmark({ ...newBookmark, url: event.target.value })
 								}
 								value={newBookmark.url}

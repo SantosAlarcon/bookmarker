@@ -5,7 +5,6 @@ import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
 import updateFolder from "@/app/lib/folders/updateFolder"
-import { BookmarkFolder, BookmarkItem } from "@/types/types"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 
 type Props = {
@@ -15,7 +14,8 @@ type Props = {
 interface EditFolderState {
 	title: string
 	description: string
-	children: [BookmarkFolder & BookmarkItem]
+	favicon: string | null
+	children: []
 }
 
 const EditFolderDialog = ({ title }: Props) => {
@@ -25,7 +25,8 @@ const EditFolderDialog = ({ title }: Props) => {
 	const [newFolder, setNewFolder] = useState<EditFolderState>({
 		title: editFolderData.title,
 		description: editFolderData.description,
-		children: editFolderData.children
+		favicon: editFolderData.favicon,
+		children: editFolderData.children,
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
@@ -41,6 +42,7 @@ const EditFolderDialog = ({ title }: Props) => {
 		setNewFolder({
 			title: editFolderData.title,
 			description: editFolderData.description,
+			favicon: editFolderData.favicon,
 			children: editFolderData.children,
 		})
 	}, [editFolderData])
@@ -51,6 +53,7 @@ const EditFolderDialog = ({ title }: Props) => {
 		setNewFolder({
 			title: "",
 			description: "",
+			favicon: null,
 			children: [],
 		})
 	}
@@ -58,8 +61,8 @@ const EditFolderDialog = ({ title }: Props) => {
 	/* This function implements the logic to modify folder metadata */
 	const editFolder = async () => {
 		updateFolder(editFolderData.id, newFolder)
-        updateBookmarkList()
-        closeDialog()
+		updateBookmarkList()
+		closeDialog()
 		toast.success("Folder data has been updated succesfully")
 	}
 
@@ -86,6 +89,7 @@ const EditFolderDialog = ({ title }: Props) => {
 							placeholder="Folder title"
 							value={newFolder.title}
 							onChange={() =>
+								// @ts-ignore
 								setNewFolder({ ...newFolder, title: event.target.value })
 							}
 							required
@@ -102,6 +106,7 @@ const EditFolderDialog = ({ title }: Props) => {
 							placeholder="Folder description"
 							value={newFolder.description}
 							onChange={() =>
+								// @ts-ignore
 								setNewFolder({ ...newFolder, description: event.target.value })
 							}
 							required

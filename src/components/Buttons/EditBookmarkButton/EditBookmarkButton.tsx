@@ -3,6 +3,8 @@ import Image from "next/image"
 import React from "react"
 import styles from "./EditButton.module.scss"
 import { modalStore } from "@/store/modalStore"
+import { Tooltip } from "react-tooltip"
+import "react-tooltip/dist/react-tooltip.css"
 
 interface EditBookmarkProps {
     children: {
@@ -24,7 +26,8 @@ const EditBookmarkButton = ({children}: EditBookmarkProps) => {
     }
 
   return (
-    <button className={styles.edit__button} onClick={handleClick}>
+    <button className={styles.edit__button} id="edit__bookmark__button" onClick={handleClick}>
+	  <Tooltip anchorSelect="#edit__bookmark__button" content="Edit bookmark" />
       <Image width={24} height={24} src="/edit-icon.svg" alt="Edit icon" />
     </button>
   )

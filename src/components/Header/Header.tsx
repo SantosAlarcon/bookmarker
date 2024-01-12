@@ -4,21 +4,19 @@ import Image from "next/image"
 import styles from "./Header.module.scss"
 import NewBookmarkDialog from "../Dialogs/NewBookmarkDialog/NewBookmarkDialog"
 import NewFolderDialog from "../Dialogs/NewFolderDialog/NewFolderDialog"
-import { useRouter } from "next/navigation"
 import { modalStore } from "@/store/modalStore"
-import { getFolderNames } from "@/app/utils/getFolderNames"
+import { Tooltip } from "react-tooltip"
+import "react-tooltip/dist/react-tooltip.css"
 
 const Header = () => {
-	const router = useRouter()
-    const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal);
-    const showNewFolderModal = modalStore((state) => state.showNewFolderModal);
+	const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
+	const showNewFolderModal = modalStore((state) => state.showNewFolderModal)
 
 	const handleNewBookmark = async () => {
-        showNewBookmarkModal();
+		showNewBookmarkModal()
 	}
 	const handleNewFolder = async () => {
-        console.log(await getFolderNames());
-        showNewFolderModal();
+		showNewFolderModal()
 	}
 	return (
 		<>
@@ -40,8 +38,13 @@ const Header = () => {
 						<button
 							onClick={handleNewBookmark}
 							className={styles.header__links__button}
+							id="new-bookmark-tooltip"
 							aria-label="New Bookmark"
 						>
+							<Tooltip
+								anchorSelect="#new-bookmark-tooltip"
+								content="New bookmark"
+							/>
 							<Image
 								width={40}
 								height={40}
@@ -54,8 +57,13 @@ const Header = () => {
 						<button
 							onClick={handleNewFolder}
 							className={styles.header__links__button}
+							id="new-folder-tooltip"
 							aria-label="New Folder"
 						>
+							<Tooltip
+								anchorSelect="#new-folder-tooltip"
+								content="New folder"
+							/>
 							<Image
 								width={40}
 								height={40}

@@ -15,15 +15,15 @@ const BookmarksView = () => {
     const bookmarksList = bookmarksStore((state) => state.bookmarksList)
     const setBookmarksList = bookmarksStore((state) => state.setBookmarksList)
 
-    const getBookmarks = async () => {
-        const response = await getAllBookmarks()
-        setBookmarksList(response)
-    }
 
     // In the first render, get all the bookmarks from the JSON file/DB.
     useEffect(() => {
+	const getBookmarks = async () => {
+	    const response = await getAllBookmarks()
+	    setBookmarksList(response)
+	}
         getBookmarks()
-    }, [])
+    }, [setBookmarksList])
 
     return (
         <>
@@ -32,6 +32,7 @@ const BookmarksView = () => {
             <ConfirmDeleteDialog title="Confirm deletion" />
             <main className={styles.bookmarks__view__container}>
                 {bookmarksList.length > 0
+		    // @ts-ignore
                     ? bookmarksList.map((bookmark: BookmarkItem | BookmarkFolder) => {
                         if ("children" in bookmark) {
                             // If the item contains the "children" key, it is treated as a folder

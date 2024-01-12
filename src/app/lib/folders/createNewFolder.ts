@@ -5,8 +5,7 @@ const createNewFolder = async (title: string, description: string) => {
 		id: crypto.randomUUID(),
 		title: title,
 		description: description,
-        favicon: null,
-		children: []
+		children: [],
 	}
 
 	await fetch("/api/bookmarks", {
