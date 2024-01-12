@@ -27,7 +27,7 @@ const RemoveButton = ({ children }: RemoveProps) => {
 
   return (
     <button className={styles.remove__button} id="remove__button" onClick={handleClick}>
-	    <Tooltip anchorSelect="#remove__button" place="top" content="Remove item"  />
+	    <Tooltip anchorSelect="#remove__button" place="top" content="Delete item" variant="info"  />
       <Image width={24} height={24} src="/trash-icon.svg" alt="Trash icon" />
     </button>
   )

@@ -1,12 +1,12 @@
 "use client"
 import React from "react"
 import Image from "next/image"
-import styles from "./Header.module.scss"
 import NewBookmarkDialog from "../Dialogs/NewBookmarkDialog/NewBookmarkDialog"
 import NewFolderDialog from "../Dialogs/NewFolderDialog/NewFolderDialog"
 import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
-import "react-tooltip/dist/react-tooltip.css"
+import styles from "./Header.module.scss"
+import tooltipStyles from "@/app/tooltip.module.css"
 
 const Header = () => {
 	const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
@@ -43,6 +43,9 @@ const Header = () => {
 						>
 							<Tooltip
 								anchorSelect="#new-bookmark-tooltip"
+                                place="bottom"
+                                variant="info"
+                                className={tooltipStyles.custom__tooltip}
 								content="New bookmark"
 							/>
 							<Image
@@ -62,6 +65,9 @@ const Header = () => {
 						>
 							<Tooltip
 								anchorSelect="#new-folder-tooltip"
+                                place="bottom"
+                                variant="info"
+                                className={tooltipStyles.custom__tooltip}
 								content="New folder"
 							/>
 							<Image

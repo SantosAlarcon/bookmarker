@@ -27,7 +27,7 @@ const EditBookmarkButton = ({children}: EditBookmarkProps) => {
 
   return (
     <button className={styles.edit__button} id="edit__bookmark__button" onClick={handleClick}>
-	  <Tooltip anchorSelect="#edit__bookmark__button" content="Edit bookmark" />
+	  <Tooltip anchorSelect="#edit__bookmark__button" variant="info" content="Edit bookmark" />
       <Image width={24} height={24} src="/edit-icon.svg" alt="Edit icon" />
     </button>
   )

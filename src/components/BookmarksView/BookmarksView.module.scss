@@ -1,6 +1,7 @@
 .bookmarks__view__container {
 	padding: 5rem;
 	width: 100%;
+    overflow: hidden;
 
 	& summary {
 		list-style: none;

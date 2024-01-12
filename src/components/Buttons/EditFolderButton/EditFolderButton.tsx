@@ -33,7 +33,7 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
 			id="edit__folder__button"
 			onClick={handleClick}
 		>
-			<Tooltip anchorSelect="#edit__folder__button" content="Edit folder" />
+			<Tooltip anchorSelect="#edit__folder__button" variant="info" content="Edit folder" />
 			<Image width={24} height={24} src="/edit-icon.svg" alt="Edit icon" />
 		</button>
 	)
