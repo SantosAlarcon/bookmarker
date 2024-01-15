@@ -3,7 +3,6 @@
 		"id": "890e5294-b54f-42ad-9142-9eb1da8f3be0",
 		"title": "Blogs de Linux",
 		"description": "Páginas Web y blogs de Linux centrados en el ecosistema de Linux",
-		"favicon": null,
 		"children": [
 			{
 				"id": "a4af627c-27f5-401a-90b2-ac2fd6333560",
@@ -32,7 +31,6 @@
 		"id": "790e5294-b54f-42ad-9142-9eb1da8f3be0",
 		"title": "Tiendas de confianza",
 		"description": "Tiendas online de buena reputación donde comprar en más de una ocasión",
-		"favicon": null,
 		"children": [
 			{
 				"id": "bd6ab708-8499-4e59-9cfe-8cd84c5bbb58",
@@ -103,7 +101,6 @@
 		"id": "b4bfacfe-6459-48e2-b4fe-c34cb9c482f6",
 		"title": "Empleo",
 		"description": "Páginas en las que importa mucho traballar",
-		"favicon": null,
 		"children": []
 	},
 	{

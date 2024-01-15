@@ -7,6 +7,7 @@ import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import styles from "./Header.module.scss"
 import tooltipStyles from "@/app/tooltip.module.scss"
+import { updateSortedBookmarkList } from "@/app/utils/updateSortedBookmarkList"
 
 const Header = () => {
 	const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
@@ -18,6 +19,10 @@ const Header = () => {
 	const handleNewFolder = async () => {
 		showNewFolderModal()
 	}
+
+    const handleSort = async () => {
+	   await updateSortedBookmarkList(); 
+    }
 	return (
 		<>
 			<NewBookmarkDialog title="New bookmark"></NewBookmarkDialog>
@@ -75,6 +80,28 @@ const Header = () => {
 								height={40}
 								src="/add-folder-icon.svg"
 								alt="New folder icon"
+							/>
+						</button>
+					</div>
+					<div className={styles.header__links__sort}>
+						<button
+							onClick={handleSort}
+							className={styles.header__links__button}
+							id="sort-tooltip"
+							aria-label="Sort by name"
+						>
+							<Tooltip
+								anchorSelect="#sort-tooltip"
+								place="bottom"
+								variant="info"
+								className={tooltipStyles.custom__tooltip}
+								content="Sort by name"
+							/>
+							<Image
+								width={40}
+								height={40}
+								src="/sort-icon.svg"
+								alt="Sort icon"
 							/>
 						</button>
 					</div>

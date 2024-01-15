@@ -6,78 +6,104 @@ import data from "../../../mock/mockData.json"
 
 /* This function modifies the mockData.json file and applies tabulation to make it readable. */
 const saveMockDataJSON = (data: object) => {
-    fs.writeFile(
-        "./mock/mockData.json",
-        JSON.stringify(data, null, "\t"),
-        { encoding: "utf-8" },
-        (err) => {
-            if (err) {
-                throw new Error("Failed to write mock data JSON")
-            } else {
-                console.log("Mock data file has been modified!")
-            }
-        }
-    )
+	fs.writeFile(
+		"./mock/mockData.json",
+		JSON.stringify(data, null, "\t"),
+		{ encoding: "utf-8" },
+		(err) => {
+			if (err) {
+				throw new Error("Failed to write mock data JSON")
+			} else {
+				console.log("Mock data file has been modified!")
+			}
+		}
+	)
 }
 
 export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
+	req: NextApiRequest,
+	res: NextApiResponse
 ) {
-    // GET Method - Read from mockData.json file
-    if (req.method === "GET") {
-        return res.status(200).json(data)
-    }
+	// GET Method - Read from mockData.json file
+	if (req.method === "GET") {
+		// Sort query param
+		const query = req.query.sort
 
-    // POST Method - Create new bookmark
-    if (req.method === "POST") {
-        const newItem = req.body
+		if (query === "yes") {
+			// Sort list alfabettically
+			const sortedData = [...data].sort((a, b) =>
+				a.title.localeCompare(b.title)
+			)
 
-        if ("id" in newItem) {
-            const newData = [...data, newItem]
-            saveMockDataJSON(newData)
-            return res.status(201).json(newItem)
-        }
+			// Sort folder children
+			sortedData.forEach((item) => {
+				item.children?.sort((a, b) => a.title.localeCompare(b.title))
+			})
 
-        return res.status(400).json({
-            message: "Data body required for creation",
-        })
-    }
+			// Sort folder first and then bookmarks
+			sortedData.sort((a, b) => {
+				if ("children" in a && "parentFolder" in b) return -1
+				return 0
+			})
 
-    // DELETE Method - Delete existing bookmark
-    if (req.method === "DELETE") {
-        const id = req.body?.id
+			// Save sorted data to JSON
+			saveMockDataJSON(sortedData)
+			return res.status(200).json(sortedData)
+		}
 
-        if (id) {
-            const newData = [...data].filter((item) => item.id !== id)
-            saveMockDataJSON(newData)
+		return res.status(200).json(data)
+	}
 
-            return res.status(200).json({
-                message: "Item succesfully deleted",
-            })
-        } else {
-            return res.status(400).json({
-                message: "ID is required to delete an item",
-            })
-        }
-    }
+	// POST Method - Create new bookmark
+	if (req.method === "POST") {
+		const newItem = req.body
 
-    // PUT Method - Update existing bookmark
-    if (req.method === "PUT") {
-        const id = req.body.id
-        const updatedBookmark = req.body
+		if ("id" in newItem) {
+			const newData = [...data, newItem]
+			saveMockDataJSON(newData)
+			return res.status(201).json(newItem)
+		}
 
-        if (id) {
-            let newData = [...data]
-            newData[newData.findIndex((element) => element.id === id)] = updatedBookmark
-            saveMockDataJSON(newData)
-            return res.status(200).json({
-                message: "Item updated successfully! :)",
-            })
-        } else {
-            return res.status(400).json({
-                message: "ID is required to delete an item",
-            })
-        }
-    }
+		return res.status(400).json({
+			message: "Data body required for creation",
+		})
+	}
+
+	// DELETE Method - Delete existing bookmark
+	if (req.method === "DELETE") {
+		const id = req.body?.id
+
+		if (id) {
+			const newData = [...data].filter((item) => item.id !== id)
+			saveMockDataJSON(newData)
+
+			return res.status(200).json({
+				message: "Item succesfully deleted",
+			})
+		} else {
+			return res.status(400).json({
+				message: "ID is required to delete an item",
+			})
+		}
+	}
+
+	// PUT Method - Update existing bookmark
+	if (req.method === "PUT") {
+		const id = req.body.id
+		const updatedBookmark = req.body
+
+		if (id) {
+			let newData = [...data]
+			newData[newData.findIndex((element) => element.id === id)] =
+				updatedBookmark
+			saveMockDataJSON(newData)
+			return res.status(200).json({
+				message: "Item updated successfully! :)",
+			})
+		} else {
+			return res.status(400).json({
+				message: "ID is required to delete an item",
+			})
+		}
+	}
 }
