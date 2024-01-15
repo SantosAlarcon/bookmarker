@@ -5,6 +5,7 @@ import styles from "./EditButton.module.scss"
 import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
+import tooltipStyles from "@/app/tooltip.module.scss"
 
 interface EditFolderProps {
 	children: {
@@ -33,7 +34,7 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
 			id="edit__folder__button"
 			onClick={handleClick}
 		>
-			<Tooltip anchorSelect="#edit__folder__button" variant="info" content="Edit folder" />
+			<Tooltip anchorSelect="#edit__folder__button" variant="info" className={tooltipStyles.custom__tooltip} content="Edit folder" />
 			<Image width={24} height={24} src="/edit-icon.svg" alt="Edit icon" />
 		</button>
 	)

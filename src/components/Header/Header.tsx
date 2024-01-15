@@ -6,7 +6,7 @@ import NewFolderDialog from "../Dialogs/NewFolderDialog/NewFolderDialog"
 import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import styles from "./Header.module.scss"
-import tooltipStyles from "@/app/tooltip.module.css"
+import tooltipStyles from "@/app/tooltip.module.scss"
 
 const Header = () => {
 	const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
@@ -43,9 +43,9 @@ const Header = () => {
 						>
 							<Tooltip
 								anchorSelect="#new-bookmark-tooltip"
-                                place="bottom"
-                                variant="info"
-                                className={tooltipStyles.custom__tooltip}
+								place="bottom"
+								variant="info"
+								className={tooltipStyles.custom__tooltip}
 								content="New bookmark"
 							/>
 							<Image
@@ -65,9 +65,9 @@ const Header = () => {
 						>
 							<Tooltip
 								anchorSelect="#new-folder-tooltip"
-                                place="bottom"
-                                variant="info"
-                                className={tooltipStyles.custom__tooltip}
+								place="bottom"
+								variant="info"
+								className={tooltipStyles.custom__tooltip}
 								content="New folder"
 							/>
 							<Image

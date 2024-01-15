@@ -3,7 +3,10 @@ import { Gabarito } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "sonner"
 
-const gabarito = Gabarito({ subsets: ["latin"] })
+const gabarito = Gabarito({
+	subsets: ["latin"],
+	weight: ["400", "500", "700", "900"],
+})
 
 export const metadata: Metadata = {
 	title: "Bookmarker",
@@ -41,14 +44,9 @@ export default function RootLayout({
 					content="App to manage browser bookmarks everywhere"
 				/>
 				<meta property="og:site_name" content="Bookmarker" />
-				{/*<meta property="og:url" content="https://yourdomain.com" />
-        <meta
-          property="og:image"
-          content="https://yourdomain.com/icons/apple-touch-icon.png"
-        />*/}
-			</head>
 			<body className={gabarito.className}>{children}</body>
 			<Toaster position="top-center" richColors />
+			</head>
 		</html>
 	)
 }
