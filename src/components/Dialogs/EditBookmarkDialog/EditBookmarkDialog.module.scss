@@ -33,7 +33,7 @@
     flex-direction: column;
     margin: 1rem 0;
 
-    & input {
+    & input, & select {
         margin-top: 1rem;
         font-size: 15px;
         font-family: inherit;
@@ -47,6 +47,12 @@
         &:focus {
             background-color: #fff5;
         }
+
+		&>option {
+			background: var(--main-color-dark);
+			padding: 0.5rem 0;
+		}
+
     }
 }
 
@@ -54,45 +60,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.edit__bookmark__dialog__form__favorite {
-    display: flex;
-    gap: .5rem;
-    justify-content: flex-start;
-    flex-direction: row-reverse;
-    align-items: center;
-
-    & input[type="checkbox"] {
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-        vertical-align: middle;
-        margin: 0;
-        border-radius: 0.25rem;
-        color: white;
-        background-color: #22f;
-        display: grid;
-        place-content: center;
-        transform-origin: center center;
-
-        &::before {
-            content: "";
-            width: 16px;
-            height: 16px;
-            color: white;
-        }
-
-        &:checked::before {
-            box-shadow: inset 1em 1em white;
-            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-        }
-
-        &:checked {
-            background-color: #88f;
-        }
-    }
 }
 
 .edit__bookmark__dialog__buttons {

@@ -44,9 +44,9 @@ export default function RootLayout({
 					content="App to manage browser bookmarks everywhere"
 				/>
 				<meta property="og:site_name" content="Bookmarker" />
+			</head>
 			<body className={gabarito.className}>{children}</body>
 			<Toaster position="top-center" richColors />
-			</head>
 		</html>
 	)
 }

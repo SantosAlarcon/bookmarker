@@ -129,10 +129,13 @@ const NewBookmarkDialog = ({ title }: Props) => {
               className={styles.new__bookmark__dialog__form__select}
               onChange={() =>
                 // @ts-ignore
-                setNewBookmark({...newBookmark, parentFolder: event.target.value})
+                setNewBookmark({
+                  ...newBookmark,
+                  parentFolder: event.target.value,
+                })
               }
             >
-              <option value={undefined}>No parent folder</option>
+              <option defaultValue="null" value="null">No parent folder</option>
               {folders &&
                 folders.map((folder: BookmarkFolder) => (
                   <option key={folder.id} value={folder.id}>
