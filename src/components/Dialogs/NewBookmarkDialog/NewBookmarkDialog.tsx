@@ -134,9 +134,9 @@ const NewBookmarkDialog = ({ title }: Props) => {
 							name="parentFolder"
 							className={styles.new__bookmark__dialog__form__select}
 							onChange={() =>
-								// @ts-ignore
 								setNewBookmark({
 									...newBookmark,
+                                    // @ts-ignore
 									parentFolder: event.target.value,
 								})
 							}
