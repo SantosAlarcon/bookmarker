@@ -5,9 +5,9 @@ import fs from "fs"
 import data from "../../../../mock/mockData.json"
 
 /* This function modifies the mockData.json file and applies tabulation to make it readable. */
-const saveMockDataJSON = (data: object) => {
+const saveMockDataJSON = async (data: object) => {
 	fs.writeFile(
-		"../../../../mock/mockData.json",
+		"./mock/mockData.json",
 		JSON.stringify(data, null, "\t"),
 		{ encoding: "utf-8" },
 		(err) => {
@@ -53,11 +53,11 @@ export default async function handler(
 
 	// DELETE Method - Delete existing bookmark
 	if (req.method === "DELETE") {
-		const id = req.body?.id
+		const id = req.query.id
 
 		if (id) {
 			const newData = [...data].filter((item) => item.id !== id)
-			saveMockDataJSON(newData)
+			await saveMockDataJSON(newData)
 
 			return res.status(202).json({
 				message: "Item succesfully deleted",
@@ -71,7 +71,7 @@ export default async function handler(
 
 	// PUT Method - Update existing bookmark
 	if (req.method === "PUT") {
-		const id = req.body.id
+		const id = req.query.id
 		const updatedBookmark = req?.body
 
 		if (id && updatedBookmark) {
@@ -85,16 +85,16 @@ export default async function handler(
 				newData[newData.findIndex((element) => element.id === id)] =
 					updatedBookmark
 			} else {
-				/* If it has a parentFolder id, it filters/delete the old bookmarks, then finds the folder
+				/* If it has a parentFolder id, it filters/delete the old bookmark, then finds the folder
 				 * with that id, and push the item into the children. */
-				newData.filter((item) => item.id !== id)
+				newData = [...data].filter((item) => item.id !== id)
 				// @ts-ignore
 				newData
 					.find((item) => updatedBookmark.parentFolder === item.id)
 					?.children.push(updatedBookmark)
 			}
 
-			saveMockDataJSON(newData)
+			await saveMockDataJSON(newData)
 			return res.status(201).json({
 				message: "Item updated successfully! :)",
 			})

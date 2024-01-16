@@ -39,6 +39,8 @@ const EditBookmarkDialog = ({ title }: Props) => {
 
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
+    const selectRef = useRef(null);
+
 	const router = useRouter()
 
 	useEffect(() => {
@@ -154,7 +156,6 @@ const EditBookmarkDialog = ({ title }: Props) => {
 							Parent folder
 							<select
 								name="parentFolder"
-								defaultValue={newBookmark.parentFolder}
 								className={styles.edit__bookmark__dialog__form__select}
 								onChange={() =>
 									// @ts-ignore
@@ -167,7 +168,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
 								<option value="null">No parent folder</option>
 								{folders &&
 									folders.map((folder: BookmarkFolder) => (
-										<option key={folder.id} value={folder.id}>
+										<option key={folder.id} value={folder.id} selected={folder.id === newBookmark.parentFolder}>
 											{folder.title}
 										</option>
 									))}

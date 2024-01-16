@@ -56,20 +56,6 @@
 		]
 	},
 	{
-		"id": "a8197d2f-0628-45cb-b0df-30aececa1f5f",
-		"title": "Música",
-		"description": "Páginas relacionadas con la música",
-		"children": [
-			{
-				"id": "d8eec6df-aa52-4043-b9e5-403101c5e1b2",
-				"title": "Discogs",
-				"url": "https://www.discogs.com",
-				"favicon": "https://www.discogs.com/favicon.ico",
-				"parentFolder": "a8197d2f-0628-45cb-b0df-30aececa1f5f"
-			}
-		]
-	},
-	{
 		"id": "b6140623-57df-41c1-966b-f5526f397795",
 		"title": "Programación",
 		"description": "Páginas dedicadas a la temática de programación",
@@ -122,15 +108,14 @@
 		"id": "a46d5598-65ae-4a3f-88cf-c7a0e43acdae",
 		"title": "Videojuegos",
 		"description": "Páginas relacionadas con los videojuegos",
-		"children": [
-			{
-				"id": "96db8210-7b5d-4d7b-b9d5-58b5d2cf9947",
-				"title": "Hobby Consolas",
-				"url": "https://www.hobbyconsolas.com",
-				"favicon": "https://www.hobbyconsolas.com/favicon.ico",
-				"parentFolder": "a46d5598-65ae-4a3f-88cf-c7a0e43acdae"
-			}
-		]
+		"children": []
+	},
+	{
+		"id": "96db8210-7b5d-4d7b-b9d5-58b5d2cf9947",
+		"title": "Hobby Consolas",
+		"url": "https://www.hobbyconsolas.com",
+		"favicon": "https://www.hobbyconsolas.com/favicon.ico",
+		"parentFolder": null
 	},
 	{
 		"id": "e7750569-88fe-4bf1-baf7-6ed3bf2ecb4e",
