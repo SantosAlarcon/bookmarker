@@ -15,7 +15,7 @@ const updateBookmark = async (id: string, bookmark: updateInfo) => {
         favicon: await getFavicon(bookmark.url),
         parentFolder: bookmark.parentFolder
     }
-    await fetch("/api/bookmarks", {
+    await fetch(`/api/bookmarks/${id}`, {
         method: "PUT",
         headers: {
             "content-type": "application/json"

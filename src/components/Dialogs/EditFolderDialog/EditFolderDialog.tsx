@@ -6,6 +6,7 @@ import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
 import updateFolder from "@/app/lib/folders/updateFolder"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
+import { useRouter } from "next/navigation"
 
 type Props = {
 	title: string
@@ -14,7 +15,6 @@ type Props = {
 interface EditFolderState {
 	title: string
 	description: string
-	favicon: string | null
 	children: []
 }
 
@@ -25,10 +25,10 @@ const EditFolderDialog = ({ title }: Props) => {
 	const [newFolder, setNewFolder] = useState<EditFolderState>({
 		title: editFolderData.title,
 		description: editFolderData.description,
-		favicon: editFolderData.favicon,
 		children: editFolderData.children,
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
+	const router = useRouter();
 
 	useEffect(() => {
 		if (editFolderModal) {
@@ -42,7 +42,6 @@ const EditFolderDialog = ({ title }: Props) => {
 		setNewFolder({
 			title: editFolderData.title,
 			description: editFolderData.description,
-			favicon: editFolderData.favicon,
 			children: editFolderData.children,
 		})
 	}, [editFolderData])
@@ -53,15 +52,15 @@ const EditFolderDialog = ({ title }: Props) => {
 		setNewFolder({
 			title: "",
 			description: "",
-			favicon: null,
 			children: [],
 		})
 	}
 
 	/* This function implements the logic to modify folder metadata */
 	const editFolder = async () => {
-		updateFolder(editFolderData.id, newFolder)
-		updateBookmarkList()
+		await updateFolder(editFolderData.id, newFolder)
+		await updateBookmarkList()
+		router.refresh()
 		closeDialog()
 		toast.success("Folder data has been updated succesfully")
 	}

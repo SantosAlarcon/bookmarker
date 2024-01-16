@@ -1,7 +1,7 @@
 import Link from "next/link"
 import styles from "./BookmarkItemComponent.module.scss"
 import Image from "next/image"
-import RemoveButton from "../Buttons/RemoveButton/RemoveButton"
+import RemoveBookmarkButton from "../Buttons/RemoveBookmarkButton/RemoveButton"
 import EditBookmarkButton from "../Buttons/EditBookmarkButton/EditBookmarkButton"
 
 interface BICProps {
@@ -43,7 +43,7 @@ const BookmarkItemComponent = (props: BICProps) => {
 				</div>
 			</Link>
 			<EditBookmarkButton>{props.children}</EditBookmarkButton>
-			<RemoveButton>{props.children}</RemoveButton>
+			<RemoveBookmarkButton>{props.children}</RemoveBookmarkButton>
 		</div>
 	)
 }

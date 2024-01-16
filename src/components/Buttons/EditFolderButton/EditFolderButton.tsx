@@ -22,6 +22,7 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
 	const { id, title, description } = children
 	const childLinks = children.children
 
+
 	const handleClick = () => {
 		// @ts-ignore
 		modifyEditFolderData(id, title, description, childLinks)
@@ -32,7 +33,7 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
 		<button
 			className={styles.edit__button}
 			id="edit__folder__button"
-			onClick={handleClick}
+			onClick={() => handleClick()}
 		>
 			<Tooltip anchorSelect="#edit__folder__button" variant="info" className={tooltipStyles.custom__tooltip} content="Edit folder" />
 			<Image width={24} height={24} src="/edit-icon.svg" alt="Edit icon" />

@@ -8,7 +8,7 @@ const createNewFolder = async (title: string, description: string) => {
 		children: [],
 	}
 
-	await fetch("/api/bookmarks", {
+	await fetch("/api/bookmarks/folders", {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",

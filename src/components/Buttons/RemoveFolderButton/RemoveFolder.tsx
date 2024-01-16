@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image"
 import React from "react"
-import styles from "./RemoveButton.module.scss"
+import styles from "./RemoveFolder.module.scss"
 import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
@@ -14,7 +14,7 @@ interface RemoveProps {
 	}
 }
 
-const RemoveButton = ({ children }: RemoveProps) => {
+const RemoveFolderButton = ({ children }: RemoveProps) => {
 	const showDeleteConfirmDialog = modalStore(
 		(state) => state.showDeleteConfirmModal
 	)
@@ -22,7 +22,7 @@ const RemoveButton = ({ children }: RemoveProps) => {
 	const { id, title } = children
 
 	const handleClick = () => {
-		setDeleteProps(id, title)
+		setDeleteProps(id, title, "folder")
 		showDeleteConfirmDialog()
 	}
 
@@ -35,7 +35,7 @@ const RemoveButton = ({ children }: RemoveProps) => {
 			<Tooltip
 				anchorSelect="#remove__button"
 				place="top"
-				content="Delete item"
+				content="Delete folder"
 				variant="info"
 				className={tooltipStyles.custom__tooltip}
 			/>
@@ -44,4 +44,4 @@ const RemoveButton = ({ children }: RemoveProps) => {
 	)
 }
 
-export default RemoveButton
+export default RemoveFolderButton

@@ -56,22 +56,23 @@ export default async function handler(
 
 	// POST Method - Create new bookmark
 	if (req.method === "POST") {
-        const newItem = req.body
-        let newData = [];
+		const newItem = req.body
+		let newData = []
 
 		if ("id" in newItem) {
-            // Get the parentFolder
-            const parentFolder = newItem.parentFolder
+			// Get the parentFolder
+			const parentFolder = newItem.parentFolder
 
-            // If parentFolder is null, the object will be inserted at the end of the array
-            if (parentFolder === "null" || parentFolder === null) {
-                newData = [...data, newItem]
-            } else {
-                /* If it has a parentFolder id, it copies the array, then finds the folder with that id,
-                and push the item into the children. */
-                newData = [...data]
-                newData.find(item => parentFolder === item.id)?.children.push(newItem)
-            }
+			// If parentFolder is null, the object will be inserted at the end of the array
+			if (parentFolder === "null" || parentFolder === null) {
+				newData = [...data, newItem]
+			} else {
+				/* If it has a parentFolder id, it copies the array, then finds the folder with that id,
+								and push the item into the children. */
+				newData = [...data]
+				// @ts-ignore
+				newData.find((item) => parentFolder === item.id)?.children.push(newItem)
+			}
 
 			saveMockDataJSON(newData)
 			return res.status(201).json(newItem)
@@ -80,52 +81,5 @@ export default async function handler(
 		return res.status(400).json({
 			message: "Data body required for creation",
 		})
-	}
-
-	// DELETE Method - Delete existing bookmark
-	if (req.method === "DELETE") {
-		const id = req.body?.id
-
-		if (id) {
-			const newData = [...data].filter((item) => item.id !== id)
-			saveMockDataJSON(newData)
-
-			return res.status(200).json({
-				message: "Item succesfully deleted",
-			})
-		} else {
-			return res.status(400).json({
-				message: "ID is required to delete an item",
-			})
-		}
-	}
-
-	// PUT Method - Update existing bookmark
-	if (req.method === "PUT") {
-		const id = req.body.id
-		const updatedBookmark = req.body
-
-		if (id) {
-			let newData = [...data]
-
-            // If parentFolder is null, the object will be inserted at the end of the array
-            if (updatedBookmark.parentFolder === "null" || updatedBookmark.parentFolder === null) {
-                newData[newData.findIndex((element) => element.id === id)] = updatedBookmark
-            } else {
-                /* If it has a parentFolder id, it filters/delete the old bookmarks, then finds the folder
-                 * with that id, and push the item into the children. */
-                newData.filter(item => item.id !== id)
-                newData.find(item => updatedBookmark.parentFolder === item.id)?.children.push(updatedBookmark)
-            }
-
-			saveMockDataJSON(newData)
-			return res.status(200).json({
-				message: "Item updated successfully! :)",
-			})
-		} else {
-			return res.status(400).json({
-				message: "ID is required to delete an item",
-			})
-		}
-	}
+	}	
 }

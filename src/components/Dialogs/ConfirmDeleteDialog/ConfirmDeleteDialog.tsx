@@ -6,6 +6,8 @@ import { toast } from "sonner"
 import { modalStore } from "@/store/modalStore"
 import deleteBookmark from "@/app/lib/bookmarks/deleteBookmark"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
+import { useRouter } from "next/navigation"
+import deleteFolder from "@/app/lib/folders/deleteFolder"
 
 type Props = {
 	title: string
@@ -15,7 +17,9 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 	const confirmDeleteModal = modalStore((state) => state.deleteConfirmModal)
 	const closeDeleteModal = modalStore((state) => state.hideDeleteConfirmModal)
-	const deleteProps = modalStore((state) => state.deleteProps);
+	const deleteProps = modalStore((state) => state.deleteProps)
+
+	const router = useRouter()
 
 	useEffect(() => {
 		if (confirmDeleteModal === true) {
@@ -32,9 +36,18 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 
 	/* This function implements deletion logic and closes the medal. Use the ID of the item to delete it */
 	const confirmDeletion = async () => {
-        deleteBookmark(deleteProps.id)
-        updateBookmarkList()
+		switch (deleteProps.type) {
+			case "bookmark":
+				await deleteBookmark(deleteProps.id)
+				break
+			case "folder":
+				await deleteFolder(deleteProps.id)
+				break
+		}
+
+		await updateBookmarkList()
 		closeDialog()
+		router.refresh()
 		toast.success(`'${deleteProps?.title}' deleted successfully!`)
 	}
 

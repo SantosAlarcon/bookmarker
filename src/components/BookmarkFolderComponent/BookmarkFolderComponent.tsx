@@ -3,8 +3,8 @@ import styles from "./BookmarkFolderComponent.module.scss"
 import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import Image from "next/image"
 import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent"
-import RemoveButton from "../Buttons/RemoveButton/RemoveButton"
 import EditFolderButton from "../Buttons/EditFolderButton/EditFolderButton"
+import RemoveFolderButton from "../Buttons/RemoveFolderButton/RemoveFolder"
 
 interface BFCProps {
 	children: {
@@ -45,7 +45,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 						</h4>
 					</div>
 					<EditFolderButton>{props.children}</EditFolderButton>
-					<RemoveButton>{props.children}</RemoveButton>
+					<RemoveFolderButton>{props.children}</RemoveFolderButton>
 				</summary>
 
 				{/* Render children links if there any */}

@@ -2,7 +2,7 @@ const deleteBookmark = async (id: string) => {
     const body = {
         id: id
     }
-    await fetch("/api/bookmarks", {
+    await fetch(`/api/bookmarks/${id}`, {
         method: "DELETE",
         headers: {
             "content-type": "application/json"

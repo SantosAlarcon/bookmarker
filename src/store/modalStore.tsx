@@ -23,6 +23,7 @@ type ModalState = {
 	deleteProps: {
 		id: string
 		title: string
+		type: "bookmark" | "folder"
 	}
 }
 
@@ -49,7 +50,7 @@ type Action = {
 		url: string,
 		parentFolder: string | null
 	) => void
-	setDeleteProps: (id: string, title: string) => void
+	setDeleteProps: (id: string, title: string, type: "bookmark" | "folder") => void
 }
 
 export const modalStore = create<ModalState & Action>(
@@ -75,6 +76,7 @@ export const modalStore = create<ModalState & Action>(
 		deleteProps: {
 			id: "",
 			title: "",
+			type: ""
 		},
 		showNewBookmarkModal: () => set({ newBookmarkModal: true }),
 		hideNewBookmarkModal: () => set({ newBookmarkModal: false }),
@@ -90,7 +92,6 @@ export const modalStore = create<ModalState & Action>(
 			id: string,
 			title: string,
 			description: string,
-			favicon: string | null,
 			children: []
 		) =>
 			set({
@@ -98,7 +99,6 @@ export const modalStore = create<ModalState & Action>(
 					id: id,
 					title: title,
 					description: description,
-					favicon: favicon,
 					children: children,
 				},
 			}),
@@ -116,7 +116,7 @@ export const modalStore = create<ModalState & Action>(
 					parentFolder: parentFolder,
 				},
 			}),
-		setDeleteProps: (id: string, title: string) =>
-			set({ deleteProps: { id: id, title: title } }),
+		setDeleteProps: (id: string, title: string, type: "bookmark" | "folder") =>
+			set({ deleteProps: { id: id, title: title, type: type } }),
 	}))
 )

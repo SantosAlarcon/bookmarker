@@ -6,6 +6,7 @@ import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
 import createNewFolder from "@/app/lib/folders/createNewFolder"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
+import { useRouter } from "next/navigation"
 
 type Props = {
 	title: string
@@ -19,6 +20,8 @@ const NewFolderDialog = ({ title }: Props) => {
 		description: "",
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
+
+	const router = useRouter()
 
 	useEffect(() => {
 		if (showNewFolderDialog) {
@@ -39,8 +42,9 @@ const NewFolderDialog = ({ title }: Props) => {
 
 	/* THis function implements the logic to create a folder and close the dialog. */
 	const createFolder = async () => {
-        createNewFolder(newFolder.title, newFolder.description);
-        updateBookmarkList()
+		await createNewFolder(newFolder.title, newFolder.description)
+		await updateBookmarkList()
+		router.refresh()
 		closeDialog()
 		toast.success("Folder created successfully!")
 	}

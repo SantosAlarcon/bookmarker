@@ -13,7 +13,7 @@ const updateFolder = async (id: string, folder: updateInfo) => {
 		description: folder.description,
 		children: folder.children,
 	}
-	await fetch("/api/bookmarks", {
+	await fetch(`/api/bookmarks/folders/${id}`, {
 		method: "PUT",
 		headers: {
 			"content-type": "application/json",
