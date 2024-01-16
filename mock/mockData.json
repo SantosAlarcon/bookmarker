@@ -1,5 +1,19 @@
 [
 	{
+		"id": "f927d36e-9805-4b59-858a-b57b95bdc114",
+		"title": "Anime",
+		"description": "Páginas relacionadas con el anime",
+		"children": [
+			{
+				"id": "cf8f9104-c35d-4c63-8033-d666e282eeac",
+				"title": "MyAnimeList",
+				"url": "https://myanimelist.net",
+				"favicon": "https://myanimelist.net/favicon.ico",
+				"parentFolder": "f927d36e-9805-4b59-858a-b57b95bdc114"
+			}
+		]
+	},
+	{
 		"id": "890e5294-b54f-42ad-9142-9eb1da8f3be0",
 		"title": "Blogs de Linux",
 		"description": "Páginas Web y blogs de Linux centrados en el ecosistema de Linux",
@@ -131,10 +145,24 @@
 		"description": "Páginas relacionadas con los videojuegos",
 		"children": [
 			{
+				"id": "2581fc83-29d7-48f8-b838-41fc8c80579b",
+				"title": "Areajugones",
+				"url": "https://areajugones.sport.es/",
+				"favicon": "https://areajugones.sport.es//favicon.ico",
+				"parentFolder": "a46d5598-65ae-4a3f-88cf-c7a0e43acdae"
+			},
+			{
 				"id": "96db8210-7b5d-4d7b-b9d5-58b5d2cf9947",
 				"title": "Hobby Consolas",
 				"url": "https://www.hobbyconsolas.com",
 				"favicon": "https://www.hobbyconsolas.com/favicon.ico",
+				"parentFolder": "a46d5598-65ae-4a3f-88cf-c7a0e43acdae"
+			},
+			{
+				"id": "45d81b6d-f817-44f2-bb98-38afd4fb9ee4",
+				"title": "Vidaextra",
+				"url": "https://www.vidaextra.com",
+				"favicon": "https://www.vidaextra.com/favicon.ico",
 				"parentFolder": "a46d5598-65ae-4a3f-88cf-c7a0e43acdae"
 			}
 		]
