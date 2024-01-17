@@ -1,9 +1,19 @@
 .bookmarks__view__container {
 	padding: 5rem;
 	width: 100%;
-    overflow: hidden;
+	overflow: hidden;
 
 	& summary {
 		list-style: none;
 	}
+
+	// Table screen
+	@media (width < 960px) {
+		padding: 2rem;
+	}
+
+	// Small phone screen
+	@media (width < 640px) {
+		padding: 1rem;
+    }
 }
