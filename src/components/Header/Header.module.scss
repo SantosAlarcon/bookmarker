@@ -13,12 +13,21 @@
 	&_img {
 		width: auto;
 		height: 72px;
+        
+        @media (width < 512px) {
+            height: 2.5rem;
+        }
 	}
+
 }
 
 .header__links {
 	display: flex;
 	gap: .5rem;
+
+    @media (width < 512px) {
+        gap: 0;
+    }
 }
 
 .header__links__button {
@@ -28,6 +37,14 @@
 	outline: none;
 	border: none;
 	background: none;
+
+    @media (width < 512px) {
+        padding: 0.25rem;
+
+        & > img {
+            height: 1.5rem;
+        }
+    }
 
 	&>img {
 		filter: invert(1);
