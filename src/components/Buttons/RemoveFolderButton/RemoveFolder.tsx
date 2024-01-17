@@ -30,6 +30,7 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
 		<button
 			className={styles.remove__button}
 			id="remove__button"
+            aria-label="Remove folder"
 			onClick={handleClick}
 		>
 			<Tooltip

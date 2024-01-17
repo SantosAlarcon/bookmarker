@@ -31,6 +31,7 @@ const RemoveButton = ({ children }: RemoveProps) => {
 			className={styles.remove__button}
 			id="remove__button"
 			onClick={handleClick}
+            aria-label="Remove bookmark"
 		>
 			<Tooltip
 				anchorSelect="#remove__button"

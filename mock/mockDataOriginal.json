@@ -3,7 +3,15 @@
 		"id": "f927d36e-9805-4b59-858a-b57b95bdc114",
 		"title": "Anime",
 		"description": "Páginas relacionadas con el anime",
-		"children": []
+		"children": [
+			{
+				"id": "cf8f9104-c35d-4c63-8033-d666e282eeac",
+				"title": "MyAnimeList",
+				"url": "https://myanimelist.net",
+				"favicon": "https://myanimelist.net/favicon.ico",
+				"parentFolder": "f927d36e-9805-4b59-858a-b57b95bdc114"
+			}
+		]
 	},
 	{
 		"id": "890e5294-b54f-42ad-9142-9eb1da8f3be0",

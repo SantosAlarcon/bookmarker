@@ -35,6 +35,7 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
 			className={styles.edit__button}
 			id="edit__bookmark__button"
 			onClick={handleClick}
+            aria-label="Edit bookmark"
 		>
 			<Tooltip
 				anchorSelect="#edit__bookmark__button"
