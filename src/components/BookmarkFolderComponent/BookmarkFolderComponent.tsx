@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import styles from "./BookmarkFolderComponent.module.scss"
 import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import Image from "next/image"
 import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent"
 import EditFolderButton from "../Buttons/EditFolderButton/EditFolderButton"
 import RemoveFolderButton from "../Buttons/RemoveFolderButton/RemoveFolder"
+import { motion } from "framer-motion"
 
 interface BFCProps {
   children: {
@@ -17,14 +18,12 @@ interface BFCProps {
 
 const BookmarkFolderComponent = (props: BFCProps) => {
   const [expanded, setExpanded] = useState(false)
-  //const [height, setHeight] = useState(0)
   const collapsibleRef = useRef<HTMLUListElement>(null)
 
-  /*useEffect(() => {
-    if (expanded) setHeight(collapsibleRef.current?.getBoundingClientRect().height + 100)
-    else setHeight(0)
-    console.log(collapsibleRef.current)
-  }, [expanded])*/
+    const variants = {
+	hidden: {height: 0, padding: 0, paddingLeft: "2rem"},
+	show: {height: collapsibleRef.current?.scrollHeight + "px", padding: "0.5rem 0", paddingLeft: "2rem"},
+    }
 
   return (
     <div className={styles.bookmark__folder__container}>
@@ -55,8 +54,10 @@ const BookmarkFolderComponent = (props: BFCProps) => {
         <RemoveFolderButton>{props.children}</RemoveFolderButton>
       </div>
 
-      {expanded && props.children.children?.length > 0 && (
-        <ul className={styles.bookmark__folder__links} ref={collapsibleRef}>
+      {props.children.children?.length > 0 && (
+        <motion.ul className={styles.bookmark__folder__links} ref={collapsibleRef}
+		    initial="hidden" animate={expanded ? "show" : "hidden"} variants={variants} transition={{duration: 0.2, type: "tween"}}
+		    >
           {props.children?.children.map(
             (child: BookmarkFolder | BookmarkItem) => {
               {
@@ -87,7 +88,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
               }
             }
           )}
-        </ul>
+        </motion.ul>
       )}
     </div>
   )

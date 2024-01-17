@@ -35,9 +35,10 @@
 .bookmark__folder__links {
     display: flex;
     flex-direction: column;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2rem;
+    padding-left: 2rem;
     width: 100%;
-    transition: height 100ms ease-in-out;
+    transition: height 150ms ease-in-out;
 
     &__link {
         list-style: none;
