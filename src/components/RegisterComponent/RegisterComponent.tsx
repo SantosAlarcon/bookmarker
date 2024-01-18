@@ -1,35 +1,24 @@
-//import "./Register.module.css"
+//import "./RegisterComponent.module.css"
 import { useState, useEffect } from "react"
 import { Auth } from "@supabase/auth-ui-react"
 import { ThemeSupa } from "@supabase/auth-ui-shared"
 import supabaseClient from "@/app/utils/supabaseClient"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const RegisterComponent = () => {
-	const [session, setSession] = useState(null)
+	const supabase = createClientComponentClient()
 
-	useEffect(() => {
-		// @ts-ignore
-		supabaseClient.auth.getSession().then(({ data: { session } }) => {
-			setSession(session)
-		})
+    return (
+    <Auth
+            supabaseClient={supabase}
+            view="magic_link"
+            appearance={{theme: ThemeSupa}}
+            theme="dark"
+            showLinks={false}
+            providers={["google", "github", "facebook"]}
+        />
+    )
 
-		const {
-			data: { subscription },
-			// @ts-ignore
-		} = supabaseClient.auth.onAuthStateChange((_event, session) => {
-			setSession(session)
-		})
-
-		return () => subscription.unsubscribe()
-	}, [])
-
-	if (!session) {
-		return (
-			<Auth supabaseClient={supabaseClient} appearance={{ theme: ThemeSupa }} />
-		)
-	} else {
-		return <div>Logged in!</div>
-	}
 }
 
 export default RegisterComponent

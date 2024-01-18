@@ -62,7 +62,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 	/* This function implements the logic for creating a new bookmark */
 	const createBookmark = async () => {
 		const regExpURL: RegExp = new RegExp(
-			"^(?:https?)://(?<host>[w-]+(?:.[w-]+)*)(?::d+)?(?<path>.*)$"
+			"^(?:https?):\/\/([w-]+(?:.[w-]+)*)(?::d+)?(.*)$"
 		)
 
 		if (!regExpURL.test(newBookmark.url)) {

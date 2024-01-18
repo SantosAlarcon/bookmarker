@@ -4,7 +4,7 @@ import RegisterComponent from "@/components/RegisterComponent/RegisterComponent"
 // Register this immediately after calling createClient!
 // Because signInWithOAuth causes a redirect, you need to fetch the
 // provider tokens from the callback.
-// @ts-ignore
+
 supabaseClient.auth.onAuthStateChange((event, session) => {
 	if (session && session.provider_token) {
 		window.localStorage.setItem('oauth_provider_token', session.provider_token)
@@ -20,7 +20,7 @@ supabaseClient.auth.onAuthStateChange((event, session) => {
 	}
 })
 
-const { data, error } = supabaseClient.auth.signInWithOAuth({
+/*const { data, error } = supabaseClient.auth.signInWithOAuth({
 	provider: 'google',
 	options: {
 		queryParams: {
@@ -28,7 +28,7 @@ const { data, error } = supabaseClient.auth.signInWithOAuth({
 			prompt: 'consent',
 		},
 	},
-})
+})*/
 
 const RegisterPage = () => {
 	return (
