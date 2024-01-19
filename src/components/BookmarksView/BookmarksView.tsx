@@ -10,6 +10,7 @@ import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog
 import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDialog"
 import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import { bookmarksStore } from "@/store/bookmarksStore"
+import LogoutButton from "../Buttons/LogoutButton/LogoutButton"
 
 const BookmarksView = () => {
     const bookmarksList = bookmarksStore((state) => state.bookmarksList)
@@ -53,6 +54,7 @@ const BookmarksView = () => {
                     Array.from({ length: 10 }).map((_, i) => (
                         <BookmarkSkeleton key={i} />
                     ))}
+		<LogoutButton />
             </main>
         </>
     )

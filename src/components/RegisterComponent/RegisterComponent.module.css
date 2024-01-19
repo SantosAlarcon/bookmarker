@@ -1,3 +1,5 @@
-.supabase-auth-ui_ui-container {
-    background-color: black;
+.register__page__container {
+	background-color: #111;
+	min-height: 98vh;
+	padding: 3rem;
 }

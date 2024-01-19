@@ -36,7 +36,7 @@ const Header = () => {
 			<NewBookmarkDialog title="New bookmark"></NewBookmarkDialog>
 			<NewFolderDialog title="New Folder"></NewFolderDialog>
 			<header className={styles.header__container}>
-				<div className={styles.header__logo}>
+				<div className={styles.header__logo} onClick={() => router.push("/")}>
 					<Image
 						src="/BookmarkerLogo.svg"
 						width="128"

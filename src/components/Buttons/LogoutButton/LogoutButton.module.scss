@@ -1,0 +1,15 @@
+.logout__button {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	border-radius: .5rem;
+	padding: 0.5rem 1rem;
+	font-family: inherit;
+
+	&__icon {
+		filter: invert(100%);
+	}
+}
