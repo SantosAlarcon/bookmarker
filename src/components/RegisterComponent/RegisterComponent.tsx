@@ -1,6 +1,6 @@
 "use client"
 
-import styles from "./RegisterComponent.module.css"
+import styles from "./RegisterComponent.module.scss"
 import Image from "next/image"
 import "../../app/globals.css"
 import {
@@ -9,13 +9,14 @@ import {
 	signInWithFacebook,
 	signInWithEmail,
 } from "@/app/utils/signIn"
-import { useState } from "react"
+import { FormEvent, useState } from "react"
 
 const RegisterComponent = () => {
-	const [email, setEmail] = useState("")
-	const [password, setPassword] = useState("")
+	const [email, setEmail] = useState<string>("")
+	const [password, setPassword] = useState<string>("")
 
-	const handleSubmit = async () => {
+	const handleSubmit = async (event: FormEvent) => {
+        event.preventDefault();
 		await signInWithEmail(email, password)
 	}
 
@@ -65,7 +66,7 @@ const RegisterComponent = () => {
 					Sign Up with Facebook
 				</button>
 				<hr className={styles.register__page__separator} />
-				<form className={styles.register__page__form} onSubmit={handleSubmit}>
+				<form className={styles.register__page__form} onSubmit={(e) => handleSubmit(e)}>
 					<label htmlFor="email">Email</label>
 					<input
 						type="email"
@@ -84,7 +85,7 @@ const RegisterComponent = () => {
 					/>
 					<button
 						className={styles.register__page__social__button}
-						onClick={() => signInWithEmail(email, password)}
+                        type="submit"
 					>
 						<Image
 							src="/social/email.svg"

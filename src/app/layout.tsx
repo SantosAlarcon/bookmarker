@@ -2,6 +2,9 @@ import type { Metadata } from "next"
 import { Gabarito } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "sonner"
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
+import { cookies } from "next/headers"
+import AuthProvider from "@/components/AuthProvider"
 
 const gabarito = Gabarito({
 	subsets: ["latin"],
@@ -14,11 +17,19 @@ export const metadata: Metadata = {
 	manifest: "/manifest.json",
 }
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode
 }) {
+
+
+    const supabase = createServerComponentClient({cookies})
+
+    const {
+        data: {session},
+    } = await supabase.auth.getSession();
+
 	return (
 		<html lang="es">
 			<head>
@@ -45,7 +56,11 @@ export default function RootLayout({
 				/>
 				<meta property="og:site_name" content="Bookmarker" />
 			</head>
-			<body className={gabarito.className}>{children}</body>
+			<body className={gabarito.className}>
+                <AuthProvider accessToken={session?.access_token}>
+                {children}
+                </AuthProvider>
+            </body>
 			<Toaster position="top-center" richColors />
 		</html>
 	)

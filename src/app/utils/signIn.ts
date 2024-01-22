@@ -43,8 +43,8 @@ export const signInWithFacebook = async () => {
 
 export const signInWithEmail = async(email: string, password: string) => {
 	// Call the sign in function to sign in the user
-	await supabaseClient.auth.signInWithPassword({
+	const {data, error} = await supabaseClient.auth.signUp({
 		email: email,
-		password: password
+		password: password,
 	});
 }
