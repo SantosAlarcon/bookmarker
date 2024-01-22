@@ -1,5 +1,4 @@
 import supabaseClient from "@/app/utils/supabaseClient"
-import Header from "@/components/Header/Header"
 import RegisterComponent from "@/components/RegisterComponent/RegisterComponent"
 import styles from "@/app/page.module.css"
 
@@ -8,7 +7,6 @@ import styles from "@/app/page.module.css"
 // provider tokens from the callback.
 
 supabaseClient.auth.onAuthStateChange((event, session) => {
-	console.log(session)
 
 	if (session && session.provider_token) {
 		window.localStorage.setItem('oauth_provider_token', session.provider_token)
