@@ -1,14 +1,15 @@
 import RegisterComponent from "@/components/RegisterComponent/RegisterComponent"
 import styles from "@/app/page.module.css"
-import { Toaster } from "sonner"
+import AuthLayout from "./layout"
 
-const RegisterPage = () => {
-	return (
-		<main className={styles.main}>
-			<RegisterComponent />
-			<Toaster position="top-center" richColors />
-		</main>
-	)
+const Home = () => {
+    return (
+        <AuthLayout>
+            <main className={styles.main}>
+                <RegisterComponent />
+            </main>
+        </AuthLayout>
+    )
 }
 
-export default RegisterPage
+export default Home

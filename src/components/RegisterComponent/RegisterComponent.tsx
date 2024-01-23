@@ -34,8 +34,10 @@ const RegisterComponent = () => {
 		event.preventDefault();
 		setFormData({ ...formData, loading: true })
 		await signInWithEmail(formData.email, formData.password).then(() => {
+            // These lines will execute if the login is successful
 			toast.success("Login successful!")
 		}).catch((error) => {
+            // If it fails to log in, it shows an toast error
 			toast.error(error.message)
 		})
 
@@ -43,7 +45,7 @@ const RegisterComponent = () => {
 		setFormData({ email: "", password: "", loading: false })
 	}
 
-	console.log(supabaseClient);
+	console.log(supabaseClient.auth);
 
 	return (
 		<section className={styles.register__page__container}>
