@@ -23,12 +23,11 @@ export default async function RootLayout({
 	children: React.ReactNode
 }) {
 
+	const supabase = createServerComponentClient({ cookies })
 
-    const supabase = createServerComponentClient({cookies})
-
-    const {
-        data: {session},
-    } = await supabase.auth.getSession();
+	const {
+		data: { session },
+	} = await supabase.auth.getSession();
 
 	return (
 		<html lang="es">
@@ -57,10 +56,10 @@ export default async function RootLayout({
 				<meta property="og:site_name" content="Bookmarker" />
 			</head>
 			<body className={gabarito.className}>
-                <AuthProvider accessToken={session?.access_token}>
-                {children}
-                </AuthProvider>
-            </body>
+				<AuthProvider accessToken={session?.access_token}>
+					{children}
+				</AuthProvider>
+			</body>
 			<Toaster position="top-center" richColors />
 		</html>
 	)

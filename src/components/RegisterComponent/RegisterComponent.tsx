@@ -9,16 +9,41 @@ import {
 	signInWithFacebook,
 	signInWithEmail,
 } from "@/app/utils/signIn"
-import { FormEvent, useState } from "react"
+import { FormEvent, useState, useContext} from "react"
+import { AuthContext } from "../AuthProvider"
+import Spinner from "../Spinner/Spinner"
+import { toast } from "sonner"
+import supabaseClient from "@/app/utils/supabaseClient"
+
+interface FormData {
+	email: string
+	password: string
+	loading: boolean
+}
 
 const RegisterComponent = () => {
-	const [email, setEmail] = useState<string>("")
-	const [password, setPassword] = useState<string>("")
+	const [formData, setFormData] = useState<FormData>({
+		email: "",
+		password: "",
+		loading: false,
+	})
+
+	const session = useContext(AuthContext)
 
 	const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-		await signInWithEmail(email, password)
+		event.preventDefault();
+		setFormData({ ...formData, loading: true })
+		await signInWithEmail(formData.email, formData.password).then(() => {
+			toast.success("Login successful!")
+		}).catch((error) => {
+			toast.error(error.message)
+		})
+
+		setFormData({ ...formData, loading: false })
+		setFormData({ email: "", password: "", loading: false })
 	}
+
+	console.log(supabaseClient);
 
 	return (
 		<section className={styles.register__page__container}>
@@ -71,21 +96,23 @@ const RegisterComponent = () => {
 					<input
 						type="email"
 						id="email"
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={(e) => setFormData({ ...formData, email: e.target.value })}
 						required
 						placeholder="Email"
+						value={formData.email}
 					/>
 					<label htmlFor="password">Password</label>
 					<input
 						type="password"
 						id="password"
-						onChange={(e) => setPassword(e.target.value)}
+						onChange={(e) => setFormData({ ...formData, password: e.target.value })}
 						required
 						placeholder="Password"
+						value={formData.password}
 					/>
 					<button
 						className={styles.register__page__social__button}
-                        type="submit"
+						type="submit"
 					>
 						<Image
 							src="/social/email.svg"
@@ -96,6 +123,9 @@ const RegisterComponent = () => {
 						Sign Up with Email
 					</button>
 				</form>
+			</div>
+			<div className={styles.register__page__loading}>
+				{formData.loading && <Spinner />}
 			</div>
 		</section>
 	)
