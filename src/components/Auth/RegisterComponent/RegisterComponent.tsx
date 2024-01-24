@@ -2,7 +2,7 @@
 
 import styles from "./RegisterComponent.module.scss"
 import Image from "next/image"
-import "../../app/globals.css"
+import "@/app/globals.css"
 import {
 	signInWithGoogle,
 	signInWithGitHub,
@@ -11,9 +11,9 @@ import {
 } from "@/app/utils/signIn"
 import { FormEvent, useState, useContext} from "react"
 import { AuthContext } from "../AuthProvider"
-import Spinner from "../Spinner/Spinner"
+import Spinner from "@/components/Spinner/Spinner"
 import { toast } from "sonner"
-import supabaseClient from "@/app/utils/supabaseClient"
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 interface FormData {
 	email: string
@@ -22,6 +22,8 @@ interface FormData {
 }
 
 const RegisterComponent = () => {
+    const supabase = createClientComponentClient();
+
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
 		password: "",
@@ -33,7 +35,7 @@ const RegisterComponent = () => {
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 		setFormData({ ...formData, loading: true })
-		await signInWithEmail(formData.email, formData.password).then(() => {
+		await signInWithEmail(formData.email, formData.password, supabase).then(() => {
             // These lines will execute if the login is successful
 			toast.success("Login successful!")
 		}).catch((error) => {
@@ -44,8 +46,6 @@ const RegisterComponent = () => {
 		setFormData({ ...formData, loading: false })
 		setFormData({ email: "", password: "", loading: false })
 	}
-
-	console.log(supabaseClient.auth);
 
 	return (
 		<section className={styles.register__page__container}>
@@ -58,7 +58,7 @@ const RegisterComponent = () => {
 			<div className={styles.register__page__social__buttons}>
 				<button
 					className={styles.register__page__social__button}
-					onClick={() => signInWithGoogle()}
+					onClick={() => signInWithGoogle(supabase)}
 				>
 					<Image
 						src="/social/google.svg"
@@ -70,7 +70,7 @@ const RegisterComponent = () => {
 				</button>
 				<button
 					className={styles.register__page__social__button}
-					onClick={() => signInWithGitHub()}
+					onClick={() => signInWithGitHub(supabase)}
 				>
 					<Image
 						src="/social/github.svg"
@@ -82,7 +82,7 @@ const RegisterComponent = () => {
 				</button>
 				<button
 					className={styles.register__page__social__button}
-					onClick={() => signInWithFacebook()}
+					onClick={() => signInWithFacebook(supabase)}
 				>
 					<Image
 						src="/social/facebook.svg"

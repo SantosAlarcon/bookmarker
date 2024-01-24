@@ -4,7 +4,7 @@ import "./globals.css"
 import { Toaster } from "sonner"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
-import AuthProvider from "@/components/AuthProvider"
+import AuthProvider from "@/components/Auth/AuthProvider"
 
 const gabarito = Gabarito({
 	subsets: ["latin"],

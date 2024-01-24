@@ -1,12 +1,18 @@
 "use client"
 import React from "react"
 import styles from "./LogoutButton.module.scss"
-import { logout } from "@/app/utils/logout"
 import Image from "next/image"
+import { SupabaseClient, createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
 const LogoutButton = () => {
+    const supabase: SupabaseClient = createClientComponentClient();
 	const handleClick = async () => {
-		await logout()
+        // Call the sign out function of Supabase and close all the sessions.
+		const {error} = await supabase.auth.signOut({scope: "global"})
+
+        if (error) {
+            console.error('ERROR:', error);
+        }
 	}
 
 	return (

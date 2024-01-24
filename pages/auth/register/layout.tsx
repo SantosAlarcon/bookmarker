@@ -11,7 +11,7 @@ export default function AuthLayout({
     return (
         <>
             <Head>
-                <title>Get started | Bookmarker</title>
+                <title>Get started - Bookmarker</title>
                 <link rel="shortcut icon" href="/favicon.svg" />
                 <link rel="manifest" href="/manifest.json" />
                 <meta
