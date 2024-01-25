@@ -3,9 +3,9 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 
-export const signInWithGoogle = async (client: SupabaseClient) => {
+export const signUpWithGoogle = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
-    const { error, data } = await client.auth.signInWithOAuth({
+    const { error, data } = await client.auth.signUp({
         provider: "google",
         options: {
             queryParams: {
@@ -20,9 +20,9 @@ export const signInWithGoogle = async (client: SupabaseClient) => {
 
 }
 
-export const signInWithGitHub = async (client: SupabaseClient) => {
+export const signUpWithGitHub = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
-    const {error, data} = await client.auth.signInWithOAuth({
+    const {error, data} = await client.auth.signUpWithOAuth({
         provider: "github",
         options: {
             queryParams: {
@@ -36,9 +36,9 @@ export const signInWithGitHub = async (client: SupabaseClient) => {
     if (error) console.error(error);
 }
 
-export const signInWithFacebook = async (client: SupabaseClient) => {
+export const signUpWithFacebook = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
-    await client.auth.signInWithOAuth({
+    await client.auth.signUpWithOAuth({
         provider: "facebook",
         options: {
             queryParams: {
@@ -49,15 +49,15 @@ export const signInWithFacebook = async (client: SupabaseClient) => {
     });
 }
 
-export const signInWithEmail = async (email: string, password: string, client: SupabaseClient) => {
+export const signUpWithEmail = async (email: string, password: string, client: SupabaseClient) => {
     // Call the sign in function to sign in the user
-    const { data, error } = await client.auth.signInWithPassword({
+    const { data, error } = await client.auth.signUpWithPassword({
         email: email,
         password: password,
     });
 
-    // If there is a session, redirect to the home page
     if (data) {
+        console.table(data);
         if (data?.session) {
             redirect('/')
         }

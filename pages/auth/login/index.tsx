@@ -1,10 +1,10 @@
 "use server"
-import RegisterComponent from "@/components/Auth/RegisterComponent/RegisterComponent"
 import AuthLayout from "./layout"
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import styles from "@/app/page.module.css"
+import LoginComponent from "@/components/Auth/LoginComponent/LoginComponent"
 
 const RegisterPage = () => {
     /*const supabase = createServerComponentClient({cookies});
@@ -17,7 +17,7 @@ const RegisterPage = () => {
     return (
         <AuthLayout>
             <main className={styles.main}>
-                <RegisterComponent />
+                <LoginComponent />
             </main>
         </AuthLayout>
     )

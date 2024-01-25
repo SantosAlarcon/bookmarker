@@ -1,14 +1,14 @@
 "use client"
 
-import styles from "./RegisterComponent.module.scss"
+import styles from "./LoginComponent.module.scss"
 import Image from "next/image"
 import "@/app/globals.css"
 import {
-	signUpWithGoogle,
-	signUpWithGitHub,
-	signUpWithFacebook,
-	signUpWithEmail,
-} from "@/app/utils/signUp"
+	signInWithGoogle,
+	signInWithGitHub,
+	signInWithFacebook,
+	signInWithEmail,
+} from "@/app/utils/signIn"
 import { FormEvent, useState, useContext } from "react"
 import { AuthContext } from "../AuthProvider"
 import Spinner from "@/components/Spinner/Spinner"
@@ -22,7 +22,7 @@ interface FormData {
 	loading: boolean
 }
 
-const RegisterComponent = () => {
+const LoadingComponent = () => {
 	const supabase = createClientComponentClient();
 
 	const [formData, setFormData] = useState<FormData>({
@@ -36,7 +36,7 @@ const RegisterComponent = () => {
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 		setFormData({ ...formData, loading: true })
-		await signUpWithEmail(formData.email, formData.password, supabase).then(() => {
+		await signInWithEmail(formData.email, formData.password, supabase).then(() => {
 			// These lines will execute if the login is successful
 			toast.success("Login successful!")
 		}).catch((error) => {
@@ -49,19 +49,19 @@ const RegisterComponent = () => {
 	}
 
 	return (
-		<section className={styles.register__page__container}>
-			<div className={styles.register__page__logo}>
+		<section className={styles.login__page__container}>
+			<div className={styles.login__page__logo}>
 				<Image src="/BookmarkerLogo.svg" alt="logo" width={450} height={200} />
 			</div>
-			<div className={styles.register__page__box}>
-				<h2 className={styles.register__page__title}>Register</h2>
-				<div className={styles.register__page__text}>
+			<div className={styles.login__page__box}>
+				<h2 className={styles.login__page__title}>Login</h2>
+				<div className={styles.login__page__text}>
 					Start managing your bookmarks in one place by login out of your account.
 				</div>
-				<div className={styles.register__page__social__buttons}>
+				<div className={styles.login__page__social__buttons}>
 					<button
-						className={styles.register__page__social__button}
-						onClick={() => signUpWithGoogle(supabase)}
+						className={styles.login__page__social__button}
+						onClick={() => signInWithGoogle(supabase)}
 					>
 						<Image
 							src="/social/google.svg"
@@ -69,11 +69,11 @@ const RegisterComponent = () => {
 							width={20}
 							height={20}
 						/>
-						Sign Up with Google
+						Sign In with Google
 					</button>
 					<button
-						className={styles.register__page__social__button}
-						onClick={() => signUpWithGitHub(supabase)}
+						className={styles.login__page__social__button}
+						onClick={() => signInWithGitHub(supabase)}
 					>
 						<Image
 							src="/social/github.svg"
@@ -81,11 +81,11 @@ const RegisterComponent = () => {
 							width={20}
 							height={20}
 						/>
-						Sign Up with GitHub
+						Sign In with GitHub
 					</button>
 					<button
-						className={styles.register__page__social__button}
-						onClick={() => signUpWithFacebook(supabase)}
+						className={styles.login__page__social__button}
+						onClick={() => signInWithFacebook(supabase)}
 					>
 						<Image
 							src="/social/facebook.svg"
@@ -93,10 +93,10 @@ const RegisterComponent = () => {
 							width={20}
 							height={20}
 						/>
-						Sign Up with Facebook
+						Sign In with Facebook
 					</button>
-					<hr className={styles.register__page__separator} />
-					<form className={styles.register__page__form} onSubmit={(e) => handleSubmit(e)}>
+					<hr className={styles.login__page__separator} />
+					<form className={styles.login__page__form} onSubmit={(e) => handleSubmit(e)}>
 						<label htmlFor="email">Email</label>
 						<input
 							type="email"
@@ -116,7 +116,7 @@ const RegisterComponent = () => {
 							value={formData.password}
 						/>
 						<button
-							className={styles.register__page__social__button}
+							className={styles.login__page__social__button}
 							type="submit"
 						>
 							<Image
@@ -125,14 +125,14 @@ const RegisterComponent = () => {
 								width={20}
 								height={20}
 							/>
-							Sign Up with Email
+							Sign In with Email
 						</button>
 					</form>
 				</div>
-				<Link href="/auth/login" className={styles.register__page__link}>
-					Already have an account? <b>Log in</b>
+				<Link href="/auth/register" className={styles.login__page__link}>
+					Already have an account? <b>Register now</b>
 				</Link>
-				<div className={styles.register__page__loading}>
+				<div className={styles.login__page__loading}>
 					{formData.loading && <Spinner />}
 				</div>
 			</div>
@@ -140,4 +140,4 @@ const RegisterComponent = () => {
 	)
 }
 
-export default RegisterComponent
+export default LoadingComponent

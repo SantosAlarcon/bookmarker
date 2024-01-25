@@ -25,7 +25,7 @@ const Header = () => {
     }
 
     const handleAuth = async () => {
-        router.push("/auth/register")
+        router.push("/auth/login")
     }
 
     const handleSort = async () => {
