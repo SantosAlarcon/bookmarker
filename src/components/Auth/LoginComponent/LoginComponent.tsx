@@ -132,6 +132,9 @@ const LoadingComponent = () => {
 				<Link href="/auth/register" className={styles.login__page__link}>
 					Already have an account? <b>Register now</b>
 				</Link>
+				<Link href="/reset-password" className={styles.login__page__link}>
+					Cannot log in? <b>Click to reset password</b>
+				</Link>
 				<div className={styles.login__page__loading}>
 					{formData.loading && <Spinner />}
 				</div>

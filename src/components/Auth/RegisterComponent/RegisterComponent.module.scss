@@ -10,7 +10,7 @@
 
 	&__title {
 		font-size: 2.5rem;
-    }
+	}
 
 	&__box {
 		display: flex;
@@ -27,11 +27,22 @@
 		padding: 3rem 0;
 		color: #ddd;
 		text-align: center;
+		line-height: 1.7rem;
 	}
 
 	&__link {
-		margin-top: 3rem;
-    }
+		margin-top: 1.5rem;
+
+		& b {
+			color: var(--main-color);
+			transition: color 0.2s ease-in-out;
+
+			&:hover {
+				color: var(--main-color-dark);
+			}
+		}
+
+	}
 
 	&__social__buttons {
 		display: flex;

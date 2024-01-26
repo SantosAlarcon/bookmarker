@@ -57,7 +57,7 @@ const ResetPassword = () => {
                     </button>
                 </form>
                 <Link href="/auth/register" className={styles.reset__password__link}>
-                    Remember your password? Sign In.
+                    Remember your password? <b>Sign in.</b>
                 </Link>
             </div>
         </div>

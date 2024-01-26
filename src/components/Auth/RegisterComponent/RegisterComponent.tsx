@@ -132,6 +132,9 @@ const RegisterComponent = () => {
 				<Link href="/auth/login" className={styles.register__page__link}>
 					Already have an account? <b>Log in</b>
 				</Link>
+				<Link href="/reset-password" className={styles.register__page__link}>
+					Cannot log in? <b>Click to reset password</b>
+				</Link>
 				<div className={styles.register__page__loading}>
 					{formData.loading && <Spinner />}
 				</div>
