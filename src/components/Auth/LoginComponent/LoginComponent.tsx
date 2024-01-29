@@ -12,7 +12,6 @@ import {
 import { FormEvent, useState, useContext } from "react"
 import { AuthContext } from "../AuthProvider"
 import Spinner from "@/components/Spinner/Spinner"
-import { toast } from "sonner"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import Link from "next/link"
 
@@ -36,13 +35,7 @@ const LoadingComponent = () => {
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 		setFormData({ ...formData, loading: true })
-		await signInWithEmail(formData.email, formData.password, supabase).then(() => {
-			// These lines will execute if the login is successful
-			toast.success("Login successful!")
-		}).catch((error) => {
-			// If it fails to log in, it shows an toast error
-			toast.error(error.message)
-		})
+		await signInWithEmail(formData.email, formData.password, supabase)
 
 		setFormData({ ...formData, loading: false })
 		setFormData({ email: "", password: "", loading: false })

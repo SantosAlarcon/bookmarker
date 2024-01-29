@@ -120,3 +120,24 @@
 		transform: scale(0.4);
 	}
 }
+
+@media (width < 512px) {
+    .register__page {
+
+        &__container {
+            width: 90%;
+        }
+
+        &__logo {
+            text-align: center;
+
+            &>img {
+                width: 90%;
+            }
+        }
+
+        &__social__button {
+            width: 70%;
+        }
+    }
+}

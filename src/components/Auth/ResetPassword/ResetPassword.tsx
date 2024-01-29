@@ -32,7 +32,7 @@ const ResetPassword = () => {
 
     return (
         <div className={styles.reset__password__container}>
-            <Image src="/BookmarkerLogo.svg" alt="Bookmarker logo" width="450" height="150" />
+            <Image className={styles.reset__password__logo} src="/BookmarkerLogo.svg" alt="Bookmarker logo" width="450" height="150" />
 
             <div className={styles.reset__password__box}>
                 <h2 className={styles.reset__password__title}>Reset Password</h2>

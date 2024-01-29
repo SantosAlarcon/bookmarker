@@ -9,8 +9,8 @@ type Action = {
 	setBookmarksList: (bookmarks: object[]) => void
 }
 
-export const bookmarksStore = create<State & Action>(zukeeper(((set: Function) => ({
+export const bookmarksStore = create<State & Action>(zukeeper((set: Function) => ({
     bookmarksList: [],
     setBookmarksList: (bookmarks: object[]) => set({ bookmarksList: bookmarks })
-}))))
+})))
 

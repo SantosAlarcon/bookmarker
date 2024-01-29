@@ -1,7 +1,7 @@
 // These functions are used to sign in the user depending of the provider
-"use server"
 import { SupabaseClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 export const signInWithGoogle = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
@@ -22,7 +22,7 @@ export const signInWithGoogle = async (client: SupabaseClient) => {
 
 export const signInWithGitHub = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
-    const {error, data} = await client.auth.signInWithOAuth({
+    const { error, data } = await client.auth.signInWithOAuth({
         provider: "github",
         options: {
             queryParams: {
@@ -56,11 +56,13 @@ export const signInWithEmail = async (email: string, password: string, client: S
         password: password,
     });
 
-    // If there is a session, redirect to the home page
     if (data) {
+        // These lines will execute if the login is successful
+        toast.success("Login successful!")
         if (data?.session) {
-            redirect('/')
+            //redirect("/", 'push')
         }
+    } else if (error) {
+        toast.error(error.message)
     }
-    if (error) console.error(error);
 }
