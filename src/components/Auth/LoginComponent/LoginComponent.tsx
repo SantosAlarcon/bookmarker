@@ -55,6 +55,7 @@ const LoadingComponent = () => {
 					<button
 						className={styles.login__page__social__button}
 						onClick={() => signInWithGoogle(supabase)}
+                        disabled={formData.loading}
 					>
 						<Image
 							src="/social/google.svg"
@@ -67,6 +68,7 @@ const LoadingComponent = () => {
 					<button
 						className={styles.login__page__social__button}
 						onClick={() => signInWithGitHub(supabase)}
+                        disabled={formData.loading}
 					>
 						<Image
 							src="/social/github.svg"
@@ -79,6 +81,7 @@ const LoadingComponent = () => {
 					<button
 						className={styles.login__page__social__button}
 						onClick={() => signInWithFacebook(supabase)}
+                        disabled={formData.loading}
 					>
 						<Image
 							src="/social/facebook.svg"
@@ -111,6 +114,7 @@ const LoadingComponent = () => {
 						<button
 							className={styles.login__page__social__button}
 							type="submit"
+                            disabled={formData.loading}
 						>
 							<Image
 								src="/social/email.svg"

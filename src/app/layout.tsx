@@ -28,6 +28,10 @@ export default async function RootLayout({
 	const {
 		data: { session },
 	} = await supabase.auth.getSession();
+	
+    const {
+		data: { user },
+	} = await supabase.auth.getUser();
 
 	return (
 		<html lang="es">
@@ -56,7 +60,7 @@ export default async function RootLayout({
 				<meta property="og:site_name" content="Bookmarker" />
 			</head>
 			<body className={gabarito.className}>
-				<AuthProvider accessToken={session?.access_token}>
+				<AuthProvider accessToken={session?.access_token} session={session} user={user}>
 					{children}
 				</AuthProvider>
 			</body>
