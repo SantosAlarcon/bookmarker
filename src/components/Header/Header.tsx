@@ -10,6 +10,7 @@ import tooltipStyles from "@/app/tooltip.module.scss"
 import { updateSortedBookmarkList } from "@/app/utils/updateSortedBookmarkList"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
+import AuthButton from "../Buttons/AuthButton/AuthButton"
 
 const Header = () => {
     const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
@@ -117,28 +118,7 @@ const Header = () => {
                             />
                         </button>
                     </div>
-                    <div className={styles.header__links__auth}>
-                        <button
-                            onClick={handleAuth}
-                            className={styles.header__links__button}
-                            id="auth-tooltip"
-                            aria-label="Login"
-                        >
-                            <Tooltip
-                                anchorSelect="#auth-tooltip"
-                                place="bottom"
-                                variant="info"
-                                className={tooltipStyles.custom__tooltip}
-                                content="Login"
-                            />
-                            <Image
-                                width={32}
-                                height={32}
-                                src="/user.svg"
-                                alt="User icon"
-                            />
-                        </button>
-                    </div>
+                    <AuthButton />
                 </div>
             </header>
         </>

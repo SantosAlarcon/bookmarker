@@ -1,6 +1,5 @@
 // These functions are used to sign in the user depending of the provider
 import { SupabaseClient } from "@supabase/supabase-js";
-import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
 export const signInWithGoogle = async (client: SupabaseClient) => {
@@ -59,10 +58,10 @@ export const signInWithEmail = async (email: string, password: string, client: S
     if (data) {
         // These lines will execute if the login is successful
         toast.success("Login successful!")
-        if (data?.session) {
-            //redirect("/", 'push')
-        }
+        return true
     } else if (error) {
         toast.error(error.message)
+        return false
     }
+
 }

@@ -9,11 +9,12 @@ import {
 	signInWithFacebook,
 	signInWithEmail,
 } from "@/app/utils/signIn"
-import { FormEvent, useState, useContext } from "react"
-import { AuthContext } from "../AuthProvider"
+import { FormEvent, useState} from "react"
 import Spinner from "@/components/Spinner/Spinner"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 
 interface FormData {
 	email: string
@@ -23,6 +24,7 @@ interface FormData {
 
 const LoadingComponent = () => {
 	const supabase = createClientComponentClient();
+    const router: AppRouterInstance = useRouter();
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
@@ -30,12 +32,15 @@ const LoadingComponent = () => {
 		loading: false,
 	})
 
-	const session = useContext(AuthContext)
 
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 		setFormData({ ...formData, loading: true })
-		await signInWithEmail(formData.email, formData.password, supabase)
+		const isLoggedIn: boolean | undefined = await signInWithEmail(formData.email, formData.password, supabase)
+
+        if (isLoggedIn) {
+            router.push("/")
+        }
 
 		setFormData({ ...formData, loading: false })
 		setFormData({ email: "", password: "", loading: false })
@@ -116,12 +121,12 @@ const LoadingComponent = () => {
 							type="submit"
                             disabled={formData.loading}
 						>
-							<Image
+                            {formData.loading ? <Spinner /> : <Image
 								src="/social/email.svg"
 								alt="Email Logo"
 								width={20}
 								height={20}
-							/>
+							/>}
 							Sign In with Email
 						</button>
 					</form>
@@ -132,9 +137,6 @@ const LoadingComponent = () => {
 				<Link href="/reset-password" className={styles.login__page__link}>
 					Cannot log in? <b>Click to reset password</b>
 				</Link>
-				<div className={styles.login__page__loading}>
-					{formData.loading && <Spinner />}
-				</div>
 			</div>
 		</section>
 	)

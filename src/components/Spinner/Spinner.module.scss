@@ -1,9 +1,9 @@
 .lds__spinner {
-	color: official;
 	display: inline-block;
 	position: relative;
 	width: 80px;
 	height: 80px;
+    zoom: 0.3;
 }
 
 .lds__spinner div {
@@ -20,7 +20,7 @@
 	width: 6px;
 	height: 18px;
 	border-radius: 20%;
-	background: #fff;
+	background: #000;
 }
 
 .lds__spinner div:nth-child(1) {

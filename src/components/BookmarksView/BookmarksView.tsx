@@ -10,7 +10,6 @@ import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog
 import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDialog"
 import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import { bookmarksStore } from "@/store/bookmarksStore"
-import LogoutButton from "../Buttons/LogoutButton/LogoutButton"
 import { SupabaseClient } from "@supabase/supabase-js"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 
@@ -80,7 +79,6 @@ const BookmarksView = () => {
 					)
 				}
 			</main>
-			{session && <LogoutButton />}
 		</>
 	)
 }
