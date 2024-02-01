@@ -5,14 +5,14 @@ import React, { useEffect, useState } from 'react'
 import styles from "./AuthButton.module.scss"
 import tooltipStyles from "@/app/tooltip.module.scss"
 import { Tooltip } from 'react-tooltip'
-import { SupabaseClient, createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useRouter } from 'next/navigation'
-import { type Session } from '@supabase/auth-helpers-nextjs'
+import { SupabaseClient, type Session } from '@supabase/auth-helpers-nextjs'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import { createClient } from '@/app/utils/supabase/client'
 
 const AuthButton = () => {
     const [session, setSession] = useState<Session | null>(null)
-    const supabase: SupabaseClient = createClientComponentClient();
+    const supabase: SupabaseClient = createClient();
     const router: AppRouterInstance = useRouter();
 
     useEffect(() => {
@@ -21,9 +21,10 @@ const AuthButton = () => {
             setSession(data.session)
         }
         fetchSession()
-    }, [])
+    }, [supabase.auth])
 
     const handleAuth = async () => {
+        // If there is no session, redirect user to the login page
         if (!session) {
             router.push("/auth/login")
         } else {

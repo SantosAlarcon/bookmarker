@@ -11,10 +11,11 @@ import {
 } from "@/app/utils/signIn"
 import { FormEvent, useState} from "react"
 import Spinner from "@/components/Spinner/Spinner"
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
+import { createClient } from "@/app/utils/supabase/client"
+import { SupabaseClient } from "@supabase/supabase-js"
 
 interface FormData {
 	email: string
@@ -23,7 +24,7 @@ interface FormData {
 }
 
 const LoadingComponent = () => {
-	const supabase = createClientComponentClient();
+	const supabase: SupabaseClient = createClient();
     const router: AppRouterInstance = useRouter();
 
 	const [formData, setFormData] = useState<FormData>({
@@ -38,6 +39,7 @@ const LoadingComponent = () => {
 		setFormData({ ...formData, loading: true })
 		const isLoggedIn: boolean | undefined = await signInWithEmail(formData.email, formData.password, supabase)
 
+        // If the login is succesfull, redirect to the main page
         if (isLoggedIn) {
             router.push("/")
         }

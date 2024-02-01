@@ -8,7 +8,6 @@ const supabaseClient: SupabaseClient = createClient(
 // Register this immediately after calling createClient!
 // Because signInWithOAuth causes a redirect, you need to fetch the
 // provider tokens from the callback.
-
 supabaseClient.auth.onAuthStateChange((event, session) => {
   if (session && session.provider_token) {
     window.localStorage.setItem("oauth_provider_token", session.provider_token)

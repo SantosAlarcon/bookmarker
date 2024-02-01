@@ -7,7 +7,7 @@ import { toast } from "sonner"
 import updateBookmark from "@/app/lib/bookmarks/updateBookmark"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { BookmarkFolder } from "@/types/types"
-import { getFolders } from "@/app/utils/getFolders"
+import { getFolders } from "@/app/utils/folders/getFolders"
 import { useRouter } from "next/navigation"
 import { bookmarksStore } from "@/store/bookmarksStore"
 
