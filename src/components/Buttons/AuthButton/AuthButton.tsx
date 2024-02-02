@@ -10,9 +10,12 @@ import { SupabaseClient, type Session } from '@supabase/auth-helpers-nextjs'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 import { createClient } from '@/app/utils/supabase/client'
 import { handleUserContextMenu } from '@/components/Header/UserContextMenu'
+import { UserMetadata } from '@supabase/supabase-js'
+import getUserMetadata from '@/app/utils/getUserMetadata'
 
 const AuthButton = () => {
     const [session, setSession] = useState<Session | null>(null)
+    const [metadata, setMetadata] = useState<UserMetadata | undefined>(undefined)
     const supabase: SupabaseClient = createClient();
     const router: AppRouterInstance = useRouter();
 
@@ -21,9 +24,14 @@ const AuthButton = () => {
             const { data } = await supabase.auth.getSession()
             setSession(data.session)
         }
-        fetchSession()
-    }, [supabase.auth])
 
+        const getMetadata = async () => {
+            setMetadata(await getUserMetadata());
+        }
+        fetchSession()
+        getMetadata()
+    }, [supabase.auth])
+    
     const handleAuth = (event: SyntheticEvent) => {
         // If there is no session, redirect user to the login page
         if (!session) {
@@ -47,14 +55,17 @@ const AuthButton = () => {
                     place="bottom"
                     variant="info"
                     className={tooltipStyles.custom__tooltip}
-                    content={session ? "User" : "Login"}
+                    content={!session ? "Login" : ""}
                 />
-                <Image
-                    width={32}
-                    height={32}
-                    src={session ? "/logout.svg" : "/user.svg"}
-                    alt="User icon"
-                />
+                {session ? (
+                    <picture>
+                        <img style={{borderRadius: "100%"}} src={metadata?.picture} width={36} height={36} alt="User picture" />
+                    </picture>) : (<Image
+                        width={32}
+                        height={32}
+                        src={"/user.svg"}
+                        alt="User icon"
+                    />)}
             </button>
         </div>
     )

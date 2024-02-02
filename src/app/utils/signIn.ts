@@ -55,13 +55,12 @@ export const signInWithEmail = async (email: string, password: string, client: S
         password: password,
     });
 
-    if (data) {
-        // These lines will execute if the login is successful
+    // If the login credentials are wrong, it shows a toaster with the error
+    if (error) {
+        toast.error(error.message)
+        return false;
+    } else {
         toast.success("Login successful!")
         return true
-    } else if (error) {
-        toast.error(error.message)
-        return false
     }
-
 }

@@ -5,6 +5,7 @@ import { Menu, Item, useContextMenu, ItemParams } from 'react-contexify'
 import "react-contexify/ReactContexify.css"
 import { TriggerEvent } from 'react-contexify'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 export let handleUserContextMenu: Function | undefined = undefined;
 
@@ -17,20 +18,19 @@ const UserContextMenu = () => {
     })
 
     handleUserContextMenu = function(event: TriggerEvent) {
-        console.log(event)
         event.preventDefault()
         show({
             event,
             props: {
                 key: "value"
-            }
+            },
         })
     }
 
     const handleItemClick = (params: ItemParams) => {
         switch (params.id) {
-            case "user-info":
-                router.push("/private")
+            case "user-profile":
+                router.push("/profile")
                 break;
             default:
                alert("Function not implemented yet.") 
@@ -38,12 +38,22 @@ const UserContextMenu = () => {
     }
 
     return (
-        <Menu id="userContext" theme='dark'>
-            <Item id="user-info" onClick={handleItemClick}>User information</Item>
+        <Menu id="userContext" theme='dark' style={{marginTop: "2rem"}}>
+            <Item id="user-profile" onClick={handleItemClick}>
+                <Image src="/user.svg" width={16} height={16} alt="User icon" style={{
+                    marginRight: "1rem"
+                }} />
+                User profile
+            </Item>
             <Item id="logout" onClick={async () => {
                 await supabase.auth.signOut({scope: "global"});
                 router.push("/auth/login")
-            }}>Logout</Item>
+            }}>
+                <Image src="/logout.svg" width={16} height={16} alt="User icon" style={{
+                    marginRight: "1rem",
+                    filter: "invert(1)"
+                }} />
+                Logout</Item>
         </Menu>
     )
 }
