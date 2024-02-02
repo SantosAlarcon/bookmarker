@@ -4,7 +4,7 @@ import styles from "./private.module.scss"
 
 import { createClient } from '@/app/utils/supabase/server'
 import { UserMetadata } from '@supabase/supabase-js'
-import TrueIcon from '@/components/Icons/FalseIcon'
+import TrueIcon from '@/components/Icons/TrueIcon'
 import FalseIcon from '@/components/Icons/FalseIcon'
 
 export default async function PrivatePage() {
@@ -25,7 +25,9 @@ export default async function PrivatePage() {
     return (<section className={styles.user__info__container}>
         <h1 className={styles.user__info__title}>User information</h1>
         <div className={styles.user__info__avatar}>
-            <img className={styles.user__info__avatar__img} src={metadata?.picture} />
+	    <picture>
+		<img className={styles.user__info__avatar__img} alt={metadata?.full_name} src={metadata?.picture} />
+	    </picture>
         </div>
         <div className={styles.user__info__data__grid}>
                 <span className={styles.user__info__data__grid__field__name}>Full Name:</span>
@@ -37,7 +39,7 @@ export default async function PrivatePage() {
                 <span className={styles.user__info__data__grid__field__name}>Creation date:</span>
                 <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.created_at).toLocaleString("es", {day:"numeric", month:"long", year:"numeric"})}</span>
                 <span className={styles.user__info__data__grid__field__name}>Last login date:</span>
-                <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.last_sign_in_at).toLocaleString("es", {day:"numeric", month:"long", year:"numeric"})}</span>
+                <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.last_sign_in_at!).toLocaleString("es", {day:"numeric", month:"long", year:"numeric", hour:"numeric", minute:"numeric"})}</span>
         </div>
     </section>)
 }
