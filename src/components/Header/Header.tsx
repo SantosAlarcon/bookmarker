@@ -11,6 +11,7 @@ import { updateSortedBookmarkList } from "@/app/utils/updateSortedBookmarkList"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import AuthButton from "../Buttons/AuthButton/AuthButton"
+import UserContextMenu from "./UserContextMenu"
 
 const Header = () => {
     const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
@@ -40,6 +41,7 @@ const Header = () => {
         <>
             <NewBookmarkDialog title="New bookmark"></NewBookmarkDialog>
             <NewFolderDialog title="New Folder"></NewFolderDialog>
+            <UserContextMenu />
             <header className={styles.header__container}>
                 <div className={styles.header__logo} onClick={() => router.push("/")}>
                     <Image
