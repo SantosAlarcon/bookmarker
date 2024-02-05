@@ -36,4 +36,16 @@
             font-weight: bold;
         }
     }
+
+    &__link {
+        padding: 1rem 1.5rem;
+        border-radius: 1.5rem;
+        background-color: var(--main-color-dark);
+        transition: all 150ms ease-in-out;
+
+        &:hover {
+            background-color: var(--main-color-hover);
+            box-shadow: 0 0 1rem var(--main-color-hover);
+        }
+    }
 }

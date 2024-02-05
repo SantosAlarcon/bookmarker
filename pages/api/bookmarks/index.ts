@@ -24,6 +24,12 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(401).json({message: "You need to provide an access token to access this resource."});
+    }
+
 	// GET Method - Read from mockData.json file
 	if (req.method === "GET") {
 		// Sort query param
