@@ -1,5 +1,4 @@
 // These functions are used to sign in the user depending of the provider
-"use server"
 import { SupabaseClient } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 
@@ -8,6 +7,7 @@ export const signUpWithGoogle = async (client: SupabaseClient) => {
     const { error, data } = await client.auth.signUp({
         provider: "google",
         options: {
+            // @ts-ignore
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
@@ -22,6 +22,7 @@ export const signUpWithGoogle = async (client: SupabaseClient) => {
 
 export const signUpWithGitHub = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
+    // @ts-ignore
     const {error, data} = await client.auth.signUpWithOAuth({
         provider: "github",
         options: {
@@ -38,6 +39,7 @@ export const signUpWithGitHub = async (client: SupabaseClient) => {
 
 export const signUpWithFacebook = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
+    // @ts-ignore
     await client.auth.signUpWithOAuth({
         provider: "facebook",
         options: {
@@ -51,13 +53,13 @@ export const signUpWithFacebook = async (client: SupabaseClient) => {
 
 export const signUpWithEmail = async (email: string, password: string, client: SupabaseClient) => {
     // Call the sign in function to sign in the user
+    // @ts-ignore
     const { data, error } = await client.auth.signUpWithPassword({
         email: email,
         password: password,
     });
 
     if (data) {
-        console.table(data);
         if (data?.session) {
             redirect('/')
         }

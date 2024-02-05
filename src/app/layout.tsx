@@ -60,9 +60,7 @@ export default async function RootLayout({
 				<meta property="og:site_name" content="Bookmarker" />
 			</head>
 			<body className={gabarito.className}>
-				<AuthProvider accessToken={session?.access_token} session={session} user={user}>
 					{children}
-				</AuthProvider>
 			</body>
 			<Toaster position="top-center" richColors />
 		</html>
