@@ -105,7 +105,7 @@ const NewFolderDialog = ({ title }: Props) => {
 					disabled={newFolder.title && newFolder.description ? false : true}
 					onClick={() => createFolder()}
 				>
-					Crear
+					Create
 				</button>
 				<button onClick={() => closeDialog()}>Close</button>
 			</div>

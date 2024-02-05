@@ -7,6 +7,7 @@
 	top: 30vh;
 	transition: all 300ms ease-in-out;
 	box-shadow: 5px 0 3rem #0005;
+	background-color: #112;
 
 	&::backdrop {
 		backdrop-filter: blur(5px);
@@ -44,6 +45,7 @@
 		border: none;
 		border-radius: 0.5rem;
 		transition: all 300ms ease-in-out;
+		background-color: #334;
 
 		&:focus {
 			background-color: #fff5;

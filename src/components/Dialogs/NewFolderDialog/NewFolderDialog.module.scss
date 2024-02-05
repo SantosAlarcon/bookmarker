@@ -1,122 +1,124 @@
 .new__folder__dialog__container {
-    width: 765px;
-    padding: 1rem;
-    margin: 0 auto;
-    border-radius: 1rem;
-    border: 1px solid;
-    top: 30vh;
-    transition: all 300ms ease-in-out;
-    box-shadow: 5px 0 3rem #0005;
+	width: 765px;
+	padding: 1rem;
+	margin: 0 auto;
+	border-radius: 1rem;
+	border: 1px solid;
+	top: 30vh;
+	transition: all 300ms ease-in-out;
+	box-shadow: 5px 0 3rem #0005;
+	background-color: #112;
 
-    &::backdrop {
-        backdrop-filter: blur(5px);
-    }
+	&::backdrop {
+		backdrop-filter: blur(5px);
+	}
 }
 
 .new__folder__dialog__title {
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #fff6;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid #fff6;
+	display: flex;
+	align-items: center;
+	gap: .5rem;
 
-    & > img {
-        width: 24px;
-        height: 24px;
-        filter: invert(1);
-    }
+	&>img {
+		width: 24px;
+		height: 24px;
+		filter: invert(1);
+	}
 }
 
 .new__folder__dialog__form {
-    display: flex;
-    gap: 1.5rem;
-    flex-direction: column;
-    margin: 1rem 0;
+	display: flex;
+	gap: 1.5rem;
+	flex-direction: column;
+	margin: 1rem 0;
 
-    & input {
-        margin-top: 1rem;
-        font-size: 15px;
-        font-family: inherit;
-        padding: .5rem;
-        width: 100%;
-        outline: none;
-        border: none;
-        border-radius: .5rem;
-        transition: all 300ms ease-in-out;
+	& input {
+		margin-top: 1rem;
+		font-size: 15px;
+		font-family: inherit;
+		padding: .5rem;
+		width: 100%;
+		outline: none;
+		border: none;
+		border-radius: .5rem;
+		transition: all 300ms ease-in-out;
+		background-color: #334;
 
-        &:focus {
-            background-color: #fff5;
-        }
-    }
+		&:focus {
+			background-color: #fff5;
+		}
+	}
 }
 
 .new__folder__dialog__form__label {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 .new__folder__dialog__form__favorite {
-    display: flex;
-    gap: .5rem;
-    justify-content: flex-start;
-    flex-direction: row-reverse;
-    align-items: center;
+	display: flex;
+	gap: .5rem;
+	justify-content: flex-start;
+	flex-direction: row-reverse;
+	align-items: center;
 
-    & input[type="checkbox"] {
-        appearance: none;
-        width: 20px;
-        height: 20px;
-        cursor: pointer;
-        vertical-align: middle;
-        margin: 0;
-        border-radius: 0.25rem;
-        color: white;
-        background-color: #22f;
-        display: grid;
-        place-content: center;
-        transform-origin: center center;
+	& input[type="checkbox"] {
+		appearance: none;
+		width: 20px;
+		height: 20px;
+		cursor: pointer;
+		vertical-align: middle;
+		margin: 0;
+		border-radius: 0.25rem;
+		color: white;
+		background-color: #22f;
+		display: grid;
+		place-content: center;
+		transform-origin: center center;
 
-        &::before {
-            content: "";
-            width: 16px;
-            height: 16px;
-            color: white;
-        }
+		&::before {
+			content: "";
+			width: 16px;
+			height: 16px;
+			color: white;
+		}
 
-        &:checked::before {
-            box-shadow: inset 1em 1em white;
-            clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-        }
+		&:checked::before {
+			box-shadow: inset 1em 1em white;
+			clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+		}
 
-        &:checked {
-            background-color: #88f;
-        }
-    }
+		&:checked {
+			background-color: #88f;
+		}
+	}
 }
 
 .new__folder__dialog__buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
 
-    &>button {
-        cursor: pointer;
-        border: none;
-        outline: none;
-        padding: .5rem 2rem;
-        border-radius: 1rem;
-        font-family: inherit;
-        background-color: var(--main-color);
-        transition: all 150ms ease-in-out;
+	&>button {
+		cursor: pointer;
+		border: none;
+		outline: none;
+		padding: .5rem 2rem;
+		border-radius: 1rem;
+		font-family: inherit;
+		background-color: var(--main-color);
+		transition: all 150ms ease-in-out;
 
-        &:nth-child(1) {
-            background-color: var(--main-color-dark);
-        }
+		&:nth-child(1) {
+			background-color: var(--main-color-dark);
+		}
 
-        &:hover {
-            background-color: var(--main-color-hover);
-        }
+		&:hover {
+			background-color: var(--main-color-hover);
+		}
 
-    }
+	}
 }
