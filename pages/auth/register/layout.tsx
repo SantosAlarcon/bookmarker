@@ -1,5 +1,11 @@
+import { Gabarito } from "next/font/google"
 import { Toaster } from "sonner"
 import Head from "next/head"
+
+const gabarito = Gabarito({
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700", "800", "900"]
+})
 
 export default function AuthLayout({
     children,
@@ -36,7 +42,9 @@ export default function AuthLayout({
                 />
                 <meta property="og:site_name" content="Bookmarker" />
             </Head>
-            {children}
+            <div className={gabarito.className}>
+                {children}
+            </div>
             <Toaster position="top-center" richColors />
         </>
     )

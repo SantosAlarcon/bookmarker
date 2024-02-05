@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-const ResetPasswordPage = async() => {
+const ResetPasswordPage = async () => {
     const supabase = createServerComponentClient({ cookies });
     const { data } = await supabase.auth.getSession();
 
@@ -13,13 +13,13 @@ const ResetPasswordPage = async() => {
         redirect('/');
     }
 
-    return ( 
-            <>
+    return (
+        <>
             <Head>
-               <title>Reset password - Bookmarker</title> 
+                <title>Reset password - Bookmarker</title>
             </Head>
             <ResetPassword />
-            </>
+        </>
     )
 
 }
