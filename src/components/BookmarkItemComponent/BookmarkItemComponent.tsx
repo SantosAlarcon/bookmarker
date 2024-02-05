@@ -28,7 +28,7 @@ const BookmarkItemComponent = (props: BICProps) => {
 						/>
 					</picture>
 				) : (
-					<Image width={16} height={16} alt="Folder icon" src="/bookmark.svg" />
+					<Image width={16} height={16} alt="Folder icon" src="/icons/bookmark.svg" />
 				)}
 			</div>
 			<Link

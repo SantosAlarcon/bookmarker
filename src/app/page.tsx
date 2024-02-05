@@ -10,12 +10,9 @@ export default async function Home() {
     const supabase: SupabaseClient = createClient(cookies())
     const {data} = await supabase.auth?.getSession();
     
-    console.log("SESION: ", data)
-
     if (!data.session) {
         redirect("/auth/login")
     }
-
 
     return (
         <div className={styles.main}>

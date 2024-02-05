@@ -60,7 +60,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 			>
 				<div className={styles.confirm__delete__dialog__title}>
 					<Image
-						src="/trash-icon.svg"
+						src="/icons/trash-icon.svg"
 						alt="Trash icon"
 						width={16}
 						height={16}

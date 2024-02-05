@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
 
   if (token_hash && type) {
-    const supabase = createClient(cookieStore)
+    const supabase = await createClient(cookieStore)
 
 
     const { error } = await supabase.auth.verifyOtp({

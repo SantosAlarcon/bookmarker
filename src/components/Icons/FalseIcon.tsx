@@ -3,7 +3,7 @@ import React from 'react'
 
 const FalseIcon = () => {
     return (
-        <Image src="/false-icon.svg" width={24} height={24} alt="False icon" />
+        <Image src="/icons/false-icon.svg" width={24} height={24} alt="False icon" />
     )
 }
 

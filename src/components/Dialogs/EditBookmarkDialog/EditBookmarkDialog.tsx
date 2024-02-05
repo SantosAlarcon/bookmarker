@@ -101,7 +101,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
       >
         <div className={styles.edit__bookmark__dialog__title}>
           <Image
-            src="/edit-icon.svg"
+            src="/icons/edit-icon.svg"
             alt="Edit bookmark icon"
             width={16}
             height={16}

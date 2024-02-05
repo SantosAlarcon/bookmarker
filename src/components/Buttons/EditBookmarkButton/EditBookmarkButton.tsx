@@ -43,7 +43,7 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
 				content="Edit bookmark"
 				className={tooltipStyles.custom__tooltip}
 			/>
-			<Image width={24} height={24} src="/edit-icon.svg" alt="Edit icon" />
+			<Image width={24} height={24} src="/icons/edit-icon.svg" alt="Edit icon" />
 		</button>
 	)
 }

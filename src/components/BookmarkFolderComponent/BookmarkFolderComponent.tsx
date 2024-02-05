@@ -36,13 +36,13 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                         width={16}
                         height={16}
                         alt="Marker"
-                        src="/triangle.svg"
+                        src="/icons/triangle.svg"
                         className={styles.bookmark__folder__mark__icon}
                         style={expanded ? { rotate: "90deg" } : { rotate: "0deg" }}
                     />
                 </div>
                 <div className={styles.bookmark__folder__icon}>
-                    <Image width={24} height={24} alt="Folder icon" src="/folder.svg" />
+                    <Image width={24} height={24} alt="Folder icon" src="/icons/folder.svg" />
                 </div>
                 <div
                     className={styles.bookmark__folder__title}

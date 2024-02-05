@@ -72,7 +72,7 @@ const EditFolderDialog = ({ title }: Props) => {
 			onClose={closeDialog}
 		>
 			<div className={styles.edit__folder__dialog__title}>
-				<Image src="/edit-icon.svg" alt="Edit icon" width={16} height={16} />
+				<Image src="/icons/edit-icon.svg" alt="Edit icon" width={16} height={16} />
 				<h4 className={styles.edit__folder__dialog__title__text}>{title}</h4>
 			</div>
 			<div className={styles.edit__folder__dialog__content}>

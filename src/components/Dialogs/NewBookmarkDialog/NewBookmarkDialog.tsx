@@ -86,7 +86,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 				<Image
 					width={24}
 					height={24}
-					src="/add-bookmark-icon.svg"
+					src="/icons/add-bookmark-icon.svg"
 					alt="Add bookmark icon"
 				/>
 				<h4 className={styles.new__bookmark__dialog__title__text}>{title}</h4>

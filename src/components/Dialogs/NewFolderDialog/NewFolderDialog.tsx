@@ -59,7 +59,7 @@ const NewFolderDialog = ({ title }: Props) => {
 				<Image
 					width={24}
 					height={24}
-					src="/add-folder-icon.svg"
+					src="/icons/add-folder-icon.svg"
 					alt="Add folder icon"
 				/>
 				<h4 className={styles.new__folder__dialog__title__text}>{title}</h4>

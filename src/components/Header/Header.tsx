@@ -26,10 +26,6 @@ const Header = () => {
         showNewFolderModal()
     }
 
-    const handleAuth = async () => {
-        router.push("/auth/login")
-    }
-
     const handleSort = async () => {
         await updateSortedBookmarkList()
         router.refresh()
@@ -71,7 +67,7 @@ const Header = () => {
                             <Image
                                 width={32}
                                 height={32}
-                                src="/add-bookmark-icon.svg"
+                                src="/icons/add-bookmark-icon.svg"
                                 alt="New bookmark icon"
                             />
                         </button>
@@ -93,7 +89,7 @@ const Header = () => {
                             <Image
                                 width={32}
                                 height={32}
-                                src="/add-folder-icon.svg"
+                                src="/icons/add-folder-icon.svg"
                                 alt="New folder icon"
                             />
                         </button>
@@ -115,7 +111,7 @@ const Header = () => {
                             <Image
                                 width={32}
                                 height={32}
-                                src="/sort-icon.svg"
+                                src="/icons/sort-icon.svg"
                                 alt="Sort icon"
                             />
                         </button>

@@ -40,7 +40,7 @@ const RemoveButton = ({ children }: RemoveProps) => {
 				variant="info"
 				className={tooltipStyles.custom__tooltip}
 			/>
-			<Image width={24} height={24} src="/trash-icon.svg" alt="Trash icon" />
+			<Image width={24} height={24} src="/icons/trash-icon.svg" alt="Trash icon" />
 		</button>
 	)
 }

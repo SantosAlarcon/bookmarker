@@ -40,7 +40,7 @@ const UserContextMenu = () => {
     return (
         <Menu id="userContext" theme='dark' style={{marginTop: "2rem"}}>
             <Item id="user-profile" onClick={handleItemClick}>
-                <Image src="/user.svg" width={16} height={16} alt="User icon" style={{
+                <Image src="/icons/user.svg" width={16} height={16} alt="User icon" style={{
                     marginRight: "1rem"
                 }} />
                 User profile
@@ -49,7 +49,7 @@ const UserContextMenu = () => {
                 await supabase.auth.signOut({scope: "global"});
                 router.push("/auth/login")
             }}>
-                <Image src="/logout.svg" width={16} height={16} alt="User icon" style={{
+                <Image src="/icons/logout.svg" width={16} height={16} alt="User icon" style={{
                     marginRight: "1rem",
                     filter: "invert(1)"
                 }} />
