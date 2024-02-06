@@ -12,10 +12,13 @@ import { createClient } from '@/app/utils/supabase/client'
 import { handleUserContextMenu } from '@/components/Header/UserContextMenu'
 import { UserMetadata } from '@supabase/supabase-js'
 import getUserMetadata from '@/app/utils/getUserMetadata'
+import { authStore } from '@/store/authStore'
 
 const AuthButton = () => {
-    const [session, setSession] = useState<Session | null>(null)
-    const [metadata, setMetadata] = useState<UserMetadata | undefined>(undefined)
+    const setSession = authStore(state => state.setSession)
+    const session: Session | null = authStore(state => state.session)
+    const setMetadata = authStore(state => state.setMetadata)
+    const metadata: UserMetadata | null = authStore(state => state.metadata)
     const supabase: SupabaseClient = createClient();
     const router: AppRouterInstance = useRouter();
 
@@ -26,11 +29,19 @@ const AuthButton = () => {
         }
 
         const getMetadata = async () => {
-            setMetadata(await getUserMetadata());
+            const md = await getUserMetadata();
+            setMetadata(md);
         }
-        fetchSession()
-        getMetadata()
-    }, [supabase.auth])
+
+        if (!session) {
+            fetchSession()
+        }
+
+        if (!metadata) {
+            getMetadata()
+        }
+
+    }, [supabase.auth, setSession, session, setMetadata, metadata])
     
     const handleAuth = (event: SyntheticEvent) => {
         // If there is no session, redirect user to the login page

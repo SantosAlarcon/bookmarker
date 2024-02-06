@@ -30,6 +30,7 @@ const UserContextMenu = () => {
     const handleItemClick = (params: ItemParams) => {
         switch (params.id) {
             case "user-profile":
+                router.prefetch("/profile")
                 router.push("/profile")
                 break;
             default:

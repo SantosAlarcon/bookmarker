@@ -20,6 +20,21 @@ const BookmarksView = () => {
 	const [session, setSession] = useState<any>(null)
 	const supabase: SupabaseClient = createClientComponentClient();
 
+    useEffect(() => {
+        const getSession = async () => {
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession()
+                setSession(session)
+                if (error) {
+                    console.error("ERROR:", error)
+                }
+            } catch (error) {
+                console.error("ERROR:", error)
+            }
+        }
+        getSession()
+    }, [supabase.auth])
+
 	// In the first render, get all the bookmarks from the JSON file/DB.
 	useEffect(() => {
 		const getBookmarks = async () => {
@@ -28,23 +43,13 @@ const BookmarksView = () => {
 			setBookmarksList(response)
 			setLoading(false)
 		}
-		getBookmarks()
-	}, [setBookmarksList])
 
-	useEffect(() => {
-		const getSession = async () => {
-			try {
-				const { data: { session }, error } = await supabase.auth.getSession()
-				setSession(session)
-				if (error) {
-					console.error("ERROR:", error)
-				}
-			} catch (error) {
-				console.error("ERROR:", error)
-			}
-		}
-		getSession()
-	}, [supabase.auth])
+        // If there is no bookmarks in the store, fetch them.
+        // It avoids the rerender when navigating to a page.
+        if (bookmarksList.length === 0) {
+            getBookmarks()
+        }
+	}, [setBookmarksList, bookmarksList])
 
 	return (
 		<>

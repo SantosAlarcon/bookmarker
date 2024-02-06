@@ -41,10 +41,13 @@ const LoadingComponent = () => {
 
         // If the login is succesfull, redirect to the main page
         if (isLoggedIn) {
+            router.prefetch("/")
             router.push("/")
         }
 
 		setFormData({ ...formData, loading: false })
+
+        // Reset the form
 		setFormData({ email: "", password: "", loading: false })
 	}
 
