@@ -37,7 +37,7 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
             aria-label="Edit folder"
 		>
 			<Tooltip anchorSelect="#edit__folder__button" variant="info" className={tooltipStyles.custom__tooltip} content="Edit folder" />
-			<Image width={24} height={24} src="/icons/edit-icon.svg" alt="Edit icon" />
+			<Image width={24} height={24} src="/icons/edit-icon.svg" alt="Edit icon" priority />
 		</button>
 	)
 }

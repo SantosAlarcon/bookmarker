@@ -38,7 +38,7 @@ const UserContextMenu = () => {
     }
 
     return (
-        <Menu id="userContext" theme='dark' style={{marginTop: "2rem"}}>
+        <Menu id="userContext" theme='dark' style={{marginTop: "2rem", marginLeft: "-2rem", minWidth: "10rem"}}>
             <Item id="user-profile" onClick={handleItemClick}>
                 <Image src="/icons/user.svg" width={16} height={16} alt="User icon" style={{
                     marginRight: "1rem"

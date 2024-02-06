@@ -36,9 +36,9 @@ export default async function PrivatePage() {
             <span className={styles.user__info__data__grid__field__name}>Verified by email:</span>
             <span className={styles.user__info__data__grid__field__value}>{metadata?.email_verified ? <TrueIcon /> : <FalseIcon />}</span>
             <span className={styles.user__info__data__grid__field__name}>Creation date:</span>
-            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.created_at).toLocaleString("es", { day: "numeric", month: "long", year: "numeric" })}</span>
+            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.created_at).toLocaleString("en", { day: "numeric", month: "long", year: "numeric" })}</span>
             <span className={styles.user__info__data__grid__field__name}>Last login date:</span>
-            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.last_sign_in_at!).toLocaleString("es", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric" })}</span>
+            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.last_sign_in_at!).toLocaleString("en", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric", hour12: false })}</span>
         </div>
         <Link className={styles.user__info__link} href="/">Back to home</Link>
     </section>)

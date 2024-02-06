@@ -1,5 +1,4 @@
 import { create } from "zustand"
-import zukeeper from "zukeeper"
 
 type ModalState = {
 	deleteConfirmModal: boolean
@@ -53,70 +52,69 @@ type Action = {
 	setDeleteProps: (id: string, title: string, type: "bookmark" | "folder") => void
 }
 
-export const modalStore = create<ModalState & Action>(
-	zukeeper((set: Function) => ({
-		deleteConfirmModal: false,
-		editFolderModal: false,
-		editBookmarkModal: false,
-		newBookmarkModal: false,
-		newFolderModal: false,
-		editFolderData: {
-			id: "",
-			title: "",
-			description: "",
-			favicon: "",
-			children: [],
-		},
-		editBookmarkData: {
-			id: "",
-			title: "",
-			url: "",
-			parentFolder: null,
-		},
-		deleteProps: {
-			id: "",
-			title: "",
-			type: ""
-		},
-		showNewBookmarkModal: () => set({ newBookmarkModal: true }),
-		hideNewBookmarkModal: () => set({ newBookmarkModal: false }),
-		showNewFolderModal: () => set({ newFolderModal: true }),
-		hideNewFolderModal: () => set({ newFolderModal: false }),
-		showDeleteConfirmModal: () => set({ deleteConfirmModal: true }),
-		hideDeleteConfirmModal: () => set({ deleteConfirmModal: false }),
-		showEditBookmarkModal: () => set({ editBookmarkModal: true }),
-		hideEditBookmarkModal: () => set({ editBookmarkModal: false }),
-		showEditFolderModal: () => set({ editFolderModal: true }),
-		hideEditFolderModal: () => set({ editFolderModal: false }),
-		modifyEditFolderData: (
-			id: string,
-			title: string,
-			description: string,
-			children: []
-		) =>
-			set({
-				editFolderData: {
-					id: id,
-					title: title,
-					description: description,
-					children: children,
-				},
-			}),
-		modifyEditBookmarkData: (
-			id: string,
-			title: string,
-			url: string,
-			parentFolder: string | null
-		) =>
-			set({
-				editBookmarkData: {
-					id: id,
-					title: title,
-					url: url,
-					parentFolder: parentFolder,
-				},
-			}),
-		setDeleteProps: (id: string, title: string, type: "bookmark" | "folder") =>
-			set({ deleteProps: { id: id, title: title, type: type } }),
-	}))
-)
+// @ts-ignore
+export const modalStore = create<ModalState & Action>((set: Function) => ({
+	deleteConfirmModal: false,
+	editFolderModal: false,
+	editBookmarkModal: false,
+	newBookmarkModal: false,
+	newFolderModal: false,
+	editFolderData: {
+		id: "",
+		title: "",
+		description: "",
+		favicon: "",
+		children: [],
+	},
+	editBookmarkData: {
+		id: "",
+		title: "",
+		url: "",
+		parentFolder: null,
+	},
+	deleteProps: {
+		id: "",
+		title: "",
+		type: ""
+	},
+	showNewBookmarkModal: () => set({ newBookmarkModal: true }),
+	hideNewBookmarkModal: () => set({ newBookmarkModal: false }),
+	showNewFolderModal: () => set({ newFolderModal: true }),
+	hideNewFolderModal: () => set({ newFolderModal: false }),
+	showDeleteConfirmModal: () => set({ deleteConfirmModal: true }),
+	hideDeleteConfirmModal: () => set({ deleteConfirmModal: false }),
+	showEditBookmarkModal: () => set({ editBookmarkModal: true }),
+	hideEditBookmarkModal: () => set({ editBookmarkModal: false }),
+	showEditFolderModal: () => set({ editFolderModal: true }),
+	hideEditFolderModal: () => set({ editFolderModal: false }),
+	modifyEditFolderData: (
+		id: string,
+		title: string,
+		description: string,
+		children: []
+	) =>
+		set({
+			editFolderData: {
+				id: id,
+				title: title,
+				description: description,
+				children: children,
+			},
+		}),
+	modifyEditBookmarkData: (
+		id: string,
+		title: string,
+		url: string,
+		parentFolder: string | null
+	) =>
+		set({
+			editBookmarkData: {
+				id: id,
+				title: title,
+				url: url,
+				parentFolder: parentFolder,
+			},
+		}),
+	setDeleteProps: (id: string, title: string, type: "bookmark" | "folder") =>
+		set({ deleteProps: { id: id, title: title, type: type } }),
+}))
