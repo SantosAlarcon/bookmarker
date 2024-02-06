@@ -9,8 +9,7 @@ import {
 	signUpWithFacebook,
 	signUpWithEmail,
 } from "@/app/utils/signUp"
-import { FormEvent, useState, useContext } from "react"
-import { AuthContext } from "../AuthProvider"
+import { FormEvent, useState } from "react"
 import Spinner from "@/components/Spinner/Spinner"
 import { toast } from "sonner"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
@@ -31,8 +30,6 @@ const RegisterComponent = () => {
 		loading: false,
 	})
 
-	const session = useContext(AuthContext)
-
 	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 		setFormData({ ...formData, loading: true })
@@ -51,12 +48,12 @@ const RegisterComponent = () => {
 	return (
 		<section className={styles.register__page__container}>
 			<div className={styles.register__page__logo}>
-				<Image src="/BookmarkerLogo.svg" alt="logo" width={450} height={200} />
+				<Image src="/BookmarkerLogo.svg" alt="logo" width={450} height={150} priority />
 			</div>
 			<div className={styles.register__page__box}>
 				<h2 className={styles.register__page__title}>Register</h2>
 				<div className={styles.register__page__text}>
-					Start managing your bookmarks in one place by login out of your account.
+					Start managing your bookmarks in one place by sign up your account.
 				</div>
 				<div className={styles.register__page__social__buttons}>
 					<button
@@ -68,6 +65,7 @@ const RegisterComponent = () => {
 							alt="Google Logo"
 							width={20}
 							height={20}
+                            priority
 						/>
 						Sign Up with Google
 					</button>
@@ -80,6 +78,7 @@ const RegisterComponent = () => {
 							alt="GitHub Logo"
 							width={20}
 							height={20}
+                            priority
 						/>
 						Sign Up with GitHub
 					</button>
@@ -92,6 +91,7 @@ const RegisterComponent = () => {
 							alt="Facebook Logo"
 							width={20}
 							height={20}
+                            priority
 						/>
 						Sign Up with Facebook
 					</button>
@@ -119,12 +119,13 @@ const RegisterComponent = () => {
 							className={styles.register__page__social__button}
 							type="submit"
 						>
-							<Image
+                            {formData.loading ? <Spinner /> : (<Image
 								src="/social/email.svg"
 								alt="Email Logo"
 								width={20}
 								height={20}
-							/>
+                                priority
+							/>)}
 							Sign Up with Email
 						</button>
 					</form>
@@ -135,9 +136,6 @@ const RegisterComponent = () => {
 				<Link href="/reset-password" className={styles.register__page__link}>
 					Cannot log in? <b>Click to reset password</b>
 				</Link>
-				<div className={styles.register__page__loading}>
-					{formData.loading && <Spinner />}
-				</div>
 			</div>
 		</section>
 	)

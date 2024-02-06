@@ -51,12 +51,12 @@ const LoadingComponent = () => {
 	return (
 		<section className={styles.login__page__container}>
 			<div className={styles.login__page__logo}>
-				<Image src="/BookmarkerLogo.svg" alt="logo" width={450} height={200} />
+				<Image src="/BookmarkerLogo.svg" alt="logo" width={450} height={150} priority />
 			</div>
 			<div className={styles.login__page__box}>
 				<h2 className={styles.login__page__title}>Login</h2>
 				<div className={styles.login__page__text}>
-					Start managing your bookmarks in one place by login out of your account.
+					Start managing your bookmarks in one place by login of your account.
 				</div>
 				<div className={styles.login__page__social__buttons}>
 					<button
@@ -69,6 +69,7 @@ const LoadingComponent = () => {
 							alt="Google Logo"
 							width={20}
 							height={20}
+                            priority
 						/>
 						Sign In with Google
 					</button>
@@ -82,6 +83,7 @@ const LoadingComponent = () => {
 							alt="GitHub Logo"
 							width={20}
 							height={20}
+                            priority
 						/>
 						Sign In with GitHub
 					</button>
@@ -95,6 +97,7 @@ const LoadingComponent = () => {
 							alt="Facebook Logo"
 							width={20}
 							height={20}
+                            priority
 						/>
 						Sign In with Facebook
 					</button>
@@ -128,6 +131,7 @@ const LoadingComponent = () => {
 								alt="Email Logo"
 								width={20}
 								height={20}
+                                priority
 							/>}
 							Sign In with Email
 						</button>
