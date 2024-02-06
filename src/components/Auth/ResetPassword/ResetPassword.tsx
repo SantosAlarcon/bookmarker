@@ -56,7 +56,7 @@ const ResetPassword = () => {
                         {loading ? <Spinner /> : "Reset password"}
                     </button>
                 </form>
-                <Link href="/auth/register" className={styles.reset__password__link}>
+                <Link href="/auth/login" className={styles.reset__password__link}>
                     Remember your password? <b>Sign in.</b>
                 </Link>
             </div>
