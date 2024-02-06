@@ -21,5 +21,5 @@ const connection = window.__REDUX_DEVTOOLS_EXTENSION__?.connect({
 connection?.init(bookmarksStore.getState())
 
 bookmarksStore.subscribe((state: State & Action) => {
-	connection?.send("State", JSON.stringify(state));
+	connection?.send("State", state);
 })

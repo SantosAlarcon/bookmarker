@@ -42,7 +42,7 @@ const AuthButton = () => {
         }
     }
 
-    return (
+    return (metadata && (
         <div className={styles.auth__button__container}>
             <button
                 onClick={(e) => handleAuth(e)}
@@ -68,7 +68,7 @@ const AuthButton = () => {
                     />)}
             </button>
         </div>
-    )
+    ))
 }
 
 export default AuthButton;
