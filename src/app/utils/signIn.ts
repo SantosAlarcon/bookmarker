@@ -1,6 +1,7 @@
 // These functions are used to sign in the user depending of the provider
 import { authStore } from "@/store/authStore";
 import { SupabaseClient } from "@supabase/supabase-js";
+import { redirect } from "next/navigation";
 import { toast } from "sonner";
 
 export const signInWithGoogle = async (client: SupabaseClient) => {
