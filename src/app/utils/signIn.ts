@@ -9,6 +9,7 @@ export const signInWithGoogle = async (client: SupabaseClient) => {
     const { error, data } = await client.auth.signInWithOAuth({
         provider: "google",
         options: {
+            redirectTo: "http://localhost:3000/auth/callback",
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
@@ -26,6 +27,7 @@ export const signInWithGitHub = async (client: SupabaseClient) => {
     const { error, data } = await client.auth.signInWithOAuth({
         provider: "github",
         options: {
+            redirectTo: "http://localhost:3000/auth/callback",
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
@@ -42,6 +44,7 @@ export const signInWithFacebook = async (client: SupabaseClient) => {
     await client.auth.signInWithOAuth({
         provider: "facebook",
         options: {
+            redirectTo: "http://localhost:3000/auth/callback",
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
