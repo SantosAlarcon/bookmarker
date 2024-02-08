@@ -35,9 +35,8 @@ export async function GET(request: Request) {
 
         // If there is no error, set session in the auth store and redirects to the main page
         if (!error) {
-            const session: Session | null = authStore.getState().session
             // @ts-ignore
-            authStore.setState((state) => state.session = session)
+            authStore.setState((state) => state.session = data?.session)
             return NextResponse.redirect(`${origin}${next}`)
         }
     }

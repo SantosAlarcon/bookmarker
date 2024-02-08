@@ -23,7 +23,7 @@ export const authStore = create<State & Action>((set: Function) => ({
 }))
 
 // @ts-ignore
-const connection = window.__REDUX_DEVTOOLS_EXTENSION__?.connect({
+/*const connection = window.__REDUX_DEVTOOLS_EXTENSION__?.connect({
 	name: "Auth",
 })
 
@@ -31,4 +31,4 @@ connection?.init(authStore.getState())
 
 authStore.subscribe((state: State & Action) => {
 	connection?.send("Auth", state);
-})
+})*/
