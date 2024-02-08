@@ -1,15 +1,21 @@
 // These functions are used to sign in the user depending of the provider
-import { authStore } from "@/store/authStore";
 import { SupabaseClient } from "@supabase/supabase-js";
-import { redirect } from "next/navigation";
 import { toast } from "sonner";
+
+let callbackUrl: string = "";
+
+if (process.env.NODE_ENV === "development") {
+    callbackUrl = "http://localhost:3000/auth/callback"
+} else if (process.env.NODE_ENV === "production") {
+    callbackUrl = "http://bookmarker-rho.vercel.app/auth/callback"
+}
 
 export const signInWithGoogle = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
     const { error, data } = await client.auth.signInWithOAuth({
         provider: "google",
         options: {
-            redirectTo: "http://localhost:3000/auth/callback",
+            redirectTo: callbackUrl,
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
@@ -27,7 +33,7 @@ export const signInWithGitHub = async (client: SupabaseClient) => {
     const { error, data } = await client.auth.signInWithOAuth({
         provider: "github",
         options: {
-            redirectTo: "http://localhost:3000/auth/callback",
+            redirectTo: callbackUrl,
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
@@ -44,7 +50,7 @@ export const signInWithFacebook = async (client: SupabaseClient) => {
     await client.auth.signInWithOAuth({
         provider: "facebook",
         options: {
-            redirectTo: "http://localhost:3000/auth/callback",
+            redirectTo: callbackUrl,
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
