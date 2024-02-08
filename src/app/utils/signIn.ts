@@ -7,7 +7,7 @@ let callbackUrl: string = "";
 if (process.env.NODE_ENV === "development") {
     callbackUrl = "http://localhost:3000/auth/callback"
 } else if (process.env.NODE_ENV === "production") {
-    callbackUrl = "http://bookmarker-rho.vercel.app/auth/callback"
+    callbackUrl = "https://bookmarker-rho.vercel.app/auth/callback"
 }
 
 export const signInWithGoogle = async (client: SupabaseClient) => {
