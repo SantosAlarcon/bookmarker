@@ -1,6 +1,8 @@
 <div align="center">
 
-![Bookmarker Logo](https://raw.githubusercontent.com/SantosAlarcon/bookmarker/86ea9cf8e397bcc1872a304b2144de7fdb014259/public/BookmarkerLogo.svg)
+<img alt="Bookmarker Logo" src="https://raw.githubusercontent.com/SantosAlarcon/bookmarker/86ea9cf8e397bcc1872a304b2144de7fdb014259/public/BookmarkerLogo.svg" height="128px">
+
+<br>
 
 **Bookmarker** is a bookmark manager that lets you manage your bookmarks and folders everywhere, whatever you are in mobile or your PC.
 
