@@ -9,7 +9,7 @@ import {
 	signInWithFacebook,
 	signInWithEmail,
 } from "@/app/utils/signIn"
-import { FormEvent, useState} from "react"
+import { FormEvent, useState } from "react"
 import Spinner from "@/components/Spinner/Spinner"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
@@ -25,7 +25,7 @@ interface FormData {
 
 const LoadingComponent = () => {
 	const supabase: SupabaseClient = createClient();
-    const router: AppRouterInstance = useRouter();
+	const router: AppRouterInstance = useRouter();
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
@@ -39,15 +39,15 @@ const LoadingComponent = () => {
 		setFormData({ ...formData, loading: true })
 		const isLoggedIn: boolean | undefined = await signInWithEmail(formData.email, formData.password, supabase)
 
-        // If the login is succesfull, redirect to the main page
-        if (isLoggedIn) {
-            router.prefetch("/")
-            router.push("/")
-        }
+		// If the login is succesfull, redirect to the main page
+		if (isLoggedIn) {
+			router.prefetch("/")
+			router.push("/")
+		}
 
 		setFormData({ ...formData, loading: false })
 
-        // Reset the form
+		// Reset the form
 		setFormData({ email: "", password: "", loading: false })
 	}
 
@@ -65,42 +65,42 @@ const LoadingComponent = () => {
 					<button
 						className={styles.login__page__social__button}
 						onClick={() => signInWithGoogle(supabase)}
-                        disabled={formData.loading}
+						disabled={formData.loading}
 					>
 						<Image
 							src="/social/google.svg"
 							alt="Google Logo"
 							width={20}
 							height={20}
-                            priority
+							priority
 						/>
 						Sign In with Google
 					</button>
 					<button
 						className={styles.login__page__social__button}
 						onClick={() => signInWithGitHub(supabase)}
-                        disabled={formData.loading}
+						disabled={formData.loading}
 					>
 						<Image
 							src="/social/github.svg"
 							alt="GitHub Logo"
 							width={20}
 							height={20}
-                            priority
+							priority
 						/>
 						Sign In with GitHub
 					</button>
 					<button
 						className={styles.login__page__social__button}
 						onClick={() => signInWithFacebook(supabase)}
-                        disabled={formData.loading}
+						disabled={formData.loading}
 					>
 						<Image
 							src="/social/facebook.svg"
 							alt="Facebook Logo"
 							width={20}
 							height={20}
-                            priority
+							priority
 						/>
 						Sign In with Facebook
 					</button>
@@ -127,14 +127,14 @@ const LoadingComponent = () => {
 						<button
 							className={styles.login__page__social__button}
 							type="submit"
-                            disabled={formData.loading}
+							disabled={formData.loading}
 						>
-                            {formData.loading ? <Spinner /> : <Image
+							{formData.loading ? <Spinner /> : <Image
 								src="/social/email.svg"
 								alt="Email Logo"
 								width={20}
 								height={20}
-                                priority
+								priority
 							/>}
 							Sign In with Email
 						</button>

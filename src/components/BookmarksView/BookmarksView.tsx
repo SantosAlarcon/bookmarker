@@ -4,20 +4,22 @@ import styles from "./BookmarksView.module.scss"
 import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderComponent"
 import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton"
 import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent"
-import getAllBookmarks from "@/app/lib/bookmarks/getAllBookmarks"
 import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog"
 import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog"
 import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDialog"
 import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import { bookmarksStore } from "@/store/bookmarksStore"
-import { SupabaseClient } from "@supabase/supabase-js"
+import { Session, SupabaseClient } from "@supabase/supabase-js"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
+import getAllBookmarks from "@/app/utils/supabase/bookmarks/getAllBookmarks"
+import { authStore } from "@/store/authStore"
 
 const BookmarksView = () => {
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList)
 	const setBookmarksList = bookmarksStore((state) => state.setBookmarksList)
+	const session = authStore((state) => state.session)
+	const setSession = authStore((state) => state.setSession)
 	const [loading, setLoading] = useState<boolean>(false);
-	const [session, setSession] = useState<any>(null)
 	const supabase: SupabaseClient = createClientComponentClient();
 
     useEffect(() => {
@@ -33,13 +35,13 @@ const BookmarksView = () => {
             }
         }
         getSession()
-    }, [supabase.auth])
+    }, [supabase.auth, setSession])
 
 	// In the first render, get all the bookmarks from the JSON file/DB.
 	useEffect(() => {
 		const getBookmarks = async () => {
 			setLoading(true)
-			const response = await getAllBookmarks()
+			const response = await getAllBookmarks(session?.user?.id)
 			setBookmarksList(response)
 			setLoading(false)
 		}
@@ -49,7 +51,7 @@ const BookmarksView = () => {
         if (bookmarksList.length === 0) {
             getBookmarks()
         }
-	}, [setBookmarksList, bookmarksList])
+	}, [setBookmarksList, bookmarksList, session?.user.id])
 
 	return (
 		<>
