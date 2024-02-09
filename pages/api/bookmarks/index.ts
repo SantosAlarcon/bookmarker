@@ -13,12 +13,11 @@ export default async function handler(
 
 	// GET Method - Read from mockData.json file
 	if (req.method === "GET") {
-		console.log("body: ", req.body)
-		const id = req.body.id
-
-
-		if (id) {
-			//const data = await getAllBookmarks(id);
+		const userId: string | undefined = req.query.user
+        
+        // If there is a ID in the URL params, it get the bookmarks of the user containing that id and return them.
+		if (userId) {
+			const data = await getAllBookmarks(userId);
 			// Sort query param
 			const query = req.query.sort
 
@@ -43,7 +42,7 @@ export default async function handler(
 				// Save sorted data to JSON
 				return res.status(200).json(sortedData)
 			}*/
-			return res.status(200).json(id)
+			return res.status(200).json(data)
 		} else {
 			return res.status(400).json({
 				message: "ID is required to retrieve bookmark data",
