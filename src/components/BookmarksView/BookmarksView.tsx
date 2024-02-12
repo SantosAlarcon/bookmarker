@@ -41,7 +41,7 @@ const BookmarksView = () => {
 	useEffect(() => {
 		const getBookmarks = async () => {
 			setLoading(true)
-			//const response = await getAllBookmarks(session?.user?.id)
+			await getAllBookmarks()
 			//setBookmarksList(response)
 			setLoading(false)
 		}

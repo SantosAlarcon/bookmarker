@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import getAllBookmarks from "@/app/utils/supabase/bookmarks/getAllBookmarks";
+import { createClient } from "@/app/utils/supabase/client";
 
 export default async function handler(
 	req: NextApiRequest,
@@ -14,10 +15,17 @@ export default async function handler(
 	// GET Method - Read from mockData.json file
 	if (req.method === "GET") {
 		const userId: string | undefined = req.query.user
-        
-        // If there is a ID in the URL params, it get the bookmarks of the user containing that id and return them.
+
+		// If there is a ID in the URL params, it get the bookmarks of the user containing that id and return them.
 		if (userId) {
-			const data = await getAllBookmarks(userId);
+
+			const supabase = createClient()
+			const { data: user } = await supabase.auth.getUser()
+			const { data: session } = await supabase.auth.getSession()
+			const { data, error } = await supabase.from("bookmarks").select("bookmark_title").eq("bookmark_user_id", userId)
+
+			console.log(data);
+
 			// Sort query param
 			const query = req.query.sort
 
