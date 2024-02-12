@@ -9,10 +9,10 @@ import tooltipStyles from "@/app/tooltip.module.scss"
 
 interface EditBookmarkProps {
 	children: {
-		id: string
-		title: string
-		url: string
-		parentFolder: string | null
+		bookmark_id: string
+		bookmark_title: string
+		bookmark_url: string
+		bookmark_parentFolder: string | null
 	}
 }
 
@@ -23,10 +23,10 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
 	const modifyEditBookmarkData = modalStore(
 		(state) => state.modifyEditBookmarkData
 	)
-	const { id, title, url, parentFolder } = children
+	const { bookmark_id, bookmark_title, bookmark_url, bookmark_parentFolder } = children
 
 	const handleClick = () => {
-		modifyEditBookmarkData(id, title, url, parentFolder)
+		modifyEditBookmarkData(bookmark_id, bookmark_title, bookmark_url, bookmark_parentFolder)
 		showEditBookmarkDialog()
 	}
 

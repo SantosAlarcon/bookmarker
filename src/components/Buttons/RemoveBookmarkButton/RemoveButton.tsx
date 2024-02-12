@@ -9,8 +9,8 @@ import tooltipStyles from "@/app/tooltip.module.scss"
 
 interface RemoveProps {
 	children: {
-		id: string
-		title: string
+		bookmark_id: string
+		bookmark_title: string
 	}
 }
 
@@ -19,10 +19,10 @@ const RemoveButton = ({ children }: RemoveProps) => {
 		(state) => state.showDeleteConfirmModal
 	)
 	const setDeleteProps = modalStore((state) => state.setDeleteProps)
-	const { id, title } = children
+	const { bookmark_id, bookmark_title } = children
 
 	const handleClick = () => {
-		setDeleteProps(id, title, "bookmark")
+		setDeleteProps(bookmark_id, bookmark_title, "bookmark")
 		showDeleteConfirmDialog()
 	}
 

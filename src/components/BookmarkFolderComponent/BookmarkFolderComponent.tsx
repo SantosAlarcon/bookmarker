@@ -9,9 +9,9 @@ import { motion } from "framer-motion"
 
 interface BFCProps {
     children: {
-        id: string
-        title: string
-        description: string
+        folder_id: string
+        folder_title: string
+        folder_description: string
         children: []
     }
 }
@@ -46,11 +46,11 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                 </div>
                 <div
                     className={styles.bookmark__folder__title}
-                    title={props.children.description}
+                    title={props.children.folder_description}
                     onClick={() => setExpanded(!expanded)}
                 >
                     <h4 className={styles.bookmark__folder__title__text}>
-                        {props.children.title}
+                        {props.children.folder_title}
                     </h4>
                 </div>
                 <EditFolderButton>{props.children}</EditFolderButton>
@@ -74,10 +74,10 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                             if ("children" in child) {
                                 return (
                                     <li
-                                        key={child.id}
+                                        key={child.folder_id}
                                         className={styles.bookmark__folder__links__link}
                                     >
-                                        <BookmarkFolderComponent key={child.id}>
+                                        <BookmarkFolderComponent key={child.folder_id}>
                                             {child}
                                         </BookmarkFolderComponent>
                                     </li>
@@ -85,10 +85,10 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                             } else {
                                 return (
                                     <li
-                                        key={child.id}
+                                        key={child.bookmark_id}
                                         className={styles.bookmark__folder__links__link}
                                     >
-                                        <BookmarkItemComponent key={child.id}>
+                                        <BookmarkItemComponent key={child.bookmark_id}>
                                             {child}
                                         </BookmarkItemComponent>
                                     </li>

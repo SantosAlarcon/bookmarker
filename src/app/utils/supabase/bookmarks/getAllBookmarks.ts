@@ -1,17 +1,14 @@
-import { UserResponse} from "@supabase/supabase-js";
-import { createClient } from "../client";
-
 // This function gets all bookmarks from a user passed by an id
-
 export default async function getAllBookmarks(id: string) {
-	const supabase = createClient()
-	const {data: user} = await supabase.auth.getUser()
-	const {data: session} = await supabase.auth.getSession()
-	console.table(session.session?.access_token);
-	const { data, error } = await supabase.from("bookmarks").select("bookmark_title").eq("bookmark_user_id", user.user?.id)
-	console.log("DATA: ", data);
-	if (error) {
-		throw new Error(error.message);
-	}
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/bookmarks`, {
+        headers: {
+            "apiKey": process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+            "Authorization": process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+        }
+    })
+
+    let data = await response.json();
+    data.filter((bookmark) => bookmark.bookmark_user_id === id);
+
 	return data;
 }

@@ -4,12 +4,13 @@ import React, { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
-import createNewBookmark from "@/app/lib/bookmarks/createNewBookmark"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
-import { getFolders } from "@/app/utils/folders/getFolders"
 import { BookmarkFolder } from "@/types/types"
 import { useRouter } from "next/navigation"
 import { bookmarksStore } from "@/store/bookmarksStore"
+import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders"
+import { createClient } from "@/app/utils/supabase/client"
+import { createNewBookmark } from "@/app/utils/supabase/bookmarks/createNewBookmark"
 
 type Props = {
 	title: string
@@ -35,7 +36,9 @@ const NewBookmarkDialog = ({ title }: Props) => {
 
 	useEffect(() => {
 		const getFolderList = async () => {
-			const folderList = await getFolders()
+            const supabase = createClient();
+            const {data: user} = await supabase.auth.getUser();
+			const folderList = await getAllFolders(user.user?.id)
 			setFolders(folderList)
 		}
 		getFolderList()
@@ -146,8 +149,8 @@ const NewBookmarkDialog = ({ title }: Props) => {
 							</option>
 							{folders &&
 								folders.map((folder: BookmarkFolder) => (
-									<option key={folder.id} value={folder.id}>
-										{folder.title}
+									<option key={folder.folder_id} value={folder.folder_id}>
+										{folder.folder_title}
 									</option>
 								))}
 						</select>

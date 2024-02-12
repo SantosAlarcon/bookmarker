@@ -1,16 +1,22 @@
-import { User, createClient } from "@supabase/supabase-js";
+import getFavicon from "../../getFavicon";
+import { createClient } from "../client";
 
-export async function createNewBookmark(id) {
-	const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
-	/*const { data } = await supabase.auth.getUser()
-	console.log(data)*/
+interface BookmarkProps {
+    title: string,
+    url: string,
+    parentFolder: string | null
+}
+
+export async function createNewBookmark(bookmark: BookmarkProps) {
+	const supabase = createClient();
+	const { data: {user} } = await supabase.auth.getUser()
 	const { data, error } = await supabase.from("bookmarks").insert({
 		bookmark_id: crypto.randomUUID(),
-		bookmark_title: "YouTube",
-		bookmark_url: "https://www.youtube.es",
-		bookmark_favicon: "https://www.youtube.es/favicon.ico",
-		bookmark_parentfolder: null,
-		bookmark_user_id: id
+		bookmark_title: bookmark.title,
+		bookmark_url: bookmark.url,
+		bookmark_favicon: await getFavicon(bookmark.url),
+		bookmark_parentfolder: bookmark.parentFolder,
+		bookmark_user_id: user?.id
 	})
 	if (error) {
 		throw new Error(error.message);

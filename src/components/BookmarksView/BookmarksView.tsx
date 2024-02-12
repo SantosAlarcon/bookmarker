@@ -41,8 +41,8 @@ const BookmarksView = () => {
 	useEffect(() => {
 		const getBookmarks = async () => {
 			setLoading(true)
-			await getAllBookmarks()
-			//setBookmarksList(response)
+			const response = await getAllBookmarks(session?.user?.id);
+			setBookmarksList(response)
 			setLoading(false)
 		}
 
@@ -51,7 +51,7 @@ const BookmarksView = () => {
         if (bookmarksList.length === 0) {
             getBookmarks()
         }
-	}, [setBookmarksList, bookmarksList])
+	}, [setBookmarksList, bookmarksList, session?.user?.id])
 
 	return (
 		<>
@@ -67,17 +67,21 @@ const BookmarksView = () => {
 					(
 						bookmarksList.length > 0 && !loading
 							// @ts-ignore
-							? bookmarksList.map((bookmark: BookmarkItem | BookmarkFolder) => {
+							? bookmarksList.map((bookmark: BookmarkItem & BookmarkFolder) => {
+                                // If the item contains the "children" key, it is treated as a folder
 								if ("children" in bookmark) {
-									// If the item contains the "children" key, it is treated as a folder
-									return (
-										<BookmarkFolderComponent key={bookmark.id}>
-											{bookmark}
-										</BookmarkFolderComponent>
-									)
+                                    // It renders the top level folders
+                                    if (bookmark.bookmark_parentFolder === null) {
+                                        console.log(bookmark);
+                                        return (
+                                            <BookmarkFolderComponent key={bookmark.folder_id}>
+                                                {bookmark}
+                                            </BookmarkFolderComponent>
+                                        )
+                                    }
 								} else {
 									return (
-										<BookmarkItemComponent key={bookmark.id}>
+										<BookmarkItemComponent key={bookmark.bookmark_id}>
 											{bookmark}
 										</BookmarkItemComponent>
 									)

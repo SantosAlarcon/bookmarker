@@ -6,11 +6,11 @@ import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
 import tooltipStyles from "@/app/tooltip.module.scss"
-
+  
 interface RemoveProps {
-	children: {
-		id: string
-		title: string
+	children: { 
+		folder_id: string
+		folder_title: string
 	}
 }
 
@@ -19,10 +19,10 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
 		(state) => state.showDeleteConfirmModal
 	)
 	const setDeleteProps = modalStore((state) => state.setDeleteProps)
-	const { id, title } = children
+	const { folder_id, folder_title } = children
 
 	const handleClick = () => {
-		setDeleteProps(id, title, "folder")
+		setDeleteProps(folder_id, folder_title, "folder")
 		showDeleteConfirmDialog()
 	}
 

@@ -4,10 +4,10 @@ import React, { useEffect, useRef } from "react"
 import Image from "next/image"
 import { toast } from "sonner"
 import { modalStore } from "@/store/modalStore"
-import deleteBookmark from "@/app/lib/bookmarks/deleteBookmark"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { useRouter } from "next/navigation"
 import deleteFolder from "@/app/lib/folders/deleteFolder"
+import { deleteBookmark } from "@/app/utils/supabase/bookmarks/deleteBookmark"
 
 type Props = {
 	title: string

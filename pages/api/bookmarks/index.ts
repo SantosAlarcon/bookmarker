@@ -18,39 +18,8 @@ export default async function handler(
 
 		// If there is a ID in the URL params, it get the bookmarks of the user containing that id and return them.
 		if (userId) {
-
-			const supabase = createClient()
-			const { data: user } = await supabase.auth.getUser()
-			const { data: session } = await supabase.auth.getSession()
-			const { data, error } = await supabase.from("bookmarks").select("bookmark_title").eq("bookmark_user_id", userId)
-
-			console.log(data);
-
-			// Sort query param
-			const query = req.query.sort
-
-			/*if (query === "yes") {
-				// Sort list alfabettically
-				const sortedData = [...data].sort((a, b) =>
-					a.title.localeCompare(b.title)
-				)
-
-				// Sort folder children
-				sortedData.forEach((item) => {
-					// @ts-ignore
-					item.children?.sort((a, b) => a.title.localeCompare(b.title))
-				})
-
-				// Sort folder first and then bookmarks
-				sortedData.sort((a, b) => {
-					if ("children" in a && "parentFolder" in b) return -1
-					return 0
-				})
-
-				// Save sorted data to JSON
-				return res.status(200).json(sortedData)
-			}*/
-			return res.status(200).json(data)
+            const data = await getAllBookmarks(userId);	
+           	return res.status(200).json(data)
 		} else {
 			return res.status(400).json({
 				message: "ID is required to retrieve bookmark data",

@@ -4,9 +4,9 @@ import React, { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
-import createNewFolder from "@/app/lib/folders/createNewFolder"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { useRouter } from "next/navigation"
+import { createNewFolder } from "@/app/utils/supabase/folders/createNewFolder"
 
 type Props = {
 	title: string
@@ -18,6 +18,7 @@ const NewFolderDialog = ({ title }: Props) => {
 	const [newFolder, setNewFolder] = useState({
 		title: "",
 		description: "",
+        parentFolder: null
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
@@ -37,12 +38,13 @@ const NewFolderDialog = ({ title }: Props) => {
 		setNewFolder({
 			title: "",
 			description: "",
+            parentFolder: null
 		})
 	}
 
 	/* THis function implements the logic to create a folder and close the dialog. */
 	const createFolder = async () => {
-		await createNewFolder(newFolder.title, newFolder.description)
+		await createNewFolder(newFolder);
 		await updateBookmarkList()
 		router.refresh()
 		closeDialog()

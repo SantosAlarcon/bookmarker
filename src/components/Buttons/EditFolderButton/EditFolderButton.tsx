@@ -9,9 +9,9 @@ import tooltipStyles from "@/app/tooltip.module.scss"
 
 interface EditFolderProps {
 	children: {
-		id: string
-		title: string
-		description: string
+		folder_id: string
+		folder_title: string
+		folder_description: string
 		children: []
 	}
 }
@@ -19,13 +19,13 @@ interface EditFolderProps {
 const EditFolderButton = ({ children }: EditFolderProps) => {
 	const showEditFolderDialog = modalStore((state) => state.showEditFolderModal)
 	const modifyEditFolderData = modalStore((state) => state.modifyEditFolderData)
-	const { id, title, description } = children
+	const { folder_id, folder_title, folder_description } = children
 	const childLinks = children.children
 
 
 	const handleClick = () => {
 		// @ts-ignore
-		modifyEditFolderData(id, title, description, childLinks)
+		modifyEditFolderData(folder_id, folder_title, folder_description, childLinks)
 		showEditFolderDialog()
 	}
 
