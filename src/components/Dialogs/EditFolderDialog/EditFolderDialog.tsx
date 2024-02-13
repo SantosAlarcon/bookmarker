@@ -4,28 +4,21 @@ import React, { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 import Image from "next/image"
 import { modalStore } from "@/store/modalStore"
-import updateFolder from "@/app/lib/folders/updateFolder"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { useRouter } from "next/navigation"
+import updateFolder from "@/app/utils/supabase/folders/updateFolder"
 
 type Props = {
 	title: string
-}
-
-interface EditFolderState {
-	title: string
-	description: string
-	children: []
 }
 
 const EditFolderDialog = ({ title }: Props) => {
 	const editFolderData = modalStore((state) => state.editFolderData)
 	const hideEditFolderDialog = modalStore((state) => state.hideEditFolderModal)
 	const editFolderModal = modalStore((state) => state.editFolderModal)
-	const [newFolder, setNewFolder] = useState<EditFolderState>({
+	const [newFolder, setNewFolder] = useState({
 		title: editFolderData.title,
 		description: editFolderData.description,
-		children: editFolderData.children,
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 	const router = useRouter();
@@ -42,7 +35,6 @@ const EditFolderDialog = ({ title }: Props) => {
 		setNewFolder({
 			title: editFolderData.title,
 			description: editFolderData.description,
-			children: editFolderData.children,
 		})
 	}, [editFolderData])
 
@@ -52,7 +44,6 @@ const EditFolderDialog = ({ title }: Props) => {
 		setNewFolder({
 			title: "",
 			description: "",
-			children: [],
 		})
 	}
 

@@ -6,8 +6,8 @@ import { toast } from "sonner"
 import { modalStore } from "@/store/modalStore"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { useRouter } from "next/navigation"
-import deleteFolder from "@/app/lib/folders/deleteFolder"
 import { deleteBookmark } from "@/app/utils/supabase/bookmarks/deleteBookmark"
+import deleteFolder from "@/app/utils/supabase/folders/deleteFolder"
 
 type Props = {
 	title: string

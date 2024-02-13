@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styles from "./BookmarksView.module.scss"
 import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderComponent"
 import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton"
@@ -19,7 +19,7 @@ const BookmarksView = () => {
 	// Get and set the bookmarks from the store
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList)
 	const setBookmarksList = bookmarksStore((state) => state.setBookmarksList)
-
+	
 	// Get and set the session from the store
 	const session: Session | null = authStore((state) => state.session)
 	const setSession = authStore((state) => state.setSession)
@@ -29,7 +29,8 @@ const BookmarksView = () => {
 
 	const supabase: SupabaseClient = createClientComponentClient();
 
-	let rootFolders = useRef<BookmarkFolder[]>([])
+
+	const rootFolders = await getRootFolders(session?.user?.id)
 
 	useEffect(() => {
 		const getSession = async () => {
@@ -44,16 +45,7 @@ const BookmarksView = () => {
 			}
 		}
 		getSession()
-		console.log(session)
-	}, [supabase.auth, setSession, session])
-
-	useEffect(() => {
-		const getRootFoldersByUser = async () => {
-		    rootFolders.current = await getRootFolders(session?.user.id)
-		}
-		getRootFoldersByUser()
-		console.log(rootFolders)
-	}, [session?.user.id])
+	}, [supabase.auth, setSession])
 
 	// In the first render, get all the bookmarks from the JSON file/DB.
 	useEffect(() => {
@@ -86,16 +78,36 @@ const BookmarksView = () => {
 					(
 						// If there no bookmarks, it shows a simple message.
 						// If there are, it renders the folders and bookmarks
-						bookmarksList.length > 0 && !loading ?
+						bookmarksList.length > 0 && !loading
 							// First render the root folders and its children
-							rootFolders.map((folder: BookmarkFolder) => {
+							? rootFolders.map((folder: BookmarkFolder) => {
 								return (
 									<BookmarkFolderComponent key={folder.folder_id}>
 										{folder}
 									</BookmarkFolderComponent>
 								)
 							})
-							: (<p>No bookmarks found.</p>)
+
+							    /*bookmarksList.map((bookmark: BookmarkItem & BookmarkFolder) => {
+								// If the item contains the "children" key, it is treated as a folder
+								if ("children" in bookmark) {
+									// It renders the top level folders
+									if (bookmark.bookmark_parentFolder === null) {
+										console.log(bookmark);
+										return (
+											<BookmarkFolderComponent key={bookmark.folder_id}>
+												{bookmark}
+											</BookmarkFolderComponent>
+										)
+									}
+								} else {
+									return (
+										<BookmarkItemComponent key={bookmark.bookmark_id}>
+											{bookmark}
+										</BookmarkItemComponent>
+									)
+								}*/
+							}) : (<p>No bookmarks found.</p>)
 					)
 				}
 			</main>

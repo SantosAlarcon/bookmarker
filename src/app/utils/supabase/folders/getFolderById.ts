@@ -1,8 +1,6 @@
 import { BookmarkFolder } from "@/types/types";
 
-
-// This function returns all folders by user ID.
-export const getAllFolders = async(userId: string) => {
+export const getFolderById = async(folderId: string) => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/folders`, {
         headers: {
             "apikey": process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -11,7 +9,7 @@ export const getAllFolders = async(userId: string) => {
     })
 
     let data = await response.json();
-    data.filter((folder: BookmarkFolder) => folder.folder_user_id === userId);
+    data.filter((folder: BookmarkFolder) => folder.folder_id === folderId);
 
     return data;
 }

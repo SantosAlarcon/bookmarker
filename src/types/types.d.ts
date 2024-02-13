@@ -17,6 +17,8 @@ export type BookmarkFolder = {
     folder_id: string,
     folder_title: string,
     folder_description: string,
+    folder_user_id: string,
+    folder_parentfolder: string,
     folder_children: []
 }
 
