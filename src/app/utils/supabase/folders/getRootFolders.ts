@@ -6,11 +6,10 @@ export const getRootFolders = async(userId: string) => {
 	const { data, error } = await supabase
 		.from("folders")
 		.select("*")
-		.eq("folder_parentfolder", null)
-		.eq("folder_user_id", userId);
+        .eq("folder_user_id", userId)
+		.is("folder_parentfolder", null) // Do not use equal to check is the value is NULL. Instead use .is()
 	if (error) {
 		throw new Error(error.message);
 	}
-	console.log("DATA: ", data);
 	return data;
 }
