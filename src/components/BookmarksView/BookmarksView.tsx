@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styles from "./BookmarksView.module.scss"
 import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderComponent"
 import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton"
@@ -15,58 +15,38 @@ import getAllBookmarks from "@/app/utils/supabase/bookmarks/getAllBookmarks"
 import { authStore } from "@/store/authStore"
 import { getRootFolders } from "@/app/utils/supabase/folders/getRootFolders"
 import { createClient } from "@/app/utils/supabase/client"
+import { getSession } from "@/app/utils/supabase/getSession"
 
 const BookmarksView = () => {
-	const supabase: SupabaseClient = createClientComponentClient();
 
 	// Get and set the bookmarks from the store
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList)
 	const setBookmarksList = bookmarksStore((state) => state.setBookmarksList)
 
-	// Get and set the session from the store
-	const sessionValue: Session | null = authStore((state) => state.session)
-	const setSession = authStore((state) => state.setSession)
+	// Get the session from the store because it already has the session information fetched in the auth button.
+	const session = authStore((state) => state.session)
 
 	// Get and set the loading state
 	const [loading, setLoading] = useState<boolean>(false);
 
-	// 1. We need to get the session and save it to the auth store
-	useEffect(() => {
-		const getSession = async () => {
-			try {
-				const { data: { session }, error } = await supabase.auth.getSession()
-				setSession(session)
-				if (error) {
-					console.error("ERROR:", error)
-				}
-			} catch (error) {
-				console.error("ERROR:", error)
-			}
-
-			/*if (sessionValue) {
-				console.log("Session is retrieved successfully")
-			}*/
-		}
-		getSession()
-	}, [supabase.auth, setSession, sessionValue])
-
-	// 2. Get the root folders so that can be rendered first
+    // 2. Get the root folders so that can be rendered first
 	useEffect(() => {
 		setLoading(true);
 		const getRootFoldersByUser = async () => {
 			// @ts-ignore
-			const rootFolders = await getRootFolders(sessionValue?.user.id)
+			const rootFolders = await getRootFolders(session?.user.id)
 			setBookmarksList(rootFolders)
 		}
-		if (sessionValue) {
+		
+        if (session) {
 			getRootFoldersByUser()
 		}
 
 		setLoading(false)
-	}, [])
+	}, [session, setBookmarksList])
 
 	// In the first render, get all the bookmarks from the JSON file/DB.
-	useEffect(() => {
+	/*useEffect(() => {
 		const getBookmarks = async () => {
 			// @ts-ignore
 			const response = await getAllBookmarks(sessionValue?.user?.id);
@@ -80,7 +60,7 @@ const BookmarksView = () => {
 		if (bookmarksList.length === 0) {
 			getBookmarks()
 		}
-	}, [setBookmarksList, bookmarksList, sessionValue?.user?.id])
+	}, [setBookmarksList, bookmarksList, sessionValue?.user?.id])*/
 
 	return (
 		<>
@@ -104,7 +84,7 @@ const BookmarksView = () => {
 										{folder}
 									</BookmarkFolderComponent>
 								))
-							) : (<p>No bookmarks found.</p>)
+							) : (<p className={styles.bookmarks__view__paragraph}>No bookmarks found.<br/>Start creating new folders and bookmarks using the buttons above.</p>)
 					)
 				}
 			</main>

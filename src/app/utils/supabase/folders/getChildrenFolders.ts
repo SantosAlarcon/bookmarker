@@ -4,6 +4,8 @@ export const getChildrenFolders = async(folderId: string) => {
 	const supabase = createClient()
 	const {data, error } = await supabase.from("folders").select("*").eq("folder_parentfolder", folderId)
 
+    console.log(data);
+
 	if (error) {
 		throw new Error(error.message)
 	}

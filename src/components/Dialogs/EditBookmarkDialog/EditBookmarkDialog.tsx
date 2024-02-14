@@ -171,7 +171,8 @@ const EditBookmarkDialog = ({ title }: Props) => {
 										<option
 											key={folder.folder_id}
 											value={folder.folder_id}
-											selected={folder.folder_id === newBookmark.parentFolder}
+                                            // @ts-ignore
+											defaultValue={folder.folder_id === newBookmark.parentFolder}
 										>
 											{folder.folder_title}
 										</option>

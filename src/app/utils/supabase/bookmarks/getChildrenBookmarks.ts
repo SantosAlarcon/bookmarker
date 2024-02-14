@@ -6,7 +6,7 @@ export default async function getChildrenBookmarks(folderId: string) {
 	const { data, error } = await supabase
 		.from("bookmarks")
 		.select("*")
-		.eq("bookmark_parentfolder", folderId);
+		.eq("bookmark_parentfolder",folderId);
 	if (error) {
 		throw new Error(error.message);
 	}

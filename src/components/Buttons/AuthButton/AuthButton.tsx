@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image'
-import React, { SyntheticEvent, useEffect, useState } from 'react'
+import React, { SyntheticEvent, useEffect } from 'react'
 import styles from "./AuthButton.module.scss"
 import tooltipStyles from "@/app/tooltip.module.scss"
 import { Tooltip } from 'react-tooltip'
@@ -13,19 +13,21 @@ import { handleUserContextMenu } from '@/components/Header/UserContextMenu'
 import { UserMetadata } from '@supabase/supabase-js'
 import getUserMetadata from '@/app/utils/getUserMetadata'
 import { authStore } from '@/store/authStore'
+import { getSession } from '@/app/utils/supabase/getSession'
 
 const AuthButton = () => {
     const setSession = authStore(state => state.setSession)
     const session: Session | null = authStore(state => state.session)
+
     const setMetadata = authStore(state => state.setMetadata)
     const metadata: UserMetadata | null = authStore(state => state.metadata)
-    const supabase: SupabaseClient = createClient();
+
     const router: AppRouterInstance = useRouter();
 
     useEffect(() => {
         const fetchSession = async () => {
-            const { data } = await supabase.auth.getSession()
-            setSession(data.session)
+            const session = await getSession();
+            setSession(session)
         }
 
         const getMetadata = async () => {
@@ -41,7 +43,7 @@ const AuthButton = () => {
             getMetadata()
         }
 
-    }, [supabase.auth, setSession, session, setMetadata, metadata])
+    }, [metadata, session, setMetadata, setSession])
     
     const handleAuth = (event: SyntheticEvent) => {
         // If there is no session, redirect user to the login page

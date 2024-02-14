@@ -1,19 +1,26 @@
 .bookmarks__view__container {
-	padding: 2rem 5rem;
-	width: 100%;
-	overflow: hidden;
+    padding: 2rem 5rem;
+    width: 100%;
+    height: calc(100vh - 10rem);
+    vertical-align: middle;
+    overflow: hidden;
 
-	& summary {
-		list-style: none;
-	}
-
-	// Table screen
-	@media (width < 960px) {
-		padding: 2rem;
-	}
-
-	// Small phone screen
-	@media (width < 640px) {
-		padding: .5rem;
+    & summary {
+        list-style: none;
     }
+
+    // Table screen
+    @media (width < 960px) {
+        padding: 2rem;
+    }
+
+    // Small phone screen
+    @media (width < 640px) {
+        padding: .5rem;
+    }
+}
+
+.bookmarks__view__paragraph {
+    text-align: center;
+    line-height: 1.75rem;
 }

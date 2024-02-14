@@ -12,7 +12,6 @@ interface EditFolderProps {
 		folder_id: string
 		folder_title: string
 		folder_description: string
-		children: []
 	}
 }
 
@@ -20,12 +19,10 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
 	const showEditFolderDialog = modalStore((state) => state.showEditFolderModal)
 	const modifyEditFolderData = modalStore((state) => state.modifyEditFolderData)
 	const { folder_id, folder_title, folder_description } = children
-	const childLinks = children.children
-
 
 	const handleClick = () => {
 		// @ts-ignore
-		modifyEditFolderData(folder_id, folder_title, folder_description, childLinks)
+		modifyEditFolderData(folder_id, folder_title, folder_description)
 		showEditFolderDialog()
 	}
 

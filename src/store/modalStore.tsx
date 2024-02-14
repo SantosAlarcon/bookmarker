@@ -11,7 +11,7 @@ type ModalState = {
 		title: string
 		description: string
 		favicon: string | null
-		children: []
+		//children: []
 	}
 	editBookmarkData: {
 		id: string
@@ -41,7 +41,7 @@ type Action = {
 		id: string,
 		title: string,
 		description: string,
-		children: []
+		//children: []
 	) => void
 	modifyEditBookmarkData: (
 		id: string,
@@ -64,7 +64,7 @@ export const modalStore = create<ModalState & Action>((set: Function) => ({
 		title: "",
 		description: "",
 		favicon: "",
-		children: [],
+		//children: [],
 	},
 	editBookmarkData: {
 		id: "",
@@ -91,14 +91,14 @@ export const modalStore = create<ModalState & Action>((set: Function) => ({
 		id: string,
 		title: string,
 		description: string,
-		children: []
+		//children: []
 	) =>
 		set({
 			editFolderData: {
 				id: id,
 				title: title,
 				description: description,
-				children: children,
+				//children: children,
 			},
 		}),
 	modifyEditBookmarkData: (
