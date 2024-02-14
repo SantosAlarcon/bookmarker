@@ -7,6 +7,7 @@ export const updateBookmarkList = async () => {
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
+    // @ts-ignore
     const bookmarkList = await getAllBookmarks(user?.id);
     updateBookmarksList(bookmarkList);
 }

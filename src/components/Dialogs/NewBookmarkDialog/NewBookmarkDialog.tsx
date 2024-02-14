@@ -11,6 +11,7 @@ import { bookmarksStore } from "@/store/bookmarksStore"
 import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders"
 import { createClient } from "@/app/utils/supabase/client"
 import { createNewBookmark } from "@/app/utils/supabase/bookmarks/createNewBookmark"
+import { folderStore } from "@/store/folderStore"
 
 type Props = {
 	title: string
@@ -21,14 +22,13 @@ const NewBookmarkDialog = ({ title }: Props) => {
 		(state) => state.hideNewBookmarkModal
 	)
 	const newBookmarkModal = modalStore((state) => state.newBookmarkModal)
-	const folderList = bookmarksStore(state => state.bookmarksList)
+	const folderList = folderStore(state => state.folderList)
+	const setFolderList = folderStore(state => state.setFolderList)
 	const [newBookmark, setNewBookmark] = useState({
 		title: "",
 		url: "",
 		parentFolder: null,
 	})
-
-	const [folders, setFolders] = useState<BookmarkFolder[]>([])
 
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
@@ -36,13 +36,14 @@ const NewBookmarkDialog = ({ title }: Props) => {
 
 	useEffect(() => {
 		const getFolderList = async () => {
-            const supabase = createClient();
-            const {data: user} = await supabase.auth.getUser();
-			const folderList = await getAllFolders(user.user?.id)
-			setFolders(folderList)
+			const supabase = createClient();
+			const { data: user } = await supabase.auth.getUser();
+			// @ts-ignore
+			const folders = await getAllFolders(user.user?.id)
+			setFolderList(folders)
 		}
 		getFolderList()
-	}, [folderList])
+	}, [setFolderList])
 
 	useEffect(() => {
 		if (newBookmarkModal) {
@@ -139,7 +140,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 							onChange={() =>
 								setNewBookmark({
 									...newBookmark,
-                                    // @ts-ignore
+									// @ts-ignore
 									parentFolder: event.target.value,
 								})
 							}
@@ -147,8 +148,8 @@ const NewBookmarkDialog = ({ title }: Props) => {
 							<option defaultValue="null" value="null">
 								No parent folder
 							</option>
-							{folders &&
-								folders.map((folder: BookmarkFolder) => (
+							{folderList &&
+								folderList.map((folder: BookmarkFolder) => (
 									<option key={folder.folder_id} value={folder.folder_id}>
 										{folder.folder_title}
 									</option>

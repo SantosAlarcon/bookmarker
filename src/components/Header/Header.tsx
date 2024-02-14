@@ -7,7 +7,6 @@ import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import styles from "./Header.module.scss"
 import tooltipStyles from "@/app/tooltip.module.scss"
-import { updateSortedBookmarkList } from "@/app/utils/updateSortedBookmarkList"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import AuthButton from "../Buttons/AuthButton/AuthButton"
@@ -26,13 +25,13 @@ const Header = () => {
         showNewFolderModal()
     }
 
-    const handleSort = async () => {
+    /*const handleSort = async () => {
         await updateSortedBookmarkList()
         router.refresh()
         toast.success(
             "Bookmarks, folders and children are now sorted alfabetically!"
         )
-    }
+    }*/
     return (
         <>
             <NewBookmarkDialog title="New bookmark"></NewBookmarkDialog>
@@ -94,7 +93,7 @@ const Header = () => {
                             />
                         </button>
                     </div>
-                    <div className={styles.header__links__sort}>
+		    {/*<div className={styles.header__links__sort}>
                         <button
                             onClick={handleSort}
                             className={styles.header__links__button}
@@ -115,7 +114,7 @@ const Header = () => {
                                 alt="Sort icon"
                             />
                         </button>
-                    </div>
+                    </div>*/}
                     <AuthButton />
                 </div>
             </header>

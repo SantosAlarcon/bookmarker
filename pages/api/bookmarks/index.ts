@@ -12,14 +12,14 @@ export default async function handler(
 		return res.status(401).json({ message: "You need to provide an access token to access this resource." });
 	}
 
-	// GET Method - Read from mockData.json file
+	// GET Method - Call the getAllBookmarks function
 	if (req.method === "GET") {
-		const userId: string | undefined = req.query.user
+		const userId: string | string[] | undefined = req.query.user
 
 		// If there is a ID in the URL params, it get the bookmarks of the user containing that id and return them.
 		if (userId) {
-            const data = await getAllBookmarks(userId);	
-           	return res.status(200).json(data)
+			const data = await getAllBookmarks(userId);
+			return res.status(200).json(data)
 		} else {
 			return res.status(400).json({
 				message: "ID is required to retrieve bookmark data",

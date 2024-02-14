@@ -19,7 +19,8 @@ const updateBookmark = async (id: string, bookmark: updateInfo) => {
         bookmark_url: bookmark.url,
         bookmark_favicon: await getFavicon(bookmark.url),
         bookmark_parentfolder: bookmark.parentFolder,
-        bookmark_user_id: user?.id
+        // @ts-ignore
+	bookmark_user_id: user?.id
     }
 
     const {error} = await supabase.from("bookmarks").update(updatedBookmark).eq("bookmark_id", id)
