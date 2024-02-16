@@ -12,7 +12,7 @@ interface EditBookmarkProps {
 		bookmark_id: string
 		bookmark_title: string
 		bookmark_url: string
-		bookmark_parentFolder: string | null
+		bookmark_parentfolder: string | null
 	}
 }
 
@@ -23,10 +23,10 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
 	const modifyEditBookmarkData = modalStore(
 		(state) => state.modifyEditBookmarkData
 	)
-	const { bookmark_id, bookmark_title, bookmark_url, bookmark_parentFolder } = children
+	const { bookmark_id, bookmark_title, bookmark_url, bookmark_parentfolder } = children
 
 	const handleClick = () => {
-		modifyEditBookmarkData(bookmark_id, bookmark_title, bookmark_url, bookmark_parentFolder)
+		modifyEditBookmarkData(bookmark_id, bookmark_title, bookmark_url, bookmark_parentfolder)
 		showEditBookmarkDialog()
 	}
 

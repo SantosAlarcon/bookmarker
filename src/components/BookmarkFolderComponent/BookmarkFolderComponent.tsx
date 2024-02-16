@@ -33,15 +33,21 @@ const BookmarkFolderComponent = (props: BFCProps) => {
     // Get the children bookmarks and folders
     useEffect(() => {
         const getChildren = async () => {
-            const childrenFolders: BookmarkFolder[] = await getChildrenFolders(props.children.folder_id);
-            const childrenBookmarks: BookmarkItem[] = await getChildrenBookmarks(props.children.folder_id);
+            // Get the children folders and bookmarks
+            const [childrenFolders, childrenBookmarks] = await Promise.all([getChildrenFolders(props.children.folder_id), getChildrenBookmarks(props.children.folder_id)])
             let childrenList = [];
 
-            // If there any child folders
+            // If there any child folders, it renders them first and then the children bookmarks
             if (childrenFolders.length > 0) {
+                // First we need to assign the children folder list to the children list
                 childrenList = childrenFolders
+
+                // Iterates every folder
                 childrenList.map((folder: BookmarkFolder) => {
+
+                    // Iterates every child bookmark
                     childrenBookmarks.map((bookmark: BookmarkItem) => {
+                        // If the bookmark belongs to this parent folder, it pushes to the children array
                         if (bookmark.bookmark_parentFolder === folder.folder_id) {
                             // @ts-ignore
                             folder.folder_children.push(bookmark)
@@ -52,10 +58,9 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                 setChildren(childrenList)
             } else {
                 // @ts-ignore
+                // The children bookmarks are set in the children where there is any children folder
                 setChildren(childrenBookmarks);
             }
-
-            console.log("CHILDREN: ", children)
         }
         getChildren()
     }, [])
@@ -99,11 +104,11 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 					transition={{ duration: 0.3, type: "tween" }}
 				>
 					{children.map(
-						(child: BookmarkFolder | BookmarkItem) => {
+						(child: BookmarkFolder & BookmarkItem) => {
 							{
-								/* If the child item has "children" property, it is considered as a folder */
+								/* If the child item has a "folder_id" key, it is considered as a folder */
 							}
-							if ("children" in child) {
+							if (child.hasOwnProperty("folder_id")) {
 								return (
 									<li
 										key={child.folder_id}

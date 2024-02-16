@@ -1,13 +1,13 @@
 import { bookmarksStore } from "@/store/bookmarksStore"
-import getAllBookmarks from "./supabase/bookmarks/getAllBookmarks"
-import { createClient } from "./supabase/client"
+import { getSession } from "./supabase/getSession";
+import { getRootFolders } from "./supabase/folders/getRootFolders";
+import getRootBookmarks from "./supabase/bookmarks/getRootBookmarks";
 
 export const updateBookmarkList = async () => {
     const updateBookmarksList = bookmarksStore.getState().setBookmarksList
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const session = await getSession();
 
     // @ts-ignore
-    const bookmarkList = await getAllBookmarks(user?.id);
-    updateBookmarksList(bookmarkList);
+    const [rootFolders, rootBookmarks] = await Promise.all([getRootFolders(session?.user.id), getRootBookmarks(session?.user.id)])
+    updateBookmarksList([...rootFolders, ...rootBookmarks])
 }

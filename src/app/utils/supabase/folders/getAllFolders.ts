@@ -1,22 +1,14 @@
-import { BookmarkFolder } from "@/types/types";
+import { createClient } from "../client";
 
 // This function returns all folders by user ID.
 export const getAllFolders = async(userId: string) => {
+    const supabase = createClient()
 
-    const headers: HeadersInit = {
-	    // @ts-ignore
-	    headers: {
-		// @ts-ignore
-		"apikey": process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-		// @ts-ignore
-		"Authorization": process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-	    }
+    const {data, error} = await supabase.from("folders").select().eq("folder_user_id", userId).order("folder_title", {ascending: true})
+
+    if (error) {
+        throw new Error(error.message)
     }
 
-    // @ts-ignore
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/folders`, headers)
-
-    let data = await response.json();
-
-    return data.filter((folder: BookmarkFolder) => folder.folder_user_id === userId);
+    return data;
 }
