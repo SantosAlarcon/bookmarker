@@ -7,6 +7,8 @@ import { modalStore } from "@/store/modalStore"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { useRouter } from "next/navigation"
 import { createNewFolder } from "@/app/utils/supabase/folders/createNewFolder"
+import { folderStore } from "@/store/folderStore"
+import { type BookmarkFolder } from "@/types/types"
 
 type Props = {
 	title: string
@@ -15,10 +17,13 @@ type Props = {
 const NewFolderDialog = ({ title }: Props) => {
 	const showNewFolderDialog = modalStore((state) => state.newFolderModal)
 	const hideNewFolderDialog = modalStore((state) => state.hideNewFolderModal)
+
+	const folderList = folderStore((state) => state.folderList)
+
 	const [newFolder, setNewFolder] = useState({
 		title: "",
 		description: "",
-        parentFolder: null
+		parentFolder: null
 	})
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
@@ -38,7 +43,7 @@ const NewFolderDialog = ({ title }: Props) => {
 		setNewFolder({
 			title: "",
 			description: "",
-            parentFolder: null
+			parentFolder: null
 		})
 	}
 
@@ -99,6 +104,25 @@ const NewFolderDialog = ({ title }: Props) => {
 							}
 							required
 						/>
+					</label>
+					<label
+						htmlFor="parentFolder"
+						className={styles.new__folder__dialog__form__label}
+					>
+						Parent Folder
+						<select
+							name="parentFolder"
+							className={styles.new__folder__dialog__form__parent__folder}
+							onChange={() =>
+								// @ts-ignore
+								setNewFolder({ ...newFolder, parentFolder: event.target.value })
+							}
+						>
+							<option defaultValue="null">None</option>
+							{folderList.map((folder: BookmarkFolder) => (
+								<option key={folder.folder_id} value={folder.folder_id}>{folder.folder_title}</option>
+							))}
+						</select>
 					</label>
 				</form>
 			</div>

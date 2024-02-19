@@ -50,6 +50,28 @@
 			background-color: #fff5;
 		}
 	}
+
+	& select {
+		margin-top: 1rem;
+		font-size: 15px;
+		font-family: inherit;
+		padding: 0.5rem;
+		width: 100%;
+		outline: none;
+		border: none;
+		border-radius: 0.5rem;
+		transition: all 300ms ease-in-out;
+		background-color: #334;
+
+		&:focus {
+			background-color: #fff5;
+		}
+
+		&>option {
+			background: var(--main-color-dark);
+			padding: 0.5rem 0;
+		}
+	}
 }
 
 .new__folder__dialog__form__label {

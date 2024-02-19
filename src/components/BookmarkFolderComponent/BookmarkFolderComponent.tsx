@@ -8,6 +8,7 @@ import RemoveFolderButton from "../Buttons/RemoveFolderButton/RemoveFolder"
 import { motion } from "framer-motion"
 import { getChildrenFolders } from "@/app/utils/supabase/folders/getChildrenFolders"
 import getChildrenBookmarks from "@/app/utils/supabase/bookmarks/getChildrenBookmarks"
+import { bookmarksStore } from "@/store/bookmarksStore"
 
 interface BFCProps {
 	children: {
@@ -20,7 +21,8 @@ interface BFCProps {
 const BookmarkFolderComponent = (props: BFCProps) => {
 	const [expanded, setExpanded] = useState(false)
 	const collapsibleRef = useRef<HTMLUListElement>(null)
-    const [children, setChildren] = useState([])
+	const [children, setChildren] = useState([])
+	const bookmarkList = bookmarksStore((state) => state.bookmarksList)
 
 	const variants = {
 		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
@@ -30,40 +32,40 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 		},
 	}
 
-    // Get the children bookmarks and folders
-    useEffect(() => {
-        const getChildren = async () => {
-            // Get the children folders and bookmarks
-            const [childrenFolders, childrenBookmarks] = await Promise.all([getChildrenFolders(props.children.folder_id), getChildrenBookmarks(props.children.folder_id)])
-            let childrenList = [];
+	// Get the children bookmarks and folders
+	useEffect(() => {
+		const getChildren = async () => {
+			// Get the children folders and bookmarks
+			const [childrenFolders, childrenBookmarks] = await Promise.all([getChildrenFolders(props.children.folder_id), getChildrenBookmarks(props.children.folder_id)])
+			let childrenList = [];
 
-            // If there any child folders, it renders them first and then the children bookmarks
-            if (childrenFolders.length > 0) {
-                // First we need to assign the children folder list to the children list
-                childrenList = childrenFolders
+			// If there any child folders, it renders them first and then the children bookmarks
+			if (childrenFolders.length > 0) {
+				// First we need to assign the children folder list to the children list
+				childrenList = childrenFolders
 
-                // Iterates every folder
-                childrenList.map((folder: BookmarkFolder) => {
+				// Iterates every folder
+				childrenList.map((folder: BookmarkFolder) => {
 
-                    // Iterates every child bookmark
-                    childrenBookmarks.map((bookmark: BookmarkItem) => {
-                        // If the bookmark belongs to this parent folder, it pushes to the children array
-                        if (bookmark.bookmark_parentFolder === folder.folder_id) {
-                            // @ts-ignore
-                            folder.folder_children.push(bookmark)
-                        }
-                    })
-                })
-                // @ts-ignore
-                setChildren(childrenList)
-            } else {
-                // @ts-ignore
-                // The children bookmarks are set in the children where there is any children folder
-                setChildren(childrenBookmarks);
-            }
-        }
-        getChildren()
-    }, [])
+					// Iterates every child bookmark
+					childrenBookmarks.map((bookmark: BookmarkItem) => {
+						// If the bookmark belongs to this parent folder, it pushes to the children array
+						if (bookmark.bookmark_parentFolder === folder.folder_id) {
+							// @ts-ignore
+							folder.folder_children.push(bookmark)
+						}
+					})
+				})
+				// @ts-ignore
+				setChildren(childrenList)
+			} else {
+				// @ts-ignore
+				// The children bookmarks are set in the children where there is any children folder
+				setChildren(childrenBookmarks);
+			}
+		}
+		getChildren()
+	}, [bookmarkList])
 
 	return (
 		<div className={styles.bookmark__folder__container}>

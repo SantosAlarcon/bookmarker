@@ -10,72 +10,70 @@ import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDia
 import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import { bookmarksStore } from "@/store/bookmarksStore"
 import { authStore } from "@/store/authStore"
-import { getRootFolders } from "@/app/utils/supabase/folders/getRootFolders"
-import getRootBookmarks from "@/app/utils/supabase/bookmarks/getRootBookmarks"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 
 const BookmarksView = () => {
 
-    // Get and set the bookmarks from the store
-    const bookmarksList = bookmarksStore((state) => state.bookmarksList)
+	// Get and set the bookmarks from the store
+	const bookmarksList = bookmarksStore((state) => state.bookmarksList)
 
-    // Get the session from the store because it already has the session information fetched in the auth button.
-    const session = authStore((state) => state.session)
+	// Get the session from the store because it already has the session information fetched in the auth button.
+	const session = authStore((state) => state.session)
 
-    // Get and set the loading state
-    const [loading, setLoading] = useState<boolean>(false);
+	// Get and set the loading state
+	const [loading, setLoading] = useState<boolean>(false);
 
-    // 2. Get the root folders so that can be rendered first
-    useEffect(() => {
-        setLoading(true);
-        const getRootItems = async () => {
-            await updateBookmarkList()
-        }
+	// Get the root folders so that can be rendered first
+	useEffect(() => {
+		setLoading(true);
+		const getRootItems = async () => {
+			await updateBookmarkList()
+		}
 
-        if (session) {
-            getRootItems()
-        }
+		if (session) {
+			getRootItems()
+		}
 
-        setLoading(false)
-    }, [session])
+		setLoading(false)
+	}, [session])
 
-    return (
-        <>
-            <EditBookmarkDialog title="Edit bookmark" />
-            <EditFolderDialog title="Edit folder" />
-            <ConfirmDeleteDialog title="Confirm deletion" />
-            <main className={styles.bookmarks__view__container}>
-                {loading ?
-                    // If not bookmarks are loaded, it shows skeleton component
-                    Array.from({ length: 10 }).map((_, i) => (
-                        <BookmarkSkeleton key={i} />
-                    )) :
-                    (
-                        // If there no bookmarks, it shows a simple message.
-                        // If there are, it renders the folders and bookmarks
-                        bookmarksList.length > 0 && !loading ?
-                            // First render the root folders and its children
-                            (
-                                // @ts-ignore
-                                bookmarksList.map((item: BookmarkFolder & BookmarkItem) => {
-                                    if (item.hasOwnProperty("folder_id")) {
-                                        return (
-                                            <BookmarkFolderComponent key={item.folder_id}>
-                                                {item}
-                                            </BookmarkFolderComponent>)
-                                    } else {
-                                        return (<BookmarkItemComponent key={item.bookmark_id}>
-                                            {item}
-                                        </BookmarkItemComponent>)
-                                    }
-                                }
-                                )
-                            ) : (<p className={styles.bookmarks__view__paragraph}>No bookmarks found.<br />Start creating new folders and bookmarks using the buttons above.</p>)
-                    )
-                }
-            </main>
-        </>
-    )
+	return (
+		<>
+			<EditBookmarkDialog title="Edit bookmark" />
+			<EditFolderDialog title="Edit folder" />
+			<ConfirmDeleteDialog title="Confirm deletion" />
+			<main className={styles.bookmarks__view__container}>
+				{loading ?
+					// If not bookmarks are loaded, it shows skeleton component
+					Array.from({ length: 10 }).map((_, i) => (
+						<BookmarkSkeleton key={i} />
+					)) :
+					(
+						// If there no bookmarks, it shows a simple message.
+						// If there are, it renders the folders and bookmarks
+						bookmarksList.length > 0 && !loading ?
+							// First render the root folders and its children
+							(
+								// @ts-ignore
+								bookmarksList.map((item: BookmarkFolder & BookmarkItem) => {
+									if (item.hasOwnProperty("folder_id")) {
+										return (
+											<BookmarkFolderComponent key={item.folder_id}>
+												{item}
+											</BookmarkFolderComponent>)
+									} else {
+										return (<BookmarkItemComponent key={item.bookmark_id}>
+											{item}
+										</BookmarkItemComponent>)
+									}
+								}
+								)
+							) : (<p className={styles.bookmarks__view__paragraph}>No bookmarks found.<br />Start creating new folders and bookmarks using the buttons above.</p>)
+					)
+				}
+			</main>
+		</>
+	)
 }
 
 export default BookmarksView
