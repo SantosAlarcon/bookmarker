@@ -56,8 +56,10 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 						}
 					})
 				})
+
+                // After rendering the children folder, render the children bookmarks
 				// @ts-ignore
-				setChildren(childrenList)
+				setChildren([...childrenList, ...childrenBookmarks])
 			} else {
 				// @ts-ignore
 				// The children bookmarks are set in the children where there is any children folder
@@ -102,6 +104,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 					ref={collapsibleRef}
 					initial="hidden"
 					animate={expanded ? "show" : "hidden"}
+                    layout
 					variants={variants}
 					transition={{ duration: 0.3, type: "tween" }}
 				>
