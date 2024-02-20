@@ -1,92 +1,94 @@
-.edit__bookmark__dialog__container {
-	width: 765px;
-	padding: 1rem;
-	margin: 0 auto;
-	border-radius: 1rem;
-	border: 1px solid;
-	top: 30vh;
-	transition: all 300ms ease-in-out;
-	box-shadow: 5px 0 3rem #0005;
-	background-color: #112;
+.edit__bookmark__dialog {
+    &__container {
+        width: 765px;
+        padding: 1rem;
+        margin: 0 auto;
+        border-radius: 1rem;
+        border: 1px solid;
+        top: 30vh;
+        transition: all 300ms ease-in-out;
+        box-shadow: 5px 0 3rem #0005;
+        background-color: #112;
 
-	&::backdrop {
-		backdrop-filter: blur(5px);
-	}
-}
+        &::backdrop {
+            backdrop-filter: blur(5px);
+        }
+    }
 
-.edit__bookmark__dialog__title {
-	padding-bottom: 1rem;
-	border-bottom: 1px solid #fff6;
-	display: flex;
-	align-items: center;
-	gap: .5rem;
+    &__title {
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #fff6;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
 
-	&>img {
-		width: 24px;
-		height: 24px;
-		filter: invert(1);
-	}
-}
+        &>img {
+            width: 24px;
+            height: 24px;
+            filter: invert(1);
+        }
+    }
 
-.edit__bookmark__dialog__form {
-	display: flex;
-	gap: 1.5rem;
-	flex-direction: column;
-	margin: 1rem 0;
+    &__form {
+        display: flex;
+        gap: 1.5rem;
+        flex-direction: column;
+        margin: 1rem 0;
 
-	& input,
-	& select {
-		margin-top: 1rem;
-		font-size: 15px;
-		font-family: inherit;
-		padding: .5rem;
-		width: 100%;
-		outline: none;
-		border: none;
-		border-radius: .5rem;
-		transition: all 300ms ease-in-out;
-		background-color: #334;
+        & input,
+        & select {
+            margin-top: 1rem;
+            font-size: 15px;
+            font-family: inherit;
+            padding: .5rem;
+            width: 100%;
+            outline: none;
+            border: none;
+            border-radius: .5rem;
+            transition: all 300ms ease-in-out;
+            background-color: #334;
 
-		&:focus {
-			background-color: #fff5;
-		}
+            &:focus {
+                background-color: #fff5;
+            }
 
-		&>option {
-			background: var(--main-color-dark);
-			padding: 0.5rem 0;
-		}
+            &>option {
+                background: var(--main-color-dark);
+                padding: 0.5rem 0;
+            }
 
-	}
-}
+        }
+    }
 
-.edit__bookmark__dialog__form__label {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
+    &__label {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 
-.edit__bookmark__dialog__buttons {
-	display: flex;
-	justify-content: center;
-	gap: 1rem;
+    &__buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
 
-	&>button {
-		cursor: pointer;
-		border: none;
-		outline: none;
-		padding: .5rem 2rem;
-		border-radius: 1rem;
-		font-family: inherit;
-		background-color: var(--main-color);
-		transition: all 150ms ease-in-out;
+        &>button {
+            cursor: pointer;
+            border: none;
+            outline: none;
+            padding: .5rem 2rem;
+            border-radius: 1rem;
+            font-family: inherit;
+            background-color: var(--main-color);
+            transition: all 150ms ease-in-out;
 
-		&:nth-child(1) {
-			background-color: var(--main-color-dark) !important;
-		}
+            &:nth-child(1) {
+                background-color: var(--main-color-dark) !important;
+            }
 
-		&:hover {
-			background-color: var(--main-color-hover);
-		}
+            &:hover {
+                background-color: var(--main-color-hover);
+            }
 
-	}
+        }
+    }
 }

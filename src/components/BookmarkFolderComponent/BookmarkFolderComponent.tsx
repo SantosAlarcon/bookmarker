@@ -10,6 +10,8 @@ import { getChildrenFolders } from "@/app/utils/supabase/folders/getChildrenFold
 import getChildrenBookmarks from "@/app/utils/supabase/bookmarks/getChildrenBookmarks"
 import { bookmarksStore } from "@/store/bookmarksStore"
 
+// TODO: Calculate total height when the children are level 2 like: folder > folder > bookmark1...bookmark2....bookmark3
+
 interface BFCProps {
 	children: {
 		folder_id: string
@@ -27,6 +29,13 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 	const [expanded, setExpanded] = useState(false)
 	const [children, setChildren] = useState([])
 
+    const FOLDER_HEIGHT = "2.5rem"
+
+    // It the children ref height is null, it returns 0
+    const childrenHeight = childrenCollapsibleRef.current?.scrollHeight ?? 0
+
+    console.log(`${props.children.folder_title}: ${collapsibleRef.current?.scrollHeight + childrenHeight}px`)
+
 	const variants = {
 		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
 		show: {
@@ -38,7 +47,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 	const childrenVariants = {
 		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
 		show: {
-			height: childrenCollapsibleRef.current?.scrollHeight + "px",
+			height: collapsibleRef.current?.scrollHeight + childrenCollapsibleRef.current?.scrollHeight + "px",
 			padding: 0, paddingLeft: "2rem",
 		},
 	}
@@ -76,6 +85,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 				// The children bookmarks are set in the children where there is any children folder
 				setChildren(childrenBookmarks);
 			}
+
 		}
 		getChildren()
 	}, [bookmarkList, props.children.folder_id])
