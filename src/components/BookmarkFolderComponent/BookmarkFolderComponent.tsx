@@ -19,15 +19,26 @@ interface BFCProps {
 }
 
 const BookmarkFolderComponent = (props: BFCProps) => {
-	const [expanded, setExpanded] = useState(false)
-	const collapsibleRef = useRef<HTMLUListElement>(null)
-	const [children, setChildren] = useState([])
 	const bookmarkList = bookmarksStore((state) => state.bookmarksList)
+
+	const collapsibleRef = useRef<HTMLUListElement>(null)
+	const childrenCollapsibleRef = useRef<HTMLLIElement>(null)
+
+	const [expanded, setExpanded] = useState(false)
+	const [children, setChildren] = useState([])
 
 	const variants = {
 		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
 		show: {
 			height: collapsibleRef.current?.scrollHeight + "px",
+			padding: 0, paddingLeft: "2rem",
+		},
+	}
+
+	const childrenVariants = {
+		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
+		show: {
+			height: childrenCollapsibleRef.current?.scrollHeight + "px",
 			padding: 0, paddingLeft: "2rem",
 		},
 	}
@@ -57,7 +68,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 					})
 				})
 
-                // After rendering the children folder, render the children bookmarks
+				// After rendering the children folder, render the children bookmarks
 				// @ts-ignore
 				setChildren([...childrenList, ...childrenBookmarks])
 			} else {
@@ -67,7 +78,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 			}
 		}
 		getChildren()
-	}, [bookmarkList])
+	}, [bookmarkList, props.children.folder_id])
 
 	return (
 		<div className={styles.bookmark__folder__container}>
@@ -104,7 +115,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 					ref={collapsibleRef}
 					initial="hidden"
 					animate={expanded ? "show" : "hidden"}
-                    layout
+					layout
 					variants={variants}
 					transition={{ duration: 0.3, type: "tween" }}
 				>
@@ -115,14 +126,17 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 							}
 							if (child.hasOwnProperty("folder_id")) {
 								return (
-									<li
+									<motion.li
 										key={child.folder_id}
 										className={styles.bookmark__folder__links__link}
+										layout
+										ref={childrenCollapsibleRef}
+										variants={childrenVariants}
 									>
 										<BookmarkFolderComponent key={child.folder_id}>
 											{child}
 										</BookmarkFolderComponent>
-									</li>
+									</motion.li>
 								)
 							} else {
 								return (

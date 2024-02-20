@@ -70,9 +70,17 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 					</h4>
 				</div>
 				<div className={styles.confirm__delete__dialog__content}>
-					<p className={styles.confirm__delete__dialog__content__text}>
-						Are you sure to delete <b>{deleteProps?.title}</b>?
-					</p>
+					{deleteProps?.type === "folder" ? (
+						<p className={styles.confirm__delete__dialog__content__text}>
+							<span className={styles.confirm__delete__dialog__danger__text}>WARNING</span>: All the bookmarks inside this folder <span className={styles.confirm__delete__dialog__danger__text}>WILL</span> be deleted.<br />
+							Are you sure to delete <b>{deleteProps?.title} folder</b>?
+						</p>
+					) : (
+						<p className={styles.confirm__delete__dialog__content__text}>
+							Are you sure to delete <b>{deleteProps?.title}</b>?
+						</p>
+					)
+					}
 				</div>
 				<div className={styles.confirm__delete__dialog__buttons}>
 					<button

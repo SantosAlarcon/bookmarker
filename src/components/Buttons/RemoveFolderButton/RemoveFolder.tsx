@@ -6,9 +6,9 @@ import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
 import tooltipStyles from "@/app/tooltip.module.scss"
-  
+
 interface RemoveProps {
-	children: { 
+	children: {
 		folder_id: string
 		folder_title: string
 	}
@@ -30,7 +30,7 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
 		<button
 			className={styles.remove__button}
 			id="remove__button"
-            aria-label="Remove folder"
+			aria-label="Remove folder"
 			onClick={handleClick}
 		>
 			<Tooltip
