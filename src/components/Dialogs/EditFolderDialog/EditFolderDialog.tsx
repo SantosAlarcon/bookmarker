@@ -139,7 +139,6 @@ const EditFolderDialog = ({ title }: Props) => {
                                 ))}
                         </select>
                     </label>
-
                 </form>
             </div>
             <div className={styles.edit__folder__dialog__buttons}>

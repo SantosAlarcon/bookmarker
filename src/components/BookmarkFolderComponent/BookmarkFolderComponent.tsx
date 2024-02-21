@@ -17,6 +17,7 @@ interface BFCProps {
 		folder_id: string
 		folder_title: string
 		folder_description: string
+        folder_parentfolder: string | null
 	}
 }
 
@@ -139,8 +140,8 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 									<motion.li
 										key={child.folder_id}
 										className={styles.bookmark__folder__links__link}
-										layout
 										ref={childrenCollapsibleRef}
+                                        exit={{scale: 0}}
 										variants={childrenVariants}
 									>
 										<BookmarkFolderComponent key={child.folder_id}>
@@ -150,14 +151,15 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 								)
 							} else {
 								return (
-									<li
+									<motion.li
 										key={child.bookmark_id}
 										className={styles.bookmark__folder__links__link}
+                                        exit={{scale: 0}}
 									>
 										<BookmarkItemComponent key={child.bookmark_id}>
 											{child}
 										</BookmarkItemComponent>
-									</li>
+									</motion.li>
 								)
 							}
 						}

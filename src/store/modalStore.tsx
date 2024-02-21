@@ -62,7 +62,7 @@ export const modalStore = create<ModalState & Action>((set: Function) => ({
         id: "",
         title: "",
         description: "",
-        parentFolder: "",
+        parentFolder: null,
     },
     editBookmarkData: {
         id: "",

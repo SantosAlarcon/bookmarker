@@ -1,25 +1,9 @@
-/*export type BookmarkFolder = {
-    id: string,
-    title: string,
-    description: string,
-    children: []
-}
-
-export type BookmarkItem = {
-    id: string,
-    title: string,
-    url: string,
-    favicon: string
-    parentFolder: string | null
-}*/
-
 export type BookmarkFolder = {
     folder_id: string,
     folder_title: string,
     folder_description: string,
     folder_user_id: string,
-    folder_parentfolder: string,
-    folder_children: []
+    folder_parentfolder: string
 }
 
 export type BookmarkItem = {
