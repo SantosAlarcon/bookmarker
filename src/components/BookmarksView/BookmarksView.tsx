@@ -11,6 +11,7 @@ import { BookmarkItem, BookmarkFolder } from "@/types/types"
 import { bookmarksStore } from "@/store/bookmarksStore"
 import { authStore } from "@/store/authStore"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
+import { motion } from "framer-motion"
 
 const BookmarksView = () => {
 
@@ -53,22 +54,29 @@ const BookmarksView = () => {
 						// If there are, it renders the folders and bookmarks
 						bookmarksList.length > 0 && !loading ?
 							// First render the root folders and its children
-							(
-								// @ts-ignore
-								bookmarksList.map((item: BookmarkFolder & BookmarkItem) => {
+							(<motion.ul layout className={styles.bookmarks__view__list}>
+								{/* @ts-ignore*/}
+								{bookmarksList.map((item: BookmarkFolder & BookmarkItem) => {
 									if (item.hasOwnProperty("folder_id")) {
-										return (
+										return (<li key={item.folder_id}>
 											<BookmarkFolderComponent key={item.folder_id}>
 												{item}
-											</BookmarkFolderComponent>)
+											</BookmarkFolderComponent>
+										</li>
+										)
 									} else {
-										return (<BookmarkItemComponent key={item.bookmark_id}>
-											{item}
-										</BookmarkItemComponent>)
+										return (
+											<li key={item.bookmark_id}>
+												<BookmarkItemComponent key={item.bookmark_id}>
+													{item}
+												</BookmarkItemComponent>
+
+											</li>
+										)
 									}
 								}
-								)
-							) : (<p className={styles.bookmarks__view__paragraph}>No bookmarks found.<br />Start creating new folders and bookmarks using the buttons above.</p>)
+								)}
+							</motion.ul>) : (<p className={styles.bookmarks__view__paragraph}>No bookmarks found.<br />Start creating new folders and bookmarks using the buttons above.</p>)
 					)
 				}
 			</main>
