@@ -17,11 +17,11 @@ interface BFCProps {
 		folder_id: string
 		folder_title: string
 		folder_description: string
-        folder_parentfolder: string | null
+		folder_parentfolder: string | null
 	}
 }
 
-const BookmarkFolderComponent = (props: BFCProps) => {
+const BookmarkFolderComponent = (props: BFCProps, child: boolean) => {
 	const bookmarkList = bookmarksStore((state) => state.bookmarksList)
 
 	const collapsibleRef = useRef<HTMLUListElement>(null)
@@ -30,17 +30,18 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 	const [expanded, setExpanded] = useState(false)
 	const [children, setChildren] = useState([])
 
-    const FOLDER_HEIGHT = "2.5rem"
+	const FOLDER_HEIGHT = "2.5rem"
 
-    // It the children ref height is null, it returns 0
-    const childrenHeight = childrenCollapsibleRef.current?.scrollHeight ?? 0
+	// It the children ref height is null, it returns 0
+	const childrenHeight = childrenCollapsibleRef.current?.scrollHeight ?? 0
 
-    console.log(`${props.children.folder_title}: ${collapsibleRef.current?.scrollHeight + childrenHeight}px`)
+	console.log(`${props.children.folder_title}: ${collapsibleRef.current?.scrollHeight + childrenHeight}px`)
 
 	const variants = {
 		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
 		show: {
-			height: collapsibleRef.current?.scrollHeight + "px",
+			//height: collapsibleRef.current?.scrollHeight + "px",
+			height: "auto",
 			padding: 0, paddingLeft: "2rem",
 		},
 	}
@@ -48,9 +49,14 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 	const childrenVariants = {
 		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
 		show: {
-			height: collapsibleRef.current?.scrollHeight + childrenCollapsibleRef.current?.scrollHeight + "px",
+			//height: collapsibleRef.current?.scrollHeight + childrenCollapsibleRef.current?.scrollHeight + "px",
+			height: "auto",
 			padding: 0, paddingLeft: "2rem",
 		},
+	}
+
+	const handleExpand = () => {
+		setExpanded(!expanded)
 	}
 
 	// Get the children bookmarks and folders
@@ -110,7 +116,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 				<div
 					className={styles.bookmark__folder__title}
 					title={props.children.folder_description}
-					onClick={() => setExpanded(!expanded)}
+					onClick={handleExpand}
 				>
 					<h4 className={styles.bookmark__folder__title__text}>
 						{props.children.folder_title}
@@ -140,9 +146,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 									<motion.li
 										key={child.folder_id}
 										className={styles.bookmark__folder__links__link}
-										ref={childrenCollapsibleRef}
-                                        exit={{scale: 0}}
-										variants={childrenVariants}
+										exit={{ scale: 0 }}
 									>
 										<BookmarkFolderComponent key={child.folder_id}>
 											{child}
@@ -154,7 +158,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 									<motion.li
 										key={child.bookmark_id}
 										className={styles.bookmark__folder__links__link}
-                                        exit={{scale: 0}}
+										exit={{ scale: 0 }}
 									>
 										<BookmarkItemComponent key={child.bookmark_id}>
 											{child}
