@@ -7,11 +7,11 @@ import { modalStore } from "@/store/modalStore"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { BookmarkFolder } from "@/types/types"
 import { useRouter } from "next/navigation"
-import { bookmarksStore } from "@/store/bookmarksStore"
 import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders"
 import { createClient } from "@/app/utils/supabase/client"
 import { createNewBookmark } from "@/app/utils/supabase/bookmarks/createNewBookmark"
 import { folderStore } from "@/store/folderStore"
+import { validateURL } from "@/app/utils/validateURL"
 
 type Props = {
 	title: string
@@ -65,12 +65,8 @@ const NewBookmarkDialog = ({ title }: Props) => {
 
 	/* This function implements the logic for creating a new bookmark */
 	const createBookmark = async () => {
-		const regExpURL: RegExp = new RegExp(
-			"^(?:https?):\/\/([w-]+(?:.[w-]+)*)(?::d+)?(.*)$"
-		)
-
-		if (!regExpURL.test(newBookmark.url)) {
-			alert("El formato de la URL es incorrecta")
+		if (!validateURL(newBookmark.url)) {
+			alert("URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.")
 		} else {
 			await createNewBookmark(newBookmark)
 			await updateBookmarkList()
