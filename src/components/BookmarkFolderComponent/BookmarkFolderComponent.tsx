@@ -10,8 +10,6 @@ import { getChildrenFolders } from "@/app/utils/supabase/folders/getChildrenFold
 import getChildrenBookmarks from "@/app/utils/supabase/bookmarks/getChildrenBookmarks"
 import { bookmarksStore } from "@/store/bookmarksStore"
 
-// TODO: Calculate total height when the children are level 2 like: folder > folder > bookmark1...bookmark2....bookmark3
-
 interface BFCProps {
 	children: {
 		folder_id: string
@@ -21,35 +19,18 @@ interface BFCProps {
 	}
 }
 
-const BookmarkFolderComponent = (props: BFCProps, child: boolean) => {
+const BookmarkFolderComponent = (props: BFCProps) => {
 	const bookmarkList = bookmarksStore((state) => state.bookmarksList)
 
 	const collapsibleRef = useRef<HTMLUListElement>(null)
-	const childrenCollapsibleRef = useRef<HTMLLIElement>(null)
 
 	const [expanded, setExpanded] = useState(false)
 	const [children, setChildren] = useState([])
-
-	const FOLDER_HEIGHT = "2.5rem"
-
-	// It the children ref height is null, it returns 0
-	const childrenHeight = childrenCollapsibleRef.current?.scrollHeight ?? 0
-
-	console.log(`${props.children.folder_title}: ${collapsibleRef.current?.scrollHeight + childrenHeight}px`)
 
 	const variants = {
 		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
 		show: {
 			//height: collapsibleRef.current?.scrollHeight + "px",
-			height: "auto",
-			padding: 0, paddingLeft: "2rem",
-		},
-	}
-
-	const childrenVariants = {
-		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
-		show: {
-			//height: collapsibleRef.current?.scrollHeight + childrenCollapsibleRef.current?.scrollHeight + "px",
 			height: "auto",
 			padding: 0, paddingLeft: "2rem",
 		},
@@ -77,7 +58,7 @@ const BookmarkFolderComponent = (props: BFCProps, child: boolean) => {
 					// Iterates every child bookmark
 					childrenBookmarks.map((bookmark: BookmarkItem) => {
 						// If the bookmark belongs to this parent folder, it pushes to the children array
-						if (bookmark.bookmark_parentFolder === folder.folder_id) {
+						if (bookmark.bookmark_parentfolder === folder.folder_id) {
 							// @ts-ignore
 							folder.folder_children.push(bookmark)
 						}

@@ -12,5 +12,5 @@ export type BookmarkItem = {
     bookmark_url: string,
     bookmark_favicon: string,
     bookmark_user_id: string,
-    bookmark_parentFolder: string | null
+    bookmark_parentfolder: string | null
 }
