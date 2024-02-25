@@ -1,4 +1,5 @@
 import { createClient } from "../client";
+import { getUser } from "../getUser";
 
 interface FolderProps {
     title: string,
@@ -7,8 +8,8 @@ interface FolderProps {
 }
 
 export async function createNewFolder(folder: FolderProps) {
-	const supabase = createClient();
-	const { data: {user} } = await supabase.auth.getUser()
+    const supabase = createClient();
+    const user = await getUser();
 	const { error } = await supabase.from("folders").insert({
 		folder_id: crypto.randomUUID(),
 		folder_title: folder.title,
