@@ -2,8 +2,6 @@ import type { Metadata } from "next"
 import { Barlow } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "sonner"
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
-import { cookies } from "next/headers"
 
 const barlow = Barlow({
 	subsets: ["latin"],
@@ -39,6 +37,7 @@ export default async function RootLayout({
 				<meta name="msapplication-config" content="/icons/browserconfig.xml" />
 				<meta name="msapplication-TileColor" content="#2B5797" />
 				<meta name="msapplication-tap-highlight" content="no" />
+				<meta name="robots" content="index, follow" />
 
 				<meta property="og:type" content="website" />
 				<meta property="og:title" content="Bookmarker" />

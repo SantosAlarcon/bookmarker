@@ -7,7 +7,6 @@ import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import styles from "./Header.module.scss"
 import tooltipStyles from "@/app/tooltip.module.scss"
-import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import AuthButton from "../Buttons/AuthButton/AuthButton"
 import UserContextMenu from "./UserContextMenu"
@@ -44,7 +43,7 @@ const Header = () => {
                         width="128"
                         height="128"
                         alt="Logo"
-                        priority={true}
+                        priority
                         className={styles.header__logo_img}
                     />
                 </div>
@@ -68,6 +67,7 @@ const Header = () => {
                                 height={32}
                                 src="/icons/add-bookmark-icon.svg"
                                 alt="New bookmark icon"
+				priority
                             />
                         </button>
                     </div>
@@ -90,6 +90,7 @@ const Header = () => {
                                 height={32}
                                 src="/icons/add-folder-icon.svg"
                                 alt="New folder icon"
+				priority
                             />
                         </button>
                     </div>
