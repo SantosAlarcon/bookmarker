@@ -22,8 +22,9 @@ export default function AuthLayout({
                 <link rel="manifest" href="/manifest.json" />
                 <meta
                     name="viewport"
-                    content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
+                    content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
                 />
+		<meta name="description" content="App to manage browser bookmarks everywhere" />
                 <meta name="theme-color" content="#8936FF" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />

@@ -33,7 +33,6 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
 	return (
 		<button
 			className={styles.edit__button}
-			id="edit__bookmark__button"
 			onClick={handleClick}
 			aria-label="Edit bookmark"
 		>

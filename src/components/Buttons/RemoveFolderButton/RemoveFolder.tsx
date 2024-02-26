@@ -29,7 +29,6 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
 	return (
 		<button
 			className={styles.remove__button}
-			id="remove__button"
 			aria-label="Remove folder"
 			onClick={handleClick}
 		>

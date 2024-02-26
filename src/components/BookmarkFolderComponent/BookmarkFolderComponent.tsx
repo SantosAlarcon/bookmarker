@@ -30,7 +30,6 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 	const variants = {
 		hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
 		show: {
-			//height: collapsibleRef.current?.scrollHeight + "px",
 			height: "auto",
 			padding: 0, paddingLeft: "2rem",
 		},
@@ -81,7 +80,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 	return (
 		<div className={styles.bookmark__folder__container}>
 			<div className={styles.bookmark__folder__main}>
-				<div className={styles.bookmark__folder__mark}>
+				{children.length > 0 && <div className={styles.bookmark__folder__mark}>
 					<Image
 						width={16}
 						height={16}
@@ -89,10 +88,11 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 						src="/icons/triangle.svg"
 						className={styles.bookmark__folder__mark__icon}
 						style={expanded ? { rotate: "90deg" } : { rotate: "0deg" }}
+						priority
 					/>
-				</div>
+				</div>}
 				<div className={styles.bookmark__folder__icon}>
-					<Image width={24} height={24} alt="Folder icon" src="/icons/folder.svg" />
+					<Image width={24} height={24} alt="Folder icon" src="/icons/folder.svg" priority />
 				</div>
 				<div
 					className={styles.bookmark__folder__title}

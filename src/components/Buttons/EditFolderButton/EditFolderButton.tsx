@@ -31,7 +31,6 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
     return (
         <button
             className={styles.edit__button}
-            id="edit__folder__button"
             onClick={() => handleClick()}
             aria-label="Edit folder"
         >
