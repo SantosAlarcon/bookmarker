@@ -25,7 +25,6 @@ const BookmarkItemComponent = (props: BICProps) => {
 							height={16}
 							alt="Folder icon"
 							src={props.children.bookmark_favicon}
-							priority
 						/>
 					</picture>
 				) : (
