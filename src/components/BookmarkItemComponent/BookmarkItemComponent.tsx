@@ -20,15 +20,16 @@ const BookmarkItemComponent = (props: BICProps) => {
 			<div className={styles.bookmark__item__icon}>
 				{props?.children.bookmark_favicon ? (
 					<picture>
-						<Image
+						<img
 							width={16}
 							height={16}
-							alt="Folder icon"
+							alt="Favicon"
 							src={props.children.bookmark_favicon}
+							loading="eager"
 						/>
 					</picture>
 				) : (
-					<Image width={16} height={16} alt="Folder icon" src="/icons/bookmark.svg" priority />
+					<Image width={16} height={16} alt="Bookmark icon" src="/icons/bookmark.svg" priority />
 				)}
 			</div>
 			<Link
