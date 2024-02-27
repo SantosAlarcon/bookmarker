@@ -10,6 +10,10 @@
         box-shadow: 5px 0 3rem #0005;
         background-color: #112;
 
+        @media (width < 720px) {
+            top: 20vh;
+        }
+
         &::backdrop {
             backdrop-filter: blur(5px);
         }
