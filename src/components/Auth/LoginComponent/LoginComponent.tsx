@@ -140,9 +140,9 @@ const LoadingComponent = () => {
 						</button>
 					</form>
 				</div>
-				<Link href="/auth/register" className={styles.login__page__link}>
+                {/*<Link href="/auth/register" className={styles.login__page__link}>
 					Already have an account? <b>Register now</b>
-				</Link>
+				</Link>*/}
 				<Link href="/reset-password" className={styles.login__page__link}>
 					Cannot log in? <b>Click to reset password</b>
 				</Link>
