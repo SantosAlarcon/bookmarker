@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation"
 import updateFolder from "@/app/utils/supabase/folders/updateFolder"
 import { folderStore } from "@/store/folderStore"
 import { BookmarkFolder } from "@/types/types"
+import Spinner from "@/components/Spinner/Spinner"
 
 type Props = {
     title: string
@@ -25,6 +26,8 @@ const EditFolderDialog = ({ title }: Props) => {
         description: editFolderData.description,
         parentFolder: editFolderData.parentFolder
     })
+    const [loading, setLoading] = useState<boolean>(false);
+
     const dialogRef = useRef<null | HTMLDialogElement>(null)
     const router = useRouter();
 
@@ -56,10 +59,12 @@ const EditFolderDialog = ({ title }: Props) => {
 
     /* This function implements the logic to modify folder metadata */
     const editFolder = async () => {
+        setLoading(true);
         await updateFolder(editFolderData.id, updatedFolder)
         await updateBookmarkList()
         router.refresh()
         closeDialog()
+        setLoading(false);
         toast.success("Folder data has been updated succesfully")
     }
 
@@ -146,7 +151,7 @@ const EditFolderDialog = ({ title }: Props) => {
                     disabled={updatedFolder.title && updatedFolder.description ? false : true}
                     onClick={() => editFolder()}
                 >
-                    Modify
+                    {loading ? <Spinner /> : "Update"}
                 </button>
                 <button onClick={() => closeDialog()}>Close</button>
             </div>

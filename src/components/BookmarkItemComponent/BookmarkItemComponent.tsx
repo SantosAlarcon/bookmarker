@@ -21,10 +21,9 @@ const BookmarkItemComponent = (props: BICProps) => {
 				{props?.children.bookmark_favicon ? (
 					<picture>
 						<img
-							width={16}
-							height={16}
 							alt="Favicon"
 							src={props.children.bookmark_favicon}
+                            className={styles.bookmark__item__favicon}
 							loading="eager"
 						/>
 					</picture>

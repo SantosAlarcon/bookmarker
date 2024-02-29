@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation"
 import { createNewFolder } from "@/app/utils/supabase/folders/createNewFolder"
 import { folderStore } from "@/store/folderStore"
 import { type BookmarkFolder } from "@/types/types"
+import Spinner from "@/components/Spinner/Spinner"
 
 type Props = {
 	title: string
@@ -25,6 +26,8 @@ const NewFolderDialog = ({ title }: Props) => {
 		description: "",
 		parentFolder: null
 	})
+    const [loading, setLoading] = useState<boolean>(false);
+
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
 	const router = useRouter()
@@ -49,10 +52,12 @@ const NewFolderDialog = ({ title }: Props) => {
 
 	/* THis function implements the logic to create a folder and close the dialog. */
 	const createFolder = async () => {
+        setLoading(true);
 		await createNewFolder(newFolder);
 		await updateBookmarkList()
 		router.refresh()
 		closeDialog()
+        setLoading(false);
 		toast.success("Folder created successfully!")
 	}
 
@@ -131,7 +136,7 @@ const NewFolderDialog = ({ title }: Props) => {
 					disabled={newFolder.title && newFolder.description ? false : true}
 					onClick={() => createFolder()}
 				>
-					Create
+                    {loading ? <Spinner /> : "Create" }
 				</button>
 				<button onClick={() => closeDialog()}>Close</button>
 			</div>

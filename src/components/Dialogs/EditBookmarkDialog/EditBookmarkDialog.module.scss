@@ -93,6 +93,9 @@
                 background-color: var(--main-color-hover);
             }
 
+            &:active {
+                transform: scale(0.9);
+            }
         }
     }
 }

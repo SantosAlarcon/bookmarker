@@ -58,12 +58,14 @@ const BookmarksView = () => {
                             (<motion.ul layout initial="false" className={styles.bookmarks__view__list}>
                                 {/* @ts-ignore*/}
                                 {bookmarksList.map((item: BookmarkFolder & BookmarkItem, index) => {
+                                    {/* If the item have the folder_id field, it renders a folder component. */ }
                                     if (item.hasOwnProperty("folder_id")) {
-                                        return (<motion.li initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{scale: 0}} transition={{ delay: 0.1 * index }} key={item.folder_id}>
-                                            <BookmarkFolderComponent key={item.folder_id}>
-                                                {item}
-                                            </BookmarkFolderComponent>
-                                        </motion.li>
+                                        return (
+                                            <motion.li initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ scale: 0 }} transition={{ delay: 0.1 * index }} key={item.folder_id}>
+                                                <BookmarkFolderComponent key={item.folder_id}>
+                                                    {item}
+                                                </BookmarkFolderComponent>
+                                            </motion.li>
                                         )
                                     } else {
                                         return (

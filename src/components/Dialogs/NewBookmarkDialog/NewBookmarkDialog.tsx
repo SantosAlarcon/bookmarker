@@ -12,6 +12,7 @@ import { createClient } from "@/app/utils/supabase/client"
 import { createNewBookmark } from "@/app/utils/supabase/bookmarks/createNewBookmark"
 import { folderStore } from "@/store/folderStore"
 import { validateURL } from "@/app/utils/validateURL"
+import Spinner from "@/components/Spinner/Spinner"
 
 type Props = {
 	title: string
@@ -29,6 +30,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 		url: "",
 		parentFolder: null,
 	})
+    const [loading, setLoading] = useState<boolean>(false);
 
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
 
@@ -68,10 +70,12 @@ const NewBookmarkDialog = ({ title }: Props) => {
 		if (!validateURL(newBookmark.url)) {
 			alert("URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.")
 		} else {
+            setLoading(true);
 			await createNewBookmark(newBookmark)
 			await updateBookmarkList()
 			router.refresh()
 			closeDialog()
+            setLoading(false);
 			toast.success("The new bookmark added successfully :)")
 		}
 	}
@@ -159,7 +163,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 					disabled={newBookmark.title && newBookmark.url ? false : true}
 					onClick={() => createBookmark()}
 				>
-					Create
+                    {loading ? <Spinner /> : "Create" }
 				</button>
 				<button onClick={() => closeDialog()}>Close</button>
 			</div>

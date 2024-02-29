@@ -1,7 +1,5 @@
 import ResetPassword from '@/components/Auth/ResetPassword/ResetPassword';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import Head from 'next/head';
-
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -15,9 +13,9 @@ const ResetPasswordPage = async () => {
 
     return (
         <>
-            <Head>
+            <head>
                 <title>Reset password - Bookmarker</title>
-            </Head>
+            </head>
             <ResetPassword />
         </>
     )

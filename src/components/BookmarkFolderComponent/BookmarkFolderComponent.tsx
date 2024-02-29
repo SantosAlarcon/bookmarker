@@ -82,8 +82,8 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 			<div className={styles.bookmark__folder__main}>
 				{children.length > 0 && <div className={styles.bookmark__folder__mark}>
 					<Image
-						width={16}
-						height={16}
+						width={10}
+						height={10}
 						alt="Marker"
 						src="/icons/triangle.svg"
 						className={styles.bookmark__folder__mark__icon}
@@ -92,7 +92,8 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 					/>
 				</div>}
 				<div className={styles.bookmark__folder__icon}>
-					<Image width={24} height={24} alt="Folder icon" src="/icons/folder.svg" priority />
+                    {expanded ? <Image width={24} height={24} alt="Folder icon" src="/icons/folder-open.svg" priority /> : 
+                    <Image width={24} height={24} alt="Folder icon" src="/icons/folder.svg" priority />}
 				</div>
 				<div
 					className={styles.bookmark__folder__title}

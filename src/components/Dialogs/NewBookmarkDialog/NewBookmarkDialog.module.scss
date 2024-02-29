@@ -83,6 +83,7 @@
             font-family: inherit;
             background-color: var(--main-color);
             transition: all 150ms ease-in-out;
+            user-select: none;
 
             &:nth-child(1) {
                 background-color: var(--main-color-dark);
@@ -90,6 +91,10 @@
 
             &:hover {
                 background-color: var(--main-color-hover);
+            }
+
+            &:active {
+                transform: scale(0.9);
             }
         }
     }

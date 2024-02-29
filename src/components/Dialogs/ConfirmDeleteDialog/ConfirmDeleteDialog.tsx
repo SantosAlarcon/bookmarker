@@ -1,6 +1,6 @@
 "use client"
 import styles from "./ConfirmDeleteDialog.module.scss"
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { toast } from "sonner"
 import { modalStore } from "@/store/modalStore"
@@ -8,6 +8,7 @@ import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { useRouter } from "next/navigation"
 import { deleteBookmark } from "@/app/utils/supabase/bookmarks/deleteBookmark"
 import deleteFolder from "@/app/utils/supabase/folders/deleteFolder"
+import Spinner from "@/components/Spinner/Spinner"
 
 type Props = {
 	title: string
@@ -18,6 +19,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 	const confirmDeleteModal = modalStore((state) => state.deleteConfirmModal)
 	const closeDeleteModal = modalStore((state) => state.hideDeleteConfirmModal)
 	const deleteProps = modalStore((state) => state.deleteProps)
+    const [loading, setLoading] = useState<boolean>(false);
 
 	const router = useRouter()
 
@@ -36,6 +38,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 
 	/* This function implements deletion logic and closes the medal. Use the ID of the item to delete it */
 	const confirmDeletion = async () => {
+        setLoading(true);
 		switch (deleteProps.type) {
 			case "bookmark":
 				await deleteBookmark(deleteProps.id)
@@ -47,6 +50,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 
 		await updateBookmarkList()
 		closeDialog()
+        setLoading(false);
 		router.refresh()
 		toast.success(`'${deleteProps?.title}' deleted successfully!`)
 	}
@@ -87,7 +91,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 						className={styles.confirm__delete__dialog__buttons__delete}
 						onClick={() => confirmDeletion()}
 					>
-						Delete
+                        {loading ? <Spinner /> : "Delete"}
 					</button>
 					<button onClick={() => closeDialog()}>Cancel</button>
 				</div>
