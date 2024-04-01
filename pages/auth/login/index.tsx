@@ -1,8 +1,9 @@
+import LoginComponent from "@/components/Auth/LoginComponent/LoginComponent"
 import AuthLayout from "./layout"
 import styles from "@/app/page.module.css"
-import LoginComponent from "@/components/Auth/LoginComponent/LoginComponent"
+import {appWithTranslation} from "next-i18next"
 
-const RegisterPage = () => {
+const LoginPage = () => {
     return (
         <AuthLayout>
             <main className={styles.main}>
@@ -12,4 +13,4 @@ const RegisterPage = () => {
     )
 }
 
-export default RegisterPage
+export default appWithTranslation(LoginPage)
