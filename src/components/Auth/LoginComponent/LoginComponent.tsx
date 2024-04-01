@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 import { createClient } from "@/app/utils/supabase/client"
 import { SupabaseClient } from "@supabase/supabase-js"
+import { useTranslation } from "next-i18next"
 
 interface FormData {
 	email: string
@@ -26,6 +27,9 @@ interface FormData {
 const LoadingComponent = () => {
 	const supabase: SupabaseClient = createClient();
 	const router: AppRouterInstance = useRouter();
+    const {t} = useTranslation('login');
+
+    console.log(t);
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
@@ -75,6 +79,7 @@ const LoadingComponent = () => {
 							priority
 						/>
 						Sign In with Google
+                        {t('sign-with-google')}
 					</button>
 					<button
 						className={styles.login__page__social__button}
@@ -137,12 +142,10 @@ const LoadingComponent = () => {
 								priority
 							/>}
 							Sign In with Email
+                            {t('sign-with-email')}
 						</button>
 					</form>
 				</div>
-                {/*<Link href="/auth/register" className={styles.login__page__link}>
-					Already have an account? <b>Register now</b>
-				</Link>*/}
 				<Link href="/reset-password" className={styles.login__page__link}>
 					Cannot log in? <b>Click to reset password</b>
 				</Link>

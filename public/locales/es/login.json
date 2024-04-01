@@ -1,0 +1,12 @@
+{
+    "title": "Iniciar sesión",
+    "text": "Comienza a organizar tus marcadores en un sólo lugar iniciando sesión con tu cuenta.",
+    "sign-with-google": "Iniciar sesión con Google",
+    "sign-with-facebook": "Iniciar sesión con Facebook",
+    "sign-with-github": "Iniciar sesión con GitHub",
+    "sign-with-email": "Iniciar sesión con correo electrónico",
+    "email-label": "Correo electrónico",
+    "password-label": "Contraseña",
+    "reset-password-text": "¿No puedes iniciar sesión?",
+    "reset-password-link": "Haz click aquí para restablecer tu contraseña."
+}
