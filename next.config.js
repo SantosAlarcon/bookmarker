@@ -5,4 +5,7 @@ const withPWA = require("next-pwa")({
 	skipWaiting: true,
 })
 
-module.exports = withPWA
+const {i18n} = require("./next-i18next.config.ts")
+
+//module.exports = withPWA
+module.exports = {i18n, withPWA}

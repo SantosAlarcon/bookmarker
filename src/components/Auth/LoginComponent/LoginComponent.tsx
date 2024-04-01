@@ -17,6 +17,8 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { createClient } from "@/app/utils/supabase/client"
 import { SupabaseClient } from "@supabase/supabase-js"
 
+import {appWithTranslation} from "next-i18next"
+
 interface FormData {
 	email: string
 	password: string
@@ -151,4 +153,4 @@ const LoadingComponent = () => {
 	)
 }
 
-export default LoadingComponent
+export default appWithTranslation(LoadingComponent)
