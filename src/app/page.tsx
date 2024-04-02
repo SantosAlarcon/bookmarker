@@ -5,8 +5,9 @@ import { createClient } from "@/app/utils/supabase/server"
 import { redirect } from "next/navigation"
 import { SupabaseClient } from "@supabase/supabase-js"
 import { cookies } from "next/headers"
+import { appWithTranslation } from "next-i18next"
 
-export default async function Home() {
+async function Home() {
     const supabase: SupabaseClient = createClient(cookies())
     const {data} = await supabase.auth?.getSession();
     
@@ -21,3 +22,5 @@ export default async function Home() {
         </div>
     )
 }
+
+export default appWithTranslation(Home)
