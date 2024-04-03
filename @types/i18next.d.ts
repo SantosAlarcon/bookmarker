@@ -1,18 +1,14 @@
-/**
- * If you want to enable locale keys typechecking and enhance IDE experience.
- *
- * Requires `resolveJsonModule:true` in your tsconfig.json.
- *
- * @link https://www.i18next.com/overview/typescript
- */
-import 'i18next'
+import "react-i18next"
 
-// resources.ts file is generated with `npm run toc`
-import resources from './resources.ts'
+// import all namespaces (for the default language, only)
+import common from "./public/locales/en/common.json"
+import login from "./public/locales/en/login.json"
 
-declare module 'i18next' {
-  interface CustomTypeOptions {
-    defaultNS: 'common'
-    resources: typeof resources
-  }
+declare module "react-i18next" {
+	interface CustomTypeOptions {
+		resources: {
+			common: typeof common
+			login: typeof login
+		}
+	}
 }
