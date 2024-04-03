@@ -1,19 +1,17 @@
 import LoginComponent from "@/components/Auth/LoginComponent/LoginComponent"
 import AuthLayout from "./layout"
 import styles from "@/app/page.module.css"
-import { I18nextProvider } from "react-i18next"
-import { i18n } from "next-i18next"
+import { appWithI18Next } from "ni18n"
+import { ni18nConfig } from "../../../ni18n.config"
 
 const LoginPage = () => {
-    return (
-	<I18nextProvider i18n={i18n}>
-	    <AuthLayout>
-		<main className={styles.main}>
-		    <LoginComponent />
-		</main>
-	    </AuthLayout>
-	</I18nextProvider>
-    )
+  return (
+    <AuthLayout>
+      <main className={styles.main}>
+        <LoginComponent />
+      </main>
+    </AuthLayout>
+  )
 }
 
-export default LoginPage
+export default appWithI18Next(LoginPage, ni18nConfig);

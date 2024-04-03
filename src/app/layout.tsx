@@ -14,14 +14,14 @@ export const metadata: Metadata = {
 	manifest: "/manifest.json",
 }
 
-export default async function RootLayout({
+async function RootLayout({
 	children,
 }: {
 	children: React.ReactNode
 }) {
 
 	return (
-		<html lang="es">
+		<html>
 			<head>
 				<link rel="shortcut icon" href="/favicon.svg" />
 				<meta
@@ -54,3 +54,5 @@ export default async function RootLayout({
 		</html>
 	)
 }
+
+export default RootLayout

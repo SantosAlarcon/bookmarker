@@ -9,6 +9,7 @@
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": true,
+        "strictNullChecks": true,
 		"noEmit": true,
 		"esModuleInterop": true,
 		"module": "esnext",
@@ -30,9 +31,11 @@
 	},
 	"include": [
 		"next-env.d.ts",
+        "i18next.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		".next/types/**/*.ts"
+		".next/types/**/*.ts",
+        "ni18n.config.ts"
 	],
 	"exclude": [
 		"node_modules"
