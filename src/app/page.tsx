@@ -5,7 +5,8 @@ import { createClient } from "@/app/utils/supabase/server"
 import { redirect } from "next/navigation"
 import { SupabaseClient } from "@supabase/supabase-js"
 import { cookies } from "next/headers"
-import { appWithTranslation } from "next-i18next"
+import { appWithI18Next } from "ni18n"
+import { ni18nConfig } from "../../ni18n.config"
 
 async function Home() {
     const supabase: SupabaseClient = createClient(cookies())
@@ -23,4 +24,4 @@ async function Home() {
     )
 }
 
-export default appWithTranslation(Home)
+export default appWithI18Next(Home, ni18nConfig)

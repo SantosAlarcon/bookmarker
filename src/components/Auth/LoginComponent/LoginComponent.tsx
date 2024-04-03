@@ -19,16 +19,19 @@ import { SupabaseClient } from "@supabase/supabase-js"
 import { useTranslation } from "next-i18next"
 import resources from "../../../../@types/resources"
 
+import {appWithI18Next} from "ni18n"
+import { ni18nConfig } from "../../../../ni18n.config"
+
 interface FormData {
 	email: string
 	password: string
 	loading: boolean
 }
 
-const LoadingComponent = () => {
-	const supabase: SupabaseClient = createClient();
-	const router: AppRouterInstance = useRouter();
-    const {t, i18n} = useTranslation(resources.login);
+const LoginComponent = () => {
+	const supabase: SupabaseClient = createClient()
+	const router: AppRouterInstance = useRouter()
+	const { t } = useTranslation("login")
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
@@ -36,13 +39,14 @@ const LoadingComponent = () => {
 		loading: false,
 	})
 
-    console.log(i18n)
-
-
 	const handleSubmit = async (event: FormEvent) => {
-		event.preventDefault();
+		event.preventDefault()
 		setFormData({ ...formData, loading: true })
-		const isLoggedIn: boolean | undefined = await signInWithEmail(formData.email, formData.password, supabase)
+		const isLoggedIn: boolean | undefined = await signInWithEmail(
+			formData.email,
+			formData.password,
+			supabase
+		)
 
 		// If the login is succesfull, redirect to the main page
 		if (isLoggedIn) {
@@ -56,14 +60,16 @@ const LoadingComponent = () => {
 		setFormData({ email: "", password: "", loading: false })
 	}
 
-    useEffect(() => {
-        i18n.reloadResources(i18n.resolvedLanguage, )
-    }, [i18n])
-
 	return (
 		<section className={styles.login__page__container}>
 			<div className={styles.login__page__logo}>
-				<Image src="/BookmarkerLogo.svg" alt="logo" width={450} height={150} priority />
+				<Image
+					src="/BookmarkerLogo.svg"
+					alt="logo"
+					width={450}
+					height={150}
+					priority
+				/>
 			</div>
 			<div className={styles.login__page__box}>
 				<h2 className={styles.login__page__title}>Login</h2>
@@ -84,7 +90,7 @@ const LoadingComponent = () => {
 							priority
 						/>
 						Sign In with Google
-                        {t('sign-with-google')}
+						{t("sign-with-google")}
 					</button>
 					<button
 						className={styles.login__page__social__button}
@@ -115,7 +121,10 @@ const LoadingComponent = () => {
 						Sign In with Facebook
 					</button>
 					<hr className={styles.login__page__separator} />
-					<form className={styles.login__page__form} onSubmit={(e) => handleSubmit(e)}>
+					<form
+						className={styles.login__page__form}
+						onSubmit={(e) => handleSubmit(e)}
+					>
 						<label htmlFor="email">Email</label>
 						<input
 							type="email"
@@ -139,15 +148,19 @@ const LoadingComponent = () => {
 							type="submit"
 							disabled={formData.loading}
 						>
-							{formData.loading ? <Spinner /> : <Image
-								src="/social/email.svg"
-								alt="Email Logo"
-								width={20}
-								height={20}
-								priority
-							/>}
+							{formData.loading ? (
+								<Spinner />
+							) : (
+								<Image
+									src="/social/email.svg"
+									alt="Email Logo"
+									width={20}
+									height={20}
+									priority
+								/>
+							)}
 							Sign In with Email
-                            {t('sign-with-email')}
+							{t("sign-with-email")}
 						</button>
 					</form>
 				</div>
@@ -159,4 +172,4 @@ const LoadingComponent = () => {
 	)
 }
 
-export default LoadingComponent
+export default appWithI18Next(LoginComponent, ni18nConfig)
