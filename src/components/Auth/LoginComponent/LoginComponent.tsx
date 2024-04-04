@@ -29,6 +29,7 @@ interface FormData {
 const LoginComponent = () => {
 	const supabase: SupabaseClient = createClient()
 	const router: AppRouterInstance = useRouter()
+    const {t} = useTranslation("login");
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
@@ -169,4 +170,4 @@ const LoginComponent = () => {
 	)
 }
 
-export default appWithI18Next(LoginComponent, ni18nConfig)
+export default LoginComponent

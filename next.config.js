@@ -5,6 +5,8 @@ const withPWA = require("next-pwa")({
 	skipWaiting: true,
 })
 
-const {i18n} = require("./next-i18next.config.cjs")
+const i18nConfig = require("./i18n.ts")
 
-module.exports = {withPWA, i18n}
+const nextTranslatePlugin = require("next-translate-plugin")
+
+module.exports = {withPWA, i18nConfig, nextTranslatePlugin}
