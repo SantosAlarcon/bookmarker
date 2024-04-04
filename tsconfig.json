@@ -31,11 +31,9 @@
 	},
 	"include": [
 		"next-env.d.ts",
-        "i18next.d.ts",
 		"**/*.ts",
 		"**/*.tsx",
-		".next/types/**/*.ts",
-        "ni18n.config.ts"
+		".next/types/**/*.ts"
 	],
 	"exclude": [
 		"node_modules"

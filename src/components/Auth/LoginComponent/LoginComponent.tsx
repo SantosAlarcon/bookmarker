@@ -16,10 +16,7 @@ import { useRouter } from "next/navigation"
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 import { createClient } from "@/app/utils/supabase/client"
 import { SupabaseClient } from "@supabase/supabase-js"
-import { useTranslation } from "next-i18next"
-
-import { appWithI18Next } from "ni18n"
-import { ni18nConfig } from "../../../../ni18n.config"
+import useTranslation from "next-translate/useTranslation"
 
 interface FormData {
 	email: string
@@ -29,7 +26,7 @@ interface FormData {
 const LoginComponent = () => {
 	const supabase: SupabaseClient = createClient()
 	const router: AppRouterInstance = useRouter()
-    const {t} = useTranslation("login");
+    const {t} = useTranslation();
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
@@ -72,7 +69,7 @@ const LoginComponent = () => {
 			<div className={styles.login__page__box}>
 				<h2 className={styles.login__page__title}>Login</h2>
 				<div className={styles.login__page__text}>
-					Start managing your bookmarks in one place by login of your account.
+                    {t(`text`)}
 				</div>
 				<div className={styles.login__page__social__buttons}>
 					<button
@@ -87,8 +84,7 @@ const LoginComponent = () => {
 							height={20}
 							priority
 						/>
-						Sign In with Google
-						{t("sign-with-google")}
+						{t('sign-with-google')}
 					</button>
 					<button
 						className={styles.login__page__social__button}
@@ -102,7 +98,7 @@ const LoginComponent = () => {
 							height={20}
 							priority
 						/>
-						Sign In with GitHub
+                        {t("sign-with-github")}
 					</button>
 					<button
 						className={styles.login__page__social__button}
@@ -116,7 +112,7 @@ const LoginComponent = () => {
 							height={20}
 							priority
 						/>
-						Sign In with Facebook
+                        {t("sign-with-facebook")}
 					</button>
 					<hr className={styles.login__page__separator} />
 					<form
@@ -157,8 +153,7 @@ const LoginComponent = () => {
 									priority
 								/>
 							)}
-							Sign In with Email
-							{t("sign-with-email")}
+							{t('sign-with-email')}
 						</button>
 					</form>
 				</div>
