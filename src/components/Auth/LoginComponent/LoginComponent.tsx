@@ -18,7 +18,7 @@ import { createClient } from "@/app/utils/supabase/client"
 import { SupabaseClient } from "@supabase/supabase-js"
 import { useTranslation } from "next-i18next"
 
-import {appWithI18Next} from "ni18n"
+import { appWithI18Next } from "ni18n"
 import { ni18nConfig } from "../../../../ni18n.config"
 
 interface FormData {
@@ -29,8 +29,6 @@ interface FormData {
 const LoginComponent = () => {
 	const supabase: SupabaseClient = createClient()
 	const router: AppRouterInstance = useRouter()
-	const { t } = useTranslation("login")
-
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
