@@ -2,10 +2,12 @@ import React from 'react'
 import appWithI18n from 'next-translate/appWithI18n'
 import i18nConfig from '../i18n'
 
-function MyApp({ Component, pageProps }) {
+// @ts-ignore
+function MyApp({ Component: Component, pageProps }) {
   return <Component {...pageProps} />
 }
 
+// @ts-ignore
 export default appWithI18n(MyApp, {
   ...i18nConfig,
   //
