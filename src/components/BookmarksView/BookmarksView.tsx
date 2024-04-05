@@ -12,6 +12,7 @@ import { bookmarksStore } from "@/store/bookmarksStore"
 import { authStore } from "@/store/authStore"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { motion } from "framer-motion"
+import useTranslation from "next-translate/useTranslation"
 
 const BookmarksView = () => {
 
@@ -39,11 +40,13 @@ const BookmarksView = () => {
         setLoading(false)
     }, [session])
 
+    const {t} = useTranslation("common");
+
     return (
         <>
-            <EditBookmarkDialog title="Edit bookmark" />
-            <EditFolderDialog title="Edit folder" />
-            <ConfirmDeleteDialog title="Confirm deletion" />
+            <EditBookmarkDialog title={t("edit-bookmark-title")} />
+            <EditFolderDialog title={t("edit-folder-title")} />
+            <ConfirmDeleteDialog title={t("delete-item")} />
             <main className={styles.bookmarks__view__container}>
                 {loading ?
                     // If not bookmarks are loaded, it shows skeleton component
@@ -78,7 +81,7 @@ const BookmarksView = () => {
                                     }
                                 }
                                 )}
-                            </motion.ul>) : (<p className={styles.bookmarks__view__paragraph}>No bookmarks found.<br />Start creating new folders and bookmarks using the buttons above.</p>)
+                            </motion.ul>) : (<p className={styles.bookmarks__view__paragraph}><h1>{t("no-bookmarks-title")}</h1> {t("no-bookmarks-text")}</p>)
                     )
                 }
             </main>

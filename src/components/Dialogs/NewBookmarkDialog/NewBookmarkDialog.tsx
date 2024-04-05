@@ -13,6 +13,7 @@ import { createNewBookmark } from "@/app/utils/supabase/bookmarks/createNewBookm
 import { folderStore } from "@/store/folderStore"
 import { validateURL } from "@/app/utils/validateURL"
 import Spinner from "@/components/Spinner/Spinner"
+import useTranslation from "next-translate/useTranslation"
 
 type Props = {
 	title: string
@@ -31,8 +32,8 @@ const NewBookmarkDialog = ({ title }: Props) => {
 		parentFolder: null,
 	})
     const [loading, setLoading] = useState<boolean>(false);
-
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
+    const {t} = useTranslation("common")
 
 	const router = useRouter()
 
@@ -76,7 +77,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 			router.refresh()
 			closeDialog()
             setLoading(false);
-			toast.success("The new bookmark added successfully :)")
+			toast.success(t("new-bookmark-success"))
 		}
 	}
 
@@ -101,11 +102,11 @@ const NewBookmarkDialog = ({ title }: Props) => {
 						htmlFor="title"
 						className={styles.new__bookmark__dialog__form__label}
 					>
-						Title
+                        {t("title")}
 						<input
 							type="text"
 							name="title"
-							placeholder="Bookmark title"
+							placeholder={t("bookmark-title-placeholder")}
 							onChange={() =>
 								// @ts-ignore
 								setNewBookmark({ ...newBookmark, title: event.target.value })
@@ -121,7 +122,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 						<input
 							type="url"
 							name="url"
-							placeholder="Bookmark URL"
+							placeholder={t("bookmark-url-placeholder")}
 							onChange={() =>
 								// @ts-ignore
 								setNewBookmark({ ...newBookmark, url: event.target.value })
@@ -133,7 +134,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 						htmlFor="parentFolder"
 						className={styles.new__bookmark__dialog__form__label}
 					>
-						Parent folder
+                        {t("parent-folder")}
 						<select
 							name="parentFolder"
 							className={styles.new__bookmark__dialog__form__select}
@@ -146,7 +147,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 							}
 						>
 							<option defaultValue="null" value="null">
-								No parent folder
+                                {t("no-parent-folder")}
 							</option>
 							{folderList &&
 								folderList.map((folder: BookmarkFolder) => (
@@ -163,9 +164,9 @@ const NewBookmarkDialog = ({ title }: Props) => {
 					disabled={newBookmark.title && newBookmark.url ? false : true}
 					onClick={() => createBookmark()}
 				>
-                    {loading ? <Spinner /> : "Create" }
+                    {loading ? <Spinner /> : t("create") }
 				</button>
-				<button onClick={() => closeDialog()}>Close</button>
+				<button onClick={() => closeDialog()}>{t("close")}</button>
 			</div>
 		</dialog>
 	) : null

@@ -15,7 +15,7 @@ import useTranslation from "next-translate/useTranslation"
 const Header = () => {
 	const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
 	const showNewFolderModal = modalStore((state) => state.showNewFolderModal)
-	const {t} = useTranslation("header")
+	const {t} = useTranslation()
 
 	const router = useRouter()
 
@@ -28,8 +28,8 @@ const Header = () => {
 
 	return (
 		<>
-			<NewBookmarkDialog title="New bookmark"></NewBookmarkDialog>
-			<NewFolderDialog title="New Folder"></NewFolderDialog>
+			<NewBookmarkDialog title={t("common:new-bookmark-title")}></NewBookmarkDialog>
+			<NewFolderDialog title={t("common:new-folder-title")}></NewFolderDialog>
 			<UserContextMenu />
 			<header className={styles.header__container}>
 				<div className={styles.header__logo} onClick={() => router.push("/")}>
@@ -48,14 +48,14 @@ const Header = () => {
 							onClick={handleNewBookmark}
 							className={styles.header__links__button}
 							id="new-bookmark-tooltip"
-							aria-label={t("new-bookmark-tooltip")}
+							aria-label={t("header:new-bookmark-tooltip")}
 						>
 							<Tooltip
 								anchorSelect="#new-bookmark-tooltip"
 								place="bottom"
 								variant="info"
 								className={tooltipStyles.custom__tooltip}
-								content={t("new-bookmark-tooltip")}
+								content={t("header:new-bookmark-tooltip")}
 							/>
 							<Image
 								width={32}
@@ -71,14 +71,14 @@ const Header = () => {
 							onClick={handleNewFolder}
 							className={styles.header__links__button}
 							id="new-folder-tooltip"
-							aria-label={t("new-folder-tooltip")}
+							aria-label={t("header:new-folder-tooltip")}
 						>
 							<Tooltip
 								anchorSelect="#new-folder-tooltip"
 								place="bottom"
 								variant="info"
 								className={tooltipStyles.custom__tooltip}
-								content={t("new-folder-tooltip")}
+								content={t("header:new-folder-tooltip")}
 							/>
 							<Image
 								width={32}

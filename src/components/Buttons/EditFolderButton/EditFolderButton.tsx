@@ -6,6 +6,7 @@ import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
 import tooltipStyles from "@/app/tooltip.module.scss"
+import useTranslation from "next-translate/useTranslation"
 
 interface EditFolderProps {
     children: {
@@ -20,6 +21,7 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
     const showEditFolderDialog = modalStore((state) => state.showEditFolderModal)
     const modifyEditFolderData = modalStore((state) => state.modifyEditFolderData)
     const { folder_id, folder_title, folder_description, folder_parentfolder } = children
+    const {t} = useTranslation("common")
 
     const handleClick = () => {
         console.log(folder_parentfolder)
@@ -32,9 +34,9 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
         <button
             className={styles.edit__button}
             onClick={() => handleClick()}
-            aria-label="Edit folder"
+            aria-label={t("edit-folder-title")}
         >
-            <Tooltip anchorSelect="#edit__folder__button" variant="info" className={tooltipStyles.custom__tooltip} content="Edit folder" />
+            <Tooltip anchorSelect="#edit__folder__button" variant="info" className={tooltipStyles.custom__tooltip} content={t("edit-folder-tooltip")} />
             <Image width={24} height={24} src="/icons/edit-icon.svg" alt="Edit icon" priority />
         </button>
     )

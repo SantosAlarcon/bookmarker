@@ -6,6 +6,7 @@ import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
 import tooltipStyles from "@/app/tooltip.module.scss"
+import useTranslation from "next-translate/useTranslation"
 
 interface RemoveProps {
 	children: {
@@ -20,6 +21,7 @@ const RemoveButton = ({ children }: RemoveProps) => {
 	)
 	const setDeleteProps = modalStore((state) => state.setDeleteProps)
 	const { bookmark_id, bookmark_title } = children
+    const {t} = useTranslation("common");
 
 	const handleClick = () => {
 		setDeleteProps(bookmark_id, bookmark_title, "bookmark")
@@ -30,12 +32,12 @@ const RemoveButton = ({ children }: RemoveProps) => {
 		<button
 			className={styles.remove__button}
 			onClick={handleClick}
-			aria-label="Remove bookmark"
+			aria-label={t("delete-item")}
 		>
 			<Tooltip
 				anchorSelect="#remove__button"
 				place="top"
-				content="Delete item"
+				content={t("delete-item")}
 				variant="info"
 				className={tooltipStyles.custom__tooltip}
 			/>

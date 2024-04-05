@@ -6,6 +6,7 @@ import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
 import tooltipStyles from "@/app/tooltip.module.scss"
+import useTranslation from "next-translate/useTranslation"
 
 interface EditBookmarkProps {
 	children: {
@@ -30,16 +31,18 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
 		showEditBookmarkDialog()
 	}
 
+    const {t} = useTranslation("common")
+
 	return (
 		<button
 			className={styles.edit__button}
 			onClick={handleClick}
-			aria-label="Edit bookmark"
+			aria-label={t("edit-bookmark-title")}
 		>
 			<Tooltip
 				anchorSelect="#edit__bookmark__button"
 				variant="info"
-				content="Edit bookmark"
+				content={t("edit-bookmark-tooltip")}
 				className={tooltipStyles.custom__tooltip}
 			/>
 			<Image width={24} height={24} src="/icons/edit-icon.svg" alt="Edit icon" priority={true} />

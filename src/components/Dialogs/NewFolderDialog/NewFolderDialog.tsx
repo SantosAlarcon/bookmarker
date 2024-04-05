@@ -10,6 +10,7 @@ import { createNewFolder } from "@/app/utils/supabase/folders/createNewFolder"
 import { folderStore } from "@/store/folderStore"
 import { type BookmarkFolder } from "@/types/types"
 import Spinner from "@/components/Spinner/Spinner"
+import useTranslation from "next-translate/useTranslation"
 
 type Props = {
 	title: string
@@ -27,8 +28,8 @@ const NewFolderDialog = ({ title }: Props) => {
 		parentFolder: null
 	})
     const [loading, setLoading] = useState<boolean>(false);
-
 	const dialogRef = useRef<null | HTMLDialogElement>(null)
+    const {t} = useTranslation("common")
 
 	const router = useRouter()
 
@@ -58,7 +59,7 @@ const NewFolderDialog = ({ title }: Props) => {
 		router.refresh()
 		closeDialog()
         setLoading(false);
-		toast.success("Folder created successfully!")
+		toast.success(t("new-folder-sucess"))
 	}
 
 	const dialog: JSX.Element | null = showNewFolderDialog ? (
@@ -82,11 +83,11 @@ const NewFolderDialog = ({ title }: Props) => {
 						htmlFor="title"
 						className={styles.new__folder__dialog__form__label}
 					>
-						Title
+                        {t("title")}
 						<input
 							type="text"
 							name="title"
-							placeholder="Folder title"
+							placeholder={t("folder-title-placeholder")}
 							onChange={() =>
 								// @ts-ignore
 								setNewFolder({ ...newFolder, title: event.target.value })
@@ -98,11 +99,11 @@ const NewFolderDialog = ({ title }: Props) => {
 						htmlFor="description"
 						className={styles.new__folder__dialog__form__label}
 					>
-						Description
+                        {t("description")}
 						<input
 							type="text"
 							name="description"
-							placeholder="Folder description"
+							placeholder={t("folder-description-placeholder")}
 							onChange={() =>
 								// @ts-ignore
 								setNewFolder({ ...newFolder, description: event.target.value })
@@ -114,7 +115,7 @@ const NewFolderDialog = ({ title }: Props) => {
 						htmlFor="parentFolder"
 						className={styles.new__folder__dialog__form__label}
 					>
-						Parent Folder
+                        {t("parent-folder")}
 						<select
 							name="parentFolder"
 							className={styles.new__folder__dialog__form__parent__folder}
@@ -123,7 +124,7 @@ const NewFolderDialog = ({ title }: Props) => {
 								setNewFolder({ ...newFolder, parentFolder: event.target.value })
 							}
 						>
-							<option defaultValue="null">None</option>
+							<option defaultValue="null">{t("no-parent-folder")}</option>
 							{folderList.map((folder: BookmarkFolder) => (
 								<option key={folder.folder_id} value={folder.folder_id}>{folder.folder_title}</option>
 							))}
@@ -136,9 +137,9 @@ const NewFolderDialog = ({ title }: Props) => {
 					disabled={newFolder.title && newFolder.description ? false : true}
 					onClick={() => createFolder()}
 				>
-                    {loading ? <Spinner /> : "Create" }
+                    {loading ? <Spinner /> : t("create") }
 				</button>
-				<button onClick={() => closeDialog()}>Close</button>
+				<button onClick={() => closeDialog()}>{t("close")}</button>
 			</div>
 		</dialog>
 	) : null

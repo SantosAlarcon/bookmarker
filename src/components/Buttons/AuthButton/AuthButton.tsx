@@ -6,9 +6,8 @@ import styles from "./AuthButton.module.scss"
 import tooltipStyles from "@/app/tooltip.module.scss"
 import { Tooltip } from 'react-tooltip'
 import { useRouter } from 'next/navigation'
-import { SupabaseClient, type Session } from '@supabase/auth-helpers-nextjs'
+import { type Session } from '@supabase/auth-helpers-nextjs'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import { createClient } from '@/app/utils/supabase/client'
 import { handleUserContextMenu } from '@/components/Header/UserContextMenu'
 import { UserMetadata } from '@supabase/supabase-js'
 import getUserMetadata from '@/app/utils/getUserMetadata'
