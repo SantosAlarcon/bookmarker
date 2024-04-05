@@ -6,12 +6,14 @@ import "react-contexify/ReactContexify.css"
 import { TriggerEvent } from 'react-contexify'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import useTranslation from 'next-translate/useTranslation'
 
 export let handleUserContextMenu: Function | undefined = undefined;
 
 const UserContextMenu = () => {
     const supabase = createClient()
     const router = useRouter()
+    const {t} = useTranslation("common")
 
     const { show } = useContextMenu({
         id: "userContext"
@@ -44,7 +46,7 @@ const UserContextMenu = () => {
                 <Image src="/icons/user.svg" width={16} height={16} alt="User icon" style={{
                     marginRight: "1rem"
                 }} />
-                User profile
+		{t("user-profile")}
             </Item>
             <Item id="logout" onClick={async () => {
                 await supabase.auth.signOut({scope: "global"});
@@ -54,7 +56,8 @@ const UserContextMenu = () => {
                     marginRight: "1rem",
                     filter: "invert(1)"
                 }} />
-                Logout</Item>
+		{t("logout")}
+	    </Item>
         </Menu>
     )
 }

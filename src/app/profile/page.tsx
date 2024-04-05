@@ -7,6 +7,12 @@ import { UserMetadata } from '@supabase/supabase-js'
 import TrueIcon from '@/components/Icons/TrueIcon'
 import FalseIcon from '@/components/Icons/FalseIcon'
 import Link from 'next/link'
+import { Metadata } from 'next'
+import useTranslation from 'next-translate/useTranslation'
+
+export const metadata: Metadata = {
+	title: "My profile - Bookmarker",
+}
 
 export default async function PrivatePage() {
 
@@ -14,7 +20,9 @@ export default async function PrivatePage() {
     const supabase = createClient(cookieStore)
 
     const { data, error } = await supabase.auth.getUser()
-    const metadata: UserMetadata | undefined = data.user?.user_metadata
+    const userMetadata: UserMetadata | undefined = data.user?.user_metadata
+    const {t, lang} = useTranslation("profile-page")
+    metadata.title = t("page-title")
 
     // If there is no user or session active, redirect to the main page.
     if (error || !data?.user) {
@@ -22,24 +30,24 @@ export default async function PrivatePage() {
     }
 
     return (<section className={styles.user__info__container}>
-        <h1 className={styles.user__info__title}>User profile</h1>
+        <h1 className={styles.user__info__title}>{t("title")}</h1>
         <div className={styles.user__info__avatar}>
             <picture>
-                <img className={styles.user__info__avatar__img} alt={metadata?.full_name} src={metadata?.picture} />
+                <img className={styles.user__info__avatar__img} alt={userMetadata?.full_name} src={userMetadata?.picture} />
             </picture>
         </div>
         <div className={styles.user__info__data__grid}>
-            <span className={styles.user__info__data__grid__field__name}>Full Name:</span>
-            <span className={styles.user__info__data__grid__field__value}>{metadata?.full_name}</span>
-            <span className={styles.user__info__data__grid__field__name}>Email:</span>
-            <span className={styles.user__info__data__grid__field__value}>{metadata?.email}</span>
-            <span className={styles.user__info__data__grid__field__name}>Verified by email:</span>
-            <span className={styles.user__info__data__grid__field__value}>{metadata?.email_verified ? <TrueIcon /> : <FalseIcon />}</span>
-            <span className={styles.user__info__data__grid__field__name}>Creation date:</span>
-            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.created_at).toLocaleString("en", { day: "numeric", month: "long", year: "numeric" })}</span>
-            <span className={styles.user__info__data__grid__field__name}>Last login date:</span>
-            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.last_sign_in_at!).toLocaleString("en", { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric", hour12: false })}</span>
+            <span className={styles.user__info__data__grid__field__name}>{t("username")}</span>
+            <span className={styles.user__info__data__grid__field__value}>{userMetadata?.full_name}</span>
+            <span className={styles.user__info__data__grid__field__name}>{t("email")}</span>
+            <span className={styles.user__info__data__grid__field__value}>{userMetadata?.email}</span>
+            <span className={styles.user__info__data__grid__field__name}>{t("verified-by-email")}</span>
+            <span className={styles.user__info__data__grid__field__value}>{userMetadata?.email_verified ? <TrueIcon /> : <FalseIcon />}</span>
+            <span className={styles.user__info__data__grid__field__name}>{t("creation-date")}</span>
+            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.created_at).toLocaleString(lang, { day: "numeric", month: "long", year: "numeric" })}</span>
+            <span className={styles.user__info__data__grid__field__name}>{t("last-login-date")}</span>
+            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.last_sign_in_at!).toLocaleString(lang, { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric", hour12: false })}</span>
         </div>
-        <Link className={styles.user__info__link} href="/">Back to home</Link>
+        <Link className={styles.user__info__link} href="/">{t("back-to-home-button")}</Link>
     </section>)
 }

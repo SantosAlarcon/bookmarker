@@ -26,7 +26,7 @@ interface FormData {
 const LoginComponent = () => {
 	const supabase: SupabaseClient = createClient()
 	const router: AppRouterInstance = useRouter()
-    const {t} = useTranslation();
+	const { t } = useTranslation("login-page")
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
@@ -67,10 +67,8 @@ const LoginComponent = () => {
 				/>
 			</div>
 			<div className={styles.login__page__box}>
-				<h2 className={styles.login__page__title}>Login</h2>
-				<div className={styles.login__page__text}>
-                    {t(`text`)}
-				</div>
+				<h2 className={styles.login__page__title}>{t(`title`)}</h2>
+				<div className={styles.login__page__text}>{t(`text`)}</div>
 				<div className={styles.login__page__social__buttons}>
 					<button
 						className={styles.login__page__social__button}
@@ -84,7 +82,7 @@ const LoginComponent = () => {
 							height={20}
 							priority
 						/>
-						{t('sign-with-google')}
+						{t("sign-with-google")}
 					</button>
 					<button
 						className={styles.login__page__social__button}
@@ -98,7 +96,7 @@ const LoginComponent = () => {
 							height={20}
 							priority
 						/>
-                        {t("sign-with-github")}
+						{t("sign-with-github")}
 					</button>
 					<button
 						className={styles.login__page__social__button}
@@ -112,29 +110,29 @@ const LoginComponent = () => {
 							height={20}
 							priority
 						/>
-                        {t("sign-with-facebook")}
+						{t("sign-with-facebook")}
 					</button>
 					<hr className={styles.login__page__separator} />
 					<form
 						className={styles.login__page__form}
 						onSubmit={(e) => handleSubmit(e)}
 					>
-						<label htmlFor="email">Email</label>
+						<label htmlFor="email">{t("email-label")}</label>
 						<input
 							type="email"
 							id="email"
 							onChange={(e) => setFormData({ ...formData, email: e.target.value })}
 							required
-							placeholder="Email"
+							placeholder={t("email-label")}
 							value={formData.email}
 						/>
-						<label htmlFor="password">Password</label>
+						<label htmlFor="password">{t("password-label")}</label>
 						<input
 							type="password"
 							id="password"
 							onChange={(e) => setFormData({ ...formData, password: e.target.value })}
 							required
-							placeholder="Password"
+							placeholder={t("password-label")}
 							value={formData.password}
 						/>
 						<button
@@ -153,12 +151,12 @@ const LoginComponent = () => {
 									priority
 								/>
 							)}
-							{t('sign-with-email')}
+							{t("sign-with-email")}
 						</button>
 					</form>
 				</div>
 				<Link href="/reset-password" className={styles.login__page__link}>
-					Cannot log in? <b>Click to reset password</b>
+					{t("reset-password-text")} <b>{t("reset-password-link")}</b>
 				</Link>
 			</div>
 		</section>

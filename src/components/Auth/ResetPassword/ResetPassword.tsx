@@ -7,12 +7,13 @@ import styles from "./ResetPassword.module.scss"
 import Image from 'next/image';
 import { toast } from 'sonner';
 import Spinner from '@/components/Spinner/Spinner';
+import useTranslation from 'next-translate/useTranslation';
 
 const ResetPassword = () => {
-
     const supabase = createClientComponentClient();
     const [email, setEmail] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
+    const {t} = useTranslation('reset-password');
 
     async function resetPassword(email: string, event: FormEvent) {
         event.preventDefault();
@@ -24,7 +25,7 @@ const ResetPassword = () => {
         if (error) {
             console.error("ERROR: ", error);
         } else {
-            toast.info("A link was sent to your email to reset your password.");
+            toast.info(t('toast-success'));
         }
         setLoading(false);
         setEmail("");
@@ -35,17 +36,17 @@ const ResetPassword = () => {
             <Image className={styles.reset__password__logo} src="/BookmarkerLogo.svg" alt="Bookmarker logo" width="450" height="150" priority />
 
             <div className={styles.reset__password__box}>
-                <h2 className={styles.reset__password__title}>Reset Password</h2>
+                <h2 className={styles.reset__password__title}>{t('title')}</h2>
 
-                <p className={styles.reset__password__text}>Please enter the email address you used to register to this application to reset your password.</p>
+                <p className={styles.reset__password__text}>{t('text')}</p>
 
                 <form className={styles.reset__password__form} onSubmit={(e) => resetPassword(email, e)}>
-                    <label htmlFor="email" className={styles.reset__password__label}>Enter valid email address</label>
+                    <label htmlFor="email" className={styles.reset__password__label}>{t('email-label')}</label>
                     <input
                         className={styles.reset__password__input}
                         id="email"
                         name="email"
-                        placeholder="Email"
+                        placeholder={t('email-placeholder')}
                         type="email"
                         required
                         value={email}
@@ -53,11 +54,12 @@ const ResetPassword = () => {
                         onChange={() => setEmail(event.target.value)}
                     />
                     <button className={styles.reset__password__button} type="submit" disabled={email ? false : true}>
-                        {loading ? <Spinner /> : "Reset password"}
+                        {loading ? <Spinner /> : t('reset-password-button')}
                     </button>
                 </form>
+		{t('remember-password-text')}
                 <Link href="/auth/login" className={styles.reset__password__link}>
-                    Remember your password? <b>Sign in.</b>
+		    <b>{t('remember-password-link')}</b>
                 </Link>
             </div>
         </div>

@@ -13,7 +13,7 @@ function AuthLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const {t} = useTranslation("login");
+	const {t} = useTranslation("login-page");
 
 	return (
 		<>
