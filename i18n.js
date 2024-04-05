@@ -1,6 +1,6 @@
 module.exports = {
-	defaultLocale: "es",
-	locales: ["en", "es"],
+	defaultLocale: "ca",
+	locales: ["en", "es", "ca"],
 	loadLocaleFrom: async (locale, namespace) =>
 		import(`./locales/${locale}/${namespace}.json`).then((r) => r.default),
 	loader: true,

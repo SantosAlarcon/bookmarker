@@ -13,6 +13,7 @@ import updateBookmark from "@/app/utils/supabase/bookmarks/updateBookmark"
 import { folderStore } from "@/store/folderStore"
 import { validateURL } from "@/app/utils/validateURL"
 import Spinner from "@/components/Spinner/Spinner"
+import useTranslation from "next-translate/useTranslation"
 
 type Props = {
     title: string
@@ -41,6 +42,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const dialogRef = useRef<null | HTMLDialogElement>(null)
+    const {t} = useTranslation("common")
 
     const router = useRouter()
 
@@ -92,7 +94,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
             closeDialog()
             setLoading(false);
             router.refresh()
-            toast.success("Bookmark updated successfully")
+            toast.success(t("edit-bookmark-success"))
         }
     }
 
@@ -120,11 +122,11 @@ const EditBookmarkDialog = ({ title }: Props) => {
                             htmlFor="title"
                             className={styles.edit__bookmark__dialog__form__label}
                         >
-                            Title
+                            {t("title")}
                             <input
                                 type="text"
                                 name="title"
-                                placeholder="Bookmark title"
+                                placeholder={t("bookmark-title-placeholder")}
                                 onChange={() =>
                                     // @ts-ignore
                                     setUpdatedBookmark({ ...updatedBookmark, title: event.target.value })
@@ -141,7 +143,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
                             <input
                                 type="url"
                                 name="url"
-                                placeholder="Bookmark URL"
+                                placeholder={t("bookmark-url-placeholder")}
                                 onChange={() =>
                                     // @ts-ignore
                                     setUpdatedBookmark({ ...updatedBookmark, url: event.target.value })
@@ -154,7 +156,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
                             htmlFor="parentFolder"
                             className={styles.edit__bookmark__dialog__form__label}
                         >
-                            Parent folder
+                        {t("parent-folder")}
                             <select
                                 name="parentFolder"
                                 className={styles.edit__bookmark__dialog__form__select}
@@ -168,7 +170,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                     })
                                 }
                             >
-                                <option value="null">No parent folder</option>
+                                <option value="null">{t("no-parent-folder")}</option>
                                 {folderList &&
                                     folderList.map((folder: BookmarkFolder) => (
                                         <option
@@ -187,9 +189,9 @@ const EditBookmarkDialog = ({ title }: Props) => {
                         disabled={updatedBookmark.title && updatedBookmark.url ? false : true}
                         onClick={() => editBookmark()}
                     >
-                        {loading ? <Spinner /> : "Update"}
+                        {loading ? <Spinner /> : t("update")}
                     </button>
-                    <button onClick={() => closeDialog()}>Close</button>
+                    <button onClick={() => closeDialog()}>{t("close")}</button>
                 </div>
             </dialog>
         ) : null

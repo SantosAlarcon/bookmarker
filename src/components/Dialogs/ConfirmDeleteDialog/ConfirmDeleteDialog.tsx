@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation"
 import { deleteBookmark } from "@/app/utils/supabase/bookmarks/deleteBookmark"
 import deleteFolder from "@/app/utils/supabase/folders/deleteFolder"
 import Spinner from "@/components/Spinner/Spinner"
+import useTranslation from "next-translate/useTranslation"
 
 type Props = {
 	title: string
@@ -20,6 +21,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 	const closeDeleteModal = modalStore((state) => state.hideDeleteConfirmModal)
 	const deleteProps = modalStore((state) => state.deleteProps)
     const [loading, setLoading] = useState<boolean>(false);
+    const {t} = useTranslation("common")
 
 	const router = useRouter()
 
@@ -76,12 +78,12 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 				<div className={styles.confirm__delete__dialog__content}>
 					{deleteProps?.type === "folder" ? (
 						<p className={styles.confirm__delete__dialog__content__text}>
-							<span className={styles.confirm__delete__dialog__danger__text}>WARNING</span>: All the bookmarks inside this folder <span className={styles.confirm__delete__dialog__danger__text}>WILL</span> be deleted.<br />
-							Are you sure to delete <b>{deleteProps?.title} folder</b>?
+							<span className={styles.confirm__delete__dialog__danger__text}>{t("warning")}</span>: {t("all-the-children-inside")} <span className={styles.confirm__delete__dialog__danger__text}>{t("will")}</span> {t("be-deleted")}.<br />
+                            {t("confirm-folder-deletion-text")} <b>{deleteProps?.title}</b>?
 						</p>
 					) : (
 						<p className={styles.confirm__delete__dialog__content__text}>
-							Are you sure to delete <b>{deleteProps?.title}</b>?
+                            {t("confirm-deletion-text")} <b>{deleteProps?.title}</b>?
 						</p>
 					)
 					}
@@ -91,9 +93,9 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 						className={styles.confirm__delete__dialog__buttons__delete}
 						onClick={() => confirmDeletion()}
 					>
-                        {loading ? <Spinner /> : "Delete"}
+                        {loading ? <Spinner /> : t("delete")}
 					</button>
-					<button onClick={() => closeDialog()}>Cancel</button>
+					<button onClick={() => closeDialog()}>{t("close")}</button>
 				</div>
 			</dialog>
 		) : null

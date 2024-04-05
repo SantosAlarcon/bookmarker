@@ -10,6 +10,7 @@ import updateFolder from "@/app/utils/supabase/folders/updateFolder"
 import { folderStore } from "@/store/folderStore"
 import { BookmarkFolder } from "@/types/types"
 import Spinner from "@/components/Spinner/Spinner"
+import useTranslation from "next-translate/useTranslation"
 
 type Props = {
     title: string
@@ -27,6 +28,7 @@ const EditFolderDialog = ({ title }: Props) => {
         parentFolder: editFolderData.parentFolder
     })
     const [loading, setLoading] = useState<boolean>(false);
+    const {t} = useTranslation("common")
 
     const dialogRef = useRef<null | HTMLDialogElement>(null)
     const router = useRouter();
@@ -65,7 +67,7 @@ const EditFolderDialog = ({ title }: Props) => {
         router.refresh()
         closeDialog()
         setLoading(false);
-        toast.success("Folder data has been updated succesfully")
+        toast.success(t("edit-folder-success"))
     }
 
     const dialog: JSX.Element | null = editFolderModal ? (
@@ -84,11 +86,11 @@ const EditFolderDialog = ({ title }: Props) => {
                         htmlFor="title"
                         className={styles.edit__folder__dialog__form__label}
                     >
-                        Title
+                        {t("title")}
                         <input
                             type="text"
                             name="title"
-                            placeholder="Folder title"
+                            placeholder={t("folder-title-placeholder")}
                             value={updatedFolder.title}
                             onChange={() =>
                                 // @ts-ignore
@@ -101,11 +103,11 @@ const EditFolderDialog = ({ title }: Props) => {
                         htmlFor="description"
                         className={styles.edit__folder__dialog__form__label}
                     >
-                        Description
+                        {t("description")}
                         <input
                             type="text"
                             name="description"
-                            placeholder="Folder description"
+                            placeholder={t("folder-description-placeholder")}
                             value={updatedFolder.description}
                             onChange={() =>
                                 // @ts-ignore
@@ -118,7 +120,7 @@ const EditFolderDialog = ({ title }: Props) => {
                         htmlFor="parentFolder"
                         className={styles.edit__folder__dialog__form__label}
                     >
-                        Parent folder
+                        {t("parent-folder")}
                         <select
                             name="parentFolder"
                             className={styles.edit__folder__dialog__form__select}
@@ -132,7 +134,7 @@ const EditFolderDialog = ({ title }: Props) => {
                                 })
                             }
                         >
-                            <option value="null">No parent folder</option>
+                            <option value="null">{t("no-parent-folder")}</option>
                             {folderList &&
                                 folderList.map((folder: BookmarkFolder) => (
                                     <option
@@ -151,9 +153,9 @@ const EditFolderDialog = ({ title }: Props) => {
                     disabled={updatedFolder.title && updatedFolder.description ? false : true}
                     onClick={() => editFolder()}
                 >
-                    {loading ? <Spinner /> : "Update"}
+                    {loading ? <Spinner /> : t("update")}
                 </button>
-                <button onClick={() => closeDialog()}>Close</button>
+                <button onClick={() => closeDialog()}>{t("close")}</button>
             </div>
         </dialog>
     ) : null
