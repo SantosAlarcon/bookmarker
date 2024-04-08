@@ -1,7 +1,7 @@
 module.exports = {
 	defaultLocale: "en",
 	locales: ["en", "es", "ca"],
-    localeDetection: false,
+	localeDetection: false,
 	loadLocaleFrom: async (locale, namespace) =>
 		import(`./locales/${locale}/${namespace}.json`).then((r) => r.default),
 	loader: true,
@@ -9,7 +9,7 @@ module.exports = {
 		"*": ["common"],
 		"/": ["login-page", "reset-password", "header"],
 		"/auth/login": ["login-page"],
-		"/reset-password": ['reset-password'],
+		"/reset-password": ["reset-password"],
 		"/profile": ["profile-page"],
 	},
 	keySeparator: ":",

@@ -10,4 +10,4 @@ const {defaultLocale, locales, loadLocaleFrom, pages} = require("./i18n")
 const nextTranslate = require("next-translate-plugin")
 
 //module.exports = {withPWA, nextTranslate}
-module.exports = nextTranslate()
+module.exports = {...nextTranslate()}

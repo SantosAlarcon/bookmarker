@@ -9,7 +9,7 @@ import {
 	signInWithFacebook,
 	signInWithEmail,
 } from "@/app/utils/signIn"
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import Spinner from "@/components/Spinner/Spinner"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
