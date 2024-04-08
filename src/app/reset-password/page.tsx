@@ -13,7 +13,7 @@ const ResetPasswordPage = async () => {
     const supabase = createServerComponentClient({ cookies });
     const { data } = await supabase.auth.getSession();
     const {t} = useTranslation('reset-password');
-    metadata.title = t('title');
+    metadata.title = t('page-title');
 
     if (data?.session) {
         redirect('/');

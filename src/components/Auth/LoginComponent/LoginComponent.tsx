@@ -17,6 +17,7 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 import { createClient } from "@/app/utils/supabase/client"
 import { SupabaseClient } from "@supabase/supabase-js"
 import useTranslation from "next-translate/useTranslation"
+import switchLocale from "@/app/utils/switchLocale"
 
 interface FormData {
 	email: string
@@ -27,6 +28,10 @@ const LoginComponent = () => {
 	const supabase: SupabaseClient = createClient()
 	const router: AppRouterInstance = useRouter()
 	const { t } = useTranslation("login-page")
+
+    useEffect(() => {
+        switchLocale()
+    }, [])
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
