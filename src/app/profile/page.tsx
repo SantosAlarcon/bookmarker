@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 }
 
 export default async function PrivatePage() {
-
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 

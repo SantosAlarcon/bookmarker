@@ -13,6 +13,7 @@ import { authStore } from "@/store/authStore"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { motion } from "framer-motion"
 import useTranslation from "next-translate/useTranslation"
+import switchLocale from "@/app/utils/switchLocale"
 
 const BookmarksView = () => {
 	// Get and set the bookmarks from the store
@@ -23,6 +24,11 @@ const BookmarksView = () => {
 
 	// Get and set the loading state
 	const [loading, setLoading] = useState<boolean>(false)
+
+  useEffect(() => {
+    switchLocale()
+  }, [])
+
 
 	// Get the root folders so that can be rendered first
 	useEffect(() => {

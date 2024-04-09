@@ -1,30 +1,48 @@
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { NextResponse } from 'next/server'
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs"
+import { NextResponse } from "next/server"
 
-import type { NextRequest } from 'next/server'
-import type { Database } from '@/lib/database.types'
+import type { NextRequest } from "next/server"
+import type { Database } from "@/lib/database.types"
+
+const PUBLIC_FILE = /\.(.*)$/
 
 export async function middleware(req: NextRequest) {
-    const res = NextResponse.next()
+  const res = NextResponse.next()
 
-    // Create a Supabase client configured to use cookies
-    const supabase = createMiddlewareClient<Database>({ req, res })
+  // Create a Supabase client configured to use cookies
+  const supabase = createMiddlewareClient<Database>({ req, res })
 
-    // Refresh session if expired - required for Server Components
-    await supabase.auth.getSession()
+  // Refresh session if expired - required for Server Components
+  await supabase.auth.getSession()
 
-    return res
+  if (
+    req.nextUrl.pathname.startsWith("/_next") ||
+    req.nextUrl.pathname.includes("/api/") ||
+    PUBLIC_FILE.test(req.nextUrl.pathname)
+  ) {
+    return
+  }
+
+  if (req.nextUrl.locale === "default") {
+    const locale = req.cookies.get("NEXT_LOCALE")?.value || "en"
+
+    return NextResponse.redirect(
+      new URL(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
+    )
+  }
+
+  return res
 }
 
 // Ensure the middleware is only called for relevant paths.
 export const config = {
-    matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico (favicon file)
-         */
-        '/((?!_next/static|_next/image|favicon.ico).*)',
-    ],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    "/((?!_next/static|_next/image|favicon.ico).*)",
+  ],
 }
