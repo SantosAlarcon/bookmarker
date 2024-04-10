@@ -7,6 +7,7 @@ const switchLocale = () => {
         window.localStorage.setItem("locale", navigator.language.split("-")[0])
     }
     
+    // @ts-ignore
     setLanguage(language)
 }
 

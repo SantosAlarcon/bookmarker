@@ -13,7 +13,7 @@ export async function middleware(req: NextRequest) {
   const supabase = createMiddlewareClient<Database>({ req, res })
 
   // Refresh session if expired - required for Server Components
-  await supabase.auth.getSession()
+  //await supabase.auth.getSession()
 
   if (
     req.nextUrl.pathname.startsWith("/_next") ||
@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest) {
     return
   }
 
-  if (req.nextUrl.locale === "default") {
+  if (req.nextUrl.locale === "__default") {
     const locale = req.cookies.get("NEXT_LOCALE")?.value || "en"
 
     return NextResponse.redirect(

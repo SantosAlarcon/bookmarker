@@ -2,6 +2,8 @@ import React from 'react'
 import appWithI18n from 'next-translate/appWithI18n'
 import i18nConfig from '../i18n'
 
+console.log("momochimomo")
+
 // @ts-ignore
 function MyApp({ Component: Component, pageProps }) {
   return <Component {...pageProps} />

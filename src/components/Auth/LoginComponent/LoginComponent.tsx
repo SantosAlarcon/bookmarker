@@ -29,9 +29,9 @@ const LoginComponent = () => {
 	const router: AppRouterInstance = useRouter()
 	const { t } = useTranslation("login-page")
 
-    useEffect(() => {
+    /*useEffect(() => {
         switchLocale()
-    }, [])
+    }, [])*/
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",

@@ -1,11 +1,14 @@
 import React from 'react'
 import appWithI18n from 'next-translate/appWithI18n'
-import i18nConfig from '../i18n'
+import i18nConfig from '../../i18n'
+
+console.log("SENSEI KIRAI!!!!")
 
 // @ts-ignore
 function MyApp({ Component: Component, pageProps }) {
   return <Component {...pageProps} />
 }
+
 
 export default MyApp
 

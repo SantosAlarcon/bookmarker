@@ -43,9 +43,9 @@ export default async function PrivatePage() {
             <span className={styles.user__info__data__grid__field__name}>{t("verified-by-email")}</span>
             <span className={styles.user__info__data__grid__field__value}>{userMetadata?.email_verified ? <TrueIcon /> : <FalseIcon />}</span>
             <span className={styles.user__info__data__grid__field__name}>{t("creation-date")}</span>
-            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.created_at).toLocaleString(lang, { day: "numeric", month: "long", year: "numeric" })}</span>
+            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user?.created_at).toLocaleString(lang, { day: "numeric", month: "long", year: "numeric" })}</span>
             <span className={styles.user__info__data__grid__field__name}>{t("last-login-date")}</span>
-            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user.last_sign_in_at!).toLocaleString(lang, { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric", hour12: false })}</span>
+            <span className={styles.user__info__data__grid__field__value}>{new Date(data.user?.last_sign_in_at!).toLocaleString(lang, { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric", hour12: false })}</span>
         </div>
         <Link className={styles.user__info__link} href="/">{t("back-to-home-button")}</Link>
     </section>)
