@@ -8,7 +8,7 @@ import TrueIcon from '@/components/Icons/TrueIcon'
 import FalseIcon from '@/components/Icons/FalseIcon'
 import Link from 'next/link'
 import { Metadata } from 'next'
-import useTranslation from 'next-translate/useTranslation'
+import {useTranslation} from 'next-i18next'
 
 export const metadata: Metadata = {
 	title: "My profile - Bookmarker",

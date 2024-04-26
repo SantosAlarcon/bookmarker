@@ -23,13 +23,13 @@ export async function middleware(req: NextRequest) {
     return
   }
 
-  if (req.nextUrl.locale === "__default") {
+  /*if (req.nextUrl.locale === "__default") {
     const locale = req.cookies.get("NEXT_LOCALE")?.value || "en"
 
     return NextResponse.redirect(
       new URL(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
     )
-  }
+  }*/
 
   return res
 }

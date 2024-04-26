@@ -1,13 +1,12 @@
-/** @type {import('next').NextConfig} */
 const withPWA = require("next-pwa")({
 	dest: "public",
 	register: true,
 	skipWaiting: true,
 })
 
-const {defaultLocale, locales, loadLocaleFrom, pages} = require("./i18n")
+const {i18n} = require("./next-i18next.config")
 
-const nextTranslate = require("next-translate-plugin")
-
-//module.exports = {withPWA, nextTranslate}
-module.exports = {...nextTranslate()}
+/** @type {import('next').NextConfig} */
+module.exports = {
+    i18n,
+}

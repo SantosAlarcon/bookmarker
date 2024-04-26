@@ -1,29 +1,9 @@
-import React from 'react'
-import appWithI18n from 'next-translate/appWithI18n'
-import i18nConfig from '../i18n'
+import type { AppProps } from 'next/app'
+import { appWithTranslation } from 'next-i18next'
+import nextI18NextConfig from '../next-i18next.config.js'
 
-// @ts-ignore
-function MyApp({ Component: Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const MyApp = ({ Component, pageProps }: AppProps) => (
+  <Component {...pageProps} />
+)
 
-export default MyApp
-
-// @ts-ignore
-/*export default appWithI18n(MyApp, {
-  ...i18nConfig,
-  //
-  // If you remove the "skipInitialProps", then all the namespaces
-  // will be downloaded in the getInitialProps of the app.js and you
-  // won't need to have any helper loadNamespaces on each page.
-  //
-  // skipInitialProps=false (default):
-  // 🟢 Easy to configure
-  // 🔴 All your pages are behind a server. No automatic page optimization.
-  //
-  // skipInitialProps=true:
-  // 🔴 Hard to configure
-  // 🟢 Better performance with automatic page optimization.
-  //
-  skipInitialProps: false,
-})*/
+export default appWithTranslation(MyApp, nextI18NextConfig)
