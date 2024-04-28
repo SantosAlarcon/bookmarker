@@ -1,7 +1,7 @@
 import ResetPassword from '@/components/Auth/ResetPassword/ResetPassword';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { Metadata } from 'next';
-import useTranslation from 'next-translate/useTranslation';
+import type { Metadata } from 'next';
+import {useTranslation} from 'next-i18next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 

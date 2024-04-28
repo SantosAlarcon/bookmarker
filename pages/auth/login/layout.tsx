@@ -1,7 +1,7 @@
 import { Barlow } from "next/font/google"
 import { Toaster } from "sonner"
 import Head from "next/head"
-import { useTranslation } from "react-i18next"
+import { useTranslation } from "next-i18next"
 
 const barlow = Barlow({
 	subsets: ["latin"],
@@ -13,12 +13,12 @@ function AuthLayout({
 }: {
 	children: React.ReactNode
 }) {
-	const {t} = useTranslation("login-page");
+    const {t} = useTranslation("login-page");
 
 	return (
 		<>
 			<Head>
-				<title>{t('page-title')}</title>
+                <title>{t("page-title")}</title>
 				<link rel="shortcut icon" href="/favicon.svg" />
 				<link rel="manifest" href="/manifest.json" />
 				<meta
