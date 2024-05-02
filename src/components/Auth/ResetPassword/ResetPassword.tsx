@@ -1,5 +1,3 @@
-"use client";
-
 import { type FormEvent, useEffect, useState } from "react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
@@ -7,7 +5,8 @@ import styles from "./ResetPassword.module.scss";
 import Image from "next/image";
 import { toast } from "sonner";
 import Spinner from "@/components/Spinner/Spinner";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
+import "../../../app/globals.css"
 
 const ResetPassword = () => {
 	const supabase = createClientComponentClient();
@@ -20,7 +19,7 @@ const ResetPassword = () => {
 		setHydrated(true);
 	}, []);
 
-	async function resetPassword(email: string, event: FormEvent) {
+	async function handleResetPassword(email: string, event: FormEvent) {
 		event.preventDefault();
 		setLoading(true);
 		const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -54,7 +53,7 @@ const ResetPassword = () => {
 
 				<p className={styles.reset__password__text}>{t("text")}</p>
 
-				<form className={styles.reset__password__form} onSubmit={(e) => resetPassword(email, e)}>
+				<form className={styles.reset__password__form} onSubmit={(e) => handleResetPassword(email, e)}>
 					<label htmlFor="email" className={styles.reset__password__label}>
 						{t("email-label")}
 					</label>
