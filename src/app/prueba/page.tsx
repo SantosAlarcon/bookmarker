@@ -1,10 +1,12 @@
+"use client"
 import React from "react"
-import { useTranslation } from "next-i18next"
+import { useClientTranslation } from "../utils/useTranslation"
 
 const PruebaPage = () => {
-  const { t } = useTranslation("common")
+	console.log("MOMOCHIMOMO")
+	const { t } = useClientTranslation("common")
 
-  return <div>{t("delete")}</div>
+	return <div>{t("delete")}</div>
 }
 
 export default PruebaPage

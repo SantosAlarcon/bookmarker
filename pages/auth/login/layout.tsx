@@ -8,17 +8,13 @@ const barlow = Barlow({
 	weight: ["400", "500", "700", "900"],
 })
 
-function AuthLayout({
-	children,
-}: {
-	children: React.ReactNode
-}) {
-    const {t} = useTranslation("login-page");
+function AuthLayout({ children }: { children: React.ReactNode }) {
+	const { t } = useTranslation("login-page")
 
 	return (
 		<>
 			<Head>
-                <title>{t("page-title")}</title>
+				<title>{t("page-title")}</title>
 				<link rel="shortcut icon" href="/favicon.svg" />
 				<link rel="manifest" href="/manifest.json" />
 				<meta

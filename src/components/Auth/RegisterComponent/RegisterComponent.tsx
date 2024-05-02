@@ -23,7 +23,6 @@ interface FormData {
 
 const RegisterComponent = () => {
 	const supabase = createClientComponentClient();
-
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
 		password: "",
