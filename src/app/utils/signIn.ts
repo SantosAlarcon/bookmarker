@@ -1,13 +1,18 @@
 // These functions are used to sign in the user depending of the provider
-import { SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { toast } from "sonner";
 
 let callbackUrl: string = "";
 
-if (process.env.NODE_ENV === "development") {
-    callbackUrl = "http://localhost:3000/auth/callback"
-} else if (process.env.NODE_ENV === "production") {
-    callbackUrl = "https://bookmarker-rho.vercel.app/auth/callback"
+switch (process.env.NODE_ENV) {
+    case "development": {
+        callbackUrl = "http://localhost:3000/auth/callback";
+        break;
+    }
+    case "production": {
+        callbackUrl = "https://bookmarker-rho.vercel.app/auth/callback";
+        break;
+    }
 }
 
 export const signInWithGoogle = async (client: SupabaseClient) => {

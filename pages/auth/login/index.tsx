@@ -21,6 +21,7 @@ const LoginPage = () => {
 
 export const getStaticProps: GetStaticProps<Props> = async ({
   locale,
+    // @ts-ignore
 }) => ({
   props: {
     ...(await serverSideTranslations(locale ?? 'en', [

@@ -8,8 +8,9 @@ const barlow = Barlow({
 	weight: ["400", "500", "700", "900"],
 })
 
-function ResetPasswordLayout({ children }: { children: React.ReactNode }) {
-	const { t } = useTranslation("reset-password")
+function ProfileLayout({ children }: { children: React.ReactNode }) {
+	const { t } = useTranslation("profile-page")
+    console.log("chiyu hakui la enfermerilla")
 
 	return (
 		<>
@@ -31,10 +32,12 @@ function ResetPasswordLayout({ children }: { children: React.ReactNode }) {
 				<meta name="msapplication-TileColor" content="#2B5797" />
 				<meta name="msapplication-tap-highlight" content="no" />
 			</Head>
-			<div className={barlow.className}>{children}</div>
+                <div className={barlow.className}>
+                        {children}
+                </div>
 			<Toaster position="top-center" richColors />
 		</>
 	)
 }
 
-export default ResetPasswordLayout
+export default ProfileLayout

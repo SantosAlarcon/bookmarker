@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { User, Session, UserMetadata } from "@supabase/supabase-js";
+import type { User, Session, UserMetadata } from "@supabase/supabase-js";
 
 interface State {
     user: User | null
@@ -11,15 +11,17 @@ interface Action {
     setUser: (user: User | null) => void
     setSession: (session: Session | null) => void
     setMetadata: (session: UserMetadata | undefined) => void
+    reset: () => void
 }
 
-export const authStore = create<State & Action>((set: Function) => ({
+export const authStore = create<State & Action>((set) => ({
     user: null,
     session: null,
     metadata: null,
     setUser: (newUser: User | null) => set({user: newUser}),
     setSession: (newSession: Session | null) => set({session: newSession}),
-    setMetadata: (newMetadata: UserMetadata | undefined) => set({metadata: newMetadata})
+    setMetadata: (newMetadata: UserMetadata | undefined) => set({metadata: newMetadata}),
+    reset: () => set({user: null, session: null, metadata: null})
 }))
 
 // @ts-ignore
