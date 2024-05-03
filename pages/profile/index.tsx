@@ -26,13 +26,13 @@ export default function PrivatePage() {
   const { t, i18n } = useTranslation("profile-page")
   metadata.title = t("page-title")
 
-  const user = authStore((state) => state.user)
+  const session = authStore((state) => state.session)
   const [hydrated, setHydrated] = useState<boolean>(false)
 
-  const userMetadata: UserMetadata | undefined = user?.user_metadata
+  const userMetadata: UserMetadata | undefined = session?.user?.user_metadata
 
   // If there is no user or session active, redirect to the main page.
-  if (user) {
+  if (session?.user) {
     redirect("/")
   }
 
@@ -78,7 +78,7 @@ export default function PrivatePage() {
             {t("creation-date")}
           </span>
           <span className={styles.user__info__data__grid__field__value}>
-            {new Date(user?.created_at).toLocaleString(i18n.language, {
+            {new Date(session?.user?.created_at).toLocaleString(i18n.language, {
               day: "numeric",
               month: "long",
               year: "numeric",
@@ -88,7 +88,7 @@ export default function PrivatePage() {
             {t("last-login-date")}
           </span>
           <span className={styles.user__info__data__grid__field__value}>
-            {new Date(user?.last_sign_in_at!).toLocaleString(i18n.language, {
+            {new Date(session?.user?.last_sign_in_at!).toLocaleString(i18n.language, {
               day: "numeric",
               month: "long",
               year: "numeric",
