@@ -1,4 +1,4 @@
-.user__info {
+.profile__page {
     &__container {
         border: 1px white solid;
         border-radius: 1.5rem;
@@ -37,7 +37,7 @@
         }
     }
 
-    &__link {
+    &__back__button {
         padding: 1rem 1.5rem;
         border-radius: 1.5rem;
         background-color: var(--main-color-dark);

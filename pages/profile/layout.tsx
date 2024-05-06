@@ -2,13 +2,14 @@ import { useTranslation } from "next-i18next"
 import { Barlow } from "next/font/google"
 import Head from "next/head"
 import { Toaster } from "sonner"
+import type { ReactNode } from "react"
 
 const barlow = Barlow({
 	subsets: ["latin"],
 	weight: ["400", "500", "700", "900"],
 })
 
-function ProfileLayout({ children }: { children: React.ReactNode }) {
+function ProfileLayout({ children }: { children: ReactNode }) {
 	const { t } = useTranslation("profile-page")
 
 	return (

@@ -1,9 +1,8 @@
-import { type Session, createMiddlewareClient } from "@supabase/auth-helpers-nextjs"
+import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs"
 import { NextResponse } from "next/server"
 
 import type { NextRequest } from "next/server"
 import type { Database } from "@/lib/database.types"
-import { authStore } from "@/store/authStore"
 
 const PUBLIC_FILE = /\.(.*)$/
 
@@ -31,20 +30,7 @@ export async function middleware(req: NextRequest) {
 		new URL(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
 	  )
 	}*/
-
-	/*const {
-		data: { session },
-	} = await supabase.auth.getSession()
-
-    // Get the setSession method from the store
-	const {setSession} = authStore.getState()
-	const storedSession: Session | null = authStore.getState().session
-
-    // If there is a session, it will be added to the store
-	if (session && !storedSession) {
-        setSession({...session})
-    }*/
-
+	
 	return res
 }
 
