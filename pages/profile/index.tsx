@@ -13,6 +13,7 @@ import ProfileLayout from "./layout"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import type { GetStaticProps } from "next"
 import "@/app/globals.css"
+import { createClient } from "@/app/utils/supabase/client"
 
 export const metadata: Metadata = {
   title: "My profile - Bookmarker",
@@ -26,8 +27,16 @@ export default function PrivatePage() {
   const { t, i18n } = useTranslation("profile-page")
   metadata.title = t("page-title")
 
-  const session = authStore((state) => state.session)
+  //const session = authStore((state) => state.session)
   const [hydrated, setHydrated] = useState<boolean>(false)
+  const supabase = createClient()
+
+  useEffect(() => {
+    setHydrated(true)
+    const {
+      data: { session },
+    } = await supabase.auth.getSession()
+  }, [])
 
   const userMetadata: UserMetadata | undefined = session?.user?.user_metadata
 
@@ -35,10 +44,6 @@ export default function PrivatePage() {
   if (session?.user) {
     redirect("/")
   }
-
-  useEffect(() => {
-    setHydrated(true)
-  }, [])
 
   if (!hydrated) return null
 
@@ -78,24 +83,30 @@ export default function PrivatePage() {
             {t("creation-date")}
           </span>
           <span className={styles.user__info__data__grid__field__value}>
-            {new Date(session?.user?.created_at).toLocaleString(i18n.language, {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
+            {new Date(session?.user?.created_at!).toLocaleString(
+              i18n.language,
+              {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              }
+            )}
           </span>
           <span className={styles.user__info__data__grid__field__name}>
             {t("last-login-date")}
           </span>
           <span className={styles.user__info__data__grid__field__value}>
-            {new Date(session?.user?.last_sign_in_at!).toLocaleString(i18n.language, {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-              hour: "numeric",
-              minute: "numeric",
-              hour12: false,
-            })}
+            {new Date(session?.user?.last_sign_in_at!).toLocaleString(
+              i18n.language,
+              {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+                hour: "numeric",
+                minute: "numeric",
+                hour12: false,
+              }
+            )}
           </span>
         </div>
         <Link className={styles.user__info__link} href="/">
