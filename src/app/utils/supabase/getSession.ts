@@ -1,17 +1,18 @@
-import { authStore } from "@/store/authStore";
+import { authStore } from "@/store/authStore"
 import { createClient } from "./client"
 
 export const getSession = async () => {
-    const supabase = createClient();
-    const {setSession} = authStore.getState()
+  const { setSession, setUser, setMetadata } = authStore.getState()
 
-    const { data, error } = await supabase.auth.getSession()
+  const { data, error } = await createClient().auth.getSession()
 
-    if (error) {
-        throw new Error(error.message)
-    }
+  if (error) {
+    throw new Error(error.message)
+  }
 
-    setSession(data.session)
-   
-    return data.session;
+  setSession(data.session)
+  setUser(data.session?.user)
+  setMetadata(data.session?.user.user_metadata)
+
+  return data.session
 }

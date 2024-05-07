@@ -1,7 +1,7 @@
 import { createInstance } from 'i18next';
-import { initReactI18next } from 'react-i18next';
 import Backend from "i18next-http-backend"
 import resourcesToBackend from 'i18next-resources-to-backend';
+import { initReactI18next } from 'react-i18next';
 
 const i18next = async () => {
     const i18nInstance = createInstance();

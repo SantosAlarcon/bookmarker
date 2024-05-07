@@ -5,7 +5,7 @@ import "@/app/globals.css"
 import FalseIcon from "@/components/Icons/FalseIcon"
 import TrueIcon from "@/components/Icons/TrueIcon"
 import { authStore } from "@/store/authStore"
-import type { UserMetadata } from "@supabase/supabase-js"
+import type { Session, UserMetadata } from "@supabase/supabase-js"
 import type { Metadata } from "next"
 import type { GetStaticProps } from "next"
 import { useTranslation } from "next-i18next"
@@ -13,6 +13,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import ProfileLayout from "./layout"
+import { cookies } from "next/headers"
 
 export const metadata: Metadata = {
   title: "My profile - Bookmarker",
@@ -27,15 +28,22 @@ export default function PrivatePage() {
   metadata.title = t("page-title")
   const router = useRouter()
 
-  const session = authStore((state) => state.session)
+  const session: Session | null = authStore((state) => state.session)
+  console.log("This is the session:")
+  console.log(session)
+
+  useEffect(() => {
+
+    // If there is no user or session active, redirect to login page
+    /*if (!session) {
+                          router.push("/auth/login")
+                        }*/
+  }, [])
+
   const [hydrated, setHydrated] = useState<boolean>(false)
 
   useEffect(() => {
     setHydrated(true)
-    // If there is no user or session active, redirect to login page
-    if (session?.user) {
-      router.push("/auth/login")
-    }
   }, [])
 
   const userMetadata: UserMetadata | undefined = session?.user?.user_metadata
