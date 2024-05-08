@@ -3,7 +3,7 @@ import { createClient } from "./client"
 
 export const getSession = async () => {
     const supabase = createClient();
-    const {setSession} = authStore.getState()
+    const {setSession, setUser, setMetadata} = authStore.getState()
 
     const { data, error } = await supabase.auth.getSession()
 
@@ -12,6 +12,9 @@ export const getSession = async () => {
     }
 
     setSession(data.session)
+    // @ts-ignore
+    setUser(data.session?.user)
+    setMetadata(data.session?.user.user_metadata)
    
     return data.session;
 }

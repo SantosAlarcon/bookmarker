@@ -3,6 +3,7 @@ import { NextResponse } from "next/server"
 
 import type { NextRequest } from "next/server"
 import type { Database } from "@/lib/database.types"
+import { getSession } from "@/app/utils/supabase/getSession"
 
 const PUBLIC_FILE = /\.(.*)$/
 
@@ -30,6 +31,8 @@ export async function middleware(req: NextRequest) {
 		new URL(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
 	  )
 	}*/
+
+	await getSession()
 	
 	return res
 }
