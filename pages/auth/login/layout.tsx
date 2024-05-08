@@ -2,13 +2,14 @@ import { Barlow } from "next/font/google"
 import { Toaster } from "sonner"
 import Head from "next/head"
 import { useTranslation } from "next-i18next"
+import type { ReactNode } from "react"
 
 const barlow = Barlow({
 	subsets: ["latin"],
 	weight: ["400", "500", "700", "900"],
 })
 
-function AuthLayout({ children }: { children: React.ReactNode }) {
+function AuthLayout({ children }: { children: ReactNode }) {
 	const { t } = useTranslation("login-page")
 
 	return (

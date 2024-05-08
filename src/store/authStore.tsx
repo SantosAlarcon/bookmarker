@@ -3,13 +3,13 @@ import type { User, Session, UserMetadata } from "@supabase/supabase-js"
 import { createJSONStorage, persist } from "zustand/middleware"
 
 interface State {
-  user: User | null
+  user: User | undefined
   session: Session | null
   metadata: UserMetadata | null
 }
 
 interface Action {
-  setUser: (user: User | null) => void
+  setUser: (user: User | undefined) => void
   setSession: (session: Session | null) => void
   setMetadata: (session: UserMetadata | undefined) => void
   reset: () => void
@@ -18,14 +18,14 @@ interface Action {
 export const authStore = create<State & Action>(
   persist(
     (set) => ({
-      user: null,
+      user: undefined,
       session: null,
       metadata: null,
-      setUser: (newUser: User | null) => set({ user: newUser }),
+      setUser: (newUser: User | undefined) => set({ user: newUser }),
       setSession: (newSession: Session | null) => set({ session: newSession }),
       setMetadata: (newMetadata: UserMetadata | undefined) =>
         set({ metadata: newMetadata }),
-      reset: () => set({ user: null, session: null, metadata: null }),
+      reset: () => set({ user: undefined, session: null, metadata: null }),
     }),
     {
       name: "auth-storage",
@@ -33,14 +33,3 @@ export const authStore = create<State & Action>(
     }
   )
 )
-
-/*
-const connection = window.__REDUX_DEVTOOLS_EXTENSION__?.connect({
-    name: "Auth",
-})
-
-connection?.init(authStore.getState())
-
-authStore.subscribe((state: State & Action) => {
-    connection?.send("Auth", state);
-})*/
