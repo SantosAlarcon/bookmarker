@@ -4,7 +4,6 @@ import styles from "./profile.module.scss"
 import "@/app/globals.css"
 import FalseIcon from "@/components/Icons/FalseIcon"
 import TrueIcon from "@/components/Icons/TrueIcon"
-import { authStore } from "@/store/authStore"
 import type { Session, UserMetadata } from "@supabase/supabase-js"
 import type { Metadata } from "next"
 import type { GetStaticProps } from "next"
@@ -13,6 +12,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import ProfileLayout from "./layout"
+import { createClient } from "@/app/utils/supabase/client"
+import { getSession } from "@/app/utils/supabase/getSession"
 
 export const metadata: Metadata = {
 	title: "My profile - Bookmarker",
@@ -22,21 +23,16 @@ type Props = {
 	locale: string
 }
 
-export default function PrivatePage() {
+export default async function PrivatePage() {
 	const { t, i18n } = useTranslation("profile-page")
 	metadata.title = t("page-title")
 	const router = useRouter()
+	const session = await getSession()
 
-	const session = authStore((state) => state.session)
 	console.log("This is the session:")
 	console.log(session)
 
-	useEffect(() => {
-		// If there is no user or session active, redirect to login page
-		/*if (!session) {
-						  router.push("/auth/login")
-						}*/
-	}, [])
+	const userMetadata: UserMetadata | undefined = session?.user?.user_metadata
 
 	const [hydrated, setHydrated] = useState<boolean>(false)
 
@@ -44,7 +40,6 @@ export default function PrivatePage() {
 		setHydrated(true)
 	}, [])
 
-	const userMetadata: UserMetadata | undefined = session?.user?.user_metadata
 
 	// To avoid hydration issues, it will show the component after the hydration.
 	if (!hydrated) return null

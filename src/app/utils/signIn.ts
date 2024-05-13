@@ -1,9 +1,11 @@
 // These functions are used to sign in the user depending of the provider
+import { authStore } from "@/store/authStore";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { toast } from "sonner";
 
 let callbackUrl: string = "";
 
+// The callback URL is different between development and production environments
 switch (process.env.NODE_ENV) {
     case "development": {
         callbackUrl = "http://localhost:3000/auth/callback";
@@ -28,7 +30,8 @@ export const signInWithGoogle = async (client: SupabaseClient) => {
         }
     });
 
-    if (data) console.log(data);
+    //if (data) console.log(data);
+    if (data) authStore.getState().setSession(data?.session);
     if (error) console.error(error);
 
 }
