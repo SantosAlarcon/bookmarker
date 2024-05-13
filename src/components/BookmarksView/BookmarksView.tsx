@@ -12,8 +12,7 @@ import { bookmarksStore } from "@/store/bookmarksStore"
 import { authStore } from "@/store/authStore"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { motion } from "framer-motion"
-import useTranslation from "next-translate/useTranslation"
-import switchLocale from "@/app/utils/switchLocale"
+import { useTranslation } from "next-i18next"
 
 const BookmarksView = () => {
 	// Get and set the bookmarks from the store
@@ -26,7 +25,6 @@ const BookmarksView = () => {
 	const [loading, setLoading] = useState<boolean>(false)
 
   useEffect(() => {
-    switchLocale()
   }, [])
 
 

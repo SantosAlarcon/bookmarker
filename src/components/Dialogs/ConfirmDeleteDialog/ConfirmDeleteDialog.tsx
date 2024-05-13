@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation"
 import { deleteBookmark } from "@/app/utils/supabase/bookmarks/deleteBookmark"
 import deleteFolder from "@/app/utils/supabase/folders/deleteFolder"
 import Spinner from "@/components/Spinner/Spinner"
-import useTranslation from "next-translate/useTranslation"
+import { useTranslation } from "next-i18next"
 
 type Props = {
 	title: string

@@ -13,7 +13,7 @@ import { createNewBookmark } from "@/app/utils/supabase/bookmarks/createNewBookm
 import { folderStore } from "@/store/folderStore"
 import { validateURL } from "@/app/utils/validateURL"
 import Spinner from "@/components/Spinner/Spinner"
-import useTranslation from "next-translate/useTranslation"
+import { useTranslation } from "next-i18next"
 
 type Props = {
 	title: string

@@ -6,7 +6,7 @@ import "react-contexify/ReactContexify.css"
 import { TriggerEvent } from 'react-contexify'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import useTranslation from 'next-translate/useTranslation'
+import { useTranslation } from 'next-i18next'
 
 export let handleUserContextMenu: Function | undefined = undefined;
 

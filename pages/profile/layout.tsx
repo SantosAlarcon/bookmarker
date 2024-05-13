@@ -32,9 +32,7 @@ function ProfileLayout({ children }: { children: ReactNode }) {
 				<meta name="msapplication-TileColor" content="#2B5797" />
 				<meta name="msapplication-tap-highlight" content="no" />
 			</Head>
-                <div className={barlow.className}>
-                        {children}
-                </div>
+			<div className={barlow.className}>{children}</div>
 			<Toaster position="top-center" richColors />
 		</>
 	)
