@@ -1,6 +1,6 @@
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
@@ -17,5 +17,5 @@ export async function GET(request: NextRequest) {
   // eslint-disable-next-line no-console
   console.error('ERROR: Invalid auth code or no auth code found');
 
-  return NextResponse.redirect(`${requestUrl.origin}/sign-in`);
+  return NextResponse.redirect(`${requestUrl.origin}/auth/login`);
 }
