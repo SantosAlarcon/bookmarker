@@ -6,7 +6,7 @@ import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
 import tooltipStyles from "@/app/tooltip.module.scss"
-import useTranslation from "next-translate/useTranslation"
+import { useTranslation } from "next-i18next"
 
 interface RemoveProps {
 	children: {

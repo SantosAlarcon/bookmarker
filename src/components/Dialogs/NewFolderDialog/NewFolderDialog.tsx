@@ -10,7 +10,7 @@ import { createNewFolder } from "@/app/utils/supabase/folders/createNewFolder"
 import { folderStore } from "@/store/folderStore"
 import { type BookmarkFolder } from "@/types/types"
 import Spinner from "@/components/Spinner/Spinner"
-import useTranslation from "next-translate/useTranslation"
+import { useTranslation } from "next-i18next"
 
 type Props = {
 	title: string

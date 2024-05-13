@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import type { User, Session, UserMetadata } from "@supabase/supabase-js"
-import { createJSONStorage, devtools, persist } from "zustand/middleware"
+import { devtools } from "zustand/middleware"
 
 interface State {
   user: User | undefined
@@ -29,7 +29,6 @@ export const authStore = create<State & Action>(
     }),
     {
       name: "auth-storage",
-      //storage: createJSONStorage(() => sessionStorage),
     }
   )
 )

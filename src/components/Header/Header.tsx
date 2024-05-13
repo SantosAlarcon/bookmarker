@@ -10,7 +10,7 @@ import tooltipStyles from "@/app/tooltip.module.scss"
 import { useRouter } from "next/navigation"
 import AuthButton from "../Buttons/AuthButton/AuthButton"
 import UserContextMenu from "./UserContextMenu"
-import useTranslation from "next-translate/useTranslation"
+import { useTranslation } from "next-i18next"
 
 const Header = () => {
 	const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)

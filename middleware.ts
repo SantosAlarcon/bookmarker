@@ -14,7 +14,7 @@ export async function middleware(req: NextRequest) {
 
 	// Refresh session if expired - required for Server Components
 	//await supabase.auth.getSession()
-
+    
 	if (
 		req.nextUrl.pathname.startsWith("/_next") ||
 		req.nextUrl.pathname.includes("/api/") ||
@@ -30,7 +30,7 @@ export async function middleware(req: NextRequest) {
 		new URL(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
 	  )
 	}*/
-	
+
 	return res
 }
 

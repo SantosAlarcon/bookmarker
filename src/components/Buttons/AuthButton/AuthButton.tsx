@@ -1,18 +1,18 @@
 "use client"
 
-import Image from 'next/image'
-import React, { SyntheticEvent, useEffect } from 'react'
-import styles from "./AuthButton.module.scss"
 import tooltipStyles from "@/app/tooltip.module.scss"
-import { Tooltip } from 'react-tooltip'
-import { useRouter } from 'next/navigation'
-import { type Session } from '@supabase/auth-helpers-nextjs'
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
-import { handleUserContextMenu } from '@/components/Header/UserContextMenu'
-import { UserMetadata } from '@supabase/supabase-js'
 import getUserMetadata from '@/app/utils/getUserMetadata'
-import { authStore } from '@/store/authStore'
 import { getSession } from '@/app/utils/supabase/getSession'
+import { handleUserContextMenu } from '@/components/Header/UserContextMenu'
+import { authStore } from '@/store/authStore'
+import type { Session } from '@supabase/auth-helpers-nextjs'
+import type { UserMetadata } from '@supabase/supabase-js'
+import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
+import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { type SyntheticEvent, useEffect } from 'react'
+import { Tooltip } from 'react-tooltip'
+import styles from "./AuthButton.module.scss"
 
 const AuthButton = () => {
     const setSession = authStore(state => state.setSession)
@@ -46,11 +46,11 @@ const AuthButton = () => {
     
     const handleAuth = (event: SyntheticEvent) => {
         // If there is no session, redirect user to the login page
-        if (!session) {
-            router.push("/auth/login")
-        } else {
+        if (session) {
             // @ts-ignore
             handleUserContextMenu(event)
+        } else {
+            router.push("/auth/login")
         }
     }
 
@@ -67,7 +67,7 @@ const AuthButton = () => {
                     place="bottom"
                     variant="info"
                     className={tooltipStyles.custom__tooltip}
-                    content={!session ? "Login" : ""}
+                    content={session ? "" : "Login"}
                 />
                 {session ? (
                     <picture>

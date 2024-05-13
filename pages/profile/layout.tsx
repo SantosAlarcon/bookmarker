@@ -1,8 +1,8 @@
 import { useTranslation } from "next-i18next";
 import { Barlow } from "next/font/google";
 import Head from "next/head";
-import { Toaster } from "sonner";
 import type { ReactNode } from "react";
+import { Toaster } from "sonner";
 
 const barlow = Barlow({
 	subsets: ["latin"],
@@ -12,7 +12,7 @@ const barlow = Barlow({
 function ProfileLayout({ children }: { children: ReactNode }) {
 	const { t } = useTranslation("profile-page");
 
-	return (
+    return (
 		<>
 			<Head>
 				<title>{t("page-title")}</title>
