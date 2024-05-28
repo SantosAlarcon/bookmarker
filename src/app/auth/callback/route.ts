@@ -33,11 +33,11 @@ export async function GET(request: Request) {
 
         const { data, error } = await supabase.auth.exchangeCodeForSession(code)
 
-
         // If there is no error, set session in the auth store and redirects to the main page
         if (!error) {
             if (data) authStore.setState({session: data.session})
-            return NextResponse.redirect(`${origin}${next}`)
+            //return NextResponse.redirect(`${origin}${next}`)
+            return NextResponse.redirect("/")
         }
     }
 

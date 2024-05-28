@@ -1,18 +1,18 @@
 "use client"
-import React, { useEffect, useState } from "react"
-import styles from "./BookmarksView.module.scss"
-import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderComponent"
-import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton"
-import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent"
-import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog"
-import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog"
-import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDialog"
-import { BookmarkItem, BookmarkFolder } from "@/types/types"
-import { bookmarksStore } from "@/store/bookmarksStore"
-import { authStore } from "@/store/authStore"
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
+import { authStore } from "@/store/authStore"
+import { bookmarksStore } from "@/store/bookmarksStore"
+import type { BookmarkFolder, BookmarkItem } from "@/types/types"
 import { motion } from "framer-motion"
 import { useTranslation } from "next-i18next"
+import { useEffect, useState } from "react"
+import BookmarkFolderComponent from "../BookmarkFolderComponent/BookmarkFolderComponent"
+import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent"
+import BookmarkSkeleton from "../BookmarkSkeleton/BookmarkSkeleton"
+import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDialog"
+import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog"
+import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog"
+import styles from "./BookmarksView.module.scss"
 
 const BookmarksView = () => {
 	// Get and set the bookmarks from the store
@@ -23,10 +23,6 @@ const BookmarksView = () => {
 
 	// Get and set the loading state
 	const [loading, setLoading] = useState<boolean>(false)
-
-  useEffect(() => {
-  }, [])
-
 
 	// Get the root folders so that can be rendered first
 	useEffect(() => {
@@ -43,6 +39,7 @@ const BookmarksView = () => {
 		setLoading(false)
 	}, [session])
 
+    // Load the translation function with the "common" namespace
 	const { t } = useTranslation("common")
 
 	return (

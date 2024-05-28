@@ -1,6 +1,5 @@
 import { create } from "zustand"
 import type { User, Session, UserMetadata } from "@supabase/supabase-js"
-import { devtools } from "zustand/middleware"
 
 interface State {
   user: User | undefined
@@ -16,7 +15,6 @@ interface Action {
 }
 
 export const authStore = create<State & Action>(
-  devtools(
     (set) => ({
       user: undefined,
       session: null,
@@ -27,8 +25,4 @@ export const authStore = create<State & Action>(
         set({ metadata: newMetadata }),
       reset: () => set({ user: undefined, session: null, metadata: null }),
     }),
-    {
-      name: "auth-storage",
-    }
-  )
 )

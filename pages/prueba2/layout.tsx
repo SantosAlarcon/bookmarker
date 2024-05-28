@@ -1,12 +1,18 @@
-import type { ReactNode } from "react"
+import type { ReactNode } from "react";
+import "@/app/global.css";
+import type { Metadata } from "next";
 
-const PruebaLayout = ({ children }: { children: ReactNode }) => {
-  console.log("Holis!!!!")
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  )
+export const metadata: Metadata = {
+    title: "Prueba"
 }
 
-export default PruebaLayout
+const PruebaLayout = ({ children }: { children: ReactNode }) => {
+    return (
+        <html lang="en">
+            <title>Prueba</title>
+            <body>{children}</body>
+        </html>
+    );
+};
+
+export default PruebaLayout;

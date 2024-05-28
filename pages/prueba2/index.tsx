@@ -8,7 +8,6 @@ type Props = {
 
 const PruebaPage = () => {
 	const { t } = useTranslation("common");
-	console.log("momotamomo");
 
 	return <div>{t("delete")}</div>;
 };

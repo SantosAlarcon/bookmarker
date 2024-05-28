@@ -5,8 +5,25 @@ import { createClient } from "@/app/utils/supabase/server";
 import { redirect } from "next/navigation";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetStaticProps } from "next";
+
+type Props = {
+    locale: string
+}
+
+export const getStaticProps: GetStaticProps<Props> = async ({
+	locale,
+	// @ts-ignore
+}) => ({
+	props: {
+		...(await serverSideTranslations(locale ?? "en", ["common", "header"])),
+	},
+});
+
 
 async function Home() {
+    console.log("Momochimomo")
 	const supabase: SupabaseClient = createClient(cookies());
 	const {
 		data: { session },

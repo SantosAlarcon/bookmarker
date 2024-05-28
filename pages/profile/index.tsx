@@ -1,6 +1,5 @@
 import styles from "./profile.module.scss";
 
-import "@/app/globals.css";
 import { createClient } from "@/app/utils/supabase/server2";
 import FalseIcon from "@/components/Icons/FalseIcon";
 import TrueIcon from "@/components/Icons/TrueIcon";

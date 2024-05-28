@@ -1,27 +1,29 @@
+import type { Metadata } from "next"
 import { Barlow } from "next/font/google"
+import "./globals.css"
 import { Toaster } from "sonner"
-import Head from "next/head"
-import { useTranslation } from "next-i18next"
-import { Metadata } from "next"
+import type { ReactNode } from "react"
 
 const barlow = Barlow({
 	subsets: ["latin"],
-	weight: ["400", "500", "700", "900"],
+	weight: ["500", "700", "900"],
 })
 
-const md: Metadata = {
-    title: "My profile - Bookmarker"
+export const metadata: Metadata = {
+	title: "Bookmarker",
+	description: "App to manage browser bookmarks everywhere",
+	manifest: "/manifest.json",
 }
 
-function ResetPasswordLayout({ children }: { children: React.ReactNode }) {
-	const { t } = useTranslation("reset-password")
-
+async function RootLayout({
+	children,
+}: {
+	children: ReactNode
+}) {
 	return (
-		<>
-			<Head>
-				<title>{t("page-title")}</title>
+		<html>
+			<head>
 				<link rel="shortcut icon" href="/favicon.svg" />
-				<link rel="manifest" href="/manifest.json" />
 				<meta
 					name="viewport"
 					content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
@@ -35,11 +37,22 @@ function ResetPasswordLayout({ children }: { children: React.ReactNode }) {
 				<meta name="msapplication-config" content="/icons/browserconfig.xml" />
 				<meta name="msapplication-TileColor" content="#2B5797" />
 				<meta name="msapplication-tap-highlight" content="no" />
-			</Head>
-			<div className={barlow.className}>{children}</div>
+				<meta name="robots" content="index, follow" />
+
+				<meta property="og:type" content="website" />
+				<meta property="og:title" content="Bookmarker" />
+				<meta
+					property="og:description"
+					content="App to manage browser bookmarks everywhere"
+				/>
+				<meta property="og:site_name" content="Bookmarker" />
+			</head>
+			<body className={barlow.className}>
+				{children}
+			</body>
 			<Toaster position="top-center" richColors />
-		</>
+		</html>
 	)
 }
 
-export default ResetPasswordLayout
+export default RootLayout

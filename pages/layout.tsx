@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 import { Barlow } from "next/font/google"
-import "./globals.css"
+import "@/src/app/globals.css"
 import { Toaster } from "sonner"
+import type { ReactNode } from "react"
 
 const barlow = Barlow({
 	subsets: ["latin"],
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
 async function RootLayout({
 	children,
 }: {
-	children: React.ReactNode
+	children: ReactNode
 }) {
 	return (
 		<html>

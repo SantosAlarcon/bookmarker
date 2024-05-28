@@ -50,6 +50,7 @@ const UserContextMenu = () => {
             </Item>
             <Item id="logout" onClick={async () => {
                 await supabase.auth.signOut({scope: "global"});
+                router.prefetch("/auth/login")
                 router.push("/auth/login")
             }}>
                 <Image src="/icons/logout.svg" width={16} height={16} alt="User icon" style={{
