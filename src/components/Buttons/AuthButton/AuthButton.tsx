@@ -1,6 +1,6 @@
 "use client"
 
-import tooltipStyles from "@/app/tooltip.module.scss"
+import tooltipStyles from "@/styles/tooltip.module.scss"
 import getUserMetadata from '@/app/utils/getUserMetadata'
 import { getSession } from '@/app/utils/supabase/getSession'
 import { handleUserContextMenu } from '@/components/Header/UserContextMenu'

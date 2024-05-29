@@ -1,16 +1,17 @@
 import type { Metadata } from "next"
 import { Barlow } from "next/font/google"
 import "@/src/app/globals.css"
-import { Toaster } from "sonner"
+import { Head, Html } from "next/document"
 import type { ReactNode } from "react"
 import { useTranslation } from "react-i18next"
+import { Toaster } from "sonner"
 
 const barlow = Barlow({
 	subsets: ["latin"],
 	weight: ["500", "700", "900"],
 })
 
-export const MainPageMetadata: Metadata = {
+export const RootMetadata: Metadata = {
 	title: "Bookmarker",
 	description: "App to manage browser bookmarks everywhere",
 	manifest: "/manifest.json",
@@ -22,9 +23,10 @@ async function RootLayout({
 	children: ReactNode
 }) {
     const {i18n} = useTranslation();
-	return (
-		<html lang={i18n.language}>
-			<head>
+	
+    return (
+		<Html lang={i18n.language}>
+			<Head>
 				<link rel="shortcut icon" href="/favicon.svg" />
 				<meta
 					name="viewport"
@@ -48,12 +50,12 @@ async function RootLayout({
 					content="App to manage browser bookmarks everywhere"
 				/>
 				<meta property="og:site_name" content="Bookmarker" />
-			</head>
+			</Head>
 			<body className={barlow.className}>
 				{children}
 			</body>
 			<Toaster position="top-center" richColors />
-		</html>
+		</Html>
 	)
 }
 

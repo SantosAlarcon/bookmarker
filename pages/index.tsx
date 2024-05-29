@@ -1,4 +1,4 @@
-import styles from "@/app/page.module.css";
+import styles from "@/styles/page.module.css";
 import Header from "@/components/Header/Header";
 import BookmarksView from "@/components/BookmarksView/BookmarksView";
 import { redirect } from "next/navigation";
