@@ -2,14 +2,14 @@ import { Barlow } from "next/font/google"
 import { Toaster } from "sonner"
 import Head from "next/head"
 import { useTranslation } from "next-i18next"
-import { Metadata } from "next"
+import type { Metadata } from "next"
 
 const barlow = Barlow({
 	subsets: ["latin"],
 	weight: ["400", "500", "700", "900"],
 })
 
-const md: Metadata = {
+export const ResetPasswordMetadata: Metadata = {
     title: "My profile - Bookmarker"
 }
 

@@ -13,17 +13,12 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProfileLayout from "./layout";
 
-export const metadata: Metadata = {
-	title: "My profile - Bookmarker",
-};
-
 type Props = {
 	locale: string;
 };
 
 export default function PrivatePage() {
     const { t, i18n } = useTranslation("profile-page");
-	metadata.title = t("page-title");
 
 	const setSession = authStore((state) => state.setSession);
 	const session: Session | null = authStore((state) => state.session);

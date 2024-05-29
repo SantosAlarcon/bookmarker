@@ -3,6 +3,7 @@ import { Barlow } from "next/font/google"
 import "@/src/app/globals.css"
 import { Toaster } from "sonner"
 import type { ReactNode } from "react"
+import { useTranslation } from "react-i18next"
 
 const barlow = Barlow({
 	subsets: ["latin"],
@@ -20,8 +21,9 @@ async function RootLayout({
 }: {
 	children: ReactNode
 }) {
+    const {i18n} = useTranslation();
 	return (
-		<html>
+		<html lang={i18n.language}>
 			<head>
 				<link rel="shortcut icon" href="/favicon.svg" />
 				<meta

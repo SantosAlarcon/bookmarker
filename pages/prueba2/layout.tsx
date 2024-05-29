@@ -1,18 +1,15 @@
 import type { ReactNode } from "react";
-import "@/app/global.css";
+import "@/app/globals.css";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+export const md: Metadata = {
     title: "Prueba"
 }
 
-const PruebaLayout = ({ children }: { children: ReactNode }) => {
+const TestLayout = ({ children }: { children: ReactNode }) => {
     return (
-        <html lang="en">
-            <title>Prueba</title>
-            <body>{children}</body>
-        </html>
+            <div>{children}</div>
     );
 };
 
-export default PruebaLayout;
+export default TestLayout;
