@@ -1,11 +1,10 @@
 "use client"
 import Image from "next/image"
-import React from "react"
 import styles from "./RemoveFolder.module.scss"
 import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
-import tooltipStyles from "@/app/tooltip.module.scss"
+import tooltipStyles from "@/styles/tooltip.module.scss"
 import { useTranslation } from "next-i18next"
 
 interface RemoveProps {
@@ -33,6 +32,7 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
 			className={styles.remove__button}
 			aria-label={t("delete-item")}
 			onClick={handleClick}
+            type="button"
 		>
 			<Tooltip
 				anchorSelect="#remove__button"

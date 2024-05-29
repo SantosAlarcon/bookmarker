@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
 	//await supabase.auth.getSession()
 
     //const session = await getSession()
-    const {data: {session}} = await supabase.auth.getSession();
+    //const {data: {session}} = await supabase.auth.getSession();
     
 	if (
 		req.nextUrl.pathname.startsWith("/_next") ||
@@ -36,9 +36,9 @@ export async function middleware(req: NextRequest) {
 	}*/
 
     // If there is no session, redirect to the login page
-    if (!session?.user) {
+    /*if (!session?.user) {
         return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
-    } 
+    } */
 
     return NextResponse.next()
 

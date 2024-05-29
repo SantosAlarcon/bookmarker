@@ -1,0 +1,37 @@
+import type { Metadata } from "next"
+import { Barlow } from "next/font/google"
+import "@/src/app/globals.css"
+import { Head, Html } from "next/document"
+import type { ReactNode } from "react"
+import { useTranslation } from "react-i18next"
+import { Toaster } from "sonner"
+
+const barlow = Barlow({
+	subsets: ["latin"],
+	weight: ["500", "700", "900"],
+})
+
+export const RootMetadata: Metadata = {
+	title: "Bookmarker",
+	description: "App to manage browser bookmarks everywhere",
+	manifest: "/manifest.json",
+}
+
+async function RootLayout({
+	children,
+}: {
+	children: ReactNode
+}) {
+    const {i18n} = useTranslation();
+	
+    return (
+		<Html lang={i18n.language}>
+			<body className={barlow.className}>
+				{children}
+			</body>
+			<Toaster position="top-center" richColors />
+		</Html>
+	)
+}
+
+export default RootLayout

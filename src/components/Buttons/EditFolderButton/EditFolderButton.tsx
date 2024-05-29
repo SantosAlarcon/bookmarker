@@ -1,11 +1,10 @@
 "use client"
 import Image from "next/image"
-import React from "react"
 import styles from "./EditButton.module.scss"
 import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
-import tooltipStyles from "@/app/tooltip.module.scss"
+import tooltipStyles from "@/styles/tooltip.module.scss"
 import { useTranslation } from "next-i18next"
 
 interface EditFolderProps {
@@ -35,6 +34,7 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
             className={styles.edit__button}
             onClick={() => handleClick()}
             aria-label={t("edit-folder-title")}
+            type="button"
         >
             <Tooltip anchorSelect="#edit__folder__button" variant="info" className={tooltipStyles.custom__tooltip} content={t("edit-folder-tooltip")} />
             <Image width={24} height={24} src="/icons/edit-icon.svg" alt="Edit icon" priority />

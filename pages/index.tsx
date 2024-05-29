@@ -38,7 +38,7 @@ function Home() {
 	return (
 		<div className={styles.main}>
 			<Header />
-            {/*<BookmarksView />*/}
+            <BookmarksView />
 		</div>
 	);
 }

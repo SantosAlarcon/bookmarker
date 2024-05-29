@@ -1,11 +1,10 @@
 "use client"
 import Image from "next/image"
-import React from "react"
 import styles from "./EditButton.module.scss"
 import { modalStore } from "@/store/modalStore"
 import { Tooltip } from "react-tooltip"
 import "react-tooltip/dist/react-tooltip.css"
-import tooltipStyles from "@/app/tooltip.module.scss"
+import tooltipStyles from "@/styles/tooltip.module.scss"
 import { useTranslation } from "next-i18next"
 
 interface EditBookmarkProps {
@@ -38,6 +37,7 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
 			className={styles.edit__button}
 			onClick={handleClick}
 			aria-label={t("edit-bookmark-title")}
+            type="button"
 		>
 			<Tooltip
 				anchorSelect="#edit__bookmark__button"
