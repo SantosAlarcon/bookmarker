@@ -1,5 +1,4 @@
 "use client"
-import React from "react"
 import Image from "next/image"
 import NewBookmarkDialog from "../Dialogs/NewBookmarkDialog/NewBookmarkDialog"
 import NewFolderDialog from "../Dialogs/NewFolderDialog/NewFolderDialog"
@@ -28,8 +27,8 @@ const Header = () => {
 
 	return (
 		<>
-			<NewBookmarkDialog title={t("common:new-bookmark-title")}></NewBookmarkDialog>
-			<NewFolderDialog title={t("common:new-folder-title")}></NewFolderDialog>
+			<NewBookmarkDialog title={t("common:new-bookmark-title")} />
+			<NewFolderDialog title={t("common:new-folder-title")} />
 			<UserContextMenu />
 			<header className={styles.header__container}>
 				<div className={styles.header__logo} onClick={() => router.push("/")}>
@@ -38,7 +37,7 @@ const Header = () => {
 						width="128"
 						height="128"
 						alt="Logo"
-						priority
+                        priority
 						className={styles.header__logo_img}
 					/>
 				</div>
@@ -49,6 +48,7 @@ const Header = () => {
 							className={styles.header__links__button}
 							id="new-bookmark-tooltip"
 							aria-label={t("header:new-bookmark-tooltip")}
+                            type="button"
 						>
 							<Tooltip
 								anchorSelect="#new-bookmark-tooltip"
@@ -72,6 +72,7 @@ const Header = () => {
 							className={styles.header__links__button}
 							id="new-folder-tooltip"
 							aria-label={t("header:new-folder-tooltip")}
+                            type="button"
 						>
 							<Tooltip
 								anchorSelect="#new-folder-tooltip"

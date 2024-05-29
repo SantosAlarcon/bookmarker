@@ -1,16 +1,16 @@
 "use client"
-import styles from "./NewFolderDialog.module.scss"
-import React, { useEffect, useRef, useState } from "react"
-import { toast } from "sonner"
-import Image from "next/image"
-import { modalStore } from "@/store/modalStore"
-import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
-import { useRouter } from "next/navigation"
 import { createNewFolder } from "@/app/utils/supabase/folders/createNewFolder"
-import { folderStore } from "@/store/folderStore"
-import { type BookmarkFolder } from "@/types/types"
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import Spinner from "@/components/Spinner/Spinner"
+import { folderStore } from "@/store/folderStore"
+import { modalStore } from "@/store/modalStore"
+import type { BookmarkFolder } from "@/types/types"
 import { useTranslation } from "next-i18next"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
+import styles from "./NewFolderDialog.module.scss"
 
 type Props = {
 	title: string
@@ -134,12 +134,13 @@ const NewFolderDialog = ({ title }: Props) => {
 			</div>
 			<div className={styles.new__folder__dialog__buttons}>
 				<button
-					disabled={newFolder.title && newFolder.description ? false : true}
+					disabled={!(newFolder.title && newFolder.description )}
 					onClick={() => createFolder()}
+                    type="button"
 				>
                     {loading ? <Spinner /> : t("create") }
 				</button>
-				<button onClick={() => closeDialog()}>{t("close")}</button>
+				<button type="button" onClick={() => closeDialog()}>{t("close")}</button>
 			</div>
 		</dialog>
 	) : null

@@ -1,16 +1,16 @@
 "use client"
-import styles from "./EditFolderDialog.module.scss"
-import React, { useEffect, useRef, useState } from "react"
-import { toast } from "sonner"
-import Image from "next/image"
-import { modalStore } from "@/store/modalStore"
-import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
-import { useRouter } from "next/navigation"
 import updateFolder from "@/app/utils/supabase/folders/updateFolder"
-import { folderStore } from "@/store/folderStore"
-import { BookmarkFolder } from "@/types/types"
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import Spinner from "@/components/Spinner/Spinner"
+import { folderStore } from "@/store/folderStore"
+import { modalStore } from "@/store/modalStore"
+import type { BookmarkFolder } from "@/types/types"
 import { useTranslation } from "next-i18next"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
+import styles from "./EditFolderDialog.module.scss"
 
 type Props = {
     title: string
@@ -135,8 +135,7 @@ const EditFolderDialog = ({ title }: Props) => {
                             }
                         >
                             <option value="null">{t("no-parent-folder")}</option>
-                            {folderList &&
-                                folderList.map((folder: BookmarkFolder) => (
+                            {folderList?.map((folder: BookmarkFolder) => (
                                     <option
                                         key={folder.folder_id}
                                         value={folder.folder_id}
@@ -150,12 +149,13 @@ const EditFolderDialog = ({ title }: Props) => {
             </div>
             <div className={styles.edit__folder__dialog__buttons}>
                 <button
-                    disabled={updatedFolder.title && updatedFolder.description ? false : true}
+                    type="button"
+                    disabled={!(updatedFolder.title && updatedFolder.description )}
                     onClick={() => editFolder()}
                 >
                     {loading ? <Spinner /> : t("update")}
                 </button>
-                <button onClick={() => closeDialog()}>{t("close")}</button>
+                <button type="button" onClick={() => closeDialog()}>{t("close")}</button>
             </div>
         </dialog>
     ) : null

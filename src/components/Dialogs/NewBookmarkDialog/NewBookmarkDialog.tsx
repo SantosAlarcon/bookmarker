@@ -1,19 +1,19 @@
 "use client"
-import styles from "./NewBookmarkDialog.module.scss"
-import React, { useEffect, useRef, useState } from "react"
-import { toast } from "sonner"
-import Image from "next/image"
-import { modalStore } from "@/store/modalStore"
-import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
-import { BookmarkFolder } from "@/types/types"
-import { useRouter } from "next/navigation"
-import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders"
-import { createClient } from "@/app/utils/supabase/client"
 import { createNewBookmark } from "@/app/utils/supabase/bookmarks/createNewBookmark"
-import { folderStore } from "@/store/folderStore"
+import { createClient } from "@/app/utils/supabase/client"
+import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders"
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { validateURL } from "@/app/utils/validateURL"
 import Spinner from "@/components/Spinner/Spinner"
+import { folderStore } from "@/store/folderStore"
+import { modalStore } from "@/store/modalStore"
+import type { BookmarkFolder } from "@/types/types"
 import { useTranslation } from "next-i18next"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
+import styles from "./NewBookmarkDialog.module.scss"
 
 type Props = {
 	title: string
@@ -149,8 +149,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
 							<option defaultValue="null" value="null">
                                 {t("no-parent-folder")}
 							</option>
-							{folderList &&
-								folderList.map((folder: BookmarkFolder) => (
+							{folderList?.map((folder: BookmarkFolder) => (
 									<option key={folder.folder_id} value={folder.folder_id}>
 										{folder.folder_title}
 									</option>
@@ -161,12 +160,13 @@ const NewBookmarkDialog = ({ title }: Props) => {
 			</div>
 			<div className={styles.new__bookmark__dialog__buttons}>
 				<button
-					disabled={newBookmark.title && newBookmark.url ? false : true}
+					disabled={!(newBookmark.title && newBookmark.url )}
+                    type="button"
 					onClick={() => createBookmark()}
 				>
                     {loading ? <Spinner /> : t("create") }
 				</button>
-				<button onClick={() => closeDialog()}>{t("close")}</button>
+				<button type="button" onClick={() => closeDialog()}>{t("close")}</button>
 			</div>
 		</dialog>
 	) : null

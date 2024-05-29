@@ -1,19 +1,19 @@
 "use client"
-import styles from "./EditBookmarkDialog.module.scss"
-import React, { useEffect, useRef, useState } from "react"
-import Image from "next/image"
-import { modalStore } from "@/store/modalStore"
-import { toast } from "sonner"
-import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
-import { BookmarkFolder } from "@/types/types"
-import { useRouter } from "next/navigation"
+import updateBookmark from "@/app/utils/supabase/bookmarks/updateBookmark"
 import { createClient } from "@/app/utils/supabase/client"
 import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders"
-import updateBookmark from "@/app/utils/supabase/bookmarks/updateBookmark"
-import { folderStore } from "@/store/folderStore"
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import { validateURL } from "@/app/utils/validateURL"
 import Spinner from "@/components/Spinner/Spinner"
+import { folderStore } from "@/store/folderStore"
+import { modalStore } from "@/store/modalStore"
+import type { BookmarkFolder } from "@/types/types"
 import { useTranslation } from "next-i18next"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
+import styles from "./EditBookmarkDialog.module.scss"
 
 type Props = {
     title: string
@@ -85,9 +85,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
     }
 
     const editBookmark = async () => {
-        if (!validateURL(updatedBookmark.url)) {
-            alert("URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.")
-        } else {
+        if (validateURL(updatedBookmark.url)) {
             setLoading(true);
             await updateBookmark(editBookmarkData.id, updatedBookmark)
             await updateBookmarkList()
@@ -95,6 +93,8 @@ const EditBookmarkDialog = ({ title }: Props) => {
             setLoading(false);
             router.refresh()
             toast.success(t("edit-bookmark-success"))
+        } else {
+            alert("URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.")
         }
     }
 
@@ -171,8 +171,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                 }
                             >
                                 <option value="null">{t("no-parent-folder")}</option>
-                                {folderList &&
-                                    folderList.map((folder: BookmarkFolder) => (
+                                {folderList?.map((folder: BookmarkFolder) => (
                                         <option
                                             key={folder.folder_id}
                                             value={folder.folder_id}
@@ -186,12 +185,13 @@ const EditBookmarkDialog = ({ title }: Props) => {
                 </div>
                 <div className={styles.edit__bookmark__dialog__buttons}>
                     <button
-                        disabled={updatedBookmark.title && updatedBookmark.url ? false : true}
+                        type="button"
+                        disabled={!(updatedBookmark.title && updatedBookmark.url )}
                         onClick={() => editBookmark()}
                     >
                         {loading ? <Spinner /> : t("update")}
                     </button>
-                    <button onClick={() => closeDialog()}>{t("close")}</button>
+                    <button type="button" onClick={() => closeDialog()}>{t("close")}</button>
                 </div>
             </dialog>
         ) : null

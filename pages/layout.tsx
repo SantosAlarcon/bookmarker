@@ -10,7 +10,7 @@ const barlow = Barlow({
 	weight: ["500", "700", "900"],
 })
 
-export const metadata: Metadata = {
+export const MainPageMetadata: Metadata = {
 	title: "Bookmarker",
 	description: "App to manage browser bookmarks everywhere",
 	manifest: "/manifest.json",

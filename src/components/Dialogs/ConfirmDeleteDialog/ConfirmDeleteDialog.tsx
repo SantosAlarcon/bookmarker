@@ -1,15 +1,15 @@
 "use client"
-import styles from "./ConfirmDeleteDialog.module.scss"
-import React, { useEffect, useRef, useState } from "react"
-import Image from "next/image"
-import { toast } from "sonner"
-import { modalStore } from "@/store/modalStore"
-import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
-import { useRouter } from "next/navigation"
 import { deleteBookmark } from "@/app/utils/supabase/bookmarks/deleteBookmark"
 import deleteFolder from "@/app/utils/supabase/folders/deleteFolder"
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
 import Spinner from "@/components/Spinner/Spinner"
+import { modalStore } from "@/store/modalStore"
 import { useTranslation } from "next-i18next"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { useEffect, useRef, useState } from "react"
+import { toast } from "sonner"
+import styles from "./ConfirmDeleteDialog.module.scss"
 
 type Props = {
 	title: string
@@ -42,12 +42,14 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 	const confirmDeletion = async () => {
         setLoading(true);
 		switch (deleteProps.type) {
-			case "bookmark":
+			case "bookmark": {
 				await deleteBookmark(deleteProps.id)
 				break
-			case "folder":
+			}
+			case "folder": {
 				await deleteFolder(deleteProps.id)
 				break
+			}
 		}
 
 		await updateBookmarkList()
@@ -90,12 +92,13 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 				</div>
 				<div className={styles.confirm__delete__dialog__buttons}>
 					<button
+                        type="button"
 						className={styles.confirm__delete__dialog__buttons__delete}
 						onClick={() => confirmDeletion()}
 					>
                         {loading ? <Spinner /> : t("delete")}
 					</button>
-					<button onClick={() => closeDialog()}>{t("close")}</button>
+					<button type="button" onClick={() => closeDialog()}>{t("close")}</button>
 				</div>
 			</dialog>
 		) : null

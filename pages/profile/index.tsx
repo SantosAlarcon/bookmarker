@@ -5,7 +5,6 @@ import FalseIcon from "@/components/Icons/FalseIcon";
 import TrueIcon from "@/components/Icons/TrueIcon";
 import { authStore } from "@/store/authStore";
 import type { Session, UserMetadata } from "@supabase/supabase-js";
-import type { Metadata } from "next";
 import type { GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -55,7 +54,7 @@ export default function PrivatePage() {
 							className={styles.profile__page__avatar__img}
 							alt={userMetadata?.full_name}
 							src={userMetadata?.picture}
-							fetchpriority="high"
+							loading="lazy"
 						/>
 					</picture>
 				</div>
