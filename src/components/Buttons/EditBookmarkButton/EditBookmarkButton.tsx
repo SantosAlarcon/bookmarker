@@ -38,11 +38,12 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
 			onClick={handleClick}
 			aria-label={t("edit-bookmark-title")}
             type="button"
+            id="edit__bookmark"
 		>
 			<Tooltip
-				anchorSelect="#edit__bookmark__button"
+				anchorSelect="#edit__bookmark"
 				variant="info"
-				content={t("edit-bookmark-tooltip")}
+				content={t("edit-bookmark-title")}
 				className={tooltipStyles.custom__tooltip}
 			/>
 			<Image width={24} height={24} src="/icons/edit-icon.svg" alt="Edit icon" priority={true} />

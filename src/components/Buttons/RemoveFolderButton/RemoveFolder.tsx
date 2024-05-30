@@ -30,14 +30,15 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
 	return (
 		<button
 			className={styles.remove__button}
-			aria-label={t("delete-item")}
+			aria-label={t("delete-folder")}
 			onClick={handleClick}
             type="button"
+            id="remove__folder__button"
 		>
 			<Tooltip
-				anchorSelect="#remove__button"
+				anchorSelect="#remove__folder__button"
 				place="top"
-				content={t("delete-item")}
+				content={t("delete-folder")}
 				variant="info"
 				className={tooltipStyles.custom__tooltip}
 			/>

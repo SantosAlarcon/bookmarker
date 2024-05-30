@@ -2,7 +2,7 @@
 
 import styles from "./LoginComponent.module.scss"
 import Image from "next/image"
-import "@/app/globals.css"
+import "@/styles/globals.css"
 import {
   signInWithGoogle,
   signInWithGitHub,

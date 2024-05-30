@@ -6,6 +6,7 @@ import type { TriggerEvent } from "react-contexify";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
+import { toast } from "sonner";
 
 export let handleUserContextMenu: Function | undefined = undefined;
 
@@ -57,6 +58,7 @@ const UserContextMenu = () => {
 			<Item
 				id="logout"
 				onClick={async () => {
+                    toast.info(t("logging-out"))
 					await supabase.auth.signOut({ scope: "global" });
 					router.prefetch("/auth/login");
 					router.push("/auth/login");

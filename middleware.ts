@@ -26,15 +26,7 @@ export async function middleware(req: NextRequest) {
 	) {
 		return
 	}
-
-	/*if (req.nextUrl.locale === "__default") {
-	  const locale = req.cookies.get("NEXT_LOCALE")?.value || "en"
-  
-	  return NextResponse.redirect(
-		new URL(`/${locale}${req.nextUrl.pathname}${req.nextUrl.search}`, req.url)
-	  )
-	}*/
-
+	
     // If there is no session, redirect to the login page
     /*if (!session?.user) {
         return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))

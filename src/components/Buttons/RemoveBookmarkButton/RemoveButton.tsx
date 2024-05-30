@@ -31,13 +31,14 @@ const RemoveButton = ({ children }: RemoveProps) => {
 		<button
 			className={styles.remove__button}
 			onClick={handleClick}
-			aria-label={t("delete-item")}
+			aria-label={t("delete-bookmark")}
             type="button"
+            id="remove__bookmark__button"
 		>
 			<Tooltip
-				anchorSelect="#remove__button"
+				anchorSelect="#remove__bookmark__button"
 				place="top"
-				content={t("delete-item")}
+				content={t("delete-bookmark")}
 				variant="info"
 				className={tooltipStyles.custom__tooltip}
 			/>

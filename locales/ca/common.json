@@ -34,5 +34,6 @@
     "parent-folder": "Carpeta pare",
     "no-parent-folder": "Sense carpeta pare",
     "no-bookmarks-title": "No hi ha cap marcador ni carpeta",
-    "no-bookmarks-text": "Comença afegint un marcador o carpeta prement qualsevol dels botons de dalt."
+    "no-bookmarks-text": "Comença afegint un marcador o carpeta prement qualsevol dels botons de dalt.",
+    "logging-out": "Tancant sessió..."
 }
