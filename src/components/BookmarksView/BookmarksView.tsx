@@ -13,16 +13,17 @@ import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDia
 import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog";
 import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog";
 import styles from "./BookmarksView.module.scss";
+import type { Session } from "@supabase/supabase-js";
 
 const BookmarksView = () => {
-    // Load the translation function with the "common" namespace
-    const { t } = useTranslation("common");
-	
-    // Get and set the bookmarks from the store
+	// Load the translation function with the "common" namespace
+	const { t } = useTranslation("common");
+
+	// Get and set the bookmarks from the store
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList);
 
 	// Get the session from the store because it already has the session information fetched in the auth button.
-	const session = authStore((state) => state.session);
+	let session: Session | null = authStore((state) => state.session);
 
 	// Get and set the loading state
 	const [loading, setLoading] = useState<boolean>(false);
@@ -30,23 +31,22 @@ const BookmarksView = () => {
 	// Get the root folders so that can be rendered first
 	useEffect(() => {
 		setLoading(true);
+
 		const getRootItems = async () => {
 			await updateBookmarkList();
 		};
 
-		// It there is a session, call the root items function
-		if (session) {
-			getRootItems();
-		}
+		getRootItems();
 
 		setLoading(false);
-	}, []);
+	}, [session]);
 
 	return (
 		<>
 			<EditBookmarkDialog title={t("edit-bookmark-title")} />
 			<EditFolderDialog title={t("edit-folder-title")} />
 			<ConfirmDeleteDialog title={t("delete-item")} />
+
 			<main className={styles.bookmarks__view__container}>
 				{loading ? (
 					// If not bookmarks are loaded, it shows skeleton component
@@ -89,6 +89,7 @@ const BookmarksView = () => {
 						})}
 					</motion.ul>
 				) : (
+					// If there not any bookmarks/folders, it shows a message of it
 					<div className={styles.bookmarks__view__paragraph}>
 						<h1>{t("no-bookmarks-title")}</h1> {t("no-bookmarks-text")}
 					</div>

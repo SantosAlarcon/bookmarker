@@ -29,6 +29,6 @@ export const authStore = create<State & Action>(
             setAuth: (newSession: Session | null) => set({session: newSession, user: newSession?.user, metadata: newSession?.user.user_metadata}),
 			reset: () => set({ user: undefined, session: null, metadata: null }),
 		}),
-		{ anonymousActionType: "auth-store-update" },
+		{ name: "Auth Store", anonymousActionType: "auth-store-update" },
 	),
 );
