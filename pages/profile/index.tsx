@@ -1,9 +1,7 @@
 import styles from "./profile.module.scss";
 
-import { createClient } from "@/app/utils/supabase/server2";
 import FalseIcon from "@/components/Icons/FalseIcon";
 import TrueIcon from "@/components/Icons/TrueIcon";
-import { authStore } from "@/store/authStore";
 import type { Session, UserMetadata } from "@supabase/supabase-js";
 import type { GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
@@ -11,6 +9,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProfileLayout from "./layout";
+import { useSession } from "@/app/utils/supabase/useSession";
 
 type Props = {
 	locale: string;
@@ -19,12 +18,14 @@ type Props = {
 export default function PrivatePage() {
 	const { t, i18n } = useTranslation("profile-page");
 
-	const setSession = authStore((state) => state.setSession);
-	const session: Session | null = authStore((state) => state.session);
+	/*const setSession = authStore((state) => state.setSession);
+	const session: Session | null = authStore((state) => state.session);*/
+
+    const session = useSession()
 
 	const [hydrated, setHydrated] = useState<boolean>(false);
 
-	useEffect(() => {
+	/*useEffect(() => {
 		const getSession = async () => {
             const {
 				data: { session },
@@ -33,7 +34,7 @@ export default function PrivatePage() {
 		};
 
 		getSession();
-	}, []);
+	}, []);*/
 
 	useEffect(() => {
 		setHydrated(true);

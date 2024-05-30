@@ -1,9 +1,9 @@
+import type { Metadata } from "next";
 import { useTranslation } from "next-i18next";
 import { Barlow } from "next/font/google";
 import Head from "next/head";
 import type { ReactNode } from "react";
 import { Toaster } from "sonner";
-import type { Metadata } from "next";
 
 const barlow = Barlow({
 	subsets: ["latin"],

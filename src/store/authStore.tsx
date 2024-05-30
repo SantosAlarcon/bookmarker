@@ -2,6 +2,8 @@ import type { Session, User, UserMetadata } from "@supabase/supabase-js";
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 
+const isDev = process.env.NODE_ENV === "development"
+
 interface State {
 	user: User | undefined;
 	session: Session | null;
@@ -29,6 +31,6 @@ export const authStore = create<State & Action>(
             setAuth: (newSession: Session | null) => set({session: newSession, user: newSession?.user, metadata: newSession?.user.user_metadata}),
 			reset: () => set({ user: undefined, session: null, metadata: null }),
 		}),
-		{ name: "Auth Store", anonymousActionType: "auth-store-update" },
+		{ name: "Auth Store", anonymousActionType: "auth-store-update", enabled: (isDev) },
 	),
 );
