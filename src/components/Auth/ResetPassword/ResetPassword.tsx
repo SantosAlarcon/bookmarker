@@ -6,7 +6,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import Spinner from "@/components/Spinner/Spinner";
 import { useTranslation } from "next-i18next";
-import "@/app/globals.css"
+import "@/styles/globals.css";
 
 const ResetPassword = () => {
 	const supabase = createClientComponentClient();

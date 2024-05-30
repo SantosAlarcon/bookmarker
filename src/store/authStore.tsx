@@ -1,5 +1,5 @@
+import type { Session, User, UserMetadata } from "@supabase/supabase-js"
 import { create } from "zustand"
-import type { User, Session, UserMetadata } from "@supabase/supabase-js"
 import {devtools} from "zustand/middleware"
 
 interface State {
@@ -15,6 +15,7 @@ interface Action {
   reset: () => void
 }
 
+// @ts-ignore
 export const authStore = create<State & Action>(devtools(
     (set) => ({
       user: undefined,

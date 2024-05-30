@@ -3,7 +3,7 @@ import { authStore } from "@/store/authStore"
 import { serverSideTranslations } from "next-i18next/serverSideTranslations"
 import { redirect } from "next/navigation"
 import type {GetStaticProps} from 'next'
-import styles from "@/app/page.module.css" 
+import styles from "@/styles/page.module.css" 
 import ResetPasswordLayout from "./layout"
 
 type Props = {

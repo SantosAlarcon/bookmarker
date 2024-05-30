@@ -2,14 +2,14 @@
 
 import styles from "./RegisterComponent.module.scss"
 import Image from "next/image"
-import "@/app/globals.css"
+import "@/styles/globals.css"
 import {
 	signUpWithGoogle,
 	signUpWithGitHub,
 	signUpWithFacebook,
 	signUpWithEmail,
 } from "@/app/utils/signUp"
-import { FormEvent, useState } from "react"
+import { type FormEvent, useState } from "react"
 import Spinner from "@/components/Spinner/Spinner"
 import { toast } from "sonner"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
@@ -58,6 +58,7 @@ const RegisterComponent = () => {
 					<button
 						className={styles.register__page__social__button}
 						onClick={() => signUpWithGoogle(supabase)}
+                        type="button"
 					>
 						<Image
 							src="/social/google.svg"
@@ -71,6 +72,7 @@ const RegisterComponent = () => {
 					<button
 						className={styles.register__page__social__button}
 						onClick={() => signUpWithGitHub(supabase)}
+                        type="button"
 					>
 						<Image
 							src="/social/github.svg"
@@ -84,6 +86,7 @@ const RegisterComponent = () => {
 					<button
 						className={styles.register__page__social__button}
 						onClick={() => signUpWithFacebook(supabase)}
+                        type="button"
 					>
 						<Image
 							src="/social/facebook.svg"
