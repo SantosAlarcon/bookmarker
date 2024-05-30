@@ -11,13 +11,14 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProfileLayout from "./layout";
+import { getSession } from "@/app/utils/supabase/getSession";
 
 type Props = {
 	locale: string;
 };
 
 export default function PrivatePage() {
-    const { t, i18n } = useTranslation("profile-page");
+	const { t, i18n } = useTranslation("profile-page");
 
 	const setSession = authStore((state) => state.setSession);
 	const session: Session | null = authStore((state) => state.session);
@@ -26,19 +27,19 @@ export default function PrivatePage() {
 
 	useEffect(() => {
 		const getSession = async () => {
-			const {
+            const {
 				data: { session },
 			} = await createClient().auth.getSession();
 			return setSession(session);
 		};
 
 		getSession();
-	}, [session]);
-     
+	}, []);
+
 	useEffect(() => {
 		setHydrated(true);
 	}, []);
-     
+
 	const userMetadata: UserMetadata | undefined = session?.user?.user_metadata;
 
 	// To avoid hydration issues, it will show the component after the hydration.
