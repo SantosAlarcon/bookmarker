@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import AuthButton from "../Buttons/AuthButton/AuthButton"
 import UserContextMenu from "./UserContextMenu"
 import { useTranslation } from "next-i18next"
+import { Toaster } from "sonner"
 
 const Header = () => {
 	const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
@@ -27,11 +28,12 @@ const Header = () => {
 
 	return (
 		<>
+            <Toaster richColors position="top-center" />
 			<NewBookmarkDialog title={t("common:new-bookmark-title")} />
 			<NewFolderDialog title={t("common:new-folder-title")} />
 			<UserContextMenu />
 			<header className={styles.header__container}>
-				<div className={styles.header__logo} onClick={() => router.push("/")}>
+                <div className={styles.header__logo} onClick={() => router.push("/")}>
 					<Image
 						src="/BookmarkerLogo.svg"
 						width="128"

@@ -9,13 +9,14 @@ const Document = () => {
 		<Html lang={i18n.language}>
 			<Head>
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
+                {/* @ts-ignore */}
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
 				<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
 			</Head>
+            <Toaster position="top-center" richColors />
 			<body>
 				<Main />
 				<NextScript />
-			    <Toaster position="top-center" richColors />
 			</body>
 		</Html>
 	);
