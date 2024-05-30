@@ -13,9 +13,11 @@ import { useTranslation } from "next-i18next"
 import { Toaster } from "sonner"
 
 const Header = () => {
-	const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
+	// Get Bookmark/Folder functions from the modal store
+    const showNewBookmarkModal = modalStore((state) => state.showNewBookmarkModal)
 	const showNewFolderModal = modalStore((state) => state.showNewFolderModal)
-	const {t} = useTranslation()
+	
+    const {t} = useTranslation()
 
 	const router = useRouter()
 

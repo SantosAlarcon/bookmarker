@@ -1,7 +1,6 @@
 "use client";
 
 import tooltipStyles from "@/styles/tooltip.module.scss";
-import getUserMetadata from "@/app/utils/getUserMetadata";
 import { getSession } from "@/app/utils/supabase/getSession";
 import { handleUserContextMenu } from "@/components/Header/UserContextMenu";
 import { authStore } from "@/store/authStore";
@@ -15,10 +14,8 @@ import { Tooltip } from "react-tooltip";
 import styles from "./AuthButton.module.scss";
 
 const AuthButton = () => {
-	const setSession = authStore((state) => state.setSession);
+	const setAuth = authStore((state) => state.setAuth);
 	const session: Session | null = authStore((state) => state.session);
-
-	const setMetadata = authStore((state) => state.setMetadata);
 	const metadata: UserMetadata | null = authStore((state) => state.metadata);
 
 	const router: AppRouterInstance = useRouter();
@@ -26,22 +23,13 @@ const AuthButton = () => {
 	useEffect(() => {
 		const fetchSession = async () => {
 			const session = await getSession();
-			setSession(session);
-		};
-
-		const getMetadata = async () => {
-			const md = await getUserMetadata();
-			setMetadata(md);
+			setAuth(session);
 		};
 
 		if (!session) {
 			fetchSession();
 		}
-
-		if (!metadata) {
-			getMetadata();
-		}
-	}, [metadata, session, setMetadata, setSession]);
+	}, [metadata, session]);
 
 	const handleAuth = (event: SyntheticEvent) => {
 		// If there is no session, redirect user to the login page
@@ -72,7 +60,14 @@ const AuthButton = () => {
 					/>
 					{session ? (
 						<picture>
-							<img style={{ borderRadius: "100%" }} src={metadata?.picture} width={36} height={36} alt="User avatar" fetchPriority="high" />
+							<img
+								style={{ borderRadius: "100%" }}
+								src={metadata?.picture}
+								width={36}
+								height={36}
+								alt="User avatar"
+								fetchPriority="high"
+							/>
 						</picture>
 					) : (
 						<Image width={32} height={32} src={"/user.svg"} alt="User icon" />

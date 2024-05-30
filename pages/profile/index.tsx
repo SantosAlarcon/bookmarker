@@ -11,7 +11,6 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ProfileLayout from "./layout";
-import { getSession } from "@/app/utils/supabase/getSession";
 
 type Props = {
 	locale: string;

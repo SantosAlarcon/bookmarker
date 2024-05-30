@@ -42,7 +42,6 @@ const BookmarksView = () => {
 		setLoading(false);
 	}, []);
 
-
 	return (
 		<>
 			<EditBookmarkDialog title={t("edit-bookmark-title")} />
@@ -58,7 +57,7 @@ const BookmarksView = () => {
 					// First render the root folders and its children
 					<motion.ul layout initial="false" className={styles.bookmarks__view__list}>
 						{/* @ts-ignore*/}
-						{bookmarksList.map((item: BookmarkFolder & BookmarkItem, index) => {
+						{bookmarksList?.map((item: BookmarkFolder & BookmarkItem, index) => {
 							{
 								/* If the item have the folder_id field, it renders a folder component. */
 							}

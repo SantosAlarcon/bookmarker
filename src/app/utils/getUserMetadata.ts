@@ -1,4 +1,4 @@
-import { UserMetadata } from "@supabase/supabase-js"
+import type { UserMetadata } from "@supabase/supabase-js"
 import { createClient } from "./supabase/client"
 
 // This function retrieves user metadata if logged
