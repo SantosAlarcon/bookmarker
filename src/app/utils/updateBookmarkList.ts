@@ -11,7 +11,11 @@ export const updateBookmarkList = async () => {
 	// Get the folders and bookmarks that don't belong to any parent
 	// @ts-ignore
 	const [rootFolders, rootBookmarks] = await Promise.all([getRootFolders(session?.user.id), getRootBookmarks(session?.user.id)]);
-	updateBookmarksList([...rootFolders, ...rootBookmarks]);
+
+    // If the above variables are not null, the bookmark list is updated
+    if (rootFolders && rootBookmarks) {
+        updateBookmarksList([...rootFolders, ...rootBookmarks]);
+    }
 
 	// Also updates de folder list of its store. It is useful when listing the updated list of folders.
 	// @ts-ignore
