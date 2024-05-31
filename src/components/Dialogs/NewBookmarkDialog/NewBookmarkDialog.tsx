@@ -74,7 +74,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
             setLoading(true);
 			await createNewBookmark(newBookmark)
 			await updateBookmarkList()
-			router.refresh()
+			//router.refresh()
 			closeDialog()
             setLoading(false);
 			toast.success(t("new-bookmark-success"))

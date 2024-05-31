@@ -91,7 +91,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
             await updateBookmarkList()
             closeDialog()
             setLoading(false);
-            router.refresh()
+            //router.refresh()
             toast.success(t("edit-bookmark-success"))
         } else {
             alert("URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.")

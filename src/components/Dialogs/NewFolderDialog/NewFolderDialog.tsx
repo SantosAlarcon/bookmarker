@@ -56,7 +56,7 @@ const NewFolderDialog = ({ title }: Props) => {
         setLoading(true);
 		await createNewFolder(newFolder);
 		await updateBookmarkList()
-		router.refresh()
+		//router.refresh()
 		closeDialog()
         setLoading(false);
 		toast.success(t("new-folder-sucess"))

@@ -14,6 +14,7 @@ import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog
 import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog";
 import styles from "./BookmarksView.module.scss";
 import type { Session } from "@supabase/supabase-js";
+import { useSession } from "@/app/utils/supabase/useSession";
 
 const BookmarksView = () => {
 	// Load the translation function with the "common" namespace
@@ -23,7 +24,7 @@ const BookmarksView = () => {
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList);
 
 	// Get the session from the store because it already has the session information fetched in the auth button.
-	let session: Session | null = authStore((state) => state.session);
+	const session: Session | null = authStore((state) => state.session);
 
 	// Get and set the loading state
 	const [loading, setLoading] = useState<boolean>(false);

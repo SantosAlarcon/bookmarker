@@ -64,7 +64,7 @@ const EditFolderDialog = ({ title }: Props) => {
         setLoading(true);
         await updateFolder(editFolderData.id, updatedFolder)
         await updateBookmarkList()
-        router.refresh()
+        //router.refresh()
         closeDialog()
         setLoading(false);
         toast.success(t("edit-folder-success"))

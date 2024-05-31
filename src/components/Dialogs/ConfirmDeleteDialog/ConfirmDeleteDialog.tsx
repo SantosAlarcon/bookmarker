@@ -55,7 +55,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 		await updateBookmarkList()
 		closeDialog()
         setLoading(false);
-		router.refresh()
+		//router.refresh()
 		toast.success(`'${deleteProps?.title}' deleted successfully!`)
 	}
 
