@@ -59,7 +59,7 @@ const NewFolderDialog = ({ title }: Props) => {
 		//router.refresh()
 		closeDialog()
         setLoading(false);
-		toast.success(t("new-folder-sucess"))
+		toast.success(t("new-folder-success"))
 	}
 
 	const dialog: JSX.Element | null = showNewFolderDialog ? (
