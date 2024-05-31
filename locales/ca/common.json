@@ -27,6 +27,7 @@
     "confirm-deletion-title": "¿Confirmar eliminació?",
     "confirm-deletion-text": "¿Estàs segur que vols eliminar el marcador",
     "confirm-folder-deletion-text": "¿Estàs segur que vols eliminar la carpeta",
+    "deletion-success": "L'element s'ha eliminat correctament",
     "bookmark-title-placeholder": "Títol del marcador",
     "bookmark-url-placeholder": "URL del marcador",
     "folder-title-placeholder": "Títol de la carpeta",

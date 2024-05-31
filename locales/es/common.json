@@ -27,6 +27,7 @@
     "confirm-deletion-title": "¿Confirmar borrado?",
     "confirm-deletion-text": "¿Estás seguro de que quieres borrar el marcador",
     "confirm-folder-deletion-text": "¿Estás seguro de que quieres borrar la carpeta",
+    "deletion-success": "Se ha borrado con éxito",
     "bookmark-title-placeholder": "Título del marcador",
     "bookmark-url-placeholder": "URL del marcador",
     "folder-title-placeholder": "Título de la carpeta",

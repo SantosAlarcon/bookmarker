@@ -56,7 +56,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 		closeDialog()
         setLoading(false);
 		//router.refresh()
-		toast.success(`'${deleteProps?.title}' deleted successfully!`)
+		toast.success(`${t("deletion-success")}: ${deleteProps?.title}`)
 	}
 
 	const dialog: JSX.Element | null =

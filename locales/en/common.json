@@ -27,6 +27,7 @@
     "confirm-deletion-title":"Confirm deletion?",
     "confirm-deletion-text":"Are you sure to delete",
     "confirm-folder-deletion-text":"Are you sure you want to delete the folder",
+    "deletion-success": "Item deletion sucess",
     "bookmark-title-placeholder":"Bookmark title",
     "bookmark-url-placeholder":"Bookmark URL",
     "folder-title-placeholder":"Folder title",
