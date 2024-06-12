@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-type DebounceProps = {
-	value: any;
-	delay: number;
-};
-
-const useDebounceValue = ({ value, delay = 500 }: DebounceProps) => {
+const useDebounceValue = (value: any, delay: number = 300): any => {
 	const [debValue, setDebValue] = useState<any>();
 	const timerRef = useRef();
 

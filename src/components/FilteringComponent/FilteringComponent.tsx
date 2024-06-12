@@ -5,16 +5,18 @@ import styles from "./FilteringComponent.module.scss"
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { filterStore } from "@/store/filterStore";
+import useDebounceValue from "@/app/utils/hooks/useDebounceValue";
 
 const FilteringComponent = () => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [filter, setFilter] = useState<string>("");
     const filterRef: MutableRefObject<string | null> = useRef<string>(null);
     const newFilterStore = filterStore((state) => state.setFilter)
+    const debounceFilter = useDebounceValue(filter, 600)
 
     useEffect(() => {
-        newFilterStore(filter)
-    }, [filter])
+        newFilterStore(debounceFilter)
+    }, [debounceFilter])
 
 	return (
         <div className={styles.filtering__container}>
