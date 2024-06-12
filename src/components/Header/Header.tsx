@@ -11,6 +11,7 @@ import AuthButton from "../Buttons/AuthButton/AuthButton"
 import UserContextMenu from "./UserContextMenu"
 import { useTranslation } from "next-i18next"
 import { Toaster } from "sonner"
+import FilteringComponent from "../FilteringComponent/FilteringComponent"
 
 const Header = () => {
 	// Get Bookmark/Folder functions from the modal store
@@ -46,6 +47,7 @@ const Header = () => {
 					/>
 				</div>
 				<div className={styles.header__links}>
+                    <FilteringComponent />
 					<div className={styles.header__links__new__boomark}>
 						<button
 							onClick={handleNewBookmark}

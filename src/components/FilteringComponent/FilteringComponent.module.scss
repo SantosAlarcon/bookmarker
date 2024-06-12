@@ -1,0 +1,17 @@
+.filtering__container {
+  display: flex;
+  gap: 1rem;
+
+  & input {
+    border: 1px #fff6 solid;
+    border-radius: .5rem;
+    width: 300px;
+    padding: 0 .5rem;
+    font-size: inherit;
+    font-family: inherit;
+  }
+
+  & img {
+    filter: invert(1);
+  }
+}

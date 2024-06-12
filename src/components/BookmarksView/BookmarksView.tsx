@@ -3,6 +3,7 @@ import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
 import { authStore } from "@/store/authStore";
 import { bookmarksStore } from "@/store/bookmarksStore";
 import type { BookmarkFolder, BookmarkItem } from "@/types/types";
+import type { Session } from "@supabase/supabase-js";
 import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
 import { useEffect, useState } from "react";
@@ -13,8 +14,7 @@ import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDia
 import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog";
 import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog";
 import styles from "./BookmarksView.module.scss";
-import type { Session } from "@supabase/supabase-js";
-import { useSession } from "@/app/utils/supabase/useSession";
+import { filterStore } from "@/store/filterStore";
 
 const BookmarksView = () => {
 	// Load the translation function with the "common" namespace
@@ -23,11 +23,16 @@ const BookmarksView = () => {
 	// Get and set the bookmarks from the store
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList);
 
+    // Get the filter from the filter store
+    const filter = filterStore(state => state.filter)
+
 	// Get the session from the store because it already has the session information fetched in the auth button.
 	const session: Session | null = authStore((state) => state.session);
 
 	// Get and set the loading state
 	const [loading, setLoading] = useState<boolean>(false);
+
+    const [filteredList, setFilteredList] = useState([...bookmarksList])
 
 	// Get the root folders so that can be rendered first
 	useEffect(() => {
@@ -41,6 +46,19 @@ const BookmarksView = () => {
 
 		setLoading(false);
 	}, [session]);
+
+    useEffect(() => {
+        setFilteredList(bookmarksList);
+    }, [])
+
+
+    useEffect(() => {
+        if (filter === "") {
+            setFilteredList([...bookmarksList])
+        } else {
+            setFilteredList([...bookmarksList].filter((item: BookmarkItem & BookmarkFolder) => item.bookmark_title?.toLowerCase().includes(filter) || item.folder_title?.toLowerCase().includes(filter.toLowerCase())))
+        }
+    }, [filter, bookmarksList])
 
 	return (
 		<>
@@ -58,7 +76,7 @@ const BookmarksView = () => {
 					// First render the root folders and its children
 					<motion.ul layout initial="false" className={styles.bookmarks__view__list}>
 						{/* @ts-ignore*/}
-						{bookmarksList?.map((item: BookmarkFolder & BookmarkItem, index) => {
+						{filteredList?.map((item: BookmarkFolder & BookmarkItem, index) => {
 							{
 								/* If the item have the folder_id field, it renders a folder component. */
 							}
