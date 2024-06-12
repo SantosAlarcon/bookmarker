@@ -22,6 +22,7 @@ const BookmarksView = () => {
 
 	// Get and set the bookmarks from the store
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList);
+	const allBokmarksList = bookmarksStore((state) => state.allBookmarksList);
 
     // Get the filter from the filter store
     const filter = filterStore(state => state.filter)
@@ -51,12 +52,11 @@ const BookmarksView = () => {
         setFilteredList(bookmarksList);
     }, [])
 
-
     useEffect(() => {
         if (filter === "") {
             setFilteredList([...bookmarksList])
         } else {
-            setFilteredList([...bookmarksList].filter((item: BookmarkItem & BookmarkFolder) => item.bookmark_title?.toLowerCase().includes(filter) || item.folder_title?.toLowerCase().includes(filter.toLowerCase())))
+            setFilteredList([...allBokmarksList].filter((item: BookmarkItem & BookmarkFolder) => item.bookmark_title?.toLowerCase().includes(filter) || item.folder_title?.toLowerCase().includes(filter.toLowerCase())))
         }
     }, [filter, bookmarksList])
 
