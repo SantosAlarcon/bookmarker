@@ -21,7 +21,13 @@ const FilteringComponent = () => {
 	return (
         <div className={styles.filtering__container}>
             {isOpen && (
-                <motion.input initial={{width: 0}} animate={{width: "100%"}} exit={{width: 0}} transition={{duration: 0.5}} type="text" ref={filterRef} onChange={() => setFilter(filterRef.current.value)} />
+                <motion.input 
+                    initial={{width: 0}} 
+                    animate={{width: "100%"}} 
+                    exit={{width: 0}} 
+                    transition={{duration: 0.5}}
+                    // @ts-ignore
+                    type="text" ref={filterRef} onChange={() => setFilter(filterRef.current.value)} />
             )}
             <button type="button" onClick={() => setIsOpen(!isOpen)}>
                 <Image width={32} height={32} src="/icons/search-icon.svg" alt="Search icon" />

@@ -53,7 +53,7 @@ const BookmarksView = () => {
     }, [])
 
     useEffect(() => {
-        if (filter === "") {
+        if (filter === "" || filter === undefined) {
             setFilteredList([...bookmarksList])
         } else {
             setFilteredList([...allBokmarksList].filter((item: BookmarkItem & BookmarkFolder) => item.bookmark_title?.toLowerCase().includes(filter) || item.folder_title?.toLowerCase().includes(filter.toLowerCase())))
