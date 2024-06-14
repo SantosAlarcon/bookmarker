@@ -12,6 +12,7 @@ const useDebounceValue = (value: any, delay: number = 300): any => {
 		};
 	}, [value, delay]);
 
+    
 	return debValue;
 };
 export default useDebounceValue;

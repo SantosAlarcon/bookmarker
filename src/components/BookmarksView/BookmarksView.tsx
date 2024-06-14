@@ -15,6 +15,8 @@ import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog
 import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog";
 import styles from "./BookmarksView.module.scss";
 import { filterStore } from "@/store/filterStore";
+import NotFound from "./NotFound";
+import NoOcurrencesFound from "./NoOcurrencesFound";
 
 const BookmarksView = () => {
 	// Load the translation function with the "common" namespace
@@ -22,10 +24,10 @@ const BookmarksView = () => {
 
 	// Get and set the bookmarks from the store
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList);
-	const allBokmarksList = bookmarksStore((state) => state.allBookmarksList);
+	const allBookmarksList = bookmarksStore((state) => state.allBookmarksList);
 
-    // Get the filter from the filter store
-    const filter = filterStore(state => state.filter)
+	// Get the filter from the filter store
+	const filter = filterStore((state) => state.filter);
 
 	// Get the session from the store because it already has the session information fetched in the auth button.
 	const session: Session | null = authStore((state) => state.session);
@@ -33,7 +35,7 @@ const BookmarksView = () => {
 	// Get and set the loading state
 	const [loading, setLoading] = useState<boolean>(false);
 
-    const [filteredList, setFilteredList] = useState([...bookmarksList])
+	const [filteredList, setFilteredList] = useState([...bookmarksList]);
 
 	// Get the root folders so that can be rendered first
 	useEffect(() => {
@@ -48,17 +50,24 @@ const BookmarksView = () => {
 		setLoading(false);
 	}, [session]);
 
-    useEffect(() => {
-        setFilteredList(bookmarksList);
-    }, [])
+	useEffect(() => {
+		setFilteredList(bookmarksList);
+	}, []);
 
-    useEffect(() => {
-        if (filter === "" || filter === undefined) {
-            setFilteredList([...bookmarksList])
-        } else {
-            setFilteredList([...allBokmarksList].filter((item: BookmarkItem & BookmarkFolder) => item.bookmark_title?.toLowerCase().includes(filter) || item.folder_title?.toLowerCase().includes(filter.toLowerCase())))
-        }
-    }, [filter, bookmarksList])
+	useEffect(() => {
+		if (filter === "" || filter === undefined) {
+			setFilteredList([...bookmarksList]);
+		} else {
+			// @ts-ignore
+			setFilteredList(
+				[...allBookmarksList].filter(
+					(item: BookmarkItem & BookmarkFolder) =>
+						item.bookmark_title?.toLowerCase().includes(filter) ||
+						item.folder_title?.toLowerCase().includes(filter.toLowerCase()),
+				),
+			);
+		}
+	}, [filter, bookmarksList]);
 
 	return (
 		<>
@@ -70,9 +79,9 @@ const BookmarksView = () => {
 				{loading ? (
 					// If not bookmarks are loaded, it shows skeleton component
 					Array.from({ length: 10 }).map((_, i) => <BookmarkSkeleton key={i} />)
-				) : // If there no bookmarks, it shows a simple message.
+				) :
 				// If there are, it renders the folders and bookmarks
-				bookmarksList.length > 0 && !loading ? (
+				bookmarksList.length > 0 ? (
 					// First render the root folders and its children
 					<motion.ul layout initial="false" className={styles.bookmarks__view__list}>
 						{/* @ts-ignore*/}
@@ -108,9 +117,13 @@ const BookmarksView = () => {
 						})}
 					</motion.ul>
 				) : (
-					// If there not any bookmarks/folders, it shows a message of it
+					// If there not any bookmarks/folders, it shows a message of it.
+                    // In case that no search ocurrences are found, it shows a message of it.
 					<div className={styles.bookmarks__view__paragraph}>
-						<h1>{t("no-bookmarks-title")}</h1> {t("no-bookmarks-text")}
+						{filter !== "" || filter !== undefined ? (<NotFound />
+						) : (
+                            <NoOcurrencesFound />
+						)}
 					</div>
 				)}
 			</main>
