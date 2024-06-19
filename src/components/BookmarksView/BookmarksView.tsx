@@ -120,7 +120,7 @@ const BookmarksView = () => {
 					// If there not any bookmarks/folders, it shows a message of it.
 					// In case that no search ocurrences are found, it shows a message of it.
 					<div className={styles.bookmarks__view__paragraph}>
-						{filteredList.length === 0 && (filter !== "" || filter !== undefined) ? <NotFound /> : <NoResultsFound />}
+						{<NotFound />}
 					</div>
 				)}
 			</main>
