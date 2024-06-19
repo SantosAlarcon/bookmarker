@@ -58,6 +58,7 @@ const BookmarksView = () => {
 			// @ts-ignore
 			setFilteredList(
 				[...allBookmarksList].filter(
+                    // @ts-ignore
 					(item: BookmarkItem & BookmarkFolder) =>
 						item.bookmark_title?.toLowerCase().includes(filter) || item.folder_title?.toLowerCase().includes(filter),
 				),

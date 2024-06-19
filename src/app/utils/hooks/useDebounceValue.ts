@@ -5,6 +5,7 @@ const useDebounceValue = (value: any, delay: number = 300): any => {
 	const timerRef = useRef();
 
 	useEffect(() => {
+        // @ts-ignore
 		timerRef.current = setTimeout(() => setDebValue(value), delay);
 
 		return () => {
