@@ -2,6 +2,7 @@
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
 import { authStore } from "@/store/authStore";
 import { bookmarksStore } from "@/store/bookmarksStore";
+import { filterStore } from "@/store/filterStore";
 import type { BookmarkFolder, BookmarkItem } from "@/types/types";
 import type { Session } from "@supabase/supabase-js";
 import { motion } from "framer-motion";
@@ -14,9 +15,8 @@ import ConfirmDeleteDialog from "../Dialogs/ConfirmDeleteDialog/ConfirmDeleteDia
 import EditBookmarkDialog from "../Dialogs/EditBookmarkDialog/EditBookmarkDialog";
 import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog";
 import styles from "./BookmarksView.module.scss";
-import { filterStore } from "@/store/filterStore";
 import NotFound from "./NotFound";
-import NoOcurrencesFound from "./NoOcurrencesFound";
+import NoResultsFound from "./NoResultsFound";
 
 const BookmarksView = () => {
 	// Load the translation function with the "common" namespace
@@ -50,10 +50,7 @@ const BookmarksView = () => {
 		setLoading(false);
 	}, [session]);
 
-	useEffect(() => {
-		setFilteredList(bookmarksList);
-	}, []);
-
+	// This will trigger when the filter updates
 	useEffect(() => {
 		if (filter === "" || filter === undefined) {
 			setFilteredList([...bookmarksList]);
@@ -62,8 +59,7 @@ const BookmarksView = () => {
 			setFilteredList(
 				[...allBookmarksList].filter(
 					(item: BookmarkItem & BookmarkFolder) =>
-						item.bookmark_title?.toLowerCase().includes(filter) ||
-						item.folder_title?.toLowerCase().includes(filter.toLowerCase()),
+						item.bookmark_title?.toLowerCase().includes(filter) || item.folder_title?.toLowerCase().includes(filter),
 				),
 			);
 		}
@@ -76,15 +72,19 @@ const BookmarksView = () => {
 			<ConfirmDeleteDialog title={t("delete-item")} />
 
 			<main className={styles.bookmarks__view__container}>
+				{filter && filteredList.length === 0 && (
+					<div className={styles.bookmarks__view__paragraph}>
+						<NoResultsFound />
+					</div>
+				)}
 				{loading ? (
 					// If not bookmarks are loaded, it shows skeleton component
 					Array.from({ length: 10 }).map((_, i) => <BookmarkSkeleton key={i} />)
-				) :
-				// If there are, it renders the folders and bookmarks
+				) : // If there are, it renders the folders and bookmarks
 				bookmarksList.length > 0 ? (
 					// First render the root folders and its children
 					<motion.ul layout initial="false" className={styles.bookmarks__view__list}>
-						{/* @ts-ignore*/}
+						{/* @ts-ignore */}
 						{filteredList?.map((item: BookmarkFolder & BookmarkItem, index) => {
 							{
 								/* If the item have the folder_id field, it renders a folder component. */
@@ -118,12 +118,9 @@ const BookmarksView = () => {
 					</motion.ul>
 				) : (
 					// If there not any bookmarks/folders, it shows a message of it.
-                    // In case that no search ocurrences are found, it shows a message of it.
+					// In case that no search ocurrences are found, it shows a message of it.
 					<div className={styles.bookmarks__view__paragraph}>
-						{filter !== "" || filter !== undefined ? (<NotFound />
-						) : (
-                            <NoOcurrencesFound />
-						)}
+						{filteredList.length === 0 && (filter !== "" || filter !== undefined) ? <NotFound /> : <NoResultsFound />}
 					</div>
 				)}
 			</main>

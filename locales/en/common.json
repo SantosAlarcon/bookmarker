@@ -36,5 +36,6 @@
     "no-parent-folder":"No parent folder",
     "no-bookmarks-title":"No bookmarks or folders found",
     "no-bookmarks-text":"Start adding one by using one of the buttons above.",
+    "no-results-found": "No results found.",
     "logging-out": "Logging out..."
 }

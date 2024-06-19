@@ -36,5 +36,6 @@
     "no-parent-folder": "Sin carpeta padre",
     "no-bookmarks-title": "No hay ningún marcador o carpeta",
     "no-bookmarks-text": "Comienza añadiendo un marcador o carpeta pulsando cualquiera de los botones de arriba.",
+    "no-results-found": "No se han encontrado resultados.",
     "logging-out": "Cerrando sesión..."
 }

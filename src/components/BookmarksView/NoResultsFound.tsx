@@ -1,12 +1,12 @@
 import { useTranslation } from "next-i18next";
 
-const NoOcurrencesFound = () => {
+const NoResultsFound = () => {
 	const { t } = useTranslation("common");
 	return (
 		<>
-			<h3>{t("no-ocurrences-found")}</h3>
+			<h3>{t("no-results-found")}</h3>
 		</>
 	);
 };
 
-export default NoOcurrencesFound;
+export default NoResultsFound;
