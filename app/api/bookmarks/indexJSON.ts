@@ -24,11 +24,11 @@ export default async function handler(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-    const token = req.headers.authorization;
+	const token = req.headers.authorization;
 
-    if (!token) {
-        return res.status(401).json({message: "You need to provide an access token to access this resource."});
-    }
+	if (!token) {
+		return res.status(401).json({ message: "You need to provide an access token to access this resource." });
+	}
 
 	// GET Method - Read from mockData.json file
 	if (req.method === "GET") {
@@ -87,5 +87,5 @@ export default async function handler(
 		return res.status(400).json({
 			message: "Data body required for creation",
 		})
-	}	
+	}
 }

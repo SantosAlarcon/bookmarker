@@ -16,9 +16,9 @@ export async function middleware(req: NextRequest) {
 	// Refresh session if expired - required for Server Components
 	//await supabase.auth.getSession()
 
-    //const session = await getSession()
-    //const {data: {session}} = await supabase.auth.getSession();
-    
+	//const session = await getSession()
+	//const {data: {session}} = await supabase.auth.getSession();
+
 	if (
 		req.nextUrl.pathname.startsWith("/_next") ||
 		req.nextUrl.pathname.includes("/api/") ||
@@ -26,13 +26,13 @@ export async function middleware(req: NextRequest) {
 	) {
 		return
 	}
-	
-    // If there is no session, redirect to the login page
-    /*if (!session?.user) {
-        return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
-    } */
 
-    return NextResponse.next()
+	// If there is no session, redirect to the login page
+	/*if (!session?.user) {
+		return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
+	} */
+
+	return NextResponse.next()
 
 }
 
@@ -46,8 +46,9 @@ export const config = {
 		 * - favicon.ico (favicon file)
 		 */
 		"/((?!_next/static|_next/image|favicon.ico).*)",
-        "/auth/login",
-        "/reset-password",
-        "/profile"
+		"/auth/login",
+		"/reset-password",
+		"/profile",
+		"/prueba2",
 	],
 }

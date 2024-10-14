@@ -9,7 +9,7 @@
 		"allowJs": true,
 		"skipLibCheck": true,
 		"strict": true,
-        "strictNullChecks": true,
+		"strictNullChecks": true,
 		"noEmit": true,
 		"esModuleInterop": true,
 		"module": "esnext",
@@ -25,7 +25,16 @@
 		],
 		"paths": {
 			"@/*": [
-				"./src/*"
+				"./*"
+			],
+			"@/components/*": [
+				"./app/components/*"
+			],
+			"@/styles/*": [
+				"./app/styles/*"
+			],
+			"@/store/*": [
+				"./app/store/*"
 			]
 		}
 	},
@@ -34,8 +43,8 @@
 		"**/*.ts",
 		"**/*.tsx",
 		".next/types/**/*.ts",
-        "pages/**/*.tsx",
-        "pages/**/*.ts"
+		"pages/**/*.tsx",
+		"pages/**/*.ts"
 	],
 	"exclude": [
 		"node_modules"
