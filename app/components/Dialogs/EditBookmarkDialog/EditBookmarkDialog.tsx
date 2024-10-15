@@ -1,102 +1,106 @@
-"use client"
-import updateBookmark from "@/app/utils/supabase/bookmarks/updateBookmark"
-import { createClient } from "@/app/utils/supabase/client"
-import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders"
-import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
-import { validateURL } from "@/app/utils/validateURL"
-import Spinner from "@/components/Spinner/Spinner"
-import { folderStore } from "@/store/folderStore"
-import { modalStore } from "@/store/modalStore"
-import type { BookmarkFolder } from "@/types/types"
-import { useTranslation } from "next-i18next"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
-import { toast } from "sonner"
-import styles from "./EditBookmarkDialog.module.scss"
+"use client";
+import updateBookmark from "@/app/utils/supabase/bookmarks/updateBookmark";
+import { createClient } from "@/app/utils/supabase/client";
+import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders";
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
+import { validateURL } from "@/app/utils/validateURL";
+import Spinner from "@/components/Spinner/Spinner";
+import { folderStore } from "@/store/folderStore";
+import { modalStore } from "@/store/modalStore";
+import type { BookmarkFolder } from "@/types/types";
+import { useTranslation } from "next-i18next";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import styles from "./EditBookmarkDialog.module.scss";
 
 type Props = {
-    title: string
-}
+    title: string;
+};
 
 interface EditBookmarkState {
-    title: string
-    url: string
-    parentFolder: string | null
+    title: string;
+    url: string;
+    parentFolder: string | null;
 }
 
 const EditBookmarkDialog = ({ title }: Props) => {
-    const editBookmarkData = modalStore((state) => state.editBookmarkData)
-    const editBookmarkModal = modalStore((state) => state.editBookmarkModal)
+    const editBookmarkData = modalStore((state) => state.editBookmarkData);
+    const editBookmarkModal = modalStore((state) => state.editBookmarkModal);
     const hideEditBookmarkDialog = modalStore(
-        (state) => state.hideEditBookmarkModal
-    )
-    const folderList = folderStore((state) => state.folderList)
-    const setFolderList = folderStore((state) => state.setFolderList)
+        (state) => state.hideEditBookmarkModal,
+    );
+    const folderList = folderStore((state) => state.folderList);
+    const setFolderList = folderStore((state) => state.setFolderList);
 
     const [updatedBookmark, setUpdatedBookmark] = useState<EditBookmarkState>({
         title: editBookmarkData.title,
         url: editBookmarkData.url,
         parentFolder: editBookmarkData.parentFolder,
-    })
+    });
     const [loading, setLoading] = useState<boolean>(false);
 
-    const dialogRef = useRef<null | HTMLDialogElement>(null)
-    const {t} = useTranslation("common")
+    const dialogRef = useRef<null | HTMLDialogElement>(null);
+    const { t } = useTranslation("common");
 
-    const router = useRouter()
+    const router = useRouter();
 
     useEffect(() => {
         if (editBookmarkModal) {
-            dialogRef.current?.showModal()
+            dialogRef.current?.showModal();
         } else {
-            dialogRef.current?.close()
+            dialogRef.current?.close();
         }
-    }, [editBookmarkModal])
+    }, [editBookmarkModal]);
 
     /* It rerenders when the bookmark list is updated */
     useEffect(() => {
         const getFolderList = async () => {
             const supabase = createClient();
-            const { data: { user } } = await supabase.auth.getUser();
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
             // @ts-ignore
-            const folders = await getAllFolders(user?.id)
-            setFolderList(folders)
-        }
-        getFolderList()
-    }, [setFolderList])
+            const folders = await getAllFolders(user?.id);
+            setFolderList(folders);
+        };
+        getFolderList();
+    }, [setFolderList]);
 
     useEffect(() => {
         setUpdatedBookmark({
             title: editBookmarkData.title,
             url: editBookmarkData.url,
             parentFolder: editBookmarkData.parentFolder,
-        })
-    }, [editBookmarkData])
+        });
+    }, [editBookmarkData]);
 
     const closeDialog = async () => {
-        dialogRef.current?.close()
-        hideEditBookmarkDialog()
+        dialogRef.current?.close();
+        hideEditBookmarkDialog();
         setUpdatedBookmark({
             title: "",
             url: "",
             parentFolder: null,
-        })
-    }
+        });
+    };
 
     const editBookmark = async () => {
         if (validateURL(updatedBookmark.url)) {
             setLoading(true);
-            await updateBookmark(editBookmarkData.id, updatedBookmark)
-            await updateBookmarkList()
-            closeDialog()
+            await updateBookmark(editBookmarkData.id, updatedBookmark);
+            await updateBookmarkList();
+            closeDialog();
             setLoading(false);
             //router.refresh()
-            toast.success(t("edit-bookmark-success"))
+            toast.success(t("edit-bookmark-success"));
         } else {
-            alert("URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.")
+            alert(
+                "URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.",
+            );
         }
-    }
+    };
 
     const dialog: JSX.Element | null =
         editBookmarkModal === true ? (
@@ -120,7 +124,9 @@ const EditBookmarkDialog = ({ title }: Props) => {
                     <form className={styles.edit__bookmark__dialog__form}>
                         <label
                             htmlFor="title"
-                            className={styles.edit__bookmark__dialog__form__label}
+                            className={
+                                styles.edit__bookmark__dialog__form__label
+                            }
                         >
                             {t("title")}
                             <input
@@ -129,7 +135,10 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                 placeholder={t("bookmark-title-placeholder")}
                                 onChange={() =>
                                     // @ts-ignore
-                                    setUpdatedBookmark({ ...updatedBookmark, title: event.target.value })
+                                    setUpdatedBookmark({
+                                        ...updatedBookmark,
+                                        title: event.target.value,
+                                    })
                                 }
                                 value={updatedBookmark.title}
                                 required
@@ -137,7 +146,9 @@ const EditBookmarkDialog = ({ title }: Props) => {
                         </label>
                         <label
                             htmlFor="url"
-                            className={styles.edit__bookmark__dialog__form__label}
+                            className={
+                                styles.edit__bookmark__dialog__form__label
+                            }
                         >
                             URL
                             <input
@@ -146,7 +157,10 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                 placeholder={t("bookmark-url-placeholder")}
                                 onChange={() =>
                                     // @ts-ignore
-                                    setUpdatedBookmark({ ...updatedBookmark, url: event.target.value })
+                                    setUpdatedBookmark({
+                                        ...updatedBookmark,
+                                        url: event.target.value,
+                                    })
                                 }
                                 value={updatedBookmark.url}
                                 required
@@ -154,14 +168,22 @@ const EditBookmarkDialog = ({ title }: Props) => {
                         </label>
                         <label
                             htmlFor="parentFolder"
-                            className={styles.edit__bookmark__dialog__form__label}
+                            className={
+                                styles.edit__bookmark__dialog__form__label
+                            }
                         >
-                        {t("parent-folder")}
+                            {t("parent-folder")}
                             <select
                                 name="parentFolder"
-                                className={styles.edit__bookmark__dialog__form__select}
+                                className={
+                                    styles.edit__bookmark__dialog__form__select
+                                }
                                 // @ts-ignore
-                                defaultValue={editBookmarkData.parentFolder ? editBookmarkData.parentFolder : null}
+                                defaultValue={
+                                    editBookmarkData.parentFolder
+                                        ? editBookmarkData.parentFolder
+                                        : null
+                                }
                                 onChange={() =>
                                     setUpdatedBookmark({
                                         ...updatedBookmark,
@@ -170,15 +192,17 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                     })
                                 }
                             >
-                                <option value="null">{t("no-parent-folder")}</option>
+                                <option value="null">
+                                    {t("no-parent-folder")}
+                                </option>
                                 {folderList?.map((folder: BookmarkFolder) => (
-                                        <option
-                                            key={folder.folder_id}
-                                            value={folder.folder_id}
-                                        >
-                                            {folder.folder_title}
-                                        </option>
-                                    ))}
+                                    <option
+                                        key={folder.folder_id}
+                                        value={folder.folder_id}
+                                    >
+                                        {folder.folder_title}
+                                    </option>
+                                ))}
                             </select>
                         </label>
                     </form>
@@ -186,17 +210,21 @@ const EditBookmarkDialog = ({ title }: Props) => {
                 <div className={styles.edit__bookmark__dialog__buttons}>
                     <button
                         type="button"
-                        disabled={!(updatedBookmark.title && updatedBookmark.url )}
+                        disabled={
+                            !(updatedBookmark.title && updatedBookmark.url)
+                        }
                         onClick={() => editBookmark()}
                     >
                         {loading ? <Spinner /> : t("update")}
                     </button>
-                    <button type="button" onClick={() => closeDialog()}>{t("close")}</button>
+                    <button type="button" onClick={() => closeDialog()}>
+                        {t("close")}
+                    </button>
                 </div>
             </dialog>
-        ) : null
+        ) : null;
 
-    return dialog
-}
+    return dialog;
+};
 
-export default EditBookmarkDialog
+export default EditBookmarkDialog;

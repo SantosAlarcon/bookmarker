@@ -7,16 +7,23 @@ import getAllBookmarks from "./supabase/bookmarks/getAllBookmarks";
 import { getAllFolders } from "./supabase/folders/getAllFolders";
 
 export const updateBookmarkList = async () => {
-	const updateBookmarksList = bookmarksStore.getState().setBookmarksList;
-	const updateAllBookmarksList = bookmarksStore.getState().setAllBookmarksList;
-	const session = await getSession();
+    const updateBookmarksList = bookmarksStore.getState().setBookmarksList;
+    const updateAllBookmarksList =
+        bookmarksStore.getState().setAllBookmarksList;
+    const session = await getSession();
 
-	// Get the folders and bookmarks that don't belong to any parent
-	// @ts-ignore
-	const [rootFolders, rootBookmarks] = await Promise.all([getRootFolders(session?.user.id), getRootBookmarks(session?.user.id)]);
-    
+    // Get the folders and bookmarks that don't belong to any parent
     // @ts-ignore
-	const [allFolders, allBookmarks] = await Promise.all([getAllFolders(session?.user.id), getAllBookmarks(session?.user.id)]);
+    const [rootFolders, rootBookmarks] = await Promise.all([
+        getRootFolders(session?.user.id),
+        getRootBookmarks(session?.user.id),
+    ]);
+
+    // @ts-ignore
+    const [allFolders, allBookmarks] = await Promise.all([
+        getAllFolders(session?.user.id),
+        getAllBookmarks(session?.user.id),
+    ]);
 
     // If the above variables are not null, the bookmark list is updated
     if (rootFolders && rootBookmarks) {
@@ -27,7 +34,7 @@ export const updateBookmarkList = async () => {
         updateAllBookmarksList([...allFolders, ...allBookmarks]);
     }
 
-	// Also updates de folder list of its store. It is useful when listing the updated list of folders.
-	// @ts-ignore
-	await updateFolderList(session?.user.id);
+    // Also updates de folder list of its store. It is useful when listing the updated list of folders.
+    // @ts-ignore
+    await updateFolderList(session?.user.id);
 };

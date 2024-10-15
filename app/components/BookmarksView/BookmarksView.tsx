@@ -19,114 +19,131 @@ import NotFound from "./NotFound";
 import NoResultsFound from "./NoResultsFound";
 
 const BookmarksView = () => {
-	// Load the translation function with the "common" namespace
-	const { t } = useTranslation("common");
+    // Load the translation function with the "common" namespace
+    const { t } = useTranslation("common");
 
-	// Get and set the bookmarks from the store
-	const bookmarksList = bookmarksStore((state) => state.bookmarksList);
-	const allBookmarksList = bookmarksStore((state) => state.allBookmarksList);
+    // Get and set the bookmarks from the store
+    const bookmarksList = bookmarksStore((state) => state.bookmarksList);
+    const allBookmarksList = bookmarksStore((state) => state.allBookmarksList);
 
-	// Get the filter from the filter store
-	const filter = filterStore((state) => state.filter);
+    // Get the filter from the filter store
+    const filter = filterStore((state) => state.filter);
 
-	// Get the session from the store because it already has the session information fetched in the auth button.
-	const session: Session | null = authStore((state) => state.session);
+    // Get the session from the store because it already has the session information fetched in the auth button.
+    const session: Session | null = authStore((state) => state.session);
 
-	// Get and set the loading state
-	const [loading, setLoading] = useState<boolean>(false);
+    // Get and set the loading state
+    const [loading, setLoading] = useState<boolean>(false);
 
-	const [filteredList, setFilteredList] = useState([...bookmarksList]);
+    const [filteredList, setFilteredList] = useState([...bookmarksList]);
 
-	// Get the root folders so that can be rendered first
-	useEffect(() => {
-		setLoading(true);
+    // Get the root folders so that can be rendered first
+    useEffect(() => {
+        setLoading(true);
 
-		const getRootItems = async () => {
-			await updateBookmarkList();
-		};
+        const getRootItems = async () => {
+            await updateBookmarkList();
+        };
 
-		getRootItems();
+        getRootItems();
 
-		setLoading(false);
-	}, [session]);
+        setLoading(false);
+    }, [session]);
 
-	// This will trigger when the filter updates
-	useEffect(() => {
-		if (filter === "" || filter === undefined) {
-			setFilteredList([...bookmarksList]);
-		} else {
-			// @ts-ignore
-			setFilteredList(
-				[...allBookmarksList].filter(
+    // This will trigger when the filter updates
+    useEffect(() => {
+        if (filter === "" || filter === undefined) {
+            setFilteredList([...bookmarksList]);
+        } else {
+            // @ts-ignore
+            setFilteredList(
+                [...allBookmarksList].filter(
                     // @ts-ignore
-					(item: BookmarkItem & BookmarkFolder) =>
-						item.bookmark_title?.toLowerCase().includes(filter) || item.folder_title?.toLowerCase().includes(filter),
-				),
-			);
-		}
-	}, [filter, bookmarksList]);
+                    (item: BookmarkItem & BookmarkFolder) =>
+                        item.bookmark_title?.toLowerCase().includes(filter) ||
+                        item.folder_title?.toLowerCase().includes(filter),
+                ),
+            );
+        }
+    }, [filter, bookmarksList]);
 
-	return (
-		<>
-			<EditBookmarkDialog title={t("edit-bookmark-title")} />
-			<EditFolderDialog title={t("edit-folder-title")} />
-			<ConfirmDeleteDialog title={t("delete-item")} />
+    return (
+        <>
+            <EditBookmarkDialog title={t("edit-bookmark-title")} />
+            <EditFolderDialog title={t("edit-folder-title")} />
+            <ConfirmDeleteDialog title={t("delete-item")} />
 
-			<main className={styles.bookmarks__view__container}>
-				{filter && filteredList.length === 0 && (
-					<div className={styles.bookmarks__view__paragraph}>
-						<NoResultsFound />
-					</div>
-				)}
-				{loading ? (
-					// If not bookmarks are loaded, it shows skeleton component
-					Array.from({ length: 10 }).map((_, i) => <BookmarkSkeleton key={i} />)
-				) : // If there are, it renders the folders and bookmarks
-				bookmarksList.length > 0 ? (
-					// First render the root folders and its children
-					<motion.ul layout initial="false" className={styles.bookmarks__view__list}>
-						{/* @ts-ignore */}
-						{filteredList?.map((item: BookmarkFolder & BookmarkItem, index) => {
-							{
-								/* If the item have the folder_id field, it renders a folder component. */
-							}
-							if (item.hasOwnProperty("folder_id")) {
-								return (
-									<motion.li
-										initial={{ opacity: 0 }}
-										animate={{ opacity: 1 }}
-										exit={{ scale: 0 }}
-										transition={{ delay: 0.1 * index }}
-										key={item.folder_id}
-									>
-										<BookmarkFolderComponent key={item.folder_id}>{item}</BookmarkFolderComponent>
-									</motion.li>
-								);
-							} else {
-								return (
-									<motion.li
-										initial={{ opacity: 0 }}
-										animate={{ opacity: 1 }}
-										exit={{ scale: 0 }}
-										transition={{ delay: 0.1 * index }}
-										key={item.bookmark_id}
-									>
-										<BookmarkItemComponent key={item.bookmark_id}>{item}</BookmarkItemComponent>
-									</motion.li>
-								);
-							}
-						})}
-					</motion.ul>
-				) : (
-					// If there not any bookmarks/folders, it shows a message of it.
-					// In case that no search ocurrences are found, it shows a message of it.
-					<div className={styles.bookmarks__view__paragraph}>
-						{<NotFound />}
-					</div>
-				)}
-			</main>
-		</>
-	);
+            <main className={styles.bookmarks__view__container}>
+                {filter && filteredList.length === 0 && (
+                    <div className={styles.bookmarks__view__paragraph}>
+                        <NoResultsFound />
+                    </div>
+                )}
+                {loading ? (
+                    // If not bookmarks are loaded, it shows skeleton component
+                    Array.from({ length: 10 }).map((_, i) => (
+                        <BookmarkSkeleton key={i} />
+                    ))
+                ) : // If there are, it renders the folders and bookmarks
+                bookmarksList.length > 0 ? (
+                    // First render the root folders and its children
+                    <motion.ul
+                        layout
+                        initial="false"
+                        className={styles.bookmarks__view__list}
+                    >
+                        {/* @ts-ignore */}
+                        {filteredList?.map(
+                            (item: BookmarkFolder & BookmarkItem, index) => {
+                                {
+                                    /* If the item have the folder_id field, it renders a folder component. */
+                                }
+                                if (item.hasOwnProperty("folder_id")) {
+                                    return (
+                                        <motion.li
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ scale: 0 }}
+                                            transition={{ delay: 0.1 * index }}
+                                            key={item.folder_id}
+                                        >
+                                            <BookmarkFolderComponent
+                                                key={item.folder_id}
+                                            >
+                                                {item}
+                                            </BookmarkFolderComponent>
+                                        </motion.li>
+                                    );
+                                } else {
+                                    return (
+                                        <motion.li
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ scale: 0 }}
+                                            transition={{ delay: 0.1 * index }}
+                                            key={item.bookmark_id}
+                                        >
+                                            <BookmarkItemComponent
+                                                key={item.bookmark_id}
+                                            >
+                                                {item}
+                                            </BookmarkItemComponent>
+                                        </motion.li>
+                                    );
+                                }
+                            },
+                        )}
+                    </motion.ul>
+                ) : (
+                    // If there not any bookmarks/folders, it shows a message of it.
+                    // In case that no search ocurrences are found, it shows a message of it.
+                    <div className={styles.bookmarks__view__paragraph}>
+                        {<NotFound />}
+                    </div>
+                )}
+            </main>
+        </>
+    );
 };
 
 export default BookmarksView;

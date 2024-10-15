@@ -1,4 +1,4 @@
-"use client"
-import {useTranslation} from "next-i18next"
+"use client";
+import { useTranslation } from "next-i18next";
 
-export const useClientTranslation = useTranslation
+export const useClientTranslation = useTranslation;

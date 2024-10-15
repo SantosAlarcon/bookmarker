@@ -6,17 +6,17 @@ import type { Session } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
 
 function Home({ params: { lang } }: { params: { lang: string } }) {
-	const session: Session | null = useSession()
+    const session: Session | null = useSession();
 
-	// It only renders the main page if there is no session
-	if (!session) return redirect(`/login/${lang}`);
+    // It only renders the main page if there is no session
+    if (!session) return redirect(`/login/${lang}`);
 
-	return (
-		<div className={styles.main}>
-			<Header />
-			<BookmarksView />
-		</div>
-	);
+    return (
+        <div className={styles.main}>
+            <Header />
+            <BookmarksView />
+        </div>
+    );
 }
 
-export default Home
+export default Home;

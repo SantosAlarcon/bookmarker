@@ -1,15 +1,16 @@
-import type { BookmarkFolder } from "@/types/types"
-import { create } from "zustand"
+import type { BookmarkFolder } from "@/types/types";
+import { create } from "zustand";
 
 export type State = {
-	folderList: BookmarkFolder[]
-}
+    folderList: BookmarkFolder[];
+};
 
 export type Action = {
-	setFolderList: (folderList: BookmarkFolder[]) => void
-}
+    setFolderList: (folderList: BookmarkFolder[]) => void;
+};
 
 export const folderStore = create<State & Action>((set: Function) => ({
-	folderList: [],
-	setFolderList: (folderList: BookmarkFolder[]) => set({ folderList: folderList }),
-}))
+    folderList: [],
+    setFolderList: (folderList: BookmarkFolder[]) =>
+        set({ folderList: folderList }),
+}));

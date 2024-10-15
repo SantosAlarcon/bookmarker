@@ -1,19 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 
 const useDebounceValue = (value: any, delay: number = 300): any => {
-	const [debValue, setDebValue] = useState<any>();
-	const timerRef = useRef();
+    const [debValue, setDebValue] = useState<any>();
+    const timerRef = useRef();
 
-	useEffect(() => {
+    useEffect(() => {
         // @ts-ignore
-		timerRef.current = setTimeout(() => setDebValue(value), delay);
+        timerRef.current = setTimeout(() => setDebValue(value), delay);
 
-		return () => {
-			clearTimeout(timerRef.current);
-		};
-	}, [value, delay]);
+        return () => {
+            clearTimeout(timerRef.current);
+        };
+    }, [value, delay]);
 
-    
-	return debValue;
+    return debValue;
 };
 export default useDebounceValue;

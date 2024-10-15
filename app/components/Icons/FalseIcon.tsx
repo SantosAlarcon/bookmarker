@@ -1,10 +1,16 @@
-import Image from 'next/image'
-import React from 'react'
+import Image from "next/image";
+import React from "react";
 
 const FalseIcon = () => {
     return (
-        <Image src="/icons/false-icon.svg" width={24} height={24} alt="False icon" priority />
-    )
-}
+        <Image
+            src="/icons/false-icon.svg"
+            width={24}
+            height={24}
+            alt="False icon"
+            priority
+        />
+    );
+};
 
-export default FalseIcon
+export default FalseIcon;

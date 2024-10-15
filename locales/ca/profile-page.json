@@ -1,11 +1,10 @@
 {
-	"title": "El meu perfil",
-	"page-title": "El meu perfil - Bookmarker",
-	"username": "Nom d'usuari:",
-	"email": "Correu electrònic:",
-	"verified-by-email": "Verificat per correu electrònic:",
-	"creation-date": "Data de creació:",
-	"last-login-date": "Últim inici de sessió:",
-	"back-to-home-button": "Tornar a l'inici"
+    "title": "El meu perfil",
+    "page-title": "El meu perfil - Bookmarker",
+    "username": "Nom d'usuari:",
+    "email": "Correu electrònic:",
+    "verified-by-email": "Verificat per correu electrònic:",
+    "creation-date": "Data de creació:",
+    "last-login-date": "Últim inici de sessió:",
+    "back-to-home-button": "Tornar a l'inici"
 }
-

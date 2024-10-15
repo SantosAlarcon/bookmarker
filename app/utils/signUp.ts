@@ -11,31 +11,30 @@ export const signUpWithGoogle = async (client: SupabaseClient) => {
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
-            }
-        }
+            },
+        },
     });
 
     if (data) console.log(data);
     if (error) console.error(error);
-
-}
+};
 
 export const signUpWithGitHub = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
     // @ts-ignore
-    const {error, data} = await client.auth.signUpWithOAuth({
+    const { error, data } = await client.auth.signUpWithOAuth({
         provider: "github",
         options: {
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
-            }
-        }
+            },
+        },
     });
 
     if (data) console.log(data);
     if (error) console.error(error);
-}
+};
 
 export const signUpWithFacebook = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
@@ -46,12 +45,16 @@ export const signUpWithFacebook = async (client: SupabaseClient) => {
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
-            }
-        }
+            },
+        },
     });
-}
+};
 
-export const signUpWithEmail = async (email: string, password: string, client: SupabaseClient) => {
+export const signUpWithEmail = async (
+    email: string,
+    password: string,
+    client: SupabaseClient,
+) => {
     // Call the sign in function to sign in the user
     // @ts-ignore
     const { data, error } = await client.auth.signUpWithPassword({
@@ -61,8 +64,8 @@ export const signUpWithEmail = async (email: string, password: string, client: S
 
     if (data) {
         if (data?.session) {
-            redirect('/')
+            redirect("/");
         }
     }
     if (error) console.error(error);
-}
+};

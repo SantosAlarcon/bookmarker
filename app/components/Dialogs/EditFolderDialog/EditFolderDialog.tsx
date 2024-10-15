@@ -1,74 +1,76 @@
-"use client"
-import updateFolder from "@/app/utils/supabase/folders/updateFolder"
-import { updateBookmarkList } from "@/app/utils/updateBookmarkList"
-import Spinner from "@/components/Spinner/Spinner"
-import { folderStore } from "@/store/folderStore"
-import { modalStore } from "@/store/modalStore"
-import type { BookmarkFolder } from "@/types/types"
-import { useTranslation } from "next-i18next"
-import Image from "next/image"
-import { useRouter } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
-import { toast } from "sonner"
-import styles from "./EditFolderDialog.module.scss"
+"use client";
+import updateFolder from "@/app/utils/supabase/folders/updateFolder";
+import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
+import Spinner from "@/components/Spinner/Spinner";
+import { folderStore } from "@/store/folderStore";
+import { modalStore } from "@/store/modalStore";
+import type { BookmarkFolder } from "@/types/types";
+import { useTranslation } from "next-i18next";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import styles from "./EditFolderDialog.module.scss";
 
 type Props = {
-    title: string
-}
+    title: string;
+};
 
 const EditFolderDialog = ({ title }: Props) => {
-    const editFolderData = modalStore((state) => state.editFolderData)
-    const hideEditFolderDialog = modalStore((state) => state.hideEditFolderModal)
-    const editFolderModal = modalStore((state) => state.editFolderModal)
-    const folderList = folderStore((state) => state.folderList)
+    const editFolderData = modalStore((state) => state.editFolderData);
+    const hideEditFolderDialog = modalStore(
+        (state) => state.hideEditFolderModal,
+    );
+    const editFolderModal = modalStore((state) => state.editFolderModal);
+    const folderList = folderStore((state) => state.folderList);
 
     const [updatedFolder, setUpdatedFolder] = useState({
         title: editFolderData.title,
         description: editFolderData.description,
-        parentFolder: editFolderData.parentFolder
-    })
+        parentFolder: editFolderData.parentFolder,
+    });
     const [loading, setLoading] = useState<boolean>(false);
-    const {t} = useTranslation("common")
+    const { t } = useTranslation("common");
 
-    const dialogRef = useRef<null | HTMLDialogElement>(null)
+    const dialogRef = useRef<null | HTMLDialogElement>(null);
     const router = useRouter();
 
     useEffect(() => {
         if (editFolderModal) {
-            dialogRef.current?.showModal()
+            dialogRef.current?.showModal();
         } else {
-            dialogRef.current?.close()
+            dialogRef.current?.close();
         }
-    }, [editFolderModal])
+    }, [editFolderModal]);
 
     useEffect(() => {
         setUpdatedFolder({
             title: editFolderData.title,
             description: editFolderData.description,
-            parentFolder: editFolderData.parentFolder
-        })
-    }, [editFolderData])
+            parentFolder: editFolderData.parentFolder,
+        });
+    }, [editFolderData]);
 
     const closeDialog = async () => {
-        dialogRef.current?.close()
-        hideEditFolderDialog()
+        dialogRef.current?.close();
+        hideEditFolderDialog();
         setUpdatedFolder({
             title: "",
             description: "",
-            parentFolder: null
-        })
-    }
+            parentFolder: null,
+        });
+    };
 
     /* This function implements the logic to modify folder metadata */
     const editFolder = async () => {
         setLoading(true);
-        await updateFolder(editFolderData.id, updatedFolder)
-        await updateBookmarkList()
+        await updateFolder(editFolderData.id, updatedFolder);
+        await updateBookmarkList();
         //router.refresh()
-        closeDialog()
+        closeDialog();
         setLoading(false);
-        toast.success(t("edit-folder-success"))
-    }
+        toast.success(t("edit-folder-success"));
+    };
 
     const dialog: JSX.Element | null = editFolderModal ? (
         <dialog
@@ -77,8 +79,15 @@ const EditFolderDialog = ({ title }: Props) => {
             onClose={closeDialog}
         >
             <div className={styles.edit__folder__dialog__title}>
-                <Image src="/icons/edit-icon.svg" alt="Edit icon" width={16} height={16} />
-                <h4 className={styles.edit__folder__dialog__title__text}>{title}</h4>
+                <Image
+                    src="/icons/edit-icon.svg"
+                    alt="Edit icon"
+                    width={16}
+                    height={16}
+                />
+                <h4 className={styles.edit__folder__dialog__title__text}>
+                    {title}
+                </h4>
             </div>
             <div className={styles.edit__folder__dialog__content}>
                 <form className={styles.edit__folder__dialog__form}>
@@ -94,7 +103,10 @@ const EditFolderDialog = ({ title }: Props) => {
                             value={updatedFolder.title}
                             onChange={() =>
                                 // @ts-ignore
-                                setUpdatedFolder({ ...updatedFolder, title: event.target.value })
+                                setUpdatedFolder({
+                                    ...updatedFolder,
+                                    title: event.target.value,
+                                })
                             }
                             required
                         />
@@ -111,7 +123,10 @@ const EditFolderDialog = ({ title }: Props) => {
                             value={updatedFolder.description}
                             onChange={() =>
                                 // @ts-ignore
-                                setUpdatedFolder({ ...updatedFolder, description: event.target.value })
+                                setUpdatedFolder({
+                                    ...updatedFolder,
+                                    description: event.target.value,
+                                })
                             }
                             required
                         />
@@ -123,9 +138,15 @@ const EditFolderDialog = ({ title }: Props) => {
                         {t("parent-folder")}
                         <select
                             name="parentFolder"
-                            className={styles.edit__folder__dialog__form__select}
+                            className={
+                                styles.edit__folder__dialog__form__select
+                            }
                             // @ts-ignore
-                            defaultValue={editFolderData.parentFolder ? editFolderData.parentFolder : null}
+                            defaultValue={
+                                editFolderData.parentFolder
+                                    ? editFolderData.parentFolder
+                                    : null
+                            }
                             onChange={() =>
                                 setUpdatedFolder({
                                     ...updatedFolder,
@@ -134,15 +155,17 @@ const EditFolderDialog = ({ title }: Props) => {
                                 })
                             }
                         >
-                            <option value="null">{t("no-parent-folder")}</option>
+                            <option value="null">
+                                {t("no-parent-folder")}
+                            </option>
                             {folderList?.map((folder: BookmarkFolder) => (
-                                    <option
-                                        key={folder.folder_id}
-                                        value={folder.folder_id}
-                                    >
-                                        {folder.folder_title}
-                                    </option>
-                                ))}
+                                <option
+                                    key={folder.folder_id}
+                                    value={folder.folder_id}
+                                >
+                                    {folder.folder_title}
+                                </option>
+                            ))}
                         </select>
                     </label>
                 </form>
@@ -150,17 +173,21 @@ const EditFolderDialog = ({ title }: Props) => {
             <div className={styles.edit__folder__dialog__buttons}>
                 <button
                     type="button"
-                    disabled={!(updatedFolder.title && updatedFolder.description )}
+                    disabled={
+                        !(updatedFolder.title && updatedFolder.description)
+                    }
                     onClick={() => editFolder()}
                 >
                     {loading ? <Spinner /> : t("update")}
                 </button>
-                <button type="button" onClick={() => closeDialog()}>{t("close")}</button>
+                <button type="button" onClick={() => closeDialog()}>
+                    {t("close")}
+                </button>
             </div>
         </dialog>
-    ) : null
+    ) : null;
 
-    return dialog
-}
+    return dialog;
+};
 
-export default EditFolderDialog
+export default EditFolderDialog;

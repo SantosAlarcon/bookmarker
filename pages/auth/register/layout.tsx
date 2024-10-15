@@ -1,19 +1,17 @@
-import { Barlow } from "next/font/google"
-import { Toaster } from "sonner"
-import Head from "next/head"
+import { Barlow } from "next/font/google";
+import { Toaster } from "sonner";
+import Head from "next/head";
 
 const barlow = Barlow({
     subsets: ["latin"],
-    weight: ["400", "500", "600", "700", "800", "900"]
-})
+    weight: ["400", "500", "600", "700", "800", "900"],
+});
 
 export default function AuthLayout({
     children,
 }: {
-    children: React.ReactNode
+    children: React.ReactNode;
 }) {
-
-
     return (
         <>
             <Head>
@@ -24,14 +22,23 @@ export default function AuthLayout({
                     name="viewport"
                     content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
                 />
-                <meta name="description" content="App to manage browser bookmarks everywhere" />
+                <meta
+                    name="description"
+                    content="App to manage browser bookmarks everywhere"
+                />
                 <meta name="theme-color" content="#8936FF" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
-                <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+                <meta
+                    name="apple-mobile-web-app-status-bar-style"
+                    content="default"
+                />
                 <meta name="apple-mobile-web-app-title" content="Bookmarker" />
                 <meta name="format-detection" content="telephone=no" />
                 <meta name="mobile-web-app-capable" content="yes" />
-                <meta name="msapplication-config" content="/icons/browserconfig.xml" />
+                <meta
+                    name="msapplication-config"
+                    content="/icons/browserconfig.xml"
+                />
                 <meta name="msapplication-TileColor" content="#2B5797" />
                 <meta name="msapplication-tap-highlight" content="no" />
 
@@ -43,10 +50,8 @@ export default function AuthLayout({
                 />
                 <meta property="og:site_name" content="Bookmarker" />
             </Head>
-            <div className={barlow.className}>
-                {children}
-            </div>
+            <div className={barlow.className}>{children}</div>
             <Toaster position="top-center" richColors />
         </>
-    )
+    );
 }

@@ -1,6 +1,6 @@
-import RegisterComponent from "@/components/Auth/RegisterComponent/RegisterComponent"
-import AuthLayout from "./layout"
-import styles from "@/styles/page.module.css"
+import RegisterComponent from "@/components/Auth/RegisterComponent/RegisterComponent";
+import AuthLayout from "./layout";
+import styles from "@/styles/page.module.css";
 
 const RegisterPage = () => {
     return (
@@ -9,7 +9,7 @@ const RegisterPage = () => {
                 <RegisterComponent />
             </main>
         </AuthLayout>
-    )
-}
+    );
+};
 
-export default RegisterPage
+export default RegisterPage;

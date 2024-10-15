@@ -1,7 +1,9 @@
-import { createClient } from "./client"
+import { createClient } from "./client";
 
 export const getUser = async () => {
     const supabase = createClient();
-    const {data: {user}} = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
     return user;
-}
+};

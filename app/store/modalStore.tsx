@@ -1,55 +1,59 @@
-import { create } from "zustand"
+import { create } from "zustand";
 
 type ModalState = {
-    deleteConfirmModal: boolean
-    editFolderModal: boolean
-    editBookmarkModal: boolean
-    newBookmarkModal: boolean
-    newFolderModal: boolean
+    deleteConfirmModal: boolean;
+    editFolderModal: boolean;
+    editBookmarkModal: boolean;
+    newBookmarkModal: boolean;
+    newFolderModal: boolean;
     editFolderData: {
-        id: string
-        title: string
-        description: string
-        parentFolder: string | null
-    }
+        id: string;
+        title: string;
+        description: string;
+        parentFolder: string | null;
+    };
     editBookmarkData: {
-        id: string
-        title: string
-        url: string
-        parentFolder: string | null
-    }
+        id: string;
+        title: string;
+        url: string;
+        parentFolder: string | null;
+    };
     deleteProps: {
-        id: string
-        title: string
-        type: "bookmark" | "folder"
-    }
-}
+        id: string;
+        title: string;
+        type: "bookmark" | "folder";
+    };
+};
 
 type Action = {
-    showNewBookmarkModal: () => void
-    hideNewBookmarkModal: () => void
-    showNewFolderModal: () => void
-    hideNewFolderModal: () => void
-    showDeleteConfirmModal: () => void
-    hideDeleteConfirmModal: () => void
-    showEditBookmarkModal: () => void
-    hideEditBookmarkModal: () => void
-    showEditFolderModal: () => void
-    hideEditFolderModal: () => void
+    showNewBookmarkModal: () => void;
+    hideNewBookmarkModal: () => void;
+    showNewFolderModal: () => void;
+    hideNewFolderModal: () => void;
+    showDeleteConfirmModal: () => void;
+    hideDeleteConfirmModal: () => void;
+    showEditBookmarkModal: () => void;
+    hideEditBookmarkModal: () => void;
+    showEditFolderModal: () => void;
+    hideEditFolderModal: () => void;
     modifyEditFolderData: (
         id: string,
         title: string,
         description: string,
-        parentFolder: string | null
-    ) => void
+        parentFolder: string | null,
+    ) => void;
     modifyEditBookmarkData: (
         id: string,
         title: string,
         url: string,
-        parentFolder: string | null
-    ) => void
-    setDeleteProps: (id: string, title: string, type: "bookmark" | "folder") => void
-}
+        parentFolder: string | null,
+    ) => void;
+    setDeleteProps: (
+        id: string,
+        title: string,
+        type: "bookmark" | "folder",
+    ) => void;
+};
 
 // @ts-ignore
 export const modalStore = create<ModalState & Action>((set: Function) => ({
@@ -73,7 +77,7 @@ export const modalStore = create<ModalState & Action>((set: Function) => ({
     deleteProps: {
         id: "",
         title: "",
-        type: ""
+        type: "",
     },
     showNewBookmarkModal: () => set({ newBookmarkModal: true }),
     hideNewBookmarkModal: () => set({ newBookmarkModal: false }),
@@ -89,21 +93,21 @@ export const modalStore = create<ModalState & Action>((set: Function) => ({
         id: string,
         title: string,
         description: string,
-        parentFolder: string | null
+        parentFolder: string | null,
     ) =>
         set({
             editFolderData: {
                 id: id,
                 title: title,
                 description: description,
-                parentFolder: parentFolder
+                parentFolder: parentFolder,
             },
         }),
     modifyEditBookmarkData: (
         id: string,
         title: string,
         url: string,
-        parentFolder: string | null
+        parentFolder: string | null,
     ) =>
         set({
             editBookmarkData: {
@@ -115,4 +119,4 @@ export const modalStore = create<ModalState & Action>((set: Function) => ({
         }),
     setDeleteProps: (id: string, title: string, type: "bookmark" | "folder") =>
         set({ deleteProps: { id: id, title: title, type: type } }),
-}))
+}));

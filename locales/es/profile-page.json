@@ -1,10 +1,10 @@
 {
-	"title": "Mi perfil",
-	"page-title": "Mi perfil - Bookmarker",
-	"username": "Nombre de usuario:",
-	"email": "Correo electrónico:",
-	"verified-by-email": "Verificado por correo electrónico:",
-	"creation-date": "Fecha de creación:",
-	"last-login-date": "Ultimo inicio de sesión:",
-	"back-to-home-button": "Volver al inicio"
+    "title": "Mi perfil",
+    "page-title": "Mi perfil - Bookmarker",
+    "username": "Nombre de usuario:",
+    "email": "Correo electrónico:",
+    "verified-by-email": "Verificado por correo electrónico:",
+    "creation-date": "Fecha de creación:",
+    "last-login-date": "Ultimo inicio de sesión:",
+    "back-to-home-button": "Volver al inicio"
 }
