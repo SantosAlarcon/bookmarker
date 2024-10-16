@@ -14,7 +14,6 @@ function AuthLayout({
     children,
     params: { lang },
 }: { children: ReactNode; params: { lang: string } }) {
-    console.log("Loading login page...");
     const { t } = useTranslation("login-page", { lng: lang });
 
     return (
