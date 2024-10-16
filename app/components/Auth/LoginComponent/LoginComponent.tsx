@@ -1,22 +1,22 @@
 "use client";
 
-import styles from "./LoginComponent.module.scss";
 import Image from "next/image";
+import styles from "./LoginComponent.module.scss";
 import "@/styles/globals.css";
 import {
-    signInWithGoogle,
-    signInWithGitHub,
-    signInWithFacebook,
     signInWithEmail,
+    signInWithFacebook,
+    signInWithGitHub,
+    signInWithGoogle,
 } from "@/app/utils/signIn";
-import { type FormEvent, useEffect, useState } from "react";
-import Spinner from "@/components/Spinner/Spinner";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { createClient } from "@/app/utils/supabase/client";
+import Spinner from "@/components/Spinner/Spinner";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { useTranslation } from "next-i18next";
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { type FormEvent, useEffect, useState } from "react";
 
 interface FormData {
     email: string;

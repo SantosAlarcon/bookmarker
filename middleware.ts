@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import type { Database } from "@/lib/database.types";
 import { getSession } from "@/app/utils/supabase/getSession";
+import {i18nRouter} from "next-i18n-router"
+import nextI18nextConfig from "./next-i18next.config";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
@@ -22,6 +24,7 @@ export async function middleware(req: NextRequest) {
     if (
         req.nextUrl.pathname.startsWith("/_next") ||
         req.nextUrl.pathname.includes("/api/") ||
+        req.nextUrl.pathname.includes("/auth/login/") ||
         PUBLIC_FILE.test(req.nextUrl.pathname)
     ) {
         return;
@@ -32,7 +35,7 @@ export async function middleware(req: NextRequest) {
 		return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
 	} */
 
-    return NextResponse.next();
+    return i18nRouter(req, nextI18nextConfig.i18n);
 }
 
 // Ensure the middleware is only called for relevant paths.
