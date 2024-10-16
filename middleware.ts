@@ -1,15 +1,15 @@
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 
-import type { NextRequest } from "next/server";
-import type { Database } from "@/lib/database.types";
 import { getSession } from "@/app/utils/supabase/getSession";
-import {i18nRouter} from "next-i18n-router"
-import nextI18nextConfig from "./next-i18next.config";
+import type { Database } from "@/lib/database.types";
+import type { NextRequest } from "next/server";
+import {i18nRouter} from "next-i18n-router";
+import i18nConfig from "./next-i18next.config";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
-export async function middleware(req: NextRequest) {
+export function middleware(req: NextRequest) {
     const res = NextResponse.next();
 
     // Create a Supabase client configured to use cookies
@@ -35,7 +35,7 @@ export async function middleware(req: NextRequest) {
 		return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
 	} */
 
-    return i18nRouter(req, nextI18nextConfig.i18n);
+    return i18nRouter(req, i18nConfig);
 }
 
 // Ensure the middleware is only called for relevant paths.

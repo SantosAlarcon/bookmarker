@@ -20,4 +20,3 @@ function Home({ params: { lang } }: { params: { lang: string } }) {
 }
 
 export default Home;
-
