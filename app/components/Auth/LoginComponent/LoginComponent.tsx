@@ -3,6 +3,7 @@
 import Image from "next/image";
 import styles from "./LoginComponent.module.scss";
 import "@/styles/globals.css";
+import i18nClient from "@/app/i18n/client";
 import {
     signInWithEmail,
     signInWithFacebook,
@@ -12,7 +13,6 @@ import {
 import { createClient } from "@/app/utils/supabase/client";
 import Spinner from "@/components/Spinner/Spinner";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { useTranslation } from "next-i18next";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -23,10 +23,10 @@ interface FormData {
     password: string;
     loading: boolean;
 }
-const LoginComponent = () => {
+const LoginComponent = ({ lang }: { lang: string }) => {
     const supabase: SupabaseClient = createClient();
     const router: AppRouterInstance = useRouter();
-    const { t } = useTranslation("login-page");
+    const t = i18nClient.getFixedT(lang, [ "login-page" ]);
     const [hydrated, setHydrated] = useState(false);
 
     useEffect(() => {
@@ -60,7 +60,9 @@ const LoginComponent = () => {
         setFormData({ email: "", password: "", loading: false });
     };
 
-    if (!hydrated) return null;
+    if (!hydrated) {
+        return null;
+    }
 
     return (
         <section className={styles.login__page__container}>
@@ -70,7 +72,7 @@ const LoginComponent = () => {
                     alt="logo"
                     width={450}
                     height={150}
-                    priority
+                    priority={true}
                 />
             </div>
             <div className={styles.login__page__box}>
@@ -78,6 +80,7 @@ const LoginComponent = () => {
                 <div className={styles.login__page__text}>{t("text")}</div>
                 <div className={styles.login__page__social__buttons}>
                     <button
+                        type="button"
                         className={styles.login__page__social__button}
                         onClick={() => signInWithGoogle(supabase)}
                         disabled={formData.loading}
@@ -87,11 +90,12 @@ const LoginComponent = () => {
                             alt="Google Logo"
                             width={20}
                             height={20}
-                            priority
+                            priority={true}
                         />
                         {t("sign-with-google")}
                     </button>
                     <button
+                        type="button"
                         className={styles.login__page__social__button}
                         onClick={() => signInWithGitHub(supabase)}
                         disabled={formData.loading}
@@ -101,11 +105,12 @@ const LoginComponent = () => {
                             alt="GitHub Logo"
                             width={20}
                             height={20}
-                            priority
+                            priority={true}
                         />
                         {t("sign-with-github")}
                     </button>
                     <button
+                        type="button"
                         className={styles.login__page__social__button}
                         onClick={() => signInWithFacebook(supabase)}
                         disabled={formData.loading}
@@ -115,7 +120,7 @@ const LoginComponent = () => {
                             alt="Facebook Logo"
                             width={20}
                             height={20}
-                            priority
+                            priority={true}
                         />
                         {t("sign-with-facebook")}
                     </button>
@@ -134,7 +139,7 @@ const LoginComponent = () => {
                                     email: e.target.value,
                                 })
                             }
-                            required
+                            required={true}
                             placeholder={t("email-label")}
                             value={formData.email}
                         />
@@ -148,7 +153,7 @@ const LoginComponent = () => {
                                     password: e.target.value,
                                 })
                             }
-                            required
+                            required={true}
                             placeholder={t("password-label")}
                             value={formData.password}
                         />
@@ -165,7 +170,7 @@ const LoginComponent = () => {
                                     alt="Email Logo"
                                     width={20}
                                     height={20}
-                                    priority
+                                    priority={true}
                                 />
                             )}
                             {t("sign-with-email")}

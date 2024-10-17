@@ -17,7 +17,7 @@ export const initTranslations = async (
 	);
 
 	await i18nInstance.init({
-		debug: process.env.NODE_ENV === "development",
+		// debug: process.env.NODE_ENV === "development",
 		lng: locale,
 		fallbackLng: i18NextConfig.i18n.defaultLocale,
 		supportedLngs: i18NextConfig.i18n.locales,

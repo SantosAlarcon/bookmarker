@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import router from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import { createClient } from "./client";
 
@@ -13,16 +12,14 @@ export const useSession = () => {
             data: { session },
         } = await createClient().auth.getSession();
 
-        if (!session) {
-            router.redirect("/auth/login");
-        } else {
+        if (session) {
             setSession(session);
-        }
+        } 
     };
 
     useEffect(() => {
         getSession();
     }, []);
-
+    
     return session;
 };

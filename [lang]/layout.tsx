@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import { Head, Html as html, NextScript } from "next/document";
 import i18nConfig from "@/next-i18next.config";
 import "@/styles/globals.css";
 
@@ -7,23 +6,20 @@ export async function generateStaticParams() {
 	return i18nConfig.locales.map((locale: string) => ({ locale }));
 }
 
-console.log("LOADING ROOT LAYOUT...")
-
 export default function RootLayout({
     params: { lang },
     children,
 }: { params: { lang: string }; children: ReactNode }) {
-    console.log("CURRENT LANGUAGE: ", lang);
 
     return (
         <html lang={lang}>
-            <Head>
+            <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 {/* @ts-ignore */}
                 <link
                     rel="preconnect"
                     href="https://fonts.gstatic.com"
-                    crossOrigin
+                    crossOrigin="use-credentials"
                 />
                 <link
                     href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800;900&display=swap"
@@ -60,10 +56,9 @@ export default function RootLayout({
                     content="App to manage browser bookmarks everywhere"
                 />
                 <meta property="og:site_name" content="Bookmarker" />
-            </Head>
+            </head>
             <body>
                 {children}
-                <NextScript />
             </body>
         </html>
     );

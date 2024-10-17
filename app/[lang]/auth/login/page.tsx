@@ -1,10 +1,10 @@
 import LoginComponent from "@/components/Auth/LoginComponent/LoginComponent";
 import styles from "@/styles/page.module.css";
 
-const LoginPage = () => {
+const LoginPage = ({ params: { lang } }: { params: { lang: string } }) => {
     return (
         <main className={styles.main}>
-            <LoginComponent />
+            <LoginComponent lang={lang} />
         </main>
     );
 };
