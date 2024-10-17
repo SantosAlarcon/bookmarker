@@ -25,7 +25,7 @@ export function middleware(req: NextRequest) {
         req.nextUrl.pathname.includes("/api/") ||
         PUBLIC_FILE.test(req.nextUrl.pathname)
     ) {
-        return;
+        return NextResponse.next();
     }
 
     // If there is no session, redirect to the login page

@@ -2,21 +2,22 @@ import { Barlow } from "next/font/google";
 import { Toaster } from "sonner";
 import type { ReactNode } from "react";
 import { initTranslations } from "@/app/i18n";
+import Head from "next/head";
 
 const barlow = Barlow({
     subsets: ["latin"],
     weight: ["400", "500", "700", "900"],
 });
 
-async function AuthLayout({
+async function LoginLayout({
     children,
     params: { lang },
 }: { children: ReactNode; params: { lang: string } }) {
     const { t } = await initTranslations(lang, [ "login-page" ]);
 
     return (
-        <html lang={lang}>
-            <head>
+        <>
+            <Head>
                 <title>{t("page-title")}</title>
                 <link rel="shortcut icon" href="/favicon.svg" />
                 <link rel="manifest" href="/manifest.json" />
@@ -51,13 +52,11 @@ async function AuthLayout({
                     content="App to manage browser bookmarks everywhere"
                 />
                 <meta property="og:site_name" content="Bookmarker" />
-            </head>
-            <body>
-                <div className={barlow.className}>{children}</div>
-            </body>
+            </Head>
+                <main className={barlow.className}>{children}</main>
             <Toaster position="top-center" richColors={true} />
-        </html>
+        </>
     );
 }
 
-export default AuthLayout;
+export default LoginLayout;

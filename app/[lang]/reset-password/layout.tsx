@@ -1,25 +1,25 @@
+import { initTranslations } from "@/app/i18n";
 import { Barlow } from "next/font/google";
-import { Toaster } from "sonner";
 import Head from "next/head";
-import { useTranslation } from "next-i18next";
-import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import { Toaster } from "sonner";
 
 const barlow = Barlow({
     subsets: ["latin"],
     weight: ["400", "500", "700", "900"],
 });
 
-export const ResetPasswordMetadata: Metadata = {
-    title: "My profile - Bookmarker",
-};
+export async function generateMetadata({ params: { lang } }: { params: { lang: string } }) {
+	const { t } = await initTranslations(lang, [ "reset-password" ]);
+	return {
+		title: `${t("title")}`,
+	};
+}
 
-function ResetPasswordLayout({ children }: { children: React.ReactNode }) {
-    const { t } = useTranslation("reset-password");
-
+function ResetPasswordLayout({ children}: { children: ReactNode }) {
     return (
         <>
             <Head>
-                <title>{t("page-title")}</title>
                 <link rel="shortcut icon" href="/favicon.svg" />
                 <link rel="manifest" href="/manifest.json" />
                 <meta

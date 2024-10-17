@@ -20,6 +20,6 @@ export const useSession = () => {
     useEffect(() => {
         getSession();
     }, []);
-    
+
     return session;
 };

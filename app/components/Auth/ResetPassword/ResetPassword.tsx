@@ -1,19 +1,22 @@
-import { type FormEvent, useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Link from "next/link";
-import styles from "./ResetPassword.module.scss";
-import Image from "next/image";
-import { toast } from "sonner";
-import Spinner from "@/components/Spinner/Spinner";
-import { useTranslation } from "next-i18next";
-import "@/styles/globals.css";
+"use client";
 
-const ResetPassword = () => {
+import Spinner from "@/components/Spinner/Spinner";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import Image from "next/image";
+import Link from "next/link";
+import { type FormEvent, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import styles from "./ResetPassword.module.scss";
+import "@/styles/globals.css";
+import "@/app/i18n/client";
+
+const ResetPassword = ({lang}: {lang: string}) => {
     const supabase = createClientComponentClient();
     const [email, setEmail] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [hydrated, setHydrated] = useState<boolean>(false);
-    const { t } = useTranslation("reset-password");
+    const { t } = useTranslation("reset-password", {lng: lang});
 
     useEffect(() => {
         setHydrated(true);
@@ -23,7 +26,7 @@ const ResetPassword = () => {
         event.preventDefault();
         setLoading(true);
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: `${window.location.origin}/auth/update-password`,
+            redirectTo: `${window.location.origin}/api/auth/update-password`,
         });
 
         if (error) {
@@ -53,14 +56,8 @@ const ResetPassword = () => {
 
                 <p className={styles.reset__password__text}>{t("text")}</p>
 
-                <form
-                    className={styles.reset__password__form}
-                    onSubmit={(e) => handleResetPassword(email, e)}
-                >
-                    <label
-                        htmlFor="email"
-                        className={styles.reset__password__label}
-                    >
+                <form className={styles.reset__password__form} onSubmit={(e) => handleResetPassword(email, e)}>
+                    <label htmlFor="email" className={styles.reset__password__label}>
                         {t("email-label")}
                     </label>
                     <input
@@ -70,24 +67,18 @@ const ResetPassword = () => {
                         placeholder={t("email-placeholder")}
                         type="email"
                         required
+                        aria-required
                         value={email}
                         // @ts-ignore
                         onChange={() => setEmail(event.target.value)}
                     />
-                    <button
-                        className={styles.reset__password__button}
-                        type="submit"
-                        disabled={!email}
-                    >
+                    <button aria-label={t("reset-password-button")} className={styles.reset__password__button} type="submit" disabled={!email}>
                         {loading ? <Spinner /> : t("reset-password-button")}
                     </button>
                 </form>
                 <div className={styles.reset__password__links}>
                     {t("remember-password-text")}
-                    <Link
-                        href="/auth/login"
-                        className={styles.reset__password__link}
-                    >
+                    <Link aria-label={t("remember-password-link")} href="/auth/login" className={styles.reset__password__link}>
                         <b>{t("remember-password-link")}</b>
                     </Link>
                 </div>

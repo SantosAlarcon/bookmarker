@@ -8,20 +8,20 @@ let callbackUrl: string = "";
 // The callback URL is different between development and production environments
 switch (process.env.NODE_ENV) {
     case "development": {
-        callbackUrl = "http://localhost:3000/auth/callback";
+        callbackUrl = "http://localhost:3000/api/auth/callback";
         break;
     }
     case "production": {
-        callbackUrl = "https://bookmarker-rho.vercel.app/auth/callback";
+        callbackUrl = "https://bookmarker-rho.vercel.app/api/auth/callback";
         break;
     }
 }
 
 export const signInWithGoogle = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
-    // @ts-ignore
     const {
         error,
+        // @ts-ignore
         data: { session },
     } = await client.auth.signInWithOAuth({
         provider: "google",

@@ -37,7 +37,6 @@ export async function GET(request: Request) {
         if (!error) {
             if (data) authStore.setState({ session: data.session });
             return NextResponse.redirect(`${origin}${next}`);
-            //return NextResponse.redirect("/");
         }
     }
 

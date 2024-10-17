@@ -8,6 +8,8 @@ import { getSession } from "../utils/supabase/getSession";
 async function Home({ params: { lang } }: { params: { lang: string } }) {
     const session: Session | null = await getSession();
 
+    console.log(session)
+
     // It only renders the main page if there is no session
     if (!session) return redirect("/auth/login");
 
