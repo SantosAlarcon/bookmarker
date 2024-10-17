@@ -2,7 +2,6 @@ import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 
 import { getSession } from "@/app/utils/supabase/getSession";
-import type { Database } from "@/lib/database.types";
 import type { NextRequest } from "next/server";
 import {i18nRouter} from "next-i18n-router";
 import i18nConfig from "./next-i18next.config";
@@ -24,7 +23,6 @@ export function middleware(req: NextRequest) {
     if (
         req.nextUrl.pathname.startsWith("/_next") ||
         req.nextUrl.pathname.includes("/api/") ||
-        req.nextUrl.pathname.includes("/auth/login/") ||
         PUBLIC_FILE.test(req.nextUrl.pathname)
     ) {
         return;

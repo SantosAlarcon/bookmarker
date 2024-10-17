@@ -4,21 +4,24 @@ import type { Metadata } from "next";
 import nextI18nextConfig from "@/next-i18next.config";
 
 export const metadata: Metadata = {
-    title: "Prueba",
+	title: "Prueba",
 };
 
 export async function generateStaticParams() {
-    return nextI18nextConfig.locales.map((locale: string) => ({
-        lang: locale,
-    }));
+	return nextI18nextConfig.locales.map((locale: string) => ({
+		lang: locale,
+	}));
 }
 
-const TestLayout = ({ children, params: { lang } }: { children: ReactNode; params: { lang: string } }) => {
-    return (
-        <html lang={lang}>
-            <body>{children}</body>
-        </html>
-    );
+const TestLayout = ({
+	children,
+	params: { lang },
+}: { children: ReactNode; params: { lang: string } }) => {
+	return (
+		<html lang={lang}>
+			<body>{children}</body>
+		</html>
+	);
 };
 
 export default TestLayout;

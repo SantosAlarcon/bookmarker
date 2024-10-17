@@ -1,28 +1,35 @@
-import { createInstance } from "i18next";
+import { createInstance, type i18n } from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
-import { getI18nSettings } from "./settings";
+import i18NextConfig from "./settings";
 
-const i18next = async (lang: string, ns: string) => {
-    const i18nInstance = createInstance();
-    await i18nInstance
-        .use(
-            resourcesToBackend((language: string, namespace: string) => {
-                import(`./locales/${language}/${namespace}.json`);
-            })
-        )
-        // @ts-ignore
-        .init(getI18nSettings(lang, ["common", "login-page", "profile-page", "register", "reset-password"]));
+export const initTranslations = async (
+	locale: string,
+	namespaces: string | string[],
+	i18nInstance?: i18n,
+) => {
+	i18nInstance = i18nInstance || createInstance();
 
-    return i18nInstance;
+	i18nInstance.use(
+		resourcesToBackend(
+			(language: string, namespace: string) =>
+				import(`./locales/${language}/${namespace}.json`),
+		),
+	);
+
+	await i18nInstance.init({
+		debug: process.env.NODE_ENV === "development",
+		lng: locale,
+		fallbackLng: i18NextConfig.i18n.defaultLocale,
+		supportedLngs: i18NextConfig.i18n.locales,
+		ns: namespaces,
+		defaultNS: namespaces[0],
+		fallbackNS: i18NextConfig.fallbackNS,
+		preload: i18NextConfig.i18n.locales,
+		load: "all",
+	});
+
+	return {
+		t: i18nInstance.t,
+		i18n: i18nInstance,
+	};
 };
-
-export const initTranslations = async (locale: string, namespace: string | string[]) => {
-    const i18nInstance = await i18next(locale, Array.isArray(namespace) ? namespace[0] : namespace);
-
-    return {
-        t: i18nInstance.getFixedT(locale, Array.isArray(namespace) ? namespace[0] : namespace),
-        i18n: i18nInstance,
-    };
-};
-
-export default i18next;
