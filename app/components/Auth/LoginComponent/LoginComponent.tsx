@@ -3,7 +3,6 @@
 import Image from "next/image";
 import styles from "./LoginComponent.module.scss";
 import "@/styles/globals.css";
-import { signInWithEmail, signInWithFacebook, signInWithGitHub, signInWithGoogle } from "@/app/utils/signIn";
 import { createClient } from "@/app/utils/supabase/client";
 import Spinner from "@/components/Spinner/Spinner";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -13,6 +12,9 @@ import { useRouter } from "next/navigation";
 import { type FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "@/app/i18n/client";
+import { loginWithEmail } from "@/app/utils/supabase/loginWithEmail";
+import { toast } from "sonner";
+import { loginWithOAuth } from "@/app/utils/supabase/loginWithOAuth";
 
 interface FormData {
     email: string;
@@ -36,16 +38,17 @@ const LoginComponent = ({ lang }: { lang: string }) => {
         loading: false,
     });
 
-    const handleSubmit = async (event: FormEvent) => {
+    const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         setFormData({ ...formData, loading: true });
-        const isLoggedIn: boolean | undefined = await signInWithEmail(formData.email, formData.password, supabase);
-
-        // If the login is succesfull, redirect to the main page
-        if (isLoggedIn) {
-            router.prefetch("/");
-            router.push("/");
-        }
+        loginWithEmail(formData.email, formData.password).then((res) => {
+		toast.success(t("login-success"));
+		router.prefetch("/");
+		router.push("/");
+	        
+        }).catch((err) => {
+		toast.error(err.message);
+        });
 
         setFormData({ ...formData, loading: false });
 
@@ -69,7 +72,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                     <button
                         type="button"
                         className={styles.login__page__social__button}
-                        onClick={() => signInWithGoogle(supabase)}
+                        onClick={() => loginWithOAuth("google")}
                         disabled={formData.loading}
                     >
                         <Image src="/social/google.svg" alt="Google Logo" width={20} height={20} priority={true} />
@@ -78,7 +81,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                     <button
                         type="button"
                         className={styles.login__page__social__button}
-                        onClick={() => signInWithGitHub(supabase)}
+                        onClick={() => loginWithOAuth("github")}
                         disabled={formData.loading}
                     >
                         <Image src="/social/github.svg" alt="GitHub Logo" width={20} height={20} priority={true} />
@@ -87,7 +90,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                     <button
                         type="button"
                         className={styles.login__page__social__button}
-                        onClick={() => signInWithFacebook(supabase)}
+                        onClick={() => loginWithOAuth("facebook")}
                         disabled={formData.loading}
                     >
                         <Image src="/social/facebook.svg" alt="Facebook Logo" width={20} height={20} priority={true} />

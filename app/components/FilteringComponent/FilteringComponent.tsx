@@ -5,7 +5,7 @@ import styles from "./FilteringComponent.module.scss";
 import Image from "next/image";
 import { filterStore } from "@/store/filterStore";
 import useDebounceValue from "@/app/utils/hooks/useDebounceValue";
-import tooltipStyles from "../../styles/tooltip.module.scss";
+import tooltipStyles from "../../styles/tooltip.module.css";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 

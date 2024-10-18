@@ -4,7 +4,7 @@ import styles from "./EditButton.module.scss";
 import { modalStore } from "@/store/modalStore";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import tooltipStyles from "@/styles/tooltip.module.scss";
+import tooltipStyles from "@/styles/tooltip.module.css";
 import { useTranslation } from "next-i18next";
 
 interface EditBookmarkProps {

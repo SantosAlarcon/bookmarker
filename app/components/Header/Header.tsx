@@ -5,7 +5,7 @@ import NewFolderDialog from "../Dialogs/NewFolderDialog/NewFolderDialog";
 import { modalStore } from "@/store/modalStore";
 import { Tooltip } from "react-tooltip";
 import styles from "./Header.module.scss";
-import tooltipStyles from "@/styles/tooltip.module.scss";
+import tooltipStyles from "@/styles/tooltip.module.css";
 import { useRouter } from "next/navigation";
 import AuthButton from "../Buttons/AuthButton/AuthButton";
 import UserContextMenu from "./UserContextMenu";

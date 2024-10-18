@@ -3,19 +3,12 @@ import styles from "./profile.module.scss";
 import FalseIcon from "@/components/Icons/FalseIcon";
 import TrueIcon from "@/components/Icons/TrueIcon";
 import type { UserMetadata } from "@supabase/supabase-js";
-import type { GetStaticProps } from "next";
 import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import ProfileLayout from "./layout";
 import { useSession } from "@/app/utils/supabase/useSession";
 
-type Props = {
-    locale: string;
-};
-
-export default function PrivatePage() {
+export default function PrivatePage({params: {lang}}: {params: {lang: string}}) {
     const { t, i18n } = useTranslation("profile-page");
 
     // If there is no session, it redirects to the login page
@@ -33,7 +26,6 @@ export default function PrivatePage() {
     if (!(hydrated && session)) return null;
 
     return (
-        <ProfileLayout>
             <section className={styles.profile__page__container}>
                 <h1 className={styles.profile__page__title}>{t("title")}</h1>
                 <div className={styles.profile__page__avatar}>
@@ -142,15 +134,5 @@ export default function PrivatePage() {
                     {t("back-to-home-button")}
                 </Link>
             </section>
-        </ProfileLayout>
     );
 }
-
-export const getStaticProps: GetStaticProps<Props> = async ({
-    locale,
-    // @ts-ignore
-}) => ({
-    props: {
-        ...(await serverSideTranslations(locale ?? "en", ["profile-page"])),
-    },
-});

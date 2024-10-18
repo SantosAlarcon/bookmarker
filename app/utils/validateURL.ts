@@ -4,7 +4,6 @@ export const validateURL = (url: string) => {
 
     if (url.match(regex)) {
         return true;
-    } else {
-        return false;
     }
+    return false;
 };

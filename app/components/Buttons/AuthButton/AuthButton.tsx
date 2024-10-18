@@ -1,6 +1,6 @@
 "use client";
 
-import tooltipStyles from "@/styles/tooltip.module.scss";
+import tooltipStyles from "@/styles/tooltip.module.css";
 import { getSession } from "@/app/utils/supabase/getSession";
 import { handleUserContextMenu } from "@/components/Header/UserContextMenu";
 import { authStore } from "@/store/authStore";

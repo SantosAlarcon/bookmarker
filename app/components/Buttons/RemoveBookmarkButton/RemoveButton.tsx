@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Tooltip } from "react-tooltip";
 import styles from "./RemoveButton.module.scss";
 import "react-tooltip/dist/react-tooltip.css";
-import tooltipStyles from "@/styles/tooltip.module.scss";
+import tooltipStyles from "@/styles/tooltip.module.css";
 import { useTranslation } from "next-i18next";
 
 interface RemoveProps {

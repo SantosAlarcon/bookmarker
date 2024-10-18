@@ -1,4 +1,4 @@
-import { BookmarkFolder } from "@/types/types";
+import type { BookmarkFolder } from "@/app/types/types";
 
 export const getFolderById = async (folderId: string) => {
     const response = await fetch(
@@ -12,7 +12,7 @@ export const getFolderById = async (folderId: string) => {
         },
     );
 
-    let data = await response.json();
+    const data = await response.json();
 
     return data.filter(
         (folder: BookmarkFolder) => folder.folder_id === folderId,

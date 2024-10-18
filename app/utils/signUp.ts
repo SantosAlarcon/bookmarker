@@ -1,6 +1,5 @@
 // These functions are used to sign in the user depending of the provider
 import { SupabaseClient } from "@supabase/supabase-js";
-import { redirect } from "next/navigation";
 
 export const signUpWithGoogle = async (client: SupabaseClient) => {
     // Call the sign in function to sign in the user
@@ -48,24 +47,4 @@ export const signUpWithFacebook = async (client: SupabaseClient) => {
             },
         },
     });
-};
-
-export const signUpWithEmail = async (
-    email: string,
-    password: string,
-    client: SupabaseClient,
-) => {
-    // Call the sign in function to sign in the user
-    // @ts-ignore
-    const { data, error } = await client.auth.signUpWithPassword({
-        email: email,
-        password: password,
-    });
-
-    if (data) {
-        if (data?.session) {
-            redirect("/");
-        }
-    }
-    if (error) console.error(error);
 };

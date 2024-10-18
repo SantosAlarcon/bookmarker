@@ -1,13 +1,15 @@
 {
-    "title": "Login",
-    "page-title": "Get started - Bookmarker",
-    "text": "Start managing your bookmarks in one place by login of your account.",
-    "sign-with-google": "Sign in with Google",
-    "sign-with-facebook": "Sign in with Facebook",
-    "sign-with-github": "Sign in with GitHub",
-    "sign-with-email": "Sign in with email",
-    "email-label": "Email",
-    "password-label": "Password",
-    "reset-password-text": "Cannot log in?",
-    "reset-password-link": "Click here to reset password"
+	"title": "Login",
+	"page-title": "Get started - Bookmarker",
+	"text": "Start managing your bookmarks in one place by login of your account.",
+	"sign-with-google": "Sign in with Google",
+	"sign-with-facebook": "Sign in with Facebook",
+	"sign-with-github": "Sign in with GitHub",
+	"sign-with-email": "Sign in with email",
+	"email-label": "Email",
+	"password-label": "Password",
+	"reset-password-text": "Cannot log in?",
+	"reset-password-link": "Click here to reset password",
+	"login-success": "Login successful!",
+	"login-error": "Login failed!"
 }

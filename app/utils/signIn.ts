@@ -68,27 +68,3 @@ export const signInWithFacebook = async (client: SupabaseClient) => {
         },
     });
 };
-
-export const signInWithEmail = async (
-    email: string,
-    password: string,
-    client: SupabaseClient,
-) => {
-    // Call the sign in function to sign in the user
-    const { data, error } = await client.auth.signInWithPassword({
-        email: email,
-        password: password,
-    });
-
-    // If the login credentials are wrong, it shows a toaster with the error
-    if (error) {
-        toast.error(error.message);
-        return false;
-    }
-
-    if (data) {
-        toast.success("Login successful!");
-    }
-
-    return true;
-};

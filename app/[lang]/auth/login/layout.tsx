@@ -9,16 +9,21 @@ const barlow = Barlow({
     weight: ["400", "500", "700", "900"],
 });
 
-async function LoginLayout({
-    children,
+export const generateMetadata = async ({
     params: { lang },
-}: { children: ReactNode; params: { lang: string } }) {
-    const { t } = await initTranslations(lang, [ "login-page" ]);
+}: { params: { lang: string } }) => {
+    const { t } = await initTranslations(lang, ["login-page"]);
+    return {
+        title: t("title"),
+    };
+};
 
+function LoginLayout({
+    children,
+}: { children: ReactNode; params: { lang: string } }) {
     return (
         <>
             <Head>
-                <title>{t("page-title")}</title>
                 <link rel="shortcut icon" href="/favicon.svg" />
                 <link rel="manifest" href="/manifest.json" />
                 <meta
@@ -53,7 +58,7 @@ async function LoginLayout({
                 />
                 <meta property="og:site_name" content="Bookmarker" />
             </Head>
-                <main className={barlow.className}>{children}</main>
+            <main className={barlow.className}>{children}</main>
             <Toaster position="top-center" richColors={true} />
         </>
     );

@@ -4,7 +4,7 @@ import styles from "./RemoveFolder.module.scss";
 import { modalStore } from "@/store/modalStore";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import tooltipStyles from "@/styles/tooltip.module.scss";
+import tooltipStyles from "@/styles/tooltip.module.css";
 import { useTranslation } from "next-i18next";
 
 interface RemoveProps {
@@ -47,7 +47,7 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
                 height={24}
                 src="/icons/trash-icon.svg"
                 alt="Trash icon"
-                priority
+                priority={true}
             />
         </button>
     );
