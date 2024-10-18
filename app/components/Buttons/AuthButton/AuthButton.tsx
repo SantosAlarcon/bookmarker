@@ -1,9 +1,9 @@
 "use client";
 
-import tooltipStyles from "@/styles/tooltip.module.css";
 import { getSession } from "@/app/utils/supabase/getSession";
 import { handleUserContextMenu } from "@/components/Header/UserContextMenu";
 import { authStore } from "@/store/authStore";
+import tooltipStyles from "@/styles/tooltip.module.css";
 import type { Session } from "@supabase/auth-helpers-nextjs";
 import type { UserMetadata } from "@supabase/supabase-js";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";

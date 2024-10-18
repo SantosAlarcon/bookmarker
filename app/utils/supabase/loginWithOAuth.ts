@@ -1,3 +1,5 @@
+"use server"
+
 import type { Provider } from "@supabase/supabase-js";
 import supabaseClient from "./supabaseClient";
 import { authStore } from "@/app/store/authStore";
@@ -12,17 +14,17 @@ switch (process.env.NODE_ENV) {
     }
 
     case "production": {
-        callbackURL = "http://bookmarker-rho.vercel.app/api/auth/callback";
+        callbackURL = "https://bookmarker-rho.vercel.app/api/auth/callback";
         break;
     }
 
     default: {
-	break;
+        break;
     }
 }
 
 export const loginWithOAuth = async (provider: Provider) => {
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
+    const { data: {session}, error } = await supabaseClient.auth.signInWithOAuth({
         provider,
         options: {
             redirectTo: callbackURL,
@@ -33,9 +35,11 @@ export const loginWithOAuth = async (provider: Provider) => {
         },
     });
 
+    if (session) {
+        setSession(session);
+    }
+
     if (error) {
         throw new Error(error.message);
     }
-
-    setSession(data.session);
 };

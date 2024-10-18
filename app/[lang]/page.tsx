@@ -3,6 +3,7 @@ import Header from "@/components/Header/Header";
 import BookmarksView from "@/components/BookmarksView/BookmarksView";
 import { redirect } from "next/navigation";
 import supabaseClient from "../utils/supabase/supabaseClient";
+import AuthSync from "../components/Auth/AuthSync";
 
 async function Home() {
     const { data: { session }} = await supabaseClient.auth.getSession();
@@ -14,6 +15,7 @@ async function Home() {
 
     return (
         <div className={styles.main}>
+            <AuthSync sessionState={session} />
             <Header />
             <BookmarksView />
         </div>

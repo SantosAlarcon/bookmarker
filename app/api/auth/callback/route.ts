@@ -4,11 +4,14 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
+    const setSession = authStore().setSession;
     const { searchParams, origin } = new URL(request.url);
     const code = searchParams.get("code");
 
     // if "next" is in param, use it as the redirect URL
     const next = searchParams.get("next") ?? "/";
+
+    console.table({code, next})
 
     if (code) {
         const cookieStore = cookies();
@@ -30,12 +33,12 @@ export async function GET(request: Request) {
             },
         );
 
-        const { data, error } =
+        const { data: {session}, error } =
             await supabase.auth.exchangeCodeForSession(code);
 
         // If there is no error, set session in the auth store and redirects to the main page
         if (!error) {
-            if (data) authStore.setState({ session: data.session });
+            setSession(session);
             return NextResponse.redirect(`${origin}${next}`);
         }
     }
