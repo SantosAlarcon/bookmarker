@@ -1,6 +1,5 @@
 "use client";
 
-import "@/app/i18n/client"
 import Image from "next/image";
 import styles from "./LoginComponent.module.scss";
 import "@/styles/globals.css";
@@ -33,14 +32,15 @@ const LoginComponent = ({ lang }: { lang: string }) => {
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         setFormData({ ...formData, loading: true });
-        loginWithEmail(formData.email, formData.password).then((res) => {
-		toast.success(t("login-success"));
-		router.prefetch("/");
-		router.push("/");
-	        
-        }).catch((err) => {
-		toast.error(err.message);
-        });
+        loginWithEmail(formData.email, formData.password)
+            .then(() => {
+                toast.success(t("login-success"));
+                router.prefetch("/");
+                router.push("/");
+            })
+            .catch((err) => {
+                toast.error(err.message);
+            });
 
         setFormData({ ...formData, loading: false });
 
@@ -57,33 +57,36 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                 <h2 className={styles.login__page__title}>{t("title")}</h2>
                 <div className={styles.login__page__text}>{t("text")}</div>
                 <div className={styles.login__page__social__buttons}>
-                    <button
-                        type="button"
-                        className={styles.login__page__social__button}
-                        onClick={() => loginWithOAuth("google")}
-                        disabled={formData.loading}
-                    >
-                        <Image src="/social/google.svg" alt="Google Logo" width={20} height={20} priority={true} />
-                        {t("sign-with-google")}
-                    </button>
-                    <button
-                        type="button"
-                        className={styles.login__page__social__button}
-                        onClick={() => loginWithOAuth("github")}
-                        disabled={formData.loading}
-                    >
-                        <Image src="/social/github.svg" alt="GitHub Logo" width={20} height={20} priority={true} />
-                        {t("sign-with-github")}
-                    </button>
-                    <button
-                        type="button"
-                        className={styles.login__page__social__button}
-                        onClick={() => loginWithOAuth("facebook")}
-                        disabled={formData.loading}
-                    >
-                        <Image src="/social/facebook.svg" alt="Facebook Logo" width={20} height={20} priority={true} />
-                        {t("sign-with-facebook")}
-                    </button>
+                    <form action={() => loginWithOAuth("google")} className={styles.login__page__social__button__form}>
+                        <button
+                            type="submit"
+                            className={styles.login__page__social__button}
+                            disabled={formData.loading}
+                        >
+                            <Image src="/social/google.svg" alt="Google Logo" width={20} height={20} priority={true} />
+                            {t("sign-with-google")}
+                        </button>
+                    </form>
+                    <form action={() => loginWithOAuth("github")} className={styles.login__page__social__button__form}>
+                        <button
+                            type="submit"
+                            className={styles.login__page__social__button}
+                            disabled={formData.loading}
+                        >
+                            <Image src="/social/github.svg" alt="GitHub Logo" width={20} height={20} priority={true} />
+                            {t("sign-with-github")}
+                        </button>
+                    </form>
+                    <form action={() => loginWithOAuth("facebook")} className={styles.login__page__social__button__form}>
+                        <button
+                            type="submit"
+                            className={styles.login__page__social__button}
+                            disabled={formData.loading}
+                        >
+                            <Image src="/social/facebook.svg" alt="Facebook Logo" width={20} height={20} priority={true} />
+                            {t("sign-with-facebook")}
+                        </button>
+                    </form>
                     <hr className={styles.login__page__separator} />
                     <form className={styles.login__page__form} onSubmit={(e) => handleSubmit(e)}>
                         <label htmlFor="email">{t("email-label")}</label>

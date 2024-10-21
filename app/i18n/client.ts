@@ -5,8 +5,8 @@ import { getCookie } from "../utils/getCookie";
 import i18NextConfig from "./settings";
 import { initReactI18next } from "react-i18next/initReactI18next";
 
-let language: string | undefined;
-getCookie("NEXT_LOCALE").then((cookie) => language = cookie);
+// let language: string | undefined;
+// getCookie("NEXT_LOCALE").then((cookie) => language = cookie);
 
 i18nClient.use(Backend);
 i18nClient.use(resourcesToBackend((language: string, namespace: string) => import(`./locales/${language}/${namespace}.json`)));

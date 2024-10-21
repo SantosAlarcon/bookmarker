@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 import { getSession } from "@/app/utils/supabase/getSession";
 import type { NextRequest } from "next/server";
-import {i18nRouter} from "next-i18n-router";
+import { i18nRouter } from "next-i18n-router";
 import i18nConfig from "./next-i18next.config";
 
 const PUBLIC_FILE = /\.(.*)$/;
@@ -23,6 +23,7 @@ export function middleware(req: NextRequest) {
     if (
         req.nextUrl.pathname.startsWith("/_next") ||
         req.nextUrl.pathname.includes("/api/") ||
+        req.nextUrl.pathname.includes("/api/auth/") ||
         PUBLIC_FILE.test(req.nextUrl.pathname)
     ) {
         return NextResponse.next();
@@ -30,8 +31,8 @@ export function middleware(req: NextRequest) {
 
     // If there is no session, redirect to the login page
     /*if (!session?.user) {
-		return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
-	} */
+        return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
+    } */
 
     return i18nRouter(req, i18nConfig);
 }
@@ -47,6 +48,8 @@ export const config = {
          */
         "/((?!_next/static|_next/image|favicon.ico).*)",
         "/auth/login",
+        "/auth/register",
+        "/api/auth/callback",
         "/reset-password",
         "/profile",
         "/prueba2",

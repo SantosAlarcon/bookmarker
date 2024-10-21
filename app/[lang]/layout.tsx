@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
 import i18nConfig from "@/next-i18next.config";
+import type { ReactNode } from "react";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
 
@@ -13,14 +13,11 @@ export const metadata: Metadata = {
         default: "Bookmarker",
     },
     description: "App to manage browser bookmarks everywhere",
-    icons: {
-        icon: "/BookmarkerLogo.svg",
-    },
 };
 
 export default function RootLayout({ params: { lang }, children }: { params: { lang: string }; children: ReactNode }) {
     return (
-        <html lang={lang}>
+        <html lang={lang} suppressHydrationWarning>
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 {/* @ts-ignore */}

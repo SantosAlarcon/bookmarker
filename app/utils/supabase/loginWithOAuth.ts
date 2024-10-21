@@ -1,22 +1,26 @@
+"use server"
+
 import type { Provider } from "@supabase/supabase-js";
-import supabaseClient from "./supabaseClient";
 import { redirect } from "next/navigation";
+import { createClient } from "./server";
 
 export const loginWithOAuth = async (provider: Provider) => {
-    const origin = await fetch("/api/origin");
-
-    const {data, error} = await supabaseClient.auth.signInWithOAuth({
+    const { data, error } = await createClient().auth.signInWithOAuth({
         provider,
         options: {
-            redirectTo: `${origin}/api/auth/callback`,
+            redirectTo: `${process.env.NEXT_PUBLIC_ORIGIN_URL}/api/auth/callback`,
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
-            },
+            }
         },
     });
 
+    if (error) {
+        return console.error(error)
+    }
+
     if (data.url) {
-	redirect(data.url);
+        return redirect(data.url)
     }
 };
