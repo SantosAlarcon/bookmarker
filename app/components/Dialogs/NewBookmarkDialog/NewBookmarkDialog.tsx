@@ -7,13 +7,15 @@ import { validateURL } from "@/app/utils/validateURL";
 import Spinner from "@/components/Spinner/Spinner";
 import { folderStore } from "@/store/folderStore";
 import { modalStore } from "@/store/modalStore";
-import type { BookmarkFolder } from "@/types/types";
+import type { BookmarkFolder } from "@/app/types/types";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./NewBookmarkDialog.module.scss";
+import { localeStore } from "@/app/store/localeStore";
+import "@/app/i18n/client"
 
 type Props = {
     title: string;
@@ -33,7 +35,10 @@ const NewBookmarkDialog = ({ title }: Props) => {
     });
     const [loading, setLoading] = useState<boolean>(false);
     const dialogRef = useRef<null | HTMLDialogElement>(null);
-    const { t } = useTranslation("common");
+
+    // @ts-ignore
+    const lang = localeStore((state) => state.locale)
+    const { t } = useTranslation("common", { lng: lang });
 
     const router = useRouter();
 

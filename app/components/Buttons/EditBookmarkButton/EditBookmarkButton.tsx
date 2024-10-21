@@ -5,7 +5,9 @@ import { modalStore } from "@/store/modalStore";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import tooltipStyles from "@/styles/tooltip.module.css";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "react-i18next";
+import "@/app/i18n/client"
+import { localeStore } from "@/app/store/localeStore";
 
 interface EditBookmarkProps {
     children: {
@@ -36,7 +38,9 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
         showEditBookmarkDialog();
     };
 
-    const { t } = useTranslation("common");
+    // @ts-ignore
+    const lang = localeStore((state) => state.locale)
+    const { t } = useTranslation("common", {lng: lang});
 
     return (
         <button

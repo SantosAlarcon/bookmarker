@@ -5,7 +5,9 @@ import { Tooltip } from "react-tooltip";
 import styles from "./RemoveButton.module.scss";
 import "react-tooltip/dist/react-tooltip.css";
 import tooltipStyles from "@/styles/tooltip.module.css";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "react-i18next";
+import "@/app/i18n/client";
+import { localeStore } from "@/app/store/localeStore";
 
 interface RemoveProps {
     children: {
@@ -20,7 +22,10 @@ const RemoveButton = ({ children }: RemoveProps) => {
     );
     const setDeleteProps = modalStore((state) => state.setDeleteProps);
     const { bookmark_id, bookmark_title } = children;
-    const { t } = useTranslation("common");
+    
+    // @ts-ignore
+    const lang = localeStore((state) => state.locale)
+    const { t } = useTranslation("common", { lng: lang });
 
     const handleClick = () => {
         setDeleteProps(bookmark_id, bookmark_title, "bookmark");

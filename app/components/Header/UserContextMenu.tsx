@@ -7,13 +7,17 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
 import { toast } from "sonner";
+import "@/app/i18n/client"
+import { localeStore } from "@/app/store/localeStore";
 
 export let handleUserContextMenu: Function | undefined = undefined;
 
 const UserContextMenu = () => {
+    // @ts-ignore
+    const lang = localeStore.getState().locale
     const supabase = createClient();
     const router = useRouter();
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("common", {lng: lang});
 
     const { show } = useContextMenu({
         id: "userContext",

@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./ConfirmDeleteDialog.module.scss";
+import "@/app/i18n/client";
+import { localeStore } from "@/app/store/localeStore";
 
 type Props = {
     title: string;
@@ -23,7 +25,10 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
     );
     const deleteProps = modalStore((state) => state.deleteProps);
     const [loading, setLoading] = useState<boolean>(false);
-    const { t } = useTranslation("common");
+
+    // @ts-ignore
+    const lang = localeStore((state) => state.locale);
+    const { t } = useTranslation("common", {lng: lang});
 
     const router = useRouter();
 

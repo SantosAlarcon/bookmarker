@@ -9,18 +9,19 @@ import tooltipStyles from "@/styles/tooltip.module.css";
 import { useRouter } from "next/navigation";
 import AuthButton from "../Buttons/AuthButton/AuthButton";
 import UserContextMenu from "./UserContextMenu";
-import { useTranslation } from "next-i18next";
+import { useTranslation } from "react-i18next";
 import { Toaster } from "sonner";
 import FilteringComponent from "../FilteringComponent/FilteringComponent";
+import "@/app/i18n/client"
 
-const Header = () => {
+const Header = ({lang}:{lang: string}) => {
     // Get Bookmark/Folder functions from the modal store
     const showNewBookmarkModal = modalStore(
         (state) => state.showNewBookmarkModal,
     );
     const showNewFolderModal = modalStore((state) => state.showNewFolderModal);
 
-    const { t } = useTranslation();
+    const { t } = useTranslation(["common", "header"], {lng: lang});
 
     const router = useRouter();
 

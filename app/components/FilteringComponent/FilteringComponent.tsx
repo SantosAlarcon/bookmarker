@@ -1,5 +1,6 @@
 "use client";
 
+import "@/app/i18n/client"
 import { type MutableRefObject, useRef, useState, useEffect } from "react";
 import styles from "./FilteringComponent.module.scss";
 import Image from "next/image";
@@ -8,13 +9,18 @@ import useDebounceValue from "@/app/utils/hooks/useDebounceValue";
 import tooltipStyles from "../../styles/tooltip.module.css";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
+import { localeStore } from "@/app/store/localeStore";
 
 const FilteringComponent = () => {
     const [filter, setFilter] = useState<string>("");
     const filterRef: MutableRefObject<string | null> = useRef<string>(null);
     const newFilterStore = filterStore((state) => state.setFilter);
     const debounceFilter = useDebounceValue(filter, 600);
-    const { t } = useTranslation("header");
+
+    // @ts-ignore
+    const lang: string = localeStore.getState().locale
+
+    const { t } = useTranslation("header", {lng: lang});
 
     useEffect(() => {
         newFilterStore(debounceFilter);

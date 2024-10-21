@@ -3,7 +3,7 @@ import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
 import { authStore } from "@/store/authStore";
 import { bookmarksStore } from "@/store/bookmarksStore";
 import { filterStore } from "@/store/filterStore";
-import type { BookmarkFolder, BookmarkItem } from "@/types/types";
+import type { BookmarkFolder, BookmarkItem } from "@/app/types/types";
 import type { Session } from "@supabase/supabase-js";
 import { motion } from "framer-motion";
 import { useTranslation } from "next-i18next";
@@ -17,10 +17,15 @@ import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog";
 import styles from "./BookmarksView.module.scss";
 import NotFound from "./NotFound";
 import NoResultsFound from "./NoResultsFound";
+import { localeStore } from "@/app/store/localeStore";
 
 const BookmarksView = () => {
+    // Get the locale from its store
+    // @ts-ignore
+    const lang = localeStore((state) => state.locale)
+
     // Load the translation function with the "common" namespace
-    const { t } = useTranslation("common");
+    const { t } = useTranslation("common", {lng: lang});
 
     // Get and set the bookmarks from the store
     const bookmarksList = bookmarksStore((state) => state.bookmarksList);
