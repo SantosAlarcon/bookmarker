@@ -23,6 +23,6 @@ i18nClient.init({
     load: "all",
 });
 
-i18nClient.changeLanguage(language);
+// i18nClient.changeLanguage(language);
 
 export default i18nClient;

@@ -8,8 +8,6 @@ import AuthSync from "../components/Auth/AuthSync";
 async function Home() {
     const { data: { session }} = await supabaseClient.auth.getSession();
 
-    console.log(session)
-
     // It only renders the main page if there is no session
     if (!session) { return redirect("/auth/login"); }
 

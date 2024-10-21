@@ -1,20 +1,18 @@
 "use client";
 
+import "@/app/i18n/client"
 import Image from "next/image";
 import styles from "./LoginComponent.module.scss";
 import "@/styles/globals.css";
-import { createClient } from "@/app/utils/supabase/client";
 import Spinner from "@/components/Spinner/Spinner";
-import type { SupabaseClient } from "@supabase/supabase-js";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import "@/app/i18n/client";
 import { loginWithEmail } from "@/app/utils/supabase/loginWithEmail";
-import { toast } from "sonner";
 import { loginWithOAuth } from "@/app/utils/supabase/loginWithOAuth";
+import { toast } from "sonner";
 
 interface FormData {
     email: string;
@@ -23,14 +21,8 @@ interface FormData {
 }
 
 const LoginComponent = ({ lang }: { lang: string }) => {
-    const supabase: SupabaseClient = createClient();
     const router: AppRouterInstance = useRouter();
     const { t } = useTranslation("login-page", { lng: lang });
-    const [hydrated, setHydrated] = useState(false);
-
-    useEffect(() => {
-        setHydrated(true);
-    }, []);
 
     const [formData, setFormData] = useState<FormData>({
         email: "",
@@ -55,10 +47,6 @@ const LoginComponent = ({ lang }: { lang: string }) => {
         // Reset the form
         setFormData({ email: "", password: "", loading: false });
     };
-
-    if (!hydrated) {
-        return null;
-    }
 
     return (
         <section className={styles.login__page__container}>

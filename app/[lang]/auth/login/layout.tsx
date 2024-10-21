@@ -3,6 +3,7 @@ import { Toaster } from "sonner";
 import type { ReactNode } from "react";
 import { initTranslations } from "@/app/i18n";
 import Head from "next/head";
+import "@/app/i18n/client"
 
 const barlow = Barlow({
     subsets: ["latin"],
