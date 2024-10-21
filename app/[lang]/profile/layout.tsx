@@ -1,5 +1,4 @@
-import type { Metadata } from "next";
-import { useTranslation } from "next-i18next";
+import { initTranslations } from "@/app/i18n";
 import { Barlow } from "next/font/google";
 import Head from "next/head";
 import type { ReactNode } from "react";
@@ -10,17 +9,17 @@ const barlow = Barlow({
     weight: ["400", "500", "700", "900"],
 });
 
-export const ProfileMetadata: Metadata = {
-    title: "My profile - Bookmarker",
+export const generateMetadata = async ({ params: { lang } }: { params: { lang: string } }) => {
+    const { t } = await initTranslations(lang, ["profile-page"]);
+    return {
+        title: t("title"),
+    };
 };
 
 function ProfileLayout({ children }: { children: ReactNode }) {
-    const { t } = useTranslation("profile-page");
-
     return (
         <>
             <Head>
-                <title>{t("page-title")}</title>
                 <link rel="shortcut icon" href="/favicon.svg" />
                 <link rel="manifest" href="/manifest.json" />
                 <meta
@@ -29,17 +28,11 @@ function ProfileLayout({ children }: { children: ReactNode }) {
                 />
                 <meta name="theme-color" content="#8936FF" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
-                <meta
-                    name="apple-mobile-web-app-status-bar-style"
-                    content="default"
-                />
+                <meta name="apple-mobile-web-app-status-bar-style" content="default" />
                 <meta name="apple-mobile-web-app-title" content="Bookmarker" />
                 <meta name="format-detection" content="telephone=no" />
                 <meta name="mobile-web-app-capable" content="yes" />
-                <meta
-                    name="msapplication-config"
-                    content="/icons/browserconfig.xml"
-                />
+                <meta name="msapplication-config" content="/icons/browserconfig.xml" />
                 <meta name="msapplication-TileColor" content="#2B5797" />
                 <meta name="msapplication-tap-highlight" content="no" />
             </Head>

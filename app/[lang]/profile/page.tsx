@@ -3,27 +3,17 @@ import styles from "./profile.module.scss";
 import FalseIcon from "@/components/Icons/FalseIcon";
 import TrueIcon from "@/components/Icons/TrueIcon";
 import type { UserMetadata } from "@supabase/supabase-js";
-import { useTranslation } from "next-i18next";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useSession } from "@/app/utils/supabase/useSession";
+import { initTranslations } from "@/app/i18n";
+import { createClient } from "@/app/utils/supabase/server";
 
-export default function PrivatePage({params: {lang}}: {params: {lang: string}}) {
-    const { t, i18n } = useTranslation("profile-page");
+async function ProfilePage({params: {lang}}: {params: {lang: string}}) {
+    const { t, i18n } = await initTranslations(lang, ["profile-page"]);
 
     // If there is no session, it redirects to the login page
-    const session = useSession();
-
-    const [hydrated, setHydrated] = useState<boolean>(false);
-
-    useEffect(() => {
-        setHydrated(true);
-    }, []);
+    const {data: {session}} = await createClient().auth.getSession();
 
     const userMetadata: UserMetadata | undefined = session?.user?.user_metadata;
-
-    // To avoid hydration issues, it will show the component after the hydration.
-    if (!(hydrated && session)) return null;
 
     return (
             <section className={styles.profile__page__container}>
@@ -136,3 +126,5 @@ export default function PrivatePage({params: {lang}}: {params: {lang: string}}) 
             </section>
     );
 }
+
+export default ProfilePage;
