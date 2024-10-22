@@ -11,25 +11,25 @@ import { useRouter } from "next/navigation";
 import { type SyntheticEvent, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import styles from "./AuthButton.module.scss";
-import { createClient } from "@/app/utils/supabase/server";
 
 const AuthButton = () => {
     const setAuth = authStore((state) => state.setAuth);
-    const session: Session | null = authStore((state) => state.session);
+    const session: Session | null = authStore.getState().session;
     const metadata: UserMetadata | null = authStore((state) => state.metadata);
 
     const router: AppRouterInstance = useRouter();
 
     useEffect(() => {
-        const fetchSession = async () => {
-            const supabase = await createClient();
-            const {data: {session}} = await supabase.auth.getSession();
-            setAuth(session);
-        };
-
-        if (!session) {
-            fetchSession();
-        }
+        setAuth(session);
+        // const fetchSession = async () => {
+        //     const supabase = createClient();
+        //     const {data: {session}} = await supabase.auth.getSession();
+        //     setAuth(session);
+        // };
+        //
+        // if (!session) {
+        //     fetchSession();
+        // }
     }, [metadata, session]);
 
     const handleAuth = (event: SyntheticEvent) => {
@@ -71,12 +71,7 @@ const AuthButton = () => {
                             />
                         </picture>
                     ) : (
-                        <Image
-                            width={32}
-                            height={32}
-                            src={"/user.svg"}
-                            alt="User icon"
-                        />
+                        <Image width={32} height={32} src={"/user.svg"} alt="User icon" />
                     )}
                 </button>
             </div>

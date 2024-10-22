@@ -4,15 +4,18 @@ import { getRootFolders } from "./supabase/folders/getRootFolders";
 import { updateFolderList } from "./updateFolderList";
 import getAllBookmarks from "./supabase/bookmarks/getAllBookmarks";
 import { getAllFolders } from "./supabase/folders/getAllFolders";
-import { createClient } from "./supabase/server";
+import { authStore } from "../store/authStore";
 
+// This function fetches all bookmarks and folders from a user associated with the session user ID.
 export const updateBookmarkList = async () => {
     const updateBookmarksList = bookmarksStore.getState().setBookmarksList;
     const updateAllBookmarksList = bookmarksStore.getState().setAllBookmarksList;
-    const supabase = await createClient();
-    const {
-        data: { session },
-    } = await supabase.auth.getSession();
+    const {session} = authStore.getState()
+
+    // const supabase = await createClient();
+    // const {
+    //     data: { session },
+    // } = await supabase.auth.getSession();
 
     // Get the folders and bookmarks that don't belong to any parent
     const [rootFolders, rootBookmarks] = await Promise.all([
