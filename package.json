@@ -31,7 +31,7 @@
         "sass": "^1.80.3",
         "sass-loader": "^16.0.2",
         "sonner": "^1.5.0",
-        "supabase": "^1.207.8",
+        "supabase": "^1.207.9",
         "zustand": "^5.0.0"
     },
     "devDependencies": {

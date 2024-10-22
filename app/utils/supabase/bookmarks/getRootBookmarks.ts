@@ -1,9 +1,9 @@
 // Function that retrieves the bookmarks that don't have any parent folder from a Supabase DB with bookmarks table.
 // These bookmarks are rendered after the root folders.
-import { createClient } from "../client";
+import { createClient } from "../server";
 
 export default async function getRootBookmarks(id: string) {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data, error } = await supabase
         .from("bookmarks")
         .select("*")

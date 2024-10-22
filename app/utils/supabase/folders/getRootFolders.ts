@@ -1,8 +1,8 @@
-import { createClient } from "../client";
+import { createClient } from "../server";
 
 // Root level folders are folder that don't have parent folder and are rendered first
 export const getRootFolders = async (userId: string) => {
-    const supabase = createClient();
+    const supabase = await createClient();
     const { data, error } = await supabase
         .from("folders")
         .select("*")
@@ -12,5 +12,7 @@ export const getRootFolders = async (userId: string) => {
     if (error) {
         throw new Error(error.message);
     }
+
+    console.log(data);
     return data;
 };

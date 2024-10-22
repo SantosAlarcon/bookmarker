@@ -9,6 +9,7 @@ import { createClient } from "@/app/utils/supabase/server";
 
 async function ProfilePage(props: {params: Promise<{lang: string}>}) {
     const params = await props.params;
+    const supabase = await createClient();
 
     const {
         lang
@@ -17,7 +18,7 @@ async function ProfilePage(props: {params: Promise<{lang: string}>}) {
     const { t, i18n } = await initTranslations(lang, ["profile-page"]);
 
     // If there is no session, it redirects to the login page
-    const {data: {session}} = await createClient().auth.getSession();
+    const {data: {session}} = await supabase.auth.getSession();
 
     const userMetadata: UserMetadata | undefined = session?.user?.user_metadata;
 

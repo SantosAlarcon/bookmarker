@@ -1,16 +1,18 @@
 import { bookmarksStore } from "@/store/bookmarksStore";
 import getRootBookmarks from "./supabase/bookmarks/getRootBookmarks";
 import { getRootFolders } from "./supabase/folders/getRootFolders";
-import { getSession } from "./supabase/getSession";
 import { updateFolderList } from "./updateFolderList";
 import getAllBookmarks from "./supabase/bookmarks/getAllBookmarks";
 import { getAllFolders } from "./supabase/folders/getAllFolders";
+import { createClient } from "./supabase/server";
 
 export const updateBookmarkList = async () => {
     const updateBookmarksList = bookmarksStore.getState().setBookmarksList;
-    const updateAllBookmarksList =
-        bookmarksStore.getState().setAllBookmarksList;
-    const session = await getSession();
+    const updateAllBookmarksList = bookmarksStore.getState().setAllBookmarksList;
+    const supabase = await createClient();
+    const {
+        data: { session },
+    } = await supabase.auth.getSession();
 
     // Get the folders and bookmarks that don't belong to any parent
     const [rootFolders, rootBookmarks] = await Promise.all([

@@ -1,4 +1,4 @@
-import { BookmarkItem } from "@/types/types";
+import type { BookmarkItem } from "@/app/types/types";
 
 // This function gets all bookmarks from a user passed by an id
 export default async function getAllBookmarks(id: string | string[]) {
@@ -13,7 +13,7 @@ export default async function getAllBookmarks(id: string | string[]) {
         },
     );
 
-    let data = await response.json();
+    const data = await response.json();
 
     return data.filter(
         (bookmark: BookmarkItem) => bookmark.bookmark_user_id === id,

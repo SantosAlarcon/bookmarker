@@ -1,6 +1,5 @@
 "use client";
 
-import { getSession } from "@/app/utils/supabase/getSession";
 import { handleUserContextMenu } from "@/components/Header/UserContextMenu";
 import { authStore } from "@/store/authStore";
 import tooltipStyles from "@/styles/tooltip.module.css";
@@ -12,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { type SyntheticEvent, useEffect } from "react";
 import { Tooltip } from "react-tooltip";
 import styles from "./AuthButton.module.scss";
+import { createClient } from "@/app/utils/supabase/server";
 
 const AuthButton = () => {
     const setAuth = authStore((state) => state.setAuth);
@@ -22,7 +22,8 @@ const AuthButton = () => {
 
     useEffect(() => {
         const fetchSession = async () => {
-            const session = await getSession();
+            const supabase = await createClient();
+            const {data: {session}} = await supabase.auth.getSession();
             setAuth(session);
         };
 
