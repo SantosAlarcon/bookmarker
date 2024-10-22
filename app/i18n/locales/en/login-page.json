@@ -11,5 +11,5 @@
 	"reset-password-text": "Cannot log in?",
 	"reset-password-link": "Click here to reset password",
 	"login-success": "Login successful!",
-	"login-error": "Login failed!"
+	"login-error": "Email or password are incorrect. Check your email and password again."
 }

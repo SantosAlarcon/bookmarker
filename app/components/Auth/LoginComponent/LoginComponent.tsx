@@ -38,8 +38,8 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                 router.prefetch("/");
                 router.push("/");
             })
-            .catch((err) => {
-                toast.error(err.message);
+            .catch(() => {
+                toast.error(t("login-error"));
             });
 
         setFormData({ ...formData, loading: false });

@@ -11,5 +11,5 @@
 	"reset-password-text": "¿Se te ha olvidado la contraseña?",
 	"reset-password-link": "Haz click aquí para restablecerla",
 	"login-sucess": "¡Se ha iniciado sesión con éxito!",
-	"login-error": "El correo electrónico o la contraseña son incorrectos."
+	"login-error": "El correo electrónico o la contraseña son incorrectos. Vuelve a comprobarlos."
 }

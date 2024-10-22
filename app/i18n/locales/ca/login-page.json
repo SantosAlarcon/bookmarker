@@ -11,5 +11,5 @@
     "reset-password-text": "Has oblidat la contrasenya?",
     "reset-password-link": "Fes clic aquí per restablir-la",
     "login-sucess": "S'ha iniciat sessió amb exit!",
-    "login-error": "S'ha produí un error al iniciar sessió. Torna-ho a intentar."
+    "login-error": "El correu electrònic o la contrasenya són incorrectes. Torna a comprovar-los."
 }
