@@ -1,17 +1,16 @@
 "use client";
+import { localeStore } from "@/app/store/localeStore";
+import type { BookmarkFolder } from "@/app/types/types";
 import updateFolder from "@/app/utils/supabase/folders/updateFolder";
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
 import Spinner from "@/components/Spinner/Spinner";
 import { folderStore } from "@/store/folderStore";
 import { modalStore } from "@/store/modalStore";
-import type { BookmarkFolder } from "@/app/types/types";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./EditFolderDialog.module.scss";
-import { localeStore } from "@/app/store/localeStore";
 import "@/app/i18n/client";
 
 type Props = {
@@ -38,7 +37,6 @@ const EditFolderDialog = ({ title }: Props) => {
     const { t } = useTranslation("common", {lng: lang});
 
     const dialogRef = useRef<null | HTMLDialogElement>(null);
-    const router = useRouter();
 
     useEffect(() => {
         if (editFolderModal) {
@@ -107,9 +105,9 @@ const EditFolderDialog = ({ title }: Props) => {
                             placeholder={t("folder-title-placeholder")}
                             value={updatedFolder.title}
                             onChange={() =>
-                                // @ts-ignore
                                 setUpdatedFolder({
                                     ...updatedFolder,
+                                    // @ts-ignore
                                     title: event.target.value,
                                 })
                             }
@@ -127,9 +125,9 @@ const EditFolderDialog = ({ title }: Props) => {
                             placeholder={t("folder-description-placeholder")}
                             value={updatedFolder.description}
                             onChange={() =>
-                                // @ts-ignore
                                 setUpdatedFolder({
                                     ...updatedFolder,
+                                    // @ts-ignore
                                     description: event.target.value,
                                 })
                             }

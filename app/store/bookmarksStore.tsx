@@ -13,8 +13,8 @@ type Action = {
     setAllBookmarksList: (bookmarks: object[]) => void;
 };
 
-// @ts-ignore
 export const bookmarksStore = create<State & Action>(
+    // @ts-ignore
     devtools(
         (set) => ({
             bookmarksList: [],

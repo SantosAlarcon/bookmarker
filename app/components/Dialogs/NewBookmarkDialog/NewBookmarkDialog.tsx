@@ -40,8 +40,6 @@ const NewBookmarkDialog = ({ title }: Props) => {
     const lang = localeStore((state) => state.locale)
     const { t } = useTranslation("common", { lng: lang });
 
-    const router = useRouter();
-
     useEffect(() => {
         const getFolderList = async () => {
             const supabase = createClient();
@@ -117,9 +115,9 @@ const NewBookmarkDialog = ({ title }: Props) => {
                             name="title"
                             placeholder={t("bookmark-title-placeholder")}
                             onChange={() =>
-                                // @ts-ignore
                                 setNewBookmark({
                                     ...newBookmark,
+                                    // @ts-ignore
                                     title: event.target.value,
                                 })
                             }
@@ -136,9 +134,9 @@ const NewBookmarkDialog = ({ title }: Props) => {
                             name="url"
                             placeholder={t("bookmark-url-placeholder")}
                             onChange={() =>
-                                // @ts-ignore
                                 setNewBookmark({
                                     ...newBookmark,
+                                    // @ts-ignore
                                     url: event.target.value,
                                 })
                             }

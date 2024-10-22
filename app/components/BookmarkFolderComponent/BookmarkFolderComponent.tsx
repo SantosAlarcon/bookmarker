@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
-import styles from "./BookmarkFolderComponent.module.scss";
-import { BookmarkItem, BookmarkFolder } from "@/types/types";
+import type { BookmarkFolder, BookmarkItem } from "@/app/types/types";
+import getChildrenBookmarks from "@/app/utils/supabase/bookmarks/getChildrenBookmarks";
+import { getChildrenFolders } from "@/app/utils/supabase/folders/getChildrenFolders";
+import { bookmarksStore } from "@/store/bookmarksStore";
+import { motion } from "framer-motion";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent";
 import EditFolderButton from "../Buttons/EditFolderButton/EditFolderButton";
 import RemoveFolderButton from "../Buttons/RemoveFolderButton/RemoveFolder";
-import { motion } from "framer-motion";
-import { getChildrenFolders } from "@/app/utils/supabase/folders/getChildrenFolders";
-import getChildrenBookmarks from "@/app/utils/supabase/bookmarks/getChildrenBookmarks";
-import { bookmarksStore } from "@/store/bookmarksStore";
+import styles from "./BookmarkFolderComponent.module.scss";
 
 interface BFCProps {
     children: {

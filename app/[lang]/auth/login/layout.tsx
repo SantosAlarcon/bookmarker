@@ -24,11 +24,11 @@ export const generateMetadata = async (props: { params: Promise<{ lang: string }
 
 function LoginLayout({
     children,
-}: { children: ReactNode; params: { lang: string } }) {
+}: { children: ReactNode}) {
     return (
         <>
             <Head>
-                <link rel="shortcut icon" href="/favicon.svg" />
+                <link rel="shortcut icon" href="/favicon.svg" / >
                 <link rel="manifest" href="/manifest.json" />
                 <meta
                     name="viewport"

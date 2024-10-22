@@ -1,7 +1,7 @@
 import getFavicon from "@/app/utils/getFavicon";
 import { createClient } from "@/app/utils/supabase/client";
-import { BookmarkItem } from "@/types/types";
-import { SupabaseClient } from "@supabase/supabase-js";
+import type { BookmarkItem } from "@/app/types/types";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 interface updateInfo {
     title: string;

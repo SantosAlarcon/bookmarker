@@ -1,7 +1,7 @@
 import { createClient } from "@/app/utils/supabase/server";
-import type { NextApiRequest } from "next";
+import type { NextRequest } from "next/server";
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
     const supabase = await createClient()
 
     const {

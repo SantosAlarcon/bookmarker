@@ -1,4 +1,4 @@
-import type { BookmarkFolder } from "@/types/types";
+import type { BookmarkFolder } from "@/app/types/types";
 import { create } from "zustand";
 
 export type State = {

@@ -36,8 +36,6 @@ const NewFolderDialog = ({ title }: Props) => {
     const lang = localeStore((state) => state.locale)
     const { t } = useTranslation("common", {lng: lang});
 
-    const router = useRouter();
-
     useEffect(() => {
         if (showNewFolderDialog) {
             dialogRef.current?.showModal();
@@ -96,9 +94,9 @@ const NewFolderDialog = ({ title }: Props) => {
                             name="title"
                             placeholder={t("folder-title-placeholder")}
                             onChange={() =>
-                                // @ts-ignore
                                 setNewFolder({
                                     ...newFolder,
+                                    // @ts-ignore
                                     title: event.target.value,
                                 })
                             }
@@ -115,9 +113,9 @@ const NewFolderDialog = ({ title }: Props) => {
                             name="description"
                             placeholder={t("folder-description-placeholder")}
                             onChange={() =>
-                                // @ts-ignore
                                 setNewFolder({
                                     ...newFolder,
+                                    // @ts-ignore
                                     description: event.target.value,
                                 })
                             }
@@ -135,9 +133,9 @@ const NewFolderDialog = ({ title }: Props) => {
                                 styles.new__folder__dialog__form__parent__folder
                             }
                             onChange={() =>
-                                // @ts-ignore
                                 setNewFolder({
                                     ...newFolder,
+                                    // @ts-ignore
                                     parentFolder: event.target.value,
                                 })
                             }

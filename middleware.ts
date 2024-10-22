@@ -1,10 +1,10 @@
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 
-import { getSession } from "@/app/utils/supabase/getSession";
 import type { NextRequest } from "next/server";
 import { i18nRouter } from "next-i18n-router";
 import i18nConfig from "./next-i18next.config";
+import type { Database } from "./app/lib/database.types";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
