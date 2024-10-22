@@ -3,17 +3,11 @@
 import styles from "./RegisterComponent.module.scss";
 import Image from "next/image";
 import "@/styles/globals.css";
-import {
-    signUpWithGoogle,
-    signUpWithGitHub,
-    signUpWithFacebook,
-    signUpWithEmail,
-} from "@/app/utils/signUp";
 import { type FormEvent, useState } from "react";
 import Spinner from "@/components/Spinner/Spinner";
 import { toast } from "sonner";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Link from "next/link";
+import { signUpWithEmail } from "@/app/utils/signUp";
 
 interface FormData {
     email: string;
@@ -22,7 +16,6 @@ interface FormData {
 }
 
 const RegisterComponent = () => {
-    const supabase = createClientComponentClient();
     const [formData, setFormData] = useState<FormData>({
         email: "",
         password: "",
@@ -32,7 +25,7 @@ const RegisterComponent = () => {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setFormData({ ...formData, loading: true });
-        await signUpWithEmail(formData.email, formData.password, supabase)
+        await signUpWithEmail(formData.email, formData.password)
             .then(() => {
                 // These lines will execute if the login is successful
                 toast.success("Login successful!");
@@ -54,7 +47,7 @@ const RegisterComponent = () => {
                     alt="logo"
                     width={450}
                     height={150}
-                    priority
+                    priority={true}
                 />
             </div>
             <div className={styles.register__page__box}>
@@ -64,48 +57,6 @@ const RegisterComponent = () => {
                     account.
                 </div>
                 <div className={styles.register__page__social__buttons}>
-                    <button
-                        className={styles.register__page__social__button}
-                        onClick={() => signUpWithGoogle(supabase)}
-                        type="button"
-                    >
-                        <Image
-                            src="/social/google.svg"
-                            alt="Google Logo"
-                            width={20}
-                            height={20}
-                            priority
-                        />
-                        Sign Up with Google
-                    </button>
-                    <button
-                        className={styles.register__page__social__button}
-                        onClick={() => signUpWithGitHub(supabase)}
-                        type="button"
-                    >
-                        <Image
-                            src="/social/github.svg"
-                            alt="GitHub Logo"
-                            width={20}
-                            height={20}
-                            priority
-                        />
-                        Sign Up with GitHub
-                    </button>
-                    <button
-                        className={styles.register__page__social__button}
-                        onClick={() => signUpWithFacebook(supabase)}
-                        type="button"
-                    >
-                        <Image
-                            src="/social/facebook.svg"
-                            alt="Facebook Logo"
-                            width={20}
-                            height={20}
-                            priority
-                        />
-                        Sign Up with Facebook
-                    </button>
                     <hr className={styles.register__page__separator} />
                     <form
                         className={styles.register__page__form}
@@ -121,7 +72,7 @@ const RegisterComponent = () => {
                                     email: e.target.value,
                                 })
                             }
-                            required
+                            required={true}
                             placeholder="Email"
                             value={formData.email}
                         />
@@ -135,7 +86,7 @@ const RegisterComponent = () => {
                                     password: e.target.value,
                                 })
                             }
-                            required
+                            required={true}
                             placeholder="Password"
                             value={formData.password}
                         />
@@ -151,7 +102,7 @@ const RegisterComponent = () => {
                                     alt="Email Logo"
                                     width={20}
                                     height={20}
-                                    priority
+                                    priority={true}
                                 />
                             )}
                             Sign Up with Email

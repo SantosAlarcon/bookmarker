@@ -1,50 +1,16 @@
-// These functions are used to sign in the user depending of the provider
-import { SupabaseClient } from "@supabase/supabase-js";
+"use server"
 
-export const signUpWithGoogle = async (client: SupabaseClient) => {
-    // Call the sign in function to sign in the user
-    const { error, data } = await client.auth.signUp({
-        provider: "google",
-        options: {
-            // @ts-ignore
-            queryParams: {
-                access_type: "offline",
-                prompt: "consent",
-            },
-        },
-    });
+// This function creates a new user with the email and password
 
-    if (data) console.log(data);
-    if (error) console.error(error);
-};
+import { redirect } from "next/navigation"
+import { createClient } from "./supabase/server"
+import { revalidatePath } from "next/cache"
 
-export const signUpWithGitHub = async (client: SupabaseClient) => {
-    // Call the sign in function to sign in the user
-    // @ts-ignore
-    const { error, data } = await client.auth.signUpWithOAuth({
-        provider: "github",
-        options: {
-            queryParams: {
-                access_type: "offline",
-                prompt: "consent",
-            },
-        },
-    });
+export const signUpWithEmail = async (email: string, password: string) => {
+    const {data, error} = await createClient().auth.signUp({email, password})
 
-    if (data) console.log(data);
-    if (error) console.error(error);
-};
+    console.log("DATA: ", data);
 
-export const signUpWithFacebook = async (client: SupabaseClient) => {
-    // Call the sign in function to sign in the user
-    // @ts-ignore
-    await client.auth.signUpWithOAuth({
-        provider: "facebook",
-        options: {
-            queryParams: {
-                access_type: "offline",
-                prompt: "consent",
-            },
-        },
-    });
-};
+    revalidatePath("/", "layout");
+    redirect("/")
+}
