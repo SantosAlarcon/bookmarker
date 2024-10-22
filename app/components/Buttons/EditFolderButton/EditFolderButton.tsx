@@ -33,7 +33,6 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
     const { t } = useTranslation("common", {lng: lang});
 
     const handleClick = () => {
-        console.log(folder_parentfolder);
         // @ts-ignore
         modifyEditFolderData(
             folder_id,
@@ -63,7 +62,7 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
                 height={24}
                 src="/icons/edit-icon.svg"
                 alt="Edit icon"
-                priority
+                priority={true}
             />
         </button>
     );

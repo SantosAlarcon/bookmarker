@@ -9,7 +9,13 @@ const barlow = Barlow({
     weight: ["400", "500", "700", "900"],
 });
 
-export const generateMetadata = async ({ params: { lang } }: { params: { lang: string } }) => {
+export const generateMetadata = async (props: { params: Promise<{ lang: string }> }) => {
+    const params = await props.params;
+
+    const {
+        lang
+    } = params;
+
     const { t } = await initTranslations(lang, ["profile-page"]);
     return {
         title: t("title"),

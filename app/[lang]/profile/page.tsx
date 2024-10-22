@@ -7,7 +7,13 @@ import Link from "next/link";
 import { initTranslations } from "@/app/i18n";
 import { createClient } from "@/app/utils/supabase/server";
 
-async function ProfilePage({params: {lang}}: {params: {lang: string}}) {
+async function ProfilePage(props: {params: Promise<{lang: string}>}) {
+    const params = await props.params;
+
+    const {
+        lang
+    } = params;
+
     const { t, i18n } = await initTranslations(lang, ["profile-page"]);
 
     // If there is no session, it redirects to the login page

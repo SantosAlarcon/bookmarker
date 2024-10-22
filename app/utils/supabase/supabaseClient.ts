@@ -10,7 +10,7 @@ const supabaseClient: SupabaseClient = createClient(
 // provider tokens from the callback.
 supabaseClient.auth.onAuthStateChange((event, session) => {
 
-    console.log("SESSION: ", session)
+    // console.log("SESSION: ", session)
 
     // If there is a provider token, it is stored in local storage
     if (session?.provider_token) {

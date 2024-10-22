@@ -13,11 +13,18 @@ export async function generateStaticParams() {
 	}));
 }
 
-const TestLayout = ({
-	children,
-	params: { lang },
-}: { children: ReactNode; params: { lang: string } }) => {
-	return (
+const TestLayout = async (props: { children: ReactNode; params: Promise<{ lang: string }> }) => {
+    const params = await props.params;
+
+    const {
+        lang
+    } = params;
+
+    const {
+        children
+    } = props;
+
+    return (
 		<html lang={lang}>
 			<body>{children}</body>
 		</html>

@@ -15,9 +15,15 @@ export const metadata: Metadata = {
     description: "App to manage browser bookmarks everywhere",
 };
 
-export default function RootLayout({ params, children }: { params; children: ReactNode }) {
+export default async function RootLayout(props: { params: Promise<{ lang: string }>; children: ReactNode }) {
+    const params = await props.params;
+
+    const {
+        children
+    } = props;
+
     return (
-        <html lang={params.lang} suppressHydrationWarning>
+        <html lang={params.lang} suppressHydrationWarning={true}>
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 {/* @ts-ignore */}

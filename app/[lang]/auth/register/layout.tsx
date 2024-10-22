@@ -1,30 +1,38 @@
 import { Barlow } from "next/font/google";
 import { Toaster } from "sonner";
 import Head from "next/head";
+import { initTranslations } from "@/app/i18n";
+import type { ReactNode } from "react";
 
 const barlow = Barlow({
     subsets: ["latin"],
     weight: ["400", "500", "600", "700", "800", "900"],
 });
 
+// @ts-ignore
+export const generateMetadata = async (props: {params}) => {
+    const params = await props.params;
+    const lang = params.lang;
+    const {t} = await initTranslations(lang, [ "register-page" ]);
+
+    return {
+	title: t("title"),
+    }
+}
+
 export default function AuthLayout({
     children,
 }: {
-    children: React.ReactNode;
+    children: ReactNode;
 }) {
     return (
         <>
             <Head>
-                <title>Get started - Bookmarker</title>
                 <link rel="shortcut icon" href="/favicon.svg" />
                 <link rel="manifest" href="/manifest.json" />
                 <meta
                     name="viewport"
                     content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
-                />
-                <meta
-                    name="description"
-                    content="App to manage browser bookmarks everywhere"
                 />
                 <meta name="theme-color" content="#8936FF" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -51,7 +59,7 @@ export default function AuthLayout({
                 <meta property="og:site_name" content="Bookmarker" />
             </Head>
             <div className={barlow.className}>{children}</div>
-            <Toaster position="top-center" richColors />
+            <Toaster position="top-center" richColors={true} />
         </>
     );
 }

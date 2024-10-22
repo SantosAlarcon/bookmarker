@@ -1,7 +1,8 @@
-import { createClient } from "./client";
+import { createClient } from "./server";
 
 export const getSession = async () => {
-    const { data, error } = await createClient().auth.getSession();
+    const supabase = await createClient();
+    const { data, error } = await supabase.auth.getSession();
 
     if (error) {
         throw new Error(error.message);

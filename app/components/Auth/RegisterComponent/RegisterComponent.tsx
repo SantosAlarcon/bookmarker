@@ -1,42 +1,59 @@
 "use client";
 
-import styles from "./RegisterComponent.module.scss";
 import Image from "next/image";
+import styles from "./RegisterComponent.module.scss";
 import "@/styles/globals.css";
-import { type FormEvent, useState } from "react";
 import Spinner from "@/components/Spinner/Spinner";
-import { toast } from "sonner";
 import Link from "next/link";
-import { signUpWithEmail } from "@/app/utils/signUp";
+import { type FormEvent, useState } from "react";
+import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
+import "@/app/i18n/client";
+import { signUpWithEmail } from "@/app/utils/supabase/signUp";
 
 interface FormData {
     email: string;
     password: string;
+    confirmPassword: string;
     loading: boolean;
 }
 
-const RegisterComponent = () => {
+const RegisterComponent = ({ lang }: { lang: string }) => {
+    // @ts-ignore
+    const { t } = useTranslation("register-page", { lng: lang });
     const [formData, setFormData] = useState<FormData>({
         email: "",
         password: "",
+        confirmPassword: "",
         loading: false,
     });
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+
+        if (formData.password !== formData.confirmPassword) {
+            toast.error(t("passwords-dont-match"));
+            return;
+        }
+
         setFormData({ ...formData, loading: true });
         await signUpWithEmail(formData.email, formData.password)
             .then(() => {
                 // These lines will execute if the login is successful
-                toast.success("Login successful!");
+                toast.success(t("toast-success"));
             })
             .catch((error) => {
                 // If it fails to log in, it shows an toast error
-                toast.error(error.message);
+                toast.error(error);
             });
 
         setFormData({ ...formData, loading: false });
-        setFormData({ email: "", password: "", loading: false });
+        setFormData({
+            email: "",
+            password: "",
+            confirmPassword: "",
+            loading: false,
+        });
     };
 
     return (
@@ -51,18 +68,20 @@ const RegisterComponent = () => {
                 />
             </div>
             <div className={styles.register__page__box}>
-                <h2 className={styles.register__page__title}>Register</h2>
-                <div className={styles.register__page__text}>
-                    Start managing your bookmarks in one place by sign up your
-                    account.
-                </div>
+                <h2 className={styles.register__page__title}>{t("title")}</h2>
+                <div className={styles.register__page__text}>{t("text")}</div>
                 <div className={styles.register__page__social__buttons}>
                     <hr className={styles.register__page__separator} />
                     <form
                         className={styles.register__page__form}
                         onSubmit={(e) => handleSubmit(e)}
                     >
-                        <label htmlFor="email">Email</label>
+                        <label
+                            className={styles.register__page__label}
+                            htmlFor="email"
+                        >
+                            {t("email-label")}
+                        </label>
                         <input
                             type="email"
                             id="email"
@@ -73,10 +92,16 @@ const RegisterComponent = () => {
                                 })
                             }
                             required={true}
-                            placeholder="Email"
+                            placeholder={t("email-placeholder")}
                             value={formData.email}
                         />
-                        <label htmlFor="password">Password</label>
+
+                        <label
+                            className={styles.register__page__label}
+                            htmlFor="password"
+                        >
+                            {t("password-label")}
+                        </label>
                         <input
                             type="password"
                             id="password"
@@ -87,8 +112,27 @@ const RegisterComponent = () => {
                                 })
                             }
                             required={true}
-                            placeholder="Password"
+                            placeholder={t("password-placeholder")}
                             value={formData.password}
+                        />
+                        <label
+                            className={styles.register__page__label}
+                            htmlFor="confirm-password"
+                        >
+                            {t("confirm-password-label")}
+                        </label>
+                        <input
+                            type="password"
+                            id="confirm-password"
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    confirmPassword: e.target.value,
+                                })
+                            }
+                            required={true}
+                            placeholder={t("confirm-password-placeholder")}
+                            value={formData.confirmPassword}
                         />
                         <button
                             className={styles.register__page__social__button}
@@ -97,15 +141,8 @@ const RegisterComponent = () => {
                             {formData.loading ? (
                                 <Spinner />
                             ) : (
-                                <Image
-                                    src="/social/email.svg"
-                                    alt="Email Logo"
-                                    width={20}
-                                    height={20}
-                                    priority={true}
-                                />
+                                t("register-button")
                             )}
-                            Sign Up with Email
                         </button>
                     </form>
                 </div>
@@ -113,13 +150,14 @@ const RegisterComponent = () => {
                     href="/auth/login"
                     className={styles.register__page__link}
                 >
-                    Already have an account? <b>Log in</b>
+                    {t("remember-password-text")}{" "}
+                    <b>{t("remember-password-link")}</b>
                 </Link>
                 <Link
                     href="/reset-password"
                     className={styles.register__page__link}
                 >
-                    Cannot log in? <b>Click to reset password</b>
+                    {t("reset-password-text")} <b>{t("reset-password-link")}</b>
                 </Link>
             </div>
         </section>

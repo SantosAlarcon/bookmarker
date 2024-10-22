@@ -1,11 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/app/utils/supabase/server";
 import type { NextApiRequest } from "next";
 
 export async function GET(req: NextApiRequest) {
-    const supabase = createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    );
+    const supabase = await createClient()
 
     const {
         data: { session },

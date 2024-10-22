@@ -3,11 +3,19 @@ import Header from "@/components/Header/Header";
 import BookmarksView from "@/components/BookmarksView/BookmarksView";
 import { redirect } from "next/navigation";
 import AuthSync from "../components/Auth/AuthSync";
-import { createClient } from "../utils/supabase/server";
 import LocaleSync from "../components/LocaleSync";
+import { getSession } from "../utils/supabase/getSession";
+import { createClient } from "../utils/supabase/server";
 
-async function Home({params: {lang}}: {params: {lang: string}}) {
-    const { data: { session }} = await createClient().auth.getSession();
+async function Home(props: {params: Promise<{lang: string}>}) {
+    const params = await props.params;
+
+    const {
+        lang
+    } = params;
+
+    const supabase = await createClient();
+    const { data: { session }} = await supabase.auth.getSession();
 
     // @ts-ignore
 
@@ -19,7 +27,7 @@ async function Home({params: {lang}}: {params: {lang: string}}) {
             <AuthSync sessionState={session} />
             <LocaleSync localeState={{locale: lang}} />
             <Header lang={lang} />
-            <BookmarksView lang={lang} />
+            <BookmarksView />
         </div>
     );
 }
