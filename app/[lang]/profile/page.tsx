@@ -18,9 +18,9 @@ async function ProfilePage(props: {params: Promise<{lang: string}>}) {
     const { t, i18n } = await initTranslations(lang, ["profile-page"]);
 
     // If there is no session, it redirects to the login page
-    const {data: {session}} = await supabase.auth.getSession();
+    const {data: {user}} = await supabase.auth.getUser();
 
-    const userMetadata: UserMetadata | undefined = session?.user?.user_metadata;
+    const userMetadata: UserMetadata | undefined = user?.user_metadata;
 
     return (
             <section className={styles.profile__page__container}>
@@ -94,7 +94,7 @@ async function ProfilePage(props: {params: Promise<{lang: string}>}) {
                             styles.profile__page__data__grid__field__value
                         }
                     >
-                        {new Date(session?.user?.created_at!).toLocaleString(
+                        {new Date(user?.created_at!).toLocaleString(
                             i18n.language,
                             {
                                 day: "numeric",
@@ -116,7 +116,7 @@ async function ProfilePage(props: {params: Promise<{lang: string}>}) {
                         }
                     >
                         {new Date(
-                            session?.user?.last_sign_in_at!,
+                            user?.last_sign_in_at!,
                         ).toLocaleString(i18n.language, {
                             day: "numeric",
                             month: "long",

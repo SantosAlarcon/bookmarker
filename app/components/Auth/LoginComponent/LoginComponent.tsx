@@ -127,6 +127,9 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                         </button>
                     </form>
                 </div>
+                <Link href="/auth/register" className={styles.login__page__link}>
+                    {t("register-text")} <b>{t("register-link")}</b>
+                </Link>
                 <Link href="/reset-password" className={styles.login__page__link}>
                     {t("reset-password-text")} <b>{t("reset-password-link")}</b>
                 </Link>

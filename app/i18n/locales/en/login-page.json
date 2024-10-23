@@ -10,6 +10,8 @@
 	"password-label": "Password",
 	"reset-password-text": "Cannot log in?",
 	"reset-password-link": "Click here to reset password",
+    "register-text": "Don't have any account yet?",
+    "register-link": "Register now",
 	"login-success": "Login successful!",
 	"login-error": "Email or password are incorrect. Check your email and password again."
 }

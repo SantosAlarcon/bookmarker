@@ -30,16 +30,17 @@ const AuthButton = () => {
         // if (!session) {
         //     fetchSession();
         // }
-    }, [metadata, session]);
+    }, []);
 
     const handleAuth = (event: SyntheticEvent) => {
-        // If there is no session, redirect user to the login page
         if (session) {
             // @ts-ignore
             handleUserContextMenu(event);
-        } else {
-            router.push("/auth/login");
-        }
+        } 
+
+        // else {
+        //     router.push("/auth/login");
+        // }
     };
 
     return (
