@@ -15,7 +15,7 @@ const FilteringComponent = () => {
     const [filter, setFilter] = useState<string>("");
     const filterRef: MutableRefObject<string | null> = useRef<string>(null);
     const newFilterStore = filterStore((state) => state.setFilter);
-    const debounceFilter = useDebounceValue(filter, 600);
+    const debounceFilter = useDebounceValue(filter, 300);
 
     // @ts-ignore
     const lang: string = localeStore.getState().locale

@@ -1,5 +1,4 @@
 import { createClient } from "@/app/utils/supabase/server";
-import { authStore } from "@/store/authStore";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
