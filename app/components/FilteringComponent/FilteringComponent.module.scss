@@ -2,10 +2,19 @@
   display: flex;
   gap: 1rem;
 
+  @media (width <=768px) {
+    width: 100%;
+  }
+
   & input {
     border: 1px #fff6 solid;
     border-radius: .5rem;
     width: 400px;
+
+    @media (width <=768px) {
+      width: 100%;
+    }
+
     padding: 0 .5rem;
     font-size: inherit;
     font-family: inherit;

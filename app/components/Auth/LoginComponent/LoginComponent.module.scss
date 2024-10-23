@@ -25,6 +25,10 @@
     box-shadow: 0 5px 5rem var(--main-color-dark);
     justify-content: center;
     align-items: center;
+
+    @media (width < 512px) {
+      padding: 1.5rem;
+    }
   }
 
   &__text {
@@ -37,6 +41,8 @@
 
   &__link {
     margin-top: 1.5rem;
+    text-align: center;
+    line-height: 1.6rem;
 
     & b {
       color: var(--main-color);
@@ -65,12 +71,13 @@
     padding: 0.5rem 1rem;
     font-weight: bold;
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 1rem;
     background-color: #ddd;
     color: #222;
     transition: all 0.2s ease-in-out;
-    width: 50%;
+    width: 75%;
     margin: 0 auto;
 
     &:not(:hover) {
@@ -83,14 +90,12 @@
       transform: scale(1.1);
     }
 
-  &__form {
-    width: 100%;
-  }
+    &__form {
+      width: 100%;
+    }
 
     @media (width < 512px) {
-      &__social__button {
-        width: 70%;
-      }
+        width: 100%;
     }
   }
 

@@ -71,7 +71,6 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
                 <h2 className={styles.register__page__title}>{t("title")}</h2>
                 <div className={styles.register__page__text}>{t("text")}</div>
                 <div className={styles.register__page__social__buttons}>
-                    <hr className={styles.register__page__separator} />
                     <form
                         className={styles.register__page__form}
                         onSubmit={(e) => handleSubmit(e)}

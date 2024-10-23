@@ -48,7 +48,7 @@ const ResetPassword = ({lang}: {lang: string}) => {
                 alt="Bookmarker logo"
                 width="450"
                 height="150"
-                priority
+                priority={true}
             />
 
             <div className={styles.reset__password__box}>
@@ -57,7 +57,7 @@ const ResetPassword = ({lang}: {lang: string}) => {
                 <p className={styles.reset__password__text}>{t("text")}</p>
 
                 <form className={styles.reset__password__form} onSubmit={(e) => handleResetPassword(email, e)}>
-                    <label htmlFor="email" className={styles.reset__password__label}>
+                    <label htmlFor="email" className={styles.reset__password__form__label}>
                         {t("email-label")}
                     </label>
                     <input
@@ -66,8 +66,8 @@ const ResetPassword = ({lang}: {lang: string}) => {
                         name="email"
                         placeholder={t("email-placeholder")}
                         type="email"
-                        required
-                        aria-required
+                        required={true}
+                        aria-required={true}
                         value={email}
                         // @ts-ignore
                         onChange={() => setEmail(event.target.value)}
