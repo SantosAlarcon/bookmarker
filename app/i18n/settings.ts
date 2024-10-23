@@ -6,7 +6,7 @@ const i18NextConfig = {
     },
     fallbackNS: "common",
     defaultNS: "common",
-    ns: ["common", "header", "login-page", "register-page", "reset-password", "profile-page"],
+    ns: ["common", "header", "login-page", "register-page", "change-password-page", "reset-password", "profile-page"],
     load: "all",
     preload: ["en", "es", "ca"]
 }
