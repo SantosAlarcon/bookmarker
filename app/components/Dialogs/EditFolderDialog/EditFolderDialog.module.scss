@@ -63,13 +63,14 @@
 
         }
 
+      &__label {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          font-weight: bold;
+      }
     }
 
-    &__label {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
 
     &__buttons {
         display: flex;

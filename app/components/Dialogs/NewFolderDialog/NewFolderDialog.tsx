@@ -1,13 +1,12 @@
 "use client";
+import type { BookmarkFolder } from "@/app/types/types";
 import { createNewFolder } from "@/app/utils/supabase/folders/createNewFolder";
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
 import Spinner from "@/components/Spinner/Spinner";
 import { folderStore } from "@/store/folderStore";
 import { modalStore } from "@/store/modalStore";
-import type { BookmarkFolder } from "@/app/types/types";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./NewFolderDialog.module.scss";
@@ -59,7 +58,6 @@ const NewFolderDialog = ({ title }: Props) => {
         setLoading(true);
         await createNewFolder(newFolder);
         await updateBookmarkList();
-        //router.refresh()
         closeDialog();
         setLoading(false);
         toast.success(t("new-folder-success"));

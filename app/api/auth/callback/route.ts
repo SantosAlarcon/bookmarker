@@ -1,5 +1,4 @@
 import { createClient } from "@/app/utils/supabase/server";
-import supabaseClient from "@/app/utils/supabase/supabaseClient";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -14,11 +13,12 @@ export async function GET(request: Request) {
     const next = searchParams.get("next") ?? "/";
 
     if (code) {
+        const supabase = await createClient()
         // If the URL has a code, it calls a function that exchanges the code for a new session.
         const {
             data,
             error,
-        } = await supabaseClient.auth.exchangeCodeForSession(code);
+        } = await supabase.auth.exchangeCodeForSession(code);
 
 	console.log("DATA:", data)
 	console.error("ERROR:", error)

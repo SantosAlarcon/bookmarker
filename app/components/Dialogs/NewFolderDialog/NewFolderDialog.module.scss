@@ -1,116 +1,118 @@
 .new__folder__dialog {
-    &__container {
-        width: 765px;
-        padding: 1rem;
-        margin: 0 auto;
-        border-radius: 1rem;
-        border: 1px solid;
-        top: 30vh;
-        transition: all 300ms ease-in-out;
-        box-shadow: 5px 0 3rem #0005;
-        background-color: #112;
+  &__container {
+    width: 765px;
+    padding: 1rem;
+    margin: 0 auto;
+    border-radius: 1rem;
+    border: 1px solid;
+    top: 30vh;
+    transition: all 300ms ease-in-out;
+    box-shadow: 5px 0 3rem #0005;
+    background-color: #112;
 
-        @media (width < 720px) {
-            top: 20vh;
-        }
-
-        &::backdrop {
-            backdrop-filter: blur(5px);
-        }
+    @media (width < 720px) {
+      top: 20vh;
     }
 
-    &__title {
-        padding-bottom: 1rem;
-        border-bottom: 1px solid #fff6;
-        display: flex;
-        align-items: center;
-        gap: .5rem;
-
-        &>img {
-            width: 24px;
-            height: 24px;
-            filter: invert(1);
-        }
+    &::backdrop {
+      backdrop-filter: blur(5px);
     }
+  }
 
-    &__form {
-        display: flex;
-        gap: 1.5rem;
-        flex-direction: column;
-        margin: 1rem 0;
+  &__title {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #fff6;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
 
-        & input {
-            margin-top: 1rem;
-            font-size: 15px;
-            font-family: inherit;
-            padding: .5rem;
-            width: 100%;
-            outline: none;
-            border: none;
-            border-radius: .5rem;
-            transition: all 300ms ease-in-out;
-            background-color: #334;
+    &>img {
+      width: 24px;
+      height: 24px;
+      filter: invert(1);
+    }
+  }
 
-            &:focus {
-                background-color: #fff5;
-            }
-        }
+  &__form {
+    display: flex;
+    gap: 1.5rem;
+    flex-direction: column;
+    margin: 1rem 0;
 
-        & select {
-            margin-top: 1rem;
-            font-size: 15px;
-            font-family: inherit;
-            padding: 0.5rem;
-            width: 100%;
-            outline: none;
-            border: none;
-            border-radius: 0.5rem;
-            transition: all 300ms ease-in-out;
-            background-color: #334;
+    & input {
+      margin-top: 1rem;
+      font-size: 15px;
+      font-family: inherit;
+      padding: .5rem;
+      width: 100%;
+      outline: none;
+      border: none;
+      border-radius: .5rem;
+      transition: all 300ms ease-in-out;
+      background-color: #334;
 
-            &:focus {
-                background-color: #fff5;
-            }
-
-            &>option {
-                background: var(--main-color-dark);
-                padding: 0.5rem 0;
-            }
-        }
+      &:focus {
+        background-color: #fff5;
+      }
     }
 
     &__label {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-weight: bold;
     }
 
-    &__buttons {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
+    & select {
+      margin-top: 1rem;
+      font-size: 15px;
+      font-family: inherit;
+      padding: 0.5rem;
+      width: 100%;
+      outline: none;
+      border: none;
+      border-radius: 0.5rem;
+      transition: all 300ms ease-in-out;
+      background-color: #334;
 
-        &>button {
-            cursor: pointer;
-            border: none;
-            outline: none;
-            padding: .5rem 2rem;
-            border-radius: 1rem;
-            font-family: inherit;
-            background-color: var(--main-color);
-            transition: all 150ms ease-in-out;
+      &:focus {
+        background-color: #fff5;
+      }
 
-            &:nth-child(1) {
-                background-color: var(--main-color-dark);
-            }
-
-            &:hover {
-                background-color: var(--main-color-hover);
-            }
-
-            &:active {
-                transform: scale(0.9);
-            }
-        }
+      &>option {
+        background: var(--main-color-dark);
+        padding: 0.5rem 0;
+      }
     }
+  }
+
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    &>button {
+      cursor: pointer;
+      border: none;
+      outline: none;
+      padding: .5rem 2rem;
+      border-radius: 1rem;
+      font-family: inherit;
+      background-color: var(--main-color);
+      transition: all 150ms ease-in-out;
+
+      &:nth-child(1) {
+        background-color: var(--main-color-dark);
+      }
+
+      &:hover {
+        background-color: var(--main-color-hover);
+      }
+
+      &:active {
+        transform: scale(0.9);
+      }
+    }
+  }
 }
