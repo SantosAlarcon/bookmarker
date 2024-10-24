@@ -21,10 +21,9 @@
 
 # Folder structure
 
+- **app** - App Router with most of the source code (components, APIs, store, utilities...)
 - **mock** - Used to store JSON data and will be removed when the database implementation is completed
-- **pages** - Pages Router
 - **public** - Static content like images and stuff
-- **src** - Most of the code is stored here, with the components, store, utilities and types
 - **tests** - Unit and E2E testing
 
 <br>
@@ -36,7 +35,3 @@ This project has **internationalization support**, so the app will be translated
 The current available languages are: **English**, **Spanish** and **Catalanian**. Any other language that is not available in this list leads to the **404 page**.
 
 If you want to contribute with more languages, submit a **Pull Request** with the language folder with its json namespaces.
-
-## ️⚠️ Warning
-
-This project is in WIP, but you can log in and log out without problem. What you can't do at the moment is managing the bookmarks until I implemented the database operations.
