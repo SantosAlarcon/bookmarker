@@ -85,7 +85,6 @@ const BookmarkFolderComponent = (props: BFCProps) => {
         <div className={styles.bookmark__folder__container}>
             <div className={styles.bookmark__folder__main}>
                 {children.length > 0 && (
-                    <div className={styles.bookmark__folder__mark}>
                         <Image
                             width={10}
                             height={10}
@@ -97,18 +96,16 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                                     ? { rotate: "90deg" }
                                     : { rotate: "0deg" }
                             }
-                            priority
+                            priority={true}
                         />
-                    </div>
                 )}
-                <div className={styles.bookmark__folder__icon}>
                     {expanded ? (
                         <Image
                             width={24}
                             height={24}
                             alt="Folder icon"
                             src="/icons/folder-open.svg"
-                            priority
+                            priority={true}
                         />
                     ) : (
                         <Image
@@ -116,10 +113,9 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                             height={24}
                             alt="Folder icon"
                             src="/icons/folder.svg"
-                            priority
+                            priority={true}
                         />
                     )}
-                </div>
                 <div
                     className={styles.bookmark__folder__title}
                     title={props.children.folder_description}
