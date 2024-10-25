@@ -30,6 +30,7 @@ const BookmarksView = () => {
     // Get and set the bookmarks from the store
     const bookmarksList = bookmarksStore((state) => state.bookmarksList);
     const allBookmarksList = bookmarksStore((state) => state.allBookmarksList);
+    const setFetched = bookmarksStore((state) => state.setFetched);
 
     // Get the filter from the filter store
     const filter = filterStore((state) => state.filter);
@@ -48,9 +49,11 @@ const BookmarksView = () => {
 
         const getRootItems = async () => {
             await updateBookmarkList();
+	    setFetched(true);
         };
 
         getRootItems();
+
 
         setLoading(false);
     }, [session]);

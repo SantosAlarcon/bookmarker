@@ -1,6 +1,6 @@
 "use client";
 
-import "@/app/i18n/client"
+import "@/app/i18n/client";
 import { type MutableRefObject, useRef, useState, useEffect } from "react";
 import styles from "./FilteringComponent.module.scss";
 import Image from "next/image";
@@ -10,23 +10,32 @@ import tooltipStyles from "../../styles/tooltip.module.css";
 import { Tooltip } from "react-tooltip";
 import { useTranslation } from "react-i18next";
 import { localeStore } from "@/app/store/localeStore";
+import { bookmarksStore } from "@/app/store/bookmarksStore";
 
 const FilteringComponent = () => {
+    const [isFetched, setIsFetched] = useState<boolean>(false);
     const [filter, setFilter] = useState<string>("");
     const filterRef: MutableRefObject<string | null> = useRef<string>(null);
     const newFilterStore = filterStore((state) => state.setFilter);
     const debounceFilter = useDebounceValue(filter, 300);
+    const fetched = bookmarksStore((state) => state.fetched);
 
     // @ts-ignore
-    const lang: string = localeStore.getState().locale
+    const lang: string = localeStore.getState().locale;
 
-    const { t } = useTranslation("header", {lng: lang});
+    const { t } = useTranslation("header", { lng: lang });
 
     useEffect(() => {
         newFilterStore(debounceFilter);
     }, [debounceFilter]);
 
-    return (
+    useEffect(() => {
+        if (fetched) {
+            setIsFetched(true);
+        }
+    }, [fetched]);
+
+    return isFetched ? (
         <div className={styles.filtering__container}>
             <input
                 initial={{ width: 0 }}
@@ -52,9 +61,12 @@ const FilteringComponent = () => {
                     height={32}
                     src="/icons/search-icon.svg"
                     alt="Search icon"
+                    className={styles.filtering__container__icon}
                 />
             </button>
         </div>
+    ) : (
+        <span className={styles.filtering__container__skeleton} />
     );
 };
 
