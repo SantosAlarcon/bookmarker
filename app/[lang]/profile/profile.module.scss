@@ -30,6 +30,8 @@
     border: 1px #fff2 solid;
     border-radius: 1.5rem;
     align-items: center;
+    overflow-wrap: anywhere;
+    width: 75%;
 
     &__field__name {
       font-weight: bold;
@@ -43,6 +45,8 @@
     transition: all 150ms ease-in-out;
     display: flex;
     align-items: center;
+    font-size: .9rem;
+    font-weight: bold;
     
     &::before {
       display: inline-flex;

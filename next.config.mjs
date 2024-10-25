@@ -9,6 +9,15 @@ const nextConfig = {
 	transpilePackages: ["i18next", "react-i18next"],
 	sassOptions: {
 		silenceDeprecations: ["legacy-js-api"]
+	},
+	experimental: {
+		staleTimes: {
+			dynamic: 60,
+			static: 60
+		}
+	},
+	images: {
+		domains: ["lh3.googleusercontent.com"]
 	}
 }
 
