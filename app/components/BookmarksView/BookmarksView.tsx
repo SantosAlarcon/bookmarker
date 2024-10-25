@@ -39,23 +39,21 @@ const BookmarksView = () => {
     const session: Session | null = authStore((state) => state.session);
 
     // Get and set the loading state
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [filteredList, setFilteredList] = useState([...bookmarksList]);
 
     // Get the root folders so that can be rendered first
     useEffect(() => {
-        setLoading(true);
-
         const getRootItems = async () => {
             await updateBookmarkList();
 	    setFetched(true);
+	    setLoading(false);
         };
 
         getRootItems();
 
 
-        setLoading(false);
     }, [session]);
 
     // This will trigger when the filter updates
