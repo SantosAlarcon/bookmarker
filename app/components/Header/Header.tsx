@@ -12,29 +12,30 @@ import UserContextMenu from "./UserContextMenu";
 import { useTranslation } from "react-i18next";
 import { Toaster } from "sonner";
 import FilteringComponent from "../FilteringComponent/FilteringComponent";
-import "@/app/i18n/client"
+import "@/app/i18n/client";
+import { Suspense } from "react";
 
-const Header = ({lang}:{lang: string}) => {
+const Header = ({ lang }: { lang: string }) => {
     // Get Bookmark/Folder functions from the modal store
     const showNewBookmarkModal = modalStore(
         (state) => state.showNewBookmarkModal,
     );
     const showNewFolderModal = modalStore((state) => state.showNewFolderModal);
 
-    const { t } = useTranslation(["common", "header"], {lng: lang});
+    const { t } = useTranslation(["common", "header"], { lng: lang });
 
     const router = useRouter();
 
-    const handleNewBookmark = async () => {
+    const handleNewBookmark = () => {
         showNewBookmarkModal();
     };
-    const handleNewFolder = async () => {
+    const handleNewFolder = () => {
         showNewFolderModal();
     };
 
     return (
         <>
-            <Toaster richColors position="top-center" />
+            <Toaster richColors={true} position="top-center" />
             <NewBookmarkDialog title={t("common:new-bookmark-title")} />
             <NewFolderDialog title={t("common:new-folder-title")} />
             <UserContextMenu />
@@ -49,7 +50,7 @@ const Header = ({lang}:{lang: string}) => {
                             width="128"
                             height="128"
                             alt="Logo"
-                            priority
+                            priority={true}
                             className={styles.header__logo_img}
                         />
                     </div>
@@ -74,7 +75,7 @@ const Header = ({lang}:{lang: string}) => {
                                     height={32}
                                     src="/icons/add-bookmark-icon.svg"
                                     alt="New bookmark icon"
-                                    priority
+                                    priority={true}
                                 />
                             </button>
                         </div>
@@ -98,7 +99,7 @@ const Header = ({lang}:{lang: string}) => {
                                     height={32}
                                     src="/icons/add-folder-icon.svg"
                                     alt="New folder icon"
-                                    priority
+                                    priority={true}
                                 />
                             </button>
                         </div>

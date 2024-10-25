@@ -23,11 +23,11 @@ const AuthButton = () => {
         if (session) {
             // @ts-ignore
             handleUserContextMenu(event);
-        } 
+        }
     };
 
     return (
-        metadata && (
+        metadata ? (
             <div className={styles.auth__button__container}>
                 <button
                     onClick={(e) => handleAuth(e)}
@@ -43,24 +43,30 @@ const AuthButton = () => {
                         className={tooltipStyles.custom__tooltip}
                         content={session ? "" : "Login"}
                     />
-                    {session ? (
-                        <picture>
-                            <img
-                                style={{ borderRadius: "100%" }}
-                                src={metadata?.picture}
+                        {session ? (
+                            <picture>
+                                <img
+                                    style={{ borderRadius: "100%" }}
+                                    src={metadata?.picture}
+                                    width={36}
+                                    height={36}
+                                    alt=""
+                                    fetchPriority="high"
+                                    className={styles.auth__button__img}
+                                />
+                            </picture>
+                        ) : (
+                            <Image
+                                className={styles.auth__button__img}
                                 width={36}
                                 height={36}
+                                src={"/user.svg"}
                                 alt=""
-                                fetchPriority="high"
-				className={styles.auth__button__img}
                             />
-                        </picture>
-                    ) : (
-                        <Image className={styles.auth__button__img} width={36} height={36} src={"/user.svg"} alt="" />
-                    )}
+                        )}
                 </button>
             </div>
-        )
+        ) : (<span className={styles.auth__button__skeleton} />)
     );
 };
 

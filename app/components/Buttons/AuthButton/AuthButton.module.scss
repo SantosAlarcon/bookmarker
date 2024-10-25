@@ -9,4 +9,25 @@
     }
   }
 
+  &__skeleton {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(90deg, #a0a0a0 25%, #303030 50%, #a0a0a0 75%);
+    border-radius: 100%;
+    background-size: 400% 400%;
+    animation: loading 1s ease-in-out infinite;
+  }
+
+}
+
+@keyframes loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
