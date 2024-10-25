@@ -26,17 +26,7 @@ export default async function RootLayout(props: {
     const params = await props.params;
 
     const { children } = props;
-
-    const supabase = await createClient();
-    const {
-        data: { session },
-    } = await supabase.auth.getSession();
-
-    // It only renders the main page if there is no session
-    if (!session) {
-        return redirect("/auth/login");
-    }
-
+    
     return (
         <html lang={params.lang} suppressHydrationWarning={true}>
             <head>
@@ -83,10 +73,7 @@ export default async function RootLayout(props: {
                 <meta property="og:site_name" content="Bookmarker" />
             </head>
             <body>
-		{/* @ts-ignore */}
-                <AuthSync sessionState={{ session: session }} />
-                <LocaleSync localeState={{ locale: params.lang }} />
-                {children}
+		{children}
             </body>
         </html>
     );
