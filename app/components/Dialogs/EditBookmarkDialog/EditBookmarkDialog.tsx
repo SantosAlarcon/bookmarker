@@ -29,7 +29,9 @@ interface EditBookmarkState {
 const EditBookmarkDialog = ({ title }: Props) => {
     const editBookmarkData = modalStore((state) => state.editBookmarkData);
     const editBookmarkModal = modalStore((state) => state.editBookmarkModal);
-    const hideEditBookmarkDialog = modalStore((state) => state.hideEditBookmarkModal);
+    const hideEditBookmarkDialog = modalStore(
+        (state) => state.hideEditBookmarkModal,
+    );
     const folderList = folderStore((state) => state.folderList);
     const setFolderList = folderStore((state) => state.setFolderList);
 
@@ -96,20 +98,38 @@ const EditBookmarkDialog = ({ title }: Props) => {
             //router.refresh()
             toast.success(t("edit-bookmark-success"));
         } else {
-            alert("URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.");
+            alert(
+                "URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.",
+            );
         }
     };
 
     const dialog: JSX.Element | null =
         editBookmarkModal === true ? (
-            <dialog ref={dialogRef} className={styles.edit__bookmark__dialog__container} onClose={closeDialog}>
+            <dialog
+                ref={dialogRef}
+                className={styles.edit__bookmark__dialog__container}
+                onClose={closeDialog}
+            >
                 <div className={styles.edit__bookmark__dialog__title}>
-                    <Image src="/icons/edit-icon.svg" alt="Edit bookmark icon" width={16} height={16} />
-                    <h4 className={styles.edit__bookmark__dialog__title__text}>{title}</h4>
+                    <Image
+                        src="/icons/edit-icon.svg"
+                        alt="Edit bookmark icon"
+                        width={16}
+                        height={16}
+                    />
+                    <h4 className={styles.edit__bookmark__dialog__title__text}>
+                        {title}
+                    </h4>
                 </div>
                 <div className={styles.edit__bookmark__dialog__content}>
                     <form className={styles.edit__bookmark__dialog__form}>
-                        <label htmlFor="title" className={styles.edit__bookmark__dialog__form__label}>
+                        <label
+                            htmlFor="title"
+                            className={
+                                styles.edit__bookmark__dialog__form__label
+                            }
+                        >
                             {t("title")}
                             <input
                                 type="text"
@@ -126,7 +146,12 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                 required
                             />
                         </label>
-                        <label htmlFor="url" className={styles.edit__bookmark__dialog__form__label}>
+                        <label
+                            htmlFor="url"
+                            className={
+                                styles.edit__bookmark__dialog__form__label
+                            }
+                        >
                             URL
                             <input
                                 type="url"
@@ -143,13 +168,24 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                 required
                             />
                         </label>
-                        <label htmlFor="parentFolder" className={styles.edit__bookmark__dialog__form__label}>
+                        <label
+                            htmlFor="parentFolder"
+                            className={
+                                styles.edit__bookmark__dialog__form__label
+                            }
+                        >
                             {t("parent-folder")}
                             <select
                                 name="parentFolder"
-                                className={styles.edit__bookmark__dialog__form__select}
+                                className={
+                                    styles.edit__bookmark__dialog__form__select
+                                }
                                 // @ts-ignore
-                                defaultValue={editBookmarkData.parentFolder ? editBookmarkData.parentFolder : null}
+                                defaultValue={
+                                    editBookmarkData.parentFolder
+                                        ? editBookmarkData.parentFolder
+                                        : null
+                                }
                                 onChange={() =>
                                     setUpdatedBookmark({
                                         ...updatedBookmark,
@@ -158,9 +194,14 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                     })
                                 }
                             >
-                                <option value="null">{t("no-parent-folder")}</option>
+                                <option value="null">
+                                    {t("no-parent-folder")}
+                                </option>
                                 {folderList?.map((folder: BookmarkFolder) => (
-                                    <option key={folder.folder_id} value={folder.folder_id}>
+                                    <option
+                                        key={folder.folder_id}
+                                        value={folder.folder_id}
+                                    >
                                         {folder.folder_title}
                                     </option>
                                 ))}
@@ -169,7 +210,13 @@ const EditBookmarkDialog = ({ title }: Props) => {
                     </form>
                 </div>
                 <div className={styles.edit__bookmark__dialog__buttons}>
-                    <button type="button" disabled={!(updatedBookmark.title && updatedBookmark.url)} onClick={() => editBookmark()}>
+                    <button
+                        type="button"
+                        disabled={
+                            !(updatedBookmark.title && updatedBookmark.url)
+                        }
+                        onClick={() => editBookmark()}
+                    >
                         {loading ? <Spinner /> : t("update")}
                     </button>
                     <button type="button" onClick={() => closeDialog()}>

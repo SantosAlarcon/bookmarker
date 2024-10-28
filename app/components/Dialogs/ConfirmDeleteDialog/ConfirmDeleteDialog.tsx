@@ -28,7 +28,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 
     // @ts-ignore
     const lang = localeStore((state) => state.locale);
-    const { t } = useTranslation("common", {lng: lang});
+    const { t } = useTranslation("common", { lng: lang });
 
     const router = useRouter();
 

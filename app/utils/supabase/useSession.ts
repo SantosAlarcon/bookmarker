@@ -14,7 +14,7 @@ export const useSession = () => {
 
         if (session) {
             setSession(session);
-        } 
+        }
     };
 
     useEffect(() => {

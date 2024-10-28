@@ -2,14 +2,22 @@ const i18NextConfig = {
     debug: process.env.NODE_ENV === "development",
     i18n: {
         locales: ["en", "es", "ca"],
-        defaultLocale: "en"
+        defaultLocale: "en",
     },
     fallbackNS: "common",
     defaultNS: "common",
-    ns: ["common", "header", "login-page", "register-page", "change-password-page", "reset-password", "profile-page"],
+    ns: [
+        "common",
+        "header",
+        "login-page",
+        "register-page",
+        "change-password-page",
+        "reset-password",
+        "profile-page",
+    ],
     load: "all",
-    preload: ["en", "es", "ca"]
-}
+    preload: ["en", "es", "ca"],
+};
 
 export const getI18nSettings = (lang: string, ns: string | string[]) => {
     return {
@@ -17,8 +25,8 @@ export const getI18nSettings = (lang: string, ns: string | string[]) => {
         lang,
         ns,
         fallbackNS: i18NextConfig.fallbackNS,
-        defaultNS: i18NextConfig.defaultNS
-    }
-}
+        defaultNS: i18NextConfig.defaultNS,
+    };
+};
 
-export default i18NextConfig
+export default i18NextConfig;

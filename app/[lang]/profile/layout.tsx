@@ -9,12 +9,12 @@ const barlow = Barlow({
     weight: ["400", "500", "700", "900"],
 });
 
-export const generateMetadata = async (props: { params: Promise<{ lang: string }> }) => {
+export const generateMetadata = async (props: {
+    params: Promise<{ lang: string }>;
+}) => {
     const params = await props.params;
 
-    const {
-        lang
-    } = params;
+    const { lang } = params;
 
     const { t } = await initTranslations(lang, ["profile-page"]);
     return {
@@ -34,11 +34,17 @@ function ProfileLayout({ children }: { children: ReactNode }) {
                 />
                 <meta name="theme-color" content="#8936FF" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
-                <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+                <meta
+                    name="apple-mobile-web-app-status-bar-style"
+                    content="default"
+                />
                 <meta name="apple-mobile-web-app-title" content="Bookmarker" />
                 <meta name="format-detection" content="telephone=no" />
                 <meta name="mobile-web-app-capable" content="yes" />
-                <meta name="msapplication-config" content="/icons/browserconfig.xml" />
+                <meta
+                    name="msapplication-config"
+                    content="/icons/browserconfig.xml"
+                />
                 <meta name="msapplication-TileColor" content="#2B5797" />
                 <meta name="msapplication-tap-highlight" content="no" />
             </Head>

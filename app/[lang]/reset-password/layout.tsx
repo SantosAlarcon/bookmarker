@@ -9,20 +9,20 @@ const barlow = Barlow({
     weight: ["400", "500", "700", "900"],
 });
 
-export async function generateMetadata(props: { params: Promise<{ lang: string }> }) {
+export async function generateMetadata(props: {
+    params: Promise<{ lang: string }>;
+}) {
     const params = await props.params;
 
-    const {
-        lang
-    } = params;
+    const { lang } = params;
 
-    const { t } = await initTranslations(lang, [ "reset-password" ]);
+    const { t } = await initTranslations(lang, ["reset-password"]);
     return {
-		title: `${t("title")}`,
-	};
+        title: `${t("title")}`,
+    };
 }
 
-function ResetPasswordLayout({ children}: { children: ReactNode }) {
+function ResetPasswordLayout({ children }: { children: ReactNode }) {
     return (
         <>
             <Head>

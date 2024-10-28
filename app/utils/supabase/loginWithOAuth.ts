@@ -1,4 +1,4 @@
-"use server"
+"use server";
 
 import type { Provider } from "@supabase/supabase-js";
 import { redirect } from "next/navigation";
@@ -13,15 +13,15 @@ export const loginWithOAuth = async (provider: Provider) => {
             queryParams: {
                 access_type: "offline",
                 prompt: "consent",
-            }
+            },
         },
     });
 
     if (error) {
-        return console.error(error)
+        return console.error(error);
     }
 
     if (data.url) {
-        return redirect(data.url)
+        return redirect(data.url);
     }
 };

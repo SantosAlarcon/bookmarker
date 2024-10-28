@@ -9,12 +9,12 @@ const barlow = Barlow({
     weight: ["400", "500", "700", "900"],
 });
 
-export const generateMetadata = async (props: { params: Promise<{ lang: string }> }) => {
+export const generateMetadata = async (props: {
+    params: Promise<{ lang: string }>;
+}) => {
     const params = await props.params;
 
-    const {
-        lang
-    } = params;
+    const { lang } = params;
 
     const { t } = await initTranslations(lang, ["login-page"]);
     return {
@@ -22,13 +22,11 @@ export const generateMetadata = async (props: { params: Promise<{ lang: string }
     };
 };
 
-function LoginLayout({
-    children,
-}: { children: ReactNode}) {
+function LoginLayout({ children }: { children: ReactNode }) {
     return (
         <>
             <Head>
-                <link rel="shortcut icon" href="/favicon.svg" / >
+                <link rel="shortcut icon" href="/favicon.svg" />
                 <link rel="manifest" href="/manifest.json" />
                 <meta
                     name="viewport"

@@ -22,9 +22,9 @@ const RemoveButton = ({ children }: RemoveProps) => {
     );
     const setDeleteProps = modalStore((state) => state.setDeleteProps);
     const { bookmark_id, bookmark_title } = children;
-    
+
     // @ts-ignore
-    const lang = localeStore((state) => state.locale)
+    const lang = localeStore((state) => state.locale);
     const { t } = useTranslation("common", { lng: lang });
 
     const handleClick = () => {

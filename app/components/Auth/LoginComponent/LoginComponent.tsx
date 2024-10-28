@@ -14,186 +14,192 @@ import { loginWithOAuth } from "@/app/utils/supabase/loginWithOAuth";
 import { toast } from "sonner";
 
 interface FormData {
-	email: string;
-	password: string;
-	loading: boolean;
+    email: string;
+    password: string;
+    loading: boolean;
 }
 
 const LoginComponent = ({ lang }: { lang: string }) => {
-	const router: AppRouterInstance = useRouter();
-	const { t } = useTranslation("login-page", { lng: lang });
+    const router: AppRouterInstance = useRouter();
+    const { t } = useTranslation("login-page", { lng: lang });
 
-	const [formData, setFormData] = useState<FormData>({
-		email: "",
-		password: "",
-		loading: false,
-	});
+    const [formData, setFormData] = useState<FormData>({
+        email: "",
+        password: "",
+        loading: false,
+    });
 
-	const handleSubmit = (event: FormEvent) => {
-		event.preventDefault();
-		setFormData({ ...formData, loading: true });
-		loginWithEmail(formData.email, formData.password)
-			.then(() => {
-				toast.success(t("login-success"));
-				router.prefetch("/");
-				router.push("/");
-			})
-			.catch(() => {
-				toast.error(t("login-error"));
-			});
+    const handleSubmit = (event: FormEvent) => {
+        event.preventDefault();
+        setFormData({ ...formData, loading: true });
+        loginWithEmail(formData.email, formData.password)
+            .then(() => {
+                toast.success(t("login-success"));
+                router.prefetch("/");
+                router.push("/");
+            })
+            .catch(() => {
+                toast.error(t("login-error"));
+            });
 
-		setFormData({ ...formData, loading: false });
+        setFormData({ ...formData, loading: false });
 
-		// Reset the form
-		setFormData({ email: "", password: "", loading: false });
-	};
+        // Reset the form
+        setFormData({ email: "", password: "", loading: false });
+    };
 
-	return (
-		<section className={styles.login__page__container}>
-			<div className={styles.login__page__logo}>
-				<Image
-					src="/BookmarkerLogo.svg"
-					alt="logo"
-					width={450}
-					height={150}
-					priority={true}
-				/>
-			</div>
-			<div className={styles.login__page__inner}>
-				<Image className={styles.login__page__image} src="/BookmarkerMockup.webp" alt="mockup" width={1225} height={749} />
-				<div className={styles.login__page__box}>
-					<h2 className={styles.login__page__title}>{t("title")}</h2>
-					<div className={styles.login__page__text}>{t("text")}</div>
-					<div className={styles.login__page__social__buttons}>
-						<form
-							action={() => loginWithOAuth("google")}
-							className={styles.login__page__social__button__form}
-						>
-							<button
-								type="submit"
-								className={styles.login__page__social__button}
-								disabled={formData.loading}
-							>
-								<Image
-									src="/social/google.svg"
-									alt="Google Logo"
-									width={20}
-									height={20}
-									priority={true}
-								/>
-								{t("sign-with-google")}
-							</button>
-						</form>
-						<form
-							action={() => loginWithOAuth("github")}
-							className={styles.login__page__social__button__form}
-						>
-							<button
-								type="submit"
-								className={styles.login__page__social__button}
-								disabled={formData.loading}
-							>
-								<Image
-									src="/social/github.svg"
-									alt="GitHub Logo"
-									width={20}
-									height={20}
-									priority={true}
-								/>
-								{t("sign-with-github")}
-							</button>
-						</form>
-						<form
-							action={() => loginWithOAuth("facebook")}
-							className={styles.login__page__social__button__form}
-						>
-							<button
-								type="submit"
-								className={styles.login__page__social__button}
-								disabled={formData.loading}
-							>
-								<Image
-									src="/social/facebook.svg"
-									alt="Facebook Logo"
-									width={20}
-									height={20}
-									priority={true}
-								/>
-								{t("sign-with-facebook")}
-							</button>
-						</form>
-						<hr className={styles.login__page__separator} />
-						<form
-							className={styles.login__page__form}
-							onSubmit={(e) => handleSubmit(e)}
-						>
-							<label htmlFor="email">{t("email-label")}</label>
-							<input
-								type="email"
-								id="email"
-								onChange={(e) =>
-									setFormData({
-										...formData,
-										email: e.target.value,
-									})
-								}
-								required={true}
-								placeholder={t("email-label")}
-								value={formData.email}
-							/>
-							<label htmlFor="password">
-								{t("password-label")}
-							</label>
-							<input
-								type="password"
-								id="password"
-								onChange={(e) =>
-									setFormData({
-										...formData,
-										password: e.target.value,
-									})
-								}
-								required={true}
-								placeholder={t("password-label")}
-								value={formData.password}
-							/>
-							<button
-								className={styles.login__page__social__button}
-								type="submit"
-								disabled={formData.loading}
-							>
-								{formData.loading ? (
-									<Spinner />
-								) : (
-									<Image
-										src="/social/email.svg"
-										alt="Email Logo"
-										width={20}
-										height={20}
-										priority={true}
-									/>
-								)}
-								{t("sign-with-email")}
-							</button>
-						</form>
-					</div>
-					<Link
-						href="/auth/register"
-						className={styles.login__page__link}
-					>
-						{t("register-text")} <b>{t("register-link")}</b>
-					</Link>
-					<Link
-						href="/reset-password"
-						className={styles.login__page__link}
-					>
-						{t("reset-password-text")}{" "}
-						<b>{t("reset-password-link")}</b>
-					</Link>
-				</div>
-			</div>
-		</section>
-	);
+    return (
+        <section className={styles.login__page__container}>
+            <div className={styles.login__page__logo}>
+                <Image
+                    src="/BookmarkerLogo.svg"
+                    alt="logo"
+                    width={450}
+                    height={150}
+                    priority={true}
+                />
+            </div>
+            <div className={styles.login__page__inner}>
+                <Image
+                    className={styles.login__page__image}
+                    src="/BookmarkerMockup.webp"
+                    alt="mockup"
+                    width={1225}
+                    height={749}
+                />
+                <div className={styles.login__page__box}>
+                    <h2 className={styles.login__page__title}>{t("title")}</h2>
+                    <div className={styles.login__page__text}>{t("text")}</div>
+                    <div className={styles.login__page__social__buttons}>
+                        <form
+                            action={() => loginWithOAuth("google")}
+                            className={styles.login__page__social__button__form}
+                        >
+                            <button
+                                type="submit"
+                                className={styles.login__page__social__button}
+                                disabled={formData.loading}
+                            >
+                                <Image
+                                    src="/social/google.svg"
+                                    alt="Google Logo"
+                                    width={20}
+                                    height={20}
+                                    priority={true}
+                                />
+                                {t("sign-with-google")}
+                            </button>
+                        </form>
+                        <form
+                            action={() => loginWithOAuth("github")}
+                            className={styles.login__page__social__button__form}
+                        >
+                            <button
+                                type="submit"
+                                className={styles.login__page__social__button}
+                                disabled={formData.loading}
+                            >
+                                <Image
+                                    src="/social/github.svg"
+                                    alt="GitHub Logo"
+                                    width={20}
+                                    height={20}
+                                    priority={true}
+                                />
+                                {t("sign-with-github")}
+                            </button>
+                        </form>
+                        <form
+                            action={() => loginWithOAuth("facebook")}
+                            className={styles.login__page__social__button__form}
+                        >
+                            <button
+                                type="submit"
+                                className={styles.login__page__social__button}
+                                disabled={formData.loading}
+                            >
+                                <Image
+                                    src="/social/facebook.svg"
+                                    alt="Facebook Logo"
+                                    width={20}
+                                    height={20}
+                                    priority={true}
+                                />
+                                {t("sign-with-facebook")}
+                            </button>
+                        </form>
+                        <hr className={styles.login__page__separator} />
+                        <form
+                            className={styles.login__page__form}
+                            onSubmit={(e) => handleSubmit(e)}
+                        >
+                            <label htmlFor="email">{t("email-label")}</label>
+                            <input
+                                type="email"
+                                id="email"
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        email: e.target.value,
+                                    })
+                                }
+                                required={true}
+                                placeholder={t("email-label")}
+                                value={formData.email}
+                            />
+                            <label htmlFor="password">
+                                {t("password-label")}
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        password: e.target.value,
+                                    })
+                                }
+                                required={true}
+                                placeholder={t("password-label")}
+                                value={formData.password}
+                            />
+                            <button
+                                className={styles.login__page__social__button}
+                                type="submit"
+                                disabled={formData.loading}
+                            >
+                                {formData.loading ? (
+                                    <Spinner />
+                                ) : (
+                                    <Image
+                                        src="/social/email.svg"
+                                        alt="Email Logo"
+                                        width={20}
+                                        height={20}
+                                        priority={true}
+                                    />
+                                )}
+                                {t("sign-with-email")}
+                            </button>
+                        </form>
+                    </div>
+                    <Link
+                        href="/auth/register"
+                        className={styles.login__page__link}
+                    >
+                        {t("register-text")} <b>{t("register-link")}</b>
+                    </Link>
+                    <Link
+                        href="/reset-password"
+                        className={styles.login__page__link}
+                    >
+                        {t("reset-password-text")}{" "}
+                        <b>{t("reset-password-link")}</b>
+                    </Link>
+                </div>
+            </div>
+        </section>
+    );
 };
 
 export default LoginComponent;

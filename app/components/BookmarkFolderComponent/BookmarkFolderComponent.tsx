@@ -85,37 +85,35 @@ const BookmarkFolderComponent = (props: BFCProps) => {
         <div className={styles.bookmark__folder__container}>
             <div className={styles.bookmark__folder__main}>
                 {children.length > 0 && (
-                        <Image
-                            width={10}
-                            height={10}
-                            alt="Marker"
-                            src="/icons/triangle.svg"
-                            className={styles.bookmark__folder__mark__icon}
-                            style={
-                                expanded
-                                    ? { rotate: "90deg" }
-                                    : { rotate: "0deg" }
-                            }
-                            priority={true}
-                        />
+                    <Image
+                        width={10}
+                        height={10}
+                        alt="Marker"
+                        src="/icons/triangle.svg"
+                        className={styles.bookmark__folder__mark__icon}
+                        style={
+                            expanded ? { rotate: "90deg" } : { rotate: "0deg" }
+                        }
+                        priority={true}
+                    />
                 )}
-                    {expanded ? (
-                        <Image
-                            width={24}
-                            height={24}
-                            alt="Folder icon"
-                            src="/icons/folder-open.svg"
-                            priority={true}
-                        />
-                    ) : (
-                        <Image
-                            width={24}
-                            height={24}
-                            alt="Folder icon"
-                            src="/icons/folder.svg"
-                            priority={true}
-                        />
-                    )}
+                {expanded ? (
+                    <Image
+                        width={24}
+                        height={24}
+                        alt="Folder icon"
+                        src="/icons/folder-open.svg"
+                        priority={true}
+                    />
+                ) : (
+                    <Image
+                        width={24}
+                        height={24}
+                        alt="Folder icon"
+                        src="/icons/folder.svg"
+                        priority={true}
+                    />
+                )}
                 <div
                     className={styles.bookmark__folder__title}
                     title={props.children.folder_description}

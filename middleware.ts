@@ -31,8 +31,8 @@ export function middleware(req: NextRequest) {
 
     // If there is no session, redirect to the login page
     /*if (!session?.user) {
-        return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
-    } */
+		return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
+	} */
 
     return i18nRouter(req, i18nConfig);
 }

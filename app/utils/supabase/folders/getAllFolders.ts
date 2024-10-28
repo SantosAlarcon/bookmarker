@@ -13,7 +13,7 @@ export const getAllFolders = async (userId: string) => {
     if (error) {
         throw new Error(error.message);
     }
-    
+
     // Returns the result of the query if there are no errors.
     return data;
 };
