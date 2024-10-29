@@ -7,12 +7,26 @@
   }
 
   & input {
-    border: 1px #fff6 solid;
+    border: 1px #eee6 solid;
     border-radius: .5rem;
     width: 400px;
     padding: 0 .5rem;
     font-size: inherit;
     font-family: inherit;
+    transition: all .25s ease-in-out;
+
+    &:focus {
+      box-shadow: 0 0 1rem #ddf6;
+      
+      @media (prefers-color-scheme: light) {
+      box-shadow: 0 0 1rem #66f6;
+    }
+    }
+
+    @media (prefers-color-scheme: light) {
+      border: 1px #1116 solid;
+      background-color: #e1e1f1;
+    }
 
     @media (width <=768px) {
       width: 100%;
@@ -21,7 +35,10 @@
   }
 
   &__icon {
-    filter: invert(1);
+    @media (prefers-color-scheme: dark) {
+      filter: invert(1);
+    }
+
     transform: rotate(-10deg);
   }
 

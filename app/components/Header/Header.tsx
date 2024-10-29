@@ -13,7 +13,6 @@ import { useTranslation } from "react-i18next";
 import { Toaster } from "sonner";
 import FilteringComponent from "../FilteringComponent/FilteringComponent";
 import "@/app/i18n/client";
-import { Suspense } from "react";
 
 const Header = ({ lang }: { lang: string }) => {
     // Get Bookmark/Folder functions from the modal store
@@ -55,7 +54,7 @@ const Header = ({ lang }: { lang: string }) => {
                         />
                     </div>
                     <div className={styles.header__links}>
-                        <div className={styles.header__links__new__boomark}>
+                        <div className={styles.header__links__new__bookmark}>
                             <button
                                 onClick={handleNewBookmark}
                                 className={styles.header__links__button}
@@ -74,6 +73,7 @@ const Header = ({ lang }: { lang: string }) => {
                                     width={32}
                                     height={32}
                                     src="/icons/add-bookmark-icon.svg"
+                                    className={tooltipStyles.header__links__icon}
                                     alt="New bookmark icon"
                                     priority={true}
                                 />
@@ -98,6 +98,7 @@ const Header = ({ lang }: { lang: string }) => {
                                     width={32}
                                     height={32}
                                     src="/icons/add-folder-icon.svg"
+                                    className={tooltipStyles.header__links__icon}
                                     alt="New folder icon"
                                     priority={true}
                                 />
