@@ -51,6 +51,10 @@
     @media (width < 512px) {
       padding: 1.5rem;
     }
+
+    @media (prefers-color-scheme: light) {
+      box-shadow: 0 5px 2rem var(--main-color-dark);
+    }
   }
 
   &__text {
@@ -59,6 +63,9 @@
     text-align: center;
     line-height: 1.6rem;
 
+    @media (prefers-color-scheme: light) {
+      color: #111;
+    }
   }
 
   &__link {
@@ -102,6 +109,11 @@
     width: 75%;
     margin: 0 auto;
 
+    @media(prefers-color-scheme: light) {
+      background-color: #0161a0;
+      color: #eee;
+    }
+
     &:not(:hover) {
       opacity: 0.7;
     }
@@ -142,6 +154,11 @@
       background: #1118;
       color: #ddd;
       transition: all 0.2s ease-in-out;
+
+      @media(prefers-color-scheme: light) {
+        background: #0161a033;
+        color: #333;
+      }
 
       &:focus {
         box-shadow: 0 0 0.25rem var(--main-color-hover), inset 0 0 0.25rem var(--main-color-hover);
