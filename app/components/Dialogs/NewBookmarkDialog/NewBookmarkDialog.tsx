@@ -46,6 +46,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
             const { data: user } = await supabase.auth.getUser();
             // @ts-ignore
             const folders = await getAllFolders(user.user?.id);
+            // @ts-ignore
             setFolderList(folders);
         };
         getFolderList();
