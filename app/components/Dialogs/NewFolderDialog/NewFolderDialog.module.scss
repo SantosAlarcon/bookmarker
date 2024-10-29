@@ -10,6 +10,10 @@
     box-shadow: 5px 0 3rem #0005;
     background-color: #112;
 
+    @media (prefers-color-scheme: light) {
+      background-color: #eef;
+    }
+
     @media (width < 720px) {
       top: 20vh;
     }
@@ -24,12 +28,20 @@
     border-bottom: 1px solid #fff6;
     display: flex;
     align-items: center;
-    gap: .5rem;
+    gap: 0.5rem;
+
+    @media (prefers-color-scheme: light) {
+      border-bottom: 1px solid #1116;
+    }
 
     &>img {
       width: 24px;
       height: 24px;
-      filter: invert(1);
+
+      @media (prefers-color-scheme: dark) {
+        filter: invert(1);
+      }
+
     }
   }
 
@@ -39,30 +51,7 @@
     flex-direction: column;
     margin: 1rem 0;
 
-    & input {
-      margin-top: 1rem;
-      font-size: 15px;
-      font-family: inherit;
-      padding: .5rem;
-      width: 100%;
-      outline: none;
-      border: none;
-      border-radius: .5rem;
-      transition: all 300ms ease-in-out;
-      background-color: #334;
-
-      &:focus {
-        background-color: #fff5;
-      }
-    }
-
-    &__label {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      font-weight: bold;
-    }
-
+    & input,
     & select {
       margin-top: 1rem;
       font-size: 15px;
@@ -75,14 +64,34 @@
       transition: all 300ms ease-in-out;
       background-color: #334;
 
+      @media (prefers-color-scheme: light) {
+        background-color: #ccf;
+      }
+
       &:focus {
-        background-color: #fff5;
+        background-color: #556;
+
+        @media (prefers-color-scheme: light) {
+          background-color: #ddf;
+          box-shadow: inset 0 0 .1rem #33f;
+        }
       }
 
       &>option {
         background: var(--main-color-dark);
         padding: 0.5rem 0;
+
+        @media (prefers-color-scheme: light) {
+          background-color: #ccf;
+        }
       }
+    }
+
+    &__label {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      font-weight: bold;
     }
   }
 
@@ -96,18 +105,36 @@
       cursor: pointer;
       border: none;
       outline: none;
-      padding: .5rem 2rem;
+      padding: 0.5rem 2rem;
       border-radius: 1rem;
       font-family: inherit;
       background-color: var(--main-color);
       transition: all 150ms ease-in-out;
+      user-select: none;
+      color: #eee;
 
       &:nth-child(1) {
         background-color: var(--main-color-dark);
+
+        &:hover {
+          box-shadow: 0 0 .75rem var(--main-color);
+
+          &:is(:disabled) {
+            box-shadow: none;
+          }
+        }
+
+        &:disabled {
+          color: #eee3;
+        }
       }
 
       &:hover {
         background-color: var(--main-color-hover);
+
+        &:is(:disabled) {
+          background-color: var(--main-color-dark);
+        }
       }
 
       &:active {

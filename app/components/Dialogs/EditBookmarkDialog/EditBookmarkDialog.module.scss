@@ -10,6 +10,10 @@
     box-shadow: 5px 0 3rem #0005;
     background-color: #112;
 
+    @media (prefers-color-scheme: light) {
+      background-color: #eef;
+    }
+
     @media (width < 720px) {
       top: 20vh;
     }
@@ -26,10 +30,17 @@
     align-items: center;
     gap: .5rem;
 
+    @media (prefers-color-scheme: light) {
+      border-bottom: 1px solid #1116;
+    }
+
     &>img {
       width: 24px;
       height: 24px;
-      filter: invert(1);
+
+      @media (prefers-color-scheme: dark) {
+        filter: invert(1);
+      }
     }
   }
 
@@ -52,15 +63,28 @@
       transition: all 300ms ease-in-out;
       background-color: #334;
 
+      @media (prefers-color-scheme: light) {
+        background-color: #ccf;
+      }
+
       &:focus {
         background-color: #fff5;
+
+        @media (prefers-color-scheme: light) {
+          background-color: #ddf;
+          box-shadow: inset 0 0 .1rem #33f;
+        }
+
       }
 
       &>option {
         background: var(--main-color-dark);
         padding: 0.5rem 0;
-      }
 
+        @media (prefers-color-scheme: light) {
+          background-color: #ccf;
+        }
+      }
 
     }
 
@@ -87,9 +111,28 @@
       font-family: inherit;
       background-color: var(--main-color);
       transition: all 150ms ease-in-out;
+      color: #eee;
 
       &:nth-child(1) {
-        background-color: var(--main-color-dark) !important;
+        background-color: var(--main-color-dark);
+
+        &:is(:disabled) {
+          color: #eee6;
+        }
+
+        &:hover {
+          background-color: var(--main-color-hover);
+          box-shadow: 0 0 .75rem var(--main-color-hover);
+
+          &:is(:disabled) {
+            box-shadow: none;
+            background-color: var(--main-color-dark);
+          }
+        }
+
+        &:disabled {
+          color: #eee3;
+        }
       }
 
       &:hover {
