@@ -1,6 +1,6 @@
 .profile__page {
   &__container {
-    border: 1px white solid;
+    border: 1px #eee solid;
     border-radius: 1.5rem;
     width: 70%;
     margin: 0 auto;
@@ -10,6 +10,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    @media (prefers-color-scheme: light) {
+      border: 1px #111 solid;
+    }
   }
 
   &__title {
@@ -27,7 +31,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-    border: 1px #fff2 solid;
+    border: 1px #eee2 solid;
     border-radius: 1.5rem;
     align-items: center;
     overflow-wrap: anywhere;
@@ -36,6 +40,11 @@
     &__field__name {
       font-weight: bold;
     }
+   
+    @media (prefers-color-scheme: light) {
+      border: 1px #111 solid;
+    }
+
   }
 
   &__back__button {
@@ -47,6 +56,11 @@
     align-items: center;
     font-size: .9rem;
     font-weight: bold;
+    color: #eee;
+
+    @media (prefers-color-scheme: light) {
+      background-color: #0161a0;
+    }
     
     &::before {
       display: inline-flex;
