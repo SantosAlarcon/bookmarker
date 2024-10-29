@@ -9,8 +9,9 @@ import { authStore } from "../store/authStore";
 // This function fetches all bookmarks and folders from a user associated with the session user ID.
 export const updateBookmarkList = async () => {
     const updateBookmarksList = bookmarksStore.getState().setBookmarksList;
-    const updateAllBookmarksList = bookmarksStore.getState().setAllBookmarksList;
-    const {session} = authStore.getState()
+    const updateAllBookmarksList =
+        bookmarksStore.getState().setAllBookmarksList;
+    const { session } = authStore.getState();
 
     // const supabase = await createClient();
     // const {

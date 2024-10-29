@@ -26,7 +26,7 @@ export default async function RootLayout(props: {
     const params = await props.params;
 
     const { children } = props;
-    
+
     return (
         <html lang={params.lang} suppressHydrationWarning={true}>
             <head>
@@ -72,9 +72,7 @@ export default async function RootLayout(props: {
                 />
                 <meta property="og:site_name" content="Bookmarker" />
             </head>
-            <body>
-		{children}
-            </body>
+            <body>{children}</body>
         </html>
     );
 }

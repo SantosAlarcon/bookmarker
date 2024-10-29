@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./NewBookmarkDialog.module.scss";
 import { localeStore } from "@/app/store/localeStore";
-import "@/app/i18n/client"
+import "@/app/i18n/client";
 
 type Props = {
     title: string;
@@ -37,7 +37,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
     const dialogRef = useRef<null | HTMLDialogElement>(null);
 
     // @ts-ignore
-    const lang = localeStore((state) => state.locale)
+    const lang = localeStore((state) => state.locale);
     const { t } = useTranslation("common", { lng: lang });
 
     useEffect(() => {

@@ -34,7 +34,7 @@ const EditFolderDialog = ({ title }: Props) => {
 
     // @ts-ignore
     const lang = localeStore((state) => state.locale);
-    const { t } = useTranslation("common", {lng: lang});
+    const { t } = useTranslation("common", { lng: lang });
 
     const dialogRef = useRef<null | HTMLDialogElement>(null);
 

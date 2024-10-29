@@ -47,13 +47,11 @@ const BookmarksView = () => {
     useEffect(() => {
         const getRootItems = async () => {
             await updateBookmarkList();
-	    setFetched(true);
-	    setLoading(false);
+            setFetched(true);
+            setLoading(false);
         };
 
         getRootItems();
-
-
     }, [session]);
 
     // This will trigger when the filter updates
@@ -66,7 +64,8 @@ const BookmarksView = () => {
                 [...allBookmarksList].filter(
                     // @ts-ignore
                     (item: BookmarkItem & BookmarkFolder) =>
-                        item.bookmark_title?.toLowerCase().includes(filter) || item.folder_title?.toLowerCase().includes(filter),
+                        item.bookmark_title?.toLowerCase().includes(filter) ||
+                        item.folder_title?.toLowerCase().includes(filter),
                 ),
             );
         }
@@ -86,47 +85,65 @@ const BookmarksView = () => {
                 )}
                 {loading ? (
                     // If not bookmarks are loaded, it shows skeleton component
-                    Array.from({ length: 10 }).map((_, i) => <BookmarkSkeleton key={i} />)
+                    Array.from({ length: 10 }).map((_, i) => (
+                        <BookmarkSkeleton key={i} />
+                    ))
                 ) : // If there are, it renders the folders and bookmarks
                 bookmarksList.length > 0 ? (
                     // First render the root folders and its children
-                    <motion.ul layout initial="false" className={styles.bookmarks__view__list}>
+                    <motion.ul
+                        layout
+                        initial="false"
+                        className={styles.bookmarks__view__list}
+                    >
                         {/* @ts-ignore */}
-                        {filteredList?.map((item: BookmarkFolder & BookmarkItem, index) => {
-                            {
-                                /* If the item have the folder_id field, it renders a folder component. */
-                            }
-                            if (item.hasOwnProperty("folder_id")) {
-                                return (
-                                    <motion.li
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ scale: 0 }}
-                                        transition={{ delay: 0.1 * index }}
-                                        key={item.folder_id}
-                                    >
-                                        <BookmarkFolderComponent key={item.folder_id}>{item}</BookmarkFolderComponent>
-                                    </motion.li>
-                                );
-                            } else {
-                                return (
-                                    <motion.li
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ scale: 0 }}
-                                        transition={{ delay: 0.1 * index }}
-                                        key={item.bookmark_id}
-                                    >
-                                        <BookmarkItemComponent key={item.bookmark_id}>{item}</BookmarkItemComponent>
-                                    </motion.li>
-                                );
-                            }
-                        })}
+                        {filteredList?.map(
+                            (item: BookmarkFolder & BookmarkItem, index) => {
+                                {
+                                    /* If the item have the folder_id field, it renders a folder component. */
+                                }
+                                if (item.hasOwnProperty("folder_id")) {
+                                    return (
+                                        <motion.li
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ scale: 0 }}
+                                            transition={{ delay: 0.1 * index }}
+                                            key={item.folder_id}
+                                        >
+                                            <BookmarkFolderComponent
+                                                key={item.folder_id}
+                                            >
+                                                {item}
+                                            </BookmarkFolderComponent>
+                                        </motion.li>
+                                    );
+                                } else {
+                                    return (
+                                        <motion.li
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            exit={{ scale: 0 }}
+                                            transition={{ delay: 0.1 * index }}
+                                            key={item.bookmark_id}
+                                        >
+                                            <BookmarkItemComponent
+                                                key={item.bookmark_id}
+                                            >
+                                                {item}
+                                            </BookmarkItemComponent>
+                                        </motion.li>
+                                    );
+                                }
+                            },
+                        )}
                     </motion.ul>
                 ) : (
                     // If there not any bookmarks/folders, it shows a message of it.
                     // In case that no search ocurrences are found, it shows a message of it.
-                    <div className={styles.bookmarks__view__paragraph}>{<NotFound />}</div>
+                    <div className={styles.bookmarks__view__paragraph}>
+                        {<NotFound />}
+                    </div>
                 )}
             </main>
         </>

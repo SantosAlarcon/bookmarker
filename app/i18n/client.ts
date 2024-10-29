@@ -9,7 +9,12 @@ import { initReactI18next } from "react-i18next/initReactI18next";
 // getCookie("NEXT_LOCALE").then((cookie) => language = cookie);
 
 i18nClient.use(Backend);
-i18nClient.use(resourcesToBackend((language: string, namespace: string) => import(`./locales/${language}/${namespace}.json`)));
+i18nClient.use(
+    resourcesToBackend(
+        (language: string, namespace: string) =>
+            import(`./locales/${language}/${namespace}.json`),
+    ),
+);
 i18nClient.use(initReactI18next);
 
 i18nClient.init({

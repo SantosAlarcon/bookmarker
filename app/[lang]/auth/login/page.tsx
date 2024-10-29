@@ -8,9 +8,7 @@ import "@/app/i18n/client";
 const LoginPage = (props: { params: Promise<{ lang: string }> }) => {
     const params = use(props.params);
 
-    const {
-        lang
-    } = params;
+    const { lang } = params;
 
     return (
         <main className={styles.main}>

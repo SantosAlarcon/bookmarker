@@ -10,15 +10,15 @@ const barlow = Barlow({
 });
 
 // @ts-ignore
-export const generateMetadata = async (props: {params}) => {
+export const generateMetadata = async (props: { params }) => {
     const params = await props.params;
     const lang = params.lang;
-    const {t} = await initTranslations(lang, [ "register-page" ]);
+    const { t } = await initTranslations(lang, ["register-page"]);
 
     return {
-	title: t("title"),
-    }
-}
+        title: t("title"),
+    };
+};
 
 export default function AuthLayout({
     children,

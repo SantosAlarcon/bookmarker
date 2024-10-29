@@ -7,7 +7,7 @@ import "react-tooltip/dist/react-tooltip.css";
 import tooltipStyles from "@/styles/tooltip.module.css";
 import { useTranslation } from "next-i18next";
 import { localeStore } from "@/app/store/localeStore";
-import "@/app/i18n/client"
+import "@/app/i18n/client";
 
 interface EditFolderProps {
     children: {
@@ -27,10 +27,10 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
     );
     const { folder_id, folder_title, folder_description, folder_parentfolder } =
         children;
-    
+
     // @ts-ignore
-    const lang = localeStore((state) => state.locale)
-    const { t } = useTranslation("common", {lng: lang});
+    const lang = localeStore((state) => state.locale);
+    const { t } = useTranslation("common", { lng: lang });
 
     const handleClick = () => {
         // @ts-ignore

@@ -2,7 +2,7 @@ import { createClient } from "@/app/utils/supabase/server";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
-    const supabase = await createClient()
+    const supabase = await createClient();
 
     const {
         data: { session },

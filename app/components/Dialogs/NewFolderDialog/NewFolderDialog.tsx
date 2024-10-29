@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./NewFolderDialog.module.scss";
-import "@/app/i18n/client"
+import "@/app/i18n/client";
 import { localeStore } from "@/app/store/localeStore";
 
 type Props = {
@@ -30,10 +30,10 @@ const NewFolderDialog = ({ title }: Props) => {
     });
     const [loading, setLoading] = useState<boolean>(false);
     const dialogRef = useRef<null | HTMLDialogElement>(null);
-    
+
     // @ts-ignore
-    const lang = localeStore((state) => state.locale)
-    const { t } = useTranslation("common", {lng: lang});
+    const lang = localeStore((state) => state.locale);
+    const { t } = useTranslation("common", { lng: lang });
 
     useEffect(() => {
         if (showNewFolderDialog) {

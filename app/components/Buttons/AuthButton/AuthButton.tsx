@@ -26,47 +26,47 @@ const AuthButton = () => {
         }
     };
 
-    return (
-        metadata ? (
-            <div className={styles.auth__button__container}>
-                <button
-                    onClick={(e) => handleAuth(e)}
-                    className={styles.auth__button__btn}
-                    id="auth-tooltip"
-                    aria-label="Login"
-                    type="button"
-                >
-                    <Tooltip
-                        anchorSelect="#auth-tooltip"
-                        place="bottom"
-                        variant="info"
-                        className={tooltipStyles.custom__tooltip}
-                        content={session ? "" : "Login"}
+    return metadata ? (
+        <div className={styles.auth__button__container}>
+            <button
+                onClick={(e) => handleAuth(e)}
+                className={styles.auth__button__btn}
+                id="auth-tooltip"
+                aria-label="Login"
+                type="button"
+            >
+                <Tooltip
+                    anchorSelect="#auth-tooltip"
+                    place="bottom"
+                    variant="info"
+                    className={tooltipStyles.custom__tooltip}
+                    content={session ? "" : "Login"}
+                />
+                {session ? (
+                    <picture>
+                        <img
+                            style={{ borderRadius: "100%" }}
+                            src={metadata?.picture}
+                            width={36}
+                            height={36}
+                            alt=""
+                            fetchPriority="high"
+                            className={styles.auth__button__img}
+                        />
+                    </picture>
+                ) : (
+                    <Image
+                        className={styles.auth__button__img}
+                        width={36}
+                        height={36}
+                        src={"/user.svg"}
+                        alt=""
                     />
-                        {session ? (
-                            <picture>
-                                <img
-                                    style={{ borderRadius: "100%" }}
-                                    src={metadata?.picture}
-                                    width={36}
-                                    height={36}
-                                    alt=""
-                                    fetchPriority="high"
-                                    className={styles.auth__button__img}
-                                />
-                            </picture>
-                        ) : (
-                            <Image
-                                className={styles.auth__button__img}
-                                width={36}
-                                height={36}
-                                src={"/user.svg"}
-                                alt=""
-                            />
-                        )}
-                </button>
-            </div>
-        ) : (<span className={styles.auth__button__skeleton} />)
+                )}
+            </button>
+        </div>
+    ) : (
+        <span className={styles.auth__button__skeleton} />
     );
 };
 
