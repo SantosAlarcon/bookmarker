@@ -59,6 +59,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                 // @ts-ignore
                 childrenList.map((folder: BookmarkFolder) => {
                     // Iterates every child bookmark
+                    // @ts-ignore
                     childrenBookmarks.map((bookmark: BookmarkItem) => {
                         // If the bookmark belongs to this parent folder, it pushes to the children array
                         if (
