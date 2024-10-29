@@ -96,8 +96,8 @@ const BookmarksView = () => {
                         initial="false"
                         className={styles.bookmarks__view__list}
                     >
-                        {/* @ts-ignore */}
                         {filteredList?.map(
+                            // @ts-ignore
                             (item: BookmarkFolder & BookmarkItem, index) => {
                                 {
                                     /* If the item have the folder_id field, it renders a folder component. */
