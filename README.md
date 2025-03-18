@@ -6,6 +6,10 @@
 
 **Bookmarker** is a bookmark manager that lets you manage your bookmarks and folders everywhere, whatever you are in mobile or your PC.
 
+<br>
+
+<img alt="Bookmarker Mockup" src="https://raw.githubusercontent.com/SantosAlarcon/bookmarker/refs/heads/main/public/BookmarkerMockup.webp" />
+
 </div>
 <br>
 
