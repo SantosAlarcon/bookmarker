@@ -30,7 +30,7 @@ const ResetPassword = ({ lang }: { lang: string }) => {
         });
 
         if (error) {
-            console.error("ERROR: ", error);
+            //console.error("ERROR: ", error);
         } else {
             toast.info(t("toast-success"));
         }

@@ -18,8 +18,8 @@ export async function GET(request: Request) {
         const { data, error } =
             await supabase.auth.exchangeCodeForSession(code);
 
-        console.log("DATA:", data);
-        console.error("ERROR:", error);
+        //console.log("DATA:", data);
+        //console.error("ERROR:", error);
 
         // If there is no error, set session in the auth store and redirects to the main page
         if (!error) {
