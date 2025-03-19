@@ -17,7 +17,9 @@ const nextConfig = {
 		}
 	},
 	images: {
-		remotePatterns: ["lh3.googleusercontent.com"]
+		remotePatterns: [{
+			protocol: "https"
+		}]
 	}
 }
 
