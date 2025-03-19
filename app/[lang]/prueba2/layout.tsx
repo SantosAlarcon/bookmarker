@@ -17,9 +17,7 @@ const TestLayout = async (props: {
     children: ReactNode;
     params: Promise<{ lang: string }>;
 }) => {
-    const params = await props.params;
-
-    const { lang } = params;
+    const {lang} = await props.params;
 
     const { children } = props;
 

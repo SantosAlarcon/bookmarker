@@ -42,7 +42,8 @@ export const authStore = create<State & Action>(
         {
             name: "Auth Store",
             anonymousActionType: "auth-store-update",
-            enabled: isDev,
+            // enabled: isDev,
+            enabled: true,
         },
     ),
 );

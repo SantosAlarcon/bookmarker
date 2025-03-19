@@ -11,8 +11,8 @@ const barlow = Barlow({
 
 // @ts-ignore
 export const generateMetadata = async (props: { params }) => {
-    const params = await props.params;
-    const lang = params.lang;
+    const {lang} = await props.params;
+
     const { t } = await initTranslations(lang, ["change-password-page"]);
 
     return {

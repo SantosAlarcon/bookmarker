@@ -12,11 +12,10 @@ const barlow = Barlow({
 export const generateMetadata = async (props: {
     params: Promise<{ lang: string }>;
 }) => {
-    const params = await props.params;
+    const {lang} = await props.params;
+    
+	const { t } = await initTranslations(lang, ["profile-page"]);
 
-    const { lang } = params;
-
-    const { t } = await initTranslations(lang, ["profile-page"]);
     return {
         title: t("title"),
     };

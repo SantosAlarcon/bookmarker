@@ -6,12 +6,12 @@ import Spinner from "@/components/Spinner/Spinner";
 import { modalStore } from "@/store/modalStore";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./ConfirmDeleteDialog.module.scss";
 import "@/app/i18n/client";
 import { localeStore } from "@/app/store/localeStore";
+import React from "react";
 
 type Props = {
     title: string;
@@ -29,8 +29,6 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
     // @ts-ignore
     const lang = localeStore((state) => state.locale);
     const { t } = useTranslation("common", { lng: lang });
-
-    const router = useRouter();
 
     useEffect(() => {
         if (confirmDeleteModal === true) {
@@ -66,7 +64,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
         toast.success(`${t("deletion-success")}: ${deleteProps?.title}`);
     };
 
-    const dialog: JSX.Element | null =
+    const dialog: React.JSX.Element | null =
         confirmDeleteModal === true ? (
             <dialog
                 ref={dialogRef}

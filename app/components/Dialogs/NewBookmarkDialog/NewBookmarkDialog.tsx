@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import styles from "./NewBookmarkDialog.module.scss";
 import { localeStore } from "@/app/store/localeStore";
 import "@/app/i18n/client";
+import React from "react";
 
 type Props = {
     title: string;
@@ -87,7 +88,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
         }
     };
 
-    const dialog: JSX.Element | null = newBookmarkModal ? (
+    const dialog: React.JSX.Element | null = newBookmarkModal ? (
         <dialog
             ref={dialogRef}
             className={styles.new__bookmark__dialog__container}

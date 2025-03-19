@@ -2,10 +2,6 @@ import i18nConfig from "@/next-i18next.config";
 import type { ReactNode } from "react";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import { redirect } from "next/navigation";
-import { createClient } from "../utils/supabase/server";
-import AuthSync from "../components/Auth/AuthSync";
-import LocaleSync from "../components/LocaleSync";
 
 export async function generateStaticParams() {
     return i18nConfig.locales.map((locale: string) => ({ locale }));
@@ -23,12 +19,12 @@ export default async function RootLayout(props: {
     params: Promise<{ lang: string }>;
     children: ReactNode;
 }) {
-    const params = await props.params;
+    const {lang} = await props.params;
 
     const { children } = props;
 
     return (
-        <html lang={params.lang} suppressHydrationWarning={true}>
+        <html lang={lang} suppressHydrationWarning={true}>
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 {/* @ts-ignore */}

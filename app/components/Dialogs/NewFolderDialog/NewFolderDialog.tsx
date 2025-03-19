@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import styles from "./NewFolderDialog.module.scss";
 import "@/app/i18n/client";
 import { localeStore } from "@/app/store/localeStore";
+import React from "react";
 
 type Props = {
     title: string;
@@ -63,7 +64,7 @@ const NewFolderDialog = ({ title }: Props) => {
         toast.success(t("new-folder-success"));
     };
 
-    const dialog: JSX.Element | null = showNewFolderDialog ? (
+    const dialog: React.JSX.Element | null = showNewFolderDialog ? (
         <dialog
             ref={dialogRef}
             className={styles.new__folder__dialog__container}

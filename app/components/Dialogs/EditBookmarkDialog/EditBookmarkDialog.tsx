@@ -15,6 +15,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./EditBookmarkDialog.module.scss";
 import "@/app/i18n/client";
+import React from "react";
 
 type Props = {
     title: string;
@@ -105,7 +106,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
         }
     };
 
-    const dialog: JSX.Element | null =
+    const dialog: React.JSX.Element | null =
         editBookmarkModal === true ? (
             <dialog
                 ref={dialogRef}

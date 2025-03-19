@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./EditFolderDialog.module.scss";
 import "@/app/i18n/client";
+import React from "react";
 
 type Props = {
     title: string;
@@ -75,7 +76,7 @@ const EditFolderDialog = ({ title }: Props) => {
         toast.success(t("edit-folder-success"));
     };
 
-    const dialog: JSX.Element | null = editFolderModal ? (
+    const dialog: React.JSX.Element | null = editFolderModal ? (
         <dialog
             ref={dialogRef}
             className={styles.edit__folder__dialog__container}

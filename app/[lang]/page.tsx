@@ -12,6 +12,7 @@ async function Home(props: { params: Promise<{ lang: string }> }) {
     const { lang } = params;
 
     const supabase = await createClient();
+
     const {
         data: { session },
     } = await supabase.auth.getSession();
