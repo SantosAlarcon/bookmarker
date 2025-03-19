@@ -21,6 +21,8 @@ export const generateMetadata = async (props: {
     };
 };
 
+export const dynamic = "force-dynamic";
+
 function ProfileLayout({ children }: { children: ReactNode }) {
     return (
         <>

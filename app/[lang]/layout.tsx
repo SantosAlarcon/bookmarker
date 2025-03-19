@@ -15,6 +15,8 @@ export const metadata: Metadata = {
     description: "App to manage browser bookmarks everywhere",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout(props: {
     params: Promise<{ lang: string }>;
     children: ReactNode;
