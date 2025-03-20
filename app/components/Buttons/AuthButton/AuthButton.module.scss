@@ -1,3 +1,9 @@
+.auth__button__container {
+  &:focus {
+    box-shadow: 0 0 0 .15rem light-dark(#000, #fff);
+  }
+}
+
 .auth__button {
   width: 16px;
   height: 16px;

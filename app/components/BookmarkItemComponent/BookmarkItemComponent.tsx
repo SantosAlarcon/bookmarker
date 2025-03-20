@@ -37,6 +37,7 @@ const BookmarkItemComponent = (props: BICProps) => {
                 className={styles.bookmark__item__link}
                 href={`${props.children.bookmark_url}`}
                 target="_blank"
+                aria-label={props.children.bookmark_title}
             >
                 <div className={styles.bookmark__item__title}>
                     <h4 className={styles.bookmark__item__title__text}>
