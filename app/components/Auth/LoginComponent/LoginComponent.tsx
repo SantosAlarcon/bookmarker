@@ -79,6 +79,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                                 type="submit"
                                 className={styles.login__page__social__button}
                                 disabled={formData.loading}
+								aria-label={t("sign-with-google")}
                             >
                                 <Image
                                     src="/social/google.svg"
@@ -98,6 +99,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                                 type="submit"
                                 className={styles.login__page__social__button}
                                 disabled={formData.loading}
+								aria-label={t("sign-with-github")}
                             >
                                 <Image
                                     src="/social/github.svg"
@@ -117,6 +119,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                                 type="submit"
                                 className={styles.login__page__social__button}
                                 disabled={formData.loading}
+								aria-label={t("sign-with-facebook")}
                             >
                                 <Image
                                     src="/social/facebook.svg"
@@ -137,6 +140,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                             <input
                                 type="email"
                                 id="email"
+								aria-label={t("email-label")}
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
@@ -153,6 +157,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                             <input
                                 type="password"
                                 id="password"
+								aria-label={t("password-label")}
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
@@ -166,6 +171,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                             <button
                                 className={styles.login__page__social__button}
                                 type="submit"
+								aria-label={t("sign-with-email")}
                                 disabled={formData.loading}
                             >
                                 {formData.loading ? (
@@ -186,12 +192,14 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                     <Link
                         href="/auth/register"
                         className={styles.login__page__link}
+						aria-label={t("register-link")}
                     >
                         {t("register-text")} <b>{t("register-link")}</b>
                     </Link>
                     <Link
                         href="/reset-password"
                         className={styles.login__page__link}
+						aria-label={t("reset-password-link")}
                     >
                         {t("reset-password-text")}{" "}
                         <b>{t("reset-password-link")}</b>

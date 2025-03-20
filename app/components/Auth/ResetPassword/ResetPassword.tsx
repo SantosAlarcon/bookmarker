@@ -83,6 +83,7 @@ const ResetPassword = ({ lang }: { lang: string }) => {
                             type="email"
                             required={true}
                             aria-required={true}
+							aria-label={t("email-label")}
                             value={email}
                             // @ts-ignore
                             onChange={() => setEmail(event.target.value)}

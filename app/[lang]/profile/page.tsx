@@ -134,7 +134,7 @@ async function ProfilePage(props: { params: Promise<{ lang: string }> }) {
                     </span>
                 </div>
             </Suspense>
-            <Link className={styles.profile__page__back__button} href="/">
+            <Link className={styles.profile__page__back__button} href="/" aria-label={t("back-to-home-button")}>
                 {t("back-to-home-button")}
             </Link>
         </section>

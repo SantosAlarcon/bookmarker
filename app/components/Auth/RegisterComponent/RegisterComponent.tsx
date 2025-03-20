@@ -99,6 +99,7 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
                             <input
                                 type="email"
                                 id="email"
+								aria-label={t("email-label")}
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
@@ -119,6 +120,7 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
                             <input
                                 type="password"
                                 id="password"
+								aria-label={t("password-label")}
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
@@ -138,6 +140,7 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
                             <input
                                 type="password"
                                 id="confirm-password"
+								aria-label={t("confirm-password-label")}
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
@@ -152,6 +155,7 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
                                 className={
                                     styles.register__page__social__button
                                 }
+								aria-label={t("register-button")}
                                 type="submit"
                             >
                                 {formData.loading ? (
@@ -165,6 +169,7 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
                     <Link
                         href="/auth/login"
                         className={styles.register__page__link}
+						aria-label={t("remember-password-link")}
                     >
                         {t("remember-password-text")}{" "}
                         <b>{t("remember-password-link")}</b>
@@ -172,6 +177,7 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
                     <Link
                         href="/reset-password"
                         className={styles.register__page__link}
+						aria-label={t("reset-password-link")}
                     >
                         {t("reset-password-text")}{" "}
                         <b>{t("reset-password-link")}</b>

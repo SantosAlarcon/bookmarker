@@ -104,6 +104,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                             </label>
                             <input
                                 type="email"
+								aria-label={t("email-label")}
                                 id="email"
                                 onChange={(e) =>
                                     setFormData({
@@ -125,6 +126,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                             <input
                                 type="password"
                                 id="password"
+								aria-label={t("password-label")}
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
@@ -144,6 +146,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                             <input
                                 type="password"
                                 id="confirm-password"
+								aria-label={t("confirm-password-label")}
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
@@ -159,6 +162,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                                     styles.change__password__page__social__button
                                 }
                                 type="submit"
+								aria-label={t("change-password-button")}
                             >
                                 {formData.loading ? (
                                     <Spinner />
