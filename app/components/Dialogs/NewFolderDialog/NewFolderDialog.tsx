@@ -92,6 +92,7 @@ const NewFolderDialog = ({ title }: Props) => {
                             type="text"
                             name="title"
                             placeholder={t("folder-title-placeholder")}
+                            aria-label={t("title")}
                             onChange={() =>
                                 setNewFolder({
                                     ...newFolder,
@@ -111,6 +112,7 @@ const NewFolderDialog = ({ title }: Props) => {
                             type="text"
                             name="description"
                             placeholder={t("folder-description-placeholder")}
+                            aria-label={t("description")}
                             onChange={() =>
                                 setNewFolder({
                                     ...newFolder,
@@ -131,6 +133,7 @@ const NewFolderDialog = ({ title }: Props) => {
                             className={
                                 styles.new__folder__dialog__form__parent__folder
                             }
+                            aria-label={t("parent-folder")}
                             onChange={() =>
                                 setNewFolder({
                                     ...newFolder,
@@ -139,13 +142,14 @@ const NewFolderDialog = ({ title }: Props) => {
                                 })
                             }
                         >
-                            <option defaultValue="null">
+                            <option defaultValue="null" aria-label={t("no-parent-folder")}>
                                 {t("no-parent-folder")}
                             </option>
                             {folderList.map((folder: BookmarkFolder) => (
                                 <option
                                     key={folder.folder_id}
                                     value={folder.folder_id}
+                                    aria-label={folder.folder_title}
                                 >
                                     {folder.folder_title}
                                 </option>
@@ -159,10 +163,11 @@ const NewFolderDialog = ({ title }: Props) => {
                     disabled={!(newFolder.title && newFolder.description)}
                     onClick={() => createFolder()}
                     type="button"
+                    aria-label={t("create")}
                 >
                     {loading ? <Spinner /> : t("create")}
                 </button>
-                <button type="button" onClick={() => closeDialog()}>
+                <button type="button" onClick={() => closeDialog()} aria-label={t("close")}>
                     {t("close")}
                 </button>
             </div>

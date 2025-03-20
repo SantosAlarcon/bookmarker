@@ -128,15 +128,14 @@ const EditBookmarkDialog = ({ title }: Props) => {
                     <form className={styles.edit__bookmark__dialog__form}>
                         <label
                             htmlFor="title"
-                            className={
-                                styles.edit__bookmark__dialog__form__label
-                            }
+                            className={styles.edit__bookmark__dialog__form__label}
                         >
                             {t("title")}
                             <input
                                 type="text"
                                 name="title"
                                 placeholder={t("bookmark-title-placeholder")}
+                                aria-label={t("title")}
                                 onChange={() =>
                                     setUpdatedBookmark({
                                         ...updatedBookmark,
@@ -150,9 +149,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
                         </label>
                         <label
                             htmlFor="url"
-                            className={
-                                styles.edit__bookmark__dialog__form__label
-                            }
+                            className={styles.edit__bookmark__dialog__form__label}
                         >
                             URL
                             <input
@@ -167,21 +164,18 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                     })
                                 }
                                 value={updatedBookmark.url}
+                                aria-label={t("url")}
                                 required
                             />
                         </label>
                         <label
                             htmlFor="parentFolder"
-                            className={
-                                styles.edit__bookmark__dialog__form__label
-                            }
+                            className={styles.edit__bookmark__dialog__form__label}
                         >
                             {t("parent-folder")}
                             <select
                                 name="parentFolder"
-                                className={
-                                    styles.edit__bookmark__dialog__form__select
-                                }
+                                className={styles.edit__bookmark__dialog__form__select}
                                 // @ts-ignore
                                 defaultValue={
                                     editBookmarkData.parentFolder
@@ -196,13 +190,14 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                     })
                                 }
                             >
-                                <option value="null">
+                                <option value="null" aria-label={t("no-parent-folder")}>
                                     {t("no-parent-folder")}
                                 </option>
                                 {folderList?.map((folder: BookmarkFolder) => (
                                     <option
                                         key={folder.folder_id}
                                         value={folder.folder_id}
+                                        aria-label={folder.folder_title}
                                     >
                                         {folder.folder_title}
                                     </option>
@@ -214,14 +209,17 @@ const EditBookmarkDialog = ({ title }: Props) => {
                 <div className={styles.edit__bookmark__dialog__buttons}>
                     <button
                         type="button"
-                        disabled={
-                            !(updatedBookmark.title && updatedBookmark.url)
-                        }
+                        aria-label={t("update")}
+                        disabled={!(updatedBookmark.title && updatedBookmark.url)}
                         onClick={() => editBookmark()}
                     >
                         {loading ? <Spinner /> : t("update")}
                     </button>
-                    <button type="button" onClick={() => closeDialog()}>
+                    <button
+                        type="button"
+                        onClick={() => closeDialog()}
+                        aria-label={t("close")}
+                    >
                         {t("close")}
                     </button>
                 </div>

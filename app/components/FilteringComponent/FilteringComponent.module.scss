@@ -16,11 +16,7 @@
     transition: all .25s ease-in-out;
 
     &:focus {
-      box-shadow: 0 0 1rem #ddf6;
-
-      @media (prefers-color-scheme: light) {
-        box-shadow: 0 0 1rem #66f6;
-      }
+      box-shadow: 0 0 0 0.15rem light-dark(#000, #fff);
     }
 
     @media (prefers-color-scheme: light) {
@@ -32,6 +28,12 @@
       width: 100%;
     }
 
+  }
+
+  &>button {
+    &:focus {
+      box-shadow: 0 0 0 0.15rem light-dark(#000, #fff);
+    }
   }
 
   &__icon {

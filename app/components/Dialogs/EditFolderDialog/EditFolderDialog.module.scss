@@ -69,10 +69,10 @@
 
       &:focus {
         background-color: #fff5;
+        box-shadow: 0 0 0 0.15rem light-dark(#000, #fff);
 
         @media (prefers-color-scheme: light) {
           background-color: #ddf;
-          box-shadow: inset 0 0 .1rem #33f;
         }
 
       }
@@ -112,6 +112,10 @@
       background-color: var(--main-color);
       transition: all 150ms ease-in-out;
       color: #eee;
+
+      &:focus {
+        box-shadow: 0 0 0 0.15rem light-dark(#000, #fff);
+      }
 
       &:nth-child(1) {
         background-color: var(--main-color-dark);

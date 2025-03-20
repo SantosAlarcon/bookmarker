@@ -126,10 +126,11 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
                             styles.confirm__delete__dialog__buttons__delete
                         }
                         onClick={() => confirmDeletion()}
+                        aria-label={t("delete")}
                     >
                         {loading ? <Spinner /> : t("delete")}
                     </button>
-                    <button type="button" onClick={() => closeDialog()}>
+                    <button type="button" onClick={() => closeDialog()} aria-label={t("close")}>
                         {t("close")}
                     </button>
                 </div>

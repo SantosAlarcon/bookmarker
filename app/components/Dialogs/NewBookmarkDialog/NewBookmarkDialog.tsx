@@ -102,9 +102,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
                     alt="Add bookmark icon"
                     className={styles.new__bookmark__dialog__icon}
                 />
-                <h4 className={styles.new__bookmark__dialog__title__text}>
-                    {title}
-                </h4>
+                <h4 className={styles.new__bookmark__dialog__title__text}>{title}</h4>
             </div>
             <div className={styles.new__bookmark__dialog__content}>
                 <form className={styles.new__bookmark__dialog__form}>
@@ -117,6 +115,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
                             type="text"
                             name="title"
                             placeholder={t("bookmark-title-placeholder")}
+                            aria-label={t("title")}
                             onChange={() =>
                                 setNewBookmark({
                                     ...newBookmark,
@@ -136,6 +135,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
                             type="url"
                             name="url"
                             placeholder={t("bookmark-url-placeholder")}
+                            aria-label={t("url")}
                             onChange={() =>
                                 setNewBookmark({
                                     ...newBookmark,
@@ -153,9 +153,8 @@ const NewBookmarkDialog = ({ title }: Props) => {
                         {t("parent-folder")}
                         <select
                             name="parentFolder"
-                            className={
-                                styles.new__bookmark__dialog__form__select
-                            }
+                            className={styles.new__bookmark__dialog__form__select}
+                            aria-label={t("parent-folder")}
                             onChange={() =>
                                 setNewBookmark({
                                     ...newBookmark,
@@ -164,13 +163,18 @@ const NewBookmarkDialog = ({ title }: Props) => {
                                 })
                             }
                         >
-                            <option defaultValue="null" value="null">
+                            <option
+                                defaultValue="null"
+                                value="null"
+                                aria-label={t("no-parent-folder")}
+                            >
                                 {t("no-parent-folder")}
                             </option>
                             {folderList?.map((folder: BookmarkFolder) => (
                                 <option
                                     key={folder.folder_id}
                                     value={folder.folder_id}
+                                    aria-label={folder.folder_title}
                                 >
                                     {folder.folder_title}
                                 </option>
@@ -183,11 +187,16 @@ const NewBookmarkDialog = ({ title }: Props) => {
                 <button
                     disabled={!(newBookmark.title && newBookmark.url)}
                     type="button"
+                    aria-label={t("create")}
                     onClick={() => createBookmark()}
                 >
                     {loading ? <Spinner /> : t("create")}
                 </button>
-                <button type="button" onClick={() => closeDialog()}>
+                <button
+                    type="button"
+                    onClick={() => closeDialog()}
+                    aria-label={t("close")}
+                >
                     {t("close")}
                 </button>
             </div>
