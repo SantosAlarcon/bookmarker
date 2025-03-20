@@ -135,6 +135,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                     ref={collapsibleRef}
                     initial="hidden"
                     animate={expanded ? "show" : "hidden"}
+                    inert={expanded ? false : true}
                     layout
                     variants={variants}
                     transition={{ duration: 0.3, type: "tween" }}
