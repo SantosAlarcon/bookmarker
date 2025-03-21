@@ -69,6 +69,7 @@ const NewFolderDialog = ({ title }: Props) => {
             ref={dialogRef}
             className={styles.new__folder__dialog__container}
             onClose={closeDialog}
+			role="dialog"
         >
             <div className={styles.new__folder__dialog__title}>
                 <Image

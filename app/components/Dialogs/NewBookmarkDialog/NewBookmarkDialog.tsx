@@ -10,7 +10,6 @@ import { modalStore } from "@/store/modalStore";
 import type { BookmarkFolder } from "@/app/types/types";
 import { useTranslation } from "next-i18next";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import styles from "./NewBookmarkDialog.module.scss";
@@ -93,6 +92,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
             ref={dialogRef}
             className={styles.new__bookmark__dialog__container}
             onClose={closeDialog}
+			role="dialog"
         >
             <div className={styles.new__bookmark__dialog__title}>
                 <Image
