@@ -78,9 +78,9 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                     height={749}
                 />
                 <div className={styles.change__password__page__box}>
-                    <h2 className={styles.change__password__page__title}>
+                    <h1 className={styles.change__password__page__title} role="heading">
                         {t("title")}
-                    </h2>
+                    </h1>
                     <div className={styles.change__password__page__text}>
                         {t("text")}
                     </div>

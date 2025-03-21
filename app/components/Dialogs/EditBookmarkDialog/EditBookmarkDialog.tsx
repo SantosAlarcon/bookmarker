@@ -112,6 +112,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
                 ref={dialogRef}
                 className={styles.edit__bookmark__dialog__container}
                 onClose={closeDialog}
+				aria-modal="true"
 				role="dialog"
             >
                 <div className={styles.edit__bookmark__dialog__title}>

@@ -68,7 +68,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                     height={749}
                 />
                 <div className={styles.login__page__box}>
-                    <h2 className={styles.login__page__title}>{t("title")}</h2>
+                    <h1 role="heading" className={styles.login__page__title}>{t("title")}</h1>
                     <div className={styles.login__page__text}>{t("text")}</div>
                     <div className={styles.login__page__social__buttons}>
                         <form

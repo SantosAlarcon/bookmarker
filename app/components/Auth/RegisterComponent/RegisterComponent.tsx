@@ -76,9 +76,9 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
                     className={styles.register__page__image}
                 />
                 <div className={styles.register__page__box}>
-                    <h2 className={styles.register__page__title}>
+                    <h1 role="heading" className={styles.register__page__title}>
                         {t("title")}
-                    </h2>
+                    </h1>
                     <div className={styles.register__page__text}>
                         {t("text")}
                     </div>

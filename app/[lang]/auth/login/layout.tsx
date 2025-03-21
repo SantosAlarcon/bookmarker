@@ -32,6 +32,7 @@ function LoginLayout({ children }: { children: ReactNode }) {
                     content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
                 />
                 <meta name="theme-color" content="#8936FF" />
+				<meta name="title" content="Bookmarker" />
                 <meta
                     name="description"
                     content="App to manage browser bookmarks everywhere"

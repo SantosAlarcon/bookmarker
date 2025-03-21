@@ -93,6 +93,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
             className={styles.new__bookmark__dialog__container}
             onClose={closeDialog}
 			role="dialog"
+			aria-modal="true"
         >
             <div className={styles.new__bookmark__dialog__title}>
                 <Image

@@ -59,9 +59,9 @@ const ResetPassword = ({ lang }: { lang: string }) => {
                     className={styles.reset__password__image}
                 />
                 <div className={styles.reset__password__box}>
-                    <h2 className={styles.reset__password__title}>
+                    <h1 role="heading" className={styles.reset__password__title}>
                         {t("title")}
-                    </h2>
+                    </h1>
 
                     <p className={styles.reset__password__text}>{t("text")}</p>
 

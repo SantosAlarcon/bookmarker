@@ -70,6 +70,7 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
                 ref={dialogRef}
                 className={styles.confirm__delete__dialog__container}
                 onClose={closeDialog}
+				aria-modal="true"
 				role="dialog"
             >
                 <div className={styles.confirm__delete__dialog__title}>
