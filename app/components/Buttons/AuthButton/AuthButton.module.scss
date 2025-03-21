@@ -1,6 +1,16 @@
+.auth__button__container {
+  }
+
 .auth__button {
   width: 16px;
   height: 16px;
+
+
+  &__btn {
+    &:focus {
+      box-shadow: 0 0 0 0.15rem light-dark(#000, #fff);
+    }
+  }
 
   @media (width <=512px) {
     &__img {
@@ -24,9 +34,11 @@
   0% {
     background-position: 100% 50%;
   }
+
   50% {
     background-position: 0% 50%;
   }
+
   100% {
     background-position: 100% 50%;
   }

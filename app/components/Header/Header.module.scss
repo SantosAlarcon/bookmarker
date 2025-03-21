@@ -54,6 +54,10 @@
   border: none;
   background: none;
 
+  &:focus {
+    box-shadow: 0 0 0 0.15rem light-dark(#000, #fff);
+  }
+
   @media (width < 512px) {
     padding: 0.25rem;
 

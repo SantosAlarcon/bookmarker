@@ -1,5 +1,6 @@
 {
     "new-bookmark-tooltip": "Nou marcador",
     "new-folder-tooltip": "Nova carpeta",
-    "search-tooltip": "Cerca"
+    "search-tooltip": "Cerca",
+    "filter": "Filtre"
 }

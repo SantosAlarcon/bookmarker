@@ -106,6 +106,7 @@ const EditFolderDialog = ({ title }: Props) => {
                             name="title"
                             placeholder={t("folder-title-placeholder")}
                             value={updatedFolder.title}
+                            aria-label={t("title")}
                             onChange={() =>
                                 setUpdatedFolder({
                                     ...updatedFolder,
@@ -126,6 +127,7 @@ const EditFolderDialog = ({ title }: Props) => {
                             name="description"
                             placeholder={t("folder-description-placeholder")}
                             value={updatedFolder.description}
+                            aria-label={t("description")}
                             onChange={() =>
                                 setUpdatedFolder({
                                     ...updatedFolder,
@@ -160,13 +162,14 @@ const EditFolderDialog = ({ title }: Props) => {
                                 })
                             }
                         >
-                            <option value="null">
+                            <option value="null" aria-label={t("no-parent-folder")}>
                                 {t("no-parent-folder")}
                             </option>
                             {folderList?.map((folder: BookmarkFolder) => (
                                 <option
                                     key={folder.folder_id}
                                     value={folder.folder_id}
+                                    aria-label={folder.folder_title}
                                 >
                                     {folder.folder_title}
                                 </option>
@@ -182,10 +185,11 @@ const EditFolderDialog = ({ title }: Props) => {
                         !(updatedFolder.title && updatedFolder.description)
                     }
                     onClick={() => editFolder()}
+                    aria-label={t("update")}
                 >
                     {loading ? <Spinner /> : t("update")}
                 </button>
-                <button type="button" onClick={() => closeDialog()}>
+                <button type="button" onClick={() => closeDialog()} aria-label={t("close")}>
                     {t("close")}
                 </button>
             </div>

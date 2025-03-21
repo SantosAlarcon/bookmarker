@@ -72,6 +72,11 @@
       &:active {
         transform: scale(0.9);
       }
+
+      &:focus {
+        box-shadow: 0 0 0 0.15rem light-dark(#000, #fff);
+      }
+
     }
 
     &__delete {

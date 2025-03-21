@@ -43,6 +43,8 @@ const FilteringComponent = () => {
                 exit={{ width: 0 }}
                 transition={{ duration: 0.5 }}
                 type="text"
+                placeholder={t("filter")}
+                aria-label={t("filter")}
                 // @ts-ignore
                 ref={filterRef}
                 // @ts-ignore

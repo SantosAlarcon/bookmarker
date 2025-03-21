@@ -116,15 +116,16 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                         priority={true}
                     />
                 )}
-                <div
+                <button
                     className={styles.bookmark__folder__title}
                     title={props.children.folder_description}
                     onClick={handleExpand}
+                    aria-label={props.children.folder_title}
                 >
                     <h4 className={styles.bookmark__folder__title__text}>
                         {props.children.folder_title}
                     </h4>
-                </div>
+                </button>
                 <EditFolderButton>{props.children}</EditFolderButton>
                 <RemoveFolderButton>{props.children}</RemoveFolderButton>
             </div>
@@ -135,6 +136,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                     ref={collapsibleRef}
                     initial="hidden"
                     animate={expanded ? "show" : "hidden"}
+                    inert={expanded ? false : true}
                     layout
                     variants={variants}
                     transition={{ duration: 0.3, type: "tween" }}

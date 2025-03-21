@@ -1,5 +1,6 @@
 {
     "new-bookmark-tooltip": "New bookmark",
     "new-folder-tooltip": "New folder",
-    "search-tooltip": "Search"
+    "search-tooltip": "Search",
+    "filter": "Filter"
 }

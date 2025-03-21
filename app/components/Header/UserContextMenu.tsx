@@ -55,7 +55,11 @@ const UserContextMenu = () => {
                 minWidth: "10rem",
             }}
         >
-            <Item id="user-profile" onClick={handleItemClick}>
+            <Item
+                id="user-profile"
+                onClick={handleItemClick}
+                aria-label={t("user-profile")}
+            >
                 <Image
                     src="/icons/user.svg"
                     width={16}
@@ -75,6 +79,7 @@ const UserContextMenu = () => {
                     router.prefetch("/auth/login");
                     router.push("/auth/login");
                 }}
+                aria-label={t("logout")}
             >
                 <Image
                     src="/icons/logout.svg"
