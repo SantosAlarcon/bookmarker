@@ -25,7 +25,7 @@ async function ProfilePage(props: { params: Promise<{ lang: string }> }) {
     const userMetadata: UserMetadata | undefined = user?.user_metadata;
 
     return (
-        <section className={styles.profile__page__container}>
+        <main className={styles.profile__page__container}>
             <h1 className={styles.profile__page__title}>{t("title")}</h1>
             <Suspense fallback={<div>Loading...</div>}>
                 <div className={styles.profile__page__avatar}>
@@ -137,7 +137,7 @@ async function ProfilePage(props: { params: Promise<{ lang: string }> }) {
             <Link className={styles.profile__page__back__button} href="/" aria-label={t("back-to-home-button")}>
                 {t("back-to-home-button")}
             </Link>
-        </section>
+        </main>
     );
 }
 

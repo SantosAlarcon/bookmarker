@@ -59,7 +59,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
     };
 
     return (
-        <section className={styles.change__password__page__container}>
+        <main className={styles.change__password__page__container}>
             <div className={styles.change__password__page__logo}>
                 <Image
                     src="/BookmarkerLogo.svg"
@@ -177,7 +177,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                     </div>
                 </div>
             </div>
-        </section>
+        </main>
     );
 };
 

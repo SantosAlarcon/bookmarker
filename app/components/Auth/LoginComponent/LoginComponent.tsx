@@ -49,7 +49,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
     };
 
     return (
-        <section className={styles.login__page__container}>
+        <main className={styles.login__page__container}>
             <div className={styles.login__page__logo}>
                 <Image
                     src="/BookmarkerLogo.svg"
@@ -208,7 +208,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                     </Link>
                 </div>
             </div>
-        </section>
+        </main>
     );
 };
 

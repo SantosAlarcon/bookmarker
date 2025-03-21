@@ -57,7 +57,7 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
     };
 
     return (
-        <section className={styles.register__page__container}>
+        <main className={styles.register__page__container}>
             <div className={styles.register__page__logo}>
                 <Image
                     src="/BookmarkerLogo.svg"
@@ -187,7 +187,7 @@ const RegisterComponent = ({ lang }: { lang: string }) => {
                     </Link>
                 </div>
             </div>
-        </section>
+        </main>
     );
 };
 

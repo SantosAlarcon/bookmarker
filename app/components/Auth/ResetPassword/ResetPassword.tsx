@@ -41,7 +41,7 @@ const ResetPassword = ({ lang }: { lang: string }) => {
     if (!hydrated) return null;
 
     return (
-        <div className={styles.reset__password__container}>
+        <main className={styles.reset__password__container}>
             <Image
                 className={styles.reset__password__logo}
                 src="/BookmarkerLogo.svg"
@@ -109,7 +109,7 @@ const ResetPassword = ({ lang }: { lang: string }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 };
 
