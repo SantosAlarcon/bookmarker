@@ -45,6 +45,7 @@ const FilteringComponent = () => {
                 type="text"
                 placeholder={t("filter")}
                 aria-label={t("filter")}
+				role="search"
                 // @ts-ignore
                 ref={filterRef}
                 // @ts-ignore

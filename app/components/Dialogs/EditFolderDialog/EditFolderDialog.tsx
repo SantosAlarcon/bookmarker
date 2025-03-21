@@ -116,6 +116,7 @@ const EditFolderDialog = ({ title }: Props) => {
                                 })
                             }
                             required
+							aria-required={true}
                         />
                     </label>
                     <label
@@ -137,6 +138,7 @@ const EditFolderDialog = ({ title }: Props) => {
                                 })
                             }
                             required
+							aria-required={true}
                         />
                     </label>
                     <label

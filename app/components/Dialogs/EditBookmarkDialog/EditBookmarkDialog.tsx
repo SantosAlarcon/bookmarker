@@ -147,6 +147,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                 }
                                 value={updatedBookmark.title}
                                 required
+								aria-required={true}
                             />
                         </label>
                         <label
@@ -168,6 +169,7 @@ const EditBookmarkDialog = ({ title }: Props) => {
                                 value={updatedBookmark.url}
                                 aria-label={t("url")}
                                 required
+								aria-required={true}
                             />
                         </label>
                         <label

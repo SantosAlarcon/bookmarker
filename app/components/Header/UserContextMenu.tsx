@@ -49,6 +49,7 @@ const UserContextMenu = () => {
         <Menu
             id="userContext"
             theme="dark"
+			role="menu"
             style={{
                 marginTop: "2rem",
                 marginLeft: "-2rem",

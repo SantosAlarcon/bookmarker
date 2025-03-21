@@ -39,7 +39,7 @@ const Header = ({ lang }: { lang: string }) => {
             <NewFolderDialog title={t("common:new-folder-title")} />
             <UserContextMenu />
             <header className={styles.header__container}>
-                <div className={styles.header__upper}>
+                <nav className={styles.header__upper}>
                     <div
                         className={styles.header__logo}
                         onClick={() => router.push("/")}
@@ -106,7 +106,7 @@ const Header = ({ lang }: { lang: string }) => {
                         </div>
                         <AuthButton />
                     </div>
-                </div>
+                </nav>
                 <div className={styles.header__lower}>
                     <FilteringComponent />
                 </div>

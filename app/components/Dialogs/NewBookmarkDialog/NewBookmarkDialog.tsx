@@ -125,6 +125,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
                                 })
                             }
                             required
+							aria-required={true}
                         />
                     </label>
                     <label
@@ -145,6 +146,7 @@ const NewBookmarkDialog = ({ title }: Props) => {
                                 })
                             }
                             required
+							aria-required={true}
                         />
                     </label>
                     <label

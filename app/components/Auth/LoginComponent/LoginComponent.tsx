@@ -148,6 +148,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                                     })
                                 }
                                 required={true}
+								aria-required={true}
                                 placeholder={t("email-label")}
                                 value={formData.email}
                             />
@@ -165,6 +166,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                                     })
                                 }
                                 required={true}
+								aria-required={true}
                                 placeholder={t("password-label")}
                                 value={formData.password}
                             />

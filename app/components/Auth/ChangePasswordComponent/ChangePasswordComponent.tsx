@@ -113,6 +113,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                                     })
                                 }
                                 required={true}
+								aria-required={true}
                                 placeholder={t("email-placeholder")}
                                 value={formData.email}
                             />
@@ -134,6 +135,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                                     })
                                 }
                                 required={true}
+								aria-required={true}
                                 placeholder={t("password-placeholder")}
                                 value={formData.password}
                             />
@@ -154,6 +156,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                                     })
                                 }
                                 required={true}
+								aria-required={true}
                                 placeholder={t("confirm-password-placeholder")}
                                 value={formData.confirmPassword}
                             />

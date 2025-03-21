@@ -103,6 +103,7 @@ const NewFolderDialog = ({ title }: Props) => {
                                 })
                             }
                             required
+							aria-required={true}
                         />
                     </label>
                     <label
@@ -123,6 +124,7 @@ const NewFolderDialog = ({ title }: Props) => {
                                 })
                             }
                             required
+							aria-required={true}
                         />
                     </label>
                     <label
