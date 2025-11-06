@@ -4,8 +4,11 @@
 	skipWaiting: true,
 });*/
 
+import { NextConfig } from "next";
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
+	reactCompiler: true,
 	transpilePackages: ["i18next", "react-i18next"],
 	sassOptions: {
 		silenceDeprecations: ["legacy-js-api"]
