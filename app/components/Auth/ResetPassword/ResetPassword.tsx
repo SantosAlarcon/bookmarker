@@ -1,7 +1,6 @@
 "use client";
 
 import Spinner from "@/components/Spinner/Spinner";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { type FormEvent, useEffect, useState } from "react";
@@ -10,9 +9,10 @@ import { toast } from "sonner";
 import styles from "./ResetPassword.module.scss";
 import "@/styles/globals.css";
 import "@/app/i18n/client";
+import { createClient } from "@/app/utils/supabase/client";
 
 const ResetPassword = ({ lang }: { lang: string }) => {
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     const [email, setEmail] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const [hydrated, setHydrated] = useState<boolean>(false);

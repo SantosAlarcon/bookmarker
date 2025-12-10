@@ -3,8 +3,7 @@
 import { handleUserContextMenu } from "@/components/Header/UserContextMenu";
 import { authStore } from "@/store/authStore";
 import tooltipStyles from "@/styles/tooltip.module.css";
-import type { Session } from "@supabase/auth-helpers-nextjs";
-import type { UserMetadata } from "@supabase/supabase-js";
+import type { Session, UserMetadata } from "@supabase/supabase-js";
 import Image from "next/image";
 import { type SyntheticEvent, useEffect } from "react";
 import { Tooltip } from "react-tooltip";

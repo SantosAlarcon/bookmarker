@@ -1,19 +1,12 @@
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import { NextResponse } from "next/server";
 
 import type { NextRequest } from "next/server";
 import { i18nRouter } from "next-i18n-router";
 import i18nConfig from "./next-i18next.config";
-import type { Database } from "./app/lib/database.types";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
 export function proxy(req: NextRequest) {
-	const res = NextResponse.next();
-
-	// Create a Supabase client configured to use cookies
-	const supabase = createMiddlewareClient<Database>({ req, res });
-
 	// Refresh session if expired - required for Server Components
 	//await supabase.auth.getSession()
 
