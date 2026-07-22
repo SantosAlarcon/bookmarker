@@ -1,6 +1,5 @@
 "use client";
 
-import { createBrowserClient } from "@supabase/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { type FormEvent, useEffect, useState } from "react";
@@ -10,12 +9,10 @@ import Spinner from "@/components/Spinner/Spinner";
 import styles from "./ResetPassword.module.scss";
 import "@/styles/globals.css";
 import "@/app/i18n/client";
+import { createClient } from "@/app/utils/supabase/client";
 
 const ResetPassword = ({ lang }: { lang: string }) => {
-	const supabase = createBrowserClient(
-		process.env.NEXT_PUBLIC_SUPABASE_URL!,
-		process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-	);
+	const supabase = createClient();
 	const [email, setEmail] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(false);
 	const [hydrated, setHydrated] = useState<boolean>(false);

@@ -5,7 +5,6 @@ import i18nConfig from "./next-i18next.config";
 
 export const proxy = createProxy(i18nConfig);
 
-// Ensure the proxy is only called for relevant paths.
 export const config = {
 	matcher: [
 		/*
