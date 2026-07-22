@@ -1,8 +1,9 @@
-import type { Config } from "next-i18n-router/dist/types";
+import type { I18nConfig } from "next-i18next/proxy";
 
-const i18nConfig: Config = {
-    locales: ["en", "ca", "es"],
-    defaultLocale: "en",
+const i18nConfig: I18nConfig = {
+	supportedLngs: ["en", "ca", "es"],
+	fallbackLng: "en",
+	defaultNS: "common",
 };
 
 export default i18nConfig;

@@ -1,41 +1,9 @@
-import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
-import { NextResponse } from "next/server";
-
-import type { NextRequest } from "next/server";
-import { i18nRouter } from "next-i18n-router";
+import {
+	createProxy
+} from "next-i18next/proxy"
 import i18nConfig from "./next-i18next.config";
-import type { Database } from "./app/lib/database.types";
 
-const PUBLIC_FILE = /\.(.*)$/;
-
-export function proxy(req: NextRequest) {
-	const res = NextResponse.next();
-
-	// Create a Supabase client configured to use cookies
-	const supabase = createMiddlewareClient<Database>({ req, res });
-
-	// Refresh session if expired - required for Server Components
-	//await supabase.auth.getSession()
-
-	//const session = await getSession()
-	//const {data: {session}} = await supabase.auth.getSession();
-
-	if (
-		req.nextUrl.pathname.startsWith("/_next") ||
-		req.nextUrl.pathname.includes("/api/") ||
-		req.nextUrl.pathname.includes("/api/auth/") ||
-		PUBLIC_FILE.test(req.nextUrl.pathname)
-	) {
-		return NextResponse.next();
-	}
-
-	// If there is no session, redirect to the login page
-	/*if (!session?.user) {
-		return NextResponse.rewrite(new URL(`/${req.nextUrl.locale}/auth/login`, req.url))
-	} */
-
-	return i18nRouter(req, i18nConfig);
-}
+export const proxy = createProxy(i18nConfig);
 
 // Ensure the proxy is only called for relevant paths.
 export const config = {

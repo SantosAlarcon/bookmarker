@@ -1,15 +1,10 @@
 import { localeStore } from "@/app/store/localeStore";
-import { useTranslation } from "next-i18next";
+import { getT } from "next-i18next/server";
 
-const NoResultsFound = () => {
-    // @ts-ignore
-    const { locale } = localeStore.getState();
-    const { t } = useTranslation("common", { lng: locale });
-    return (
-        <>
-            <h3>{t("no-results-found")}</h3>
-        </>
-    );
+const NoResultsFound = async () => {
+	const { locale } = localeStore.getState();
+	const { t } = await getT("common", { lng: locale });
+	return <h3>{t("no-results-found")}</h3>;
 };
 
 export default NoResultsFound;
