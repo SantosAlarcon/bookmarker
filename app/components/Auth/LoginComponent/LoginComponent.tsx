@@ -66,6 +66,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
                     alt="mockup"
                     width={1225}
                     height={749}
+                    loading="eager"
                 />
                 <div className={styles.login__page__box}>
                     <h1 role="heading" className={styles.login__page__title}>{t("title")}</h1>

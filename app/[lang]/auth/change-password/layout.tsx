@@ -29,7 +29,7 @@ export default function ChangePasswordLayout({
         <>
             <Head>
                 <link rel="shortcut icon" href="/favicon.svg" />
-                <link rel="manifest" href="/manifest.json" />
+                {/* <link rel="manifest" href="/manifest.json" /> */}
                 <meta
                     name="viewport"
                     content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"

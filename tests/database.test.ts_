@@ -1,6 +1,8 @@
 // Import bun test libraries
 
 import getAllBookmarks from "@/app/utils/supabase/bookmarks/getAllBookmarks";
+
+// @ts-ignore
 import { test, expect, describe } from "bun:test";
 
 describe("Database tests", () => {

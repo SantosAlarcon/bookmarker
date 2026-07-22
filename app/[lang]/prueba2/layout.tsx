@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 };
 
 export async function generateStaticParams() {
-    return nextI18nextConfig.locales.map((locale: string) => ({
+    return nextI18nextConfig.supportedLngs.map((locale: string) => ({
         lang: locale,
     }));
 }
