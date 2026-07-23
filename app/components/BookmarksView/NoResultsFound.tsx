@@ -1,10 +1,11 @@
+"use client";
+import { useT } from "next-i18next/client";
 import { localeStore } from "@/app/store/localeStore";
-import { getT } from "next-i18next/server";
 
-const NoResultsFound = async () => {
-    // @ts-ignore
+const NoResultsFound = () => {
+	// @ts-ignore
 	const { locale } = localeStore.getState();
-	const { t } = await getT("common", { lng: locale });
+	const { t } = useT("common", { lng: locale });
 	return <h3>{t("no-results-found")}</h3>;
 };
 

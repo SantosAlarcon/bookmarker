@@ -39,7 +39,7 @@ const AuthButton = () => {
 					place="bottom"
 					variant="info"
 					className={tooltipStyles.custom__tooltip}
-					content={session ? "" : "Login"}
+					content={metadata ? metadata.full_name : "Login"}
 				/>
 				{session ? (
 					<picture>
