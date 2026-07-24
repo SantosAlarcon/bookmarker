@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import i18nConfig from "@/next-i18next.config";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
+import Providers from "../components/providers";
 
 export async function generateStaticParams() {
 	return i18nConfig.supportedLngs.map((locale: string) => ({ locale }));
@@ -29,7 +30,6 @@ export default async function RootLayout(props: {
 		<html lang={lang} suppressHydrationWarning={true}>
 			<head>
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
-				{/* @ts-ignore */}
 				<link
 					rel="preconnect"
 					href="https://fonts.gstatic.com"
@@ -64,7 +64,9 @@ export default async function RootLayout(props: {
 				/>
 				<meta property="og:site_name" content="Bookmarker" />
 			</head>
-			<body>{children}</body>
+			<body>
+				<Providers>{children}</Providers>
+			</body>
 		</html>
 	);
 }

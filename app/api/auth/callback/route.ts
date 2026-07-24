@@ -12,9 +12,7 @@ export async function GET(request: Request) {
 	if (code) {
 		const supabase = await createClient();
 		// If the URL has a code, it calls a function that exchanges the code for a new session.
-		const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-
-		console.log("DATA:", data);
+		const { error } = await supabase.auth.exchangeCodeForSession(code);
 
 		// If there is no error, set session in the auth store and redirects to the main page
 		if (!error) {

@@ -30,6 +30,7 @@ const BookmarksView = () => {
 	// Get and set the bookmarks from the store
 	const bookmarksList = bookmarksStore((state) => state.bookmarksList);
 	const allBookmarksList = bookmarksStore((state) => state.allBookmarksList);
+
 	const setFetched = bookmarksStore((state) => state.setFetched);
 
 	// Get the filter from the filter store

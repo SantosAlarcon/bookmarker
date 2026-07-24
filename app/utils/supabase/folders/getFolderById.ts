@@ -1,20 +1,25 @@
+import { QueryClient } from "@tanstack/react-query";
 import type { BookmarkFolder } from "@/app/types/types";
 
 export const getFolderById = async (folderId: string) => {
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/folders`,
-        {
-            // @ts-ignore
-            headers: {
-                apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-                Authorization: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-            },
-        },
-    );
+	const queryClient: QueryClient = new QueryClient();
 
-    const data = await response.json();
+	await queryClient.prefetchQuery({
+		queryKey: ["foldersData"],
+		queryFn: async () =>
+			fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/folders`, {
+				// @ts-ignore
+				headers: {
+					apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+					Authorization: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+				},
+			}).then((res) => res.json()),
+	});
 
-    return data.filter(
-        (folder: BookmarkFolder) => folder.folder_id === folderId,
-    );
+	const folders = queryClient.getQueryData(["foldersData"]);
+
+	// @ts-ignore
+	return folders.filter(
+		(folder: BookmarkFolder) => folder.folder_id === folderId,
+	);
 };
