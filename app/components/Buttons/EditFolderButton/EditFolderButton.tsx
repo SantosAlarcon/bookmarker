@@ -8,6 +8,7 @@ import { useT } from "next-i18next/client";
 import { localeStore } from "@/app/store/localeStore";
 import tooltipStyles from "@/styles/tooltip.module.css";
 import "@/app/i18n/client";
+import { useId } from "react";
 
 interface EditFolderProps {
 	children: {
@@ -25,6 +26,8 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
 	);
 	const { folder_id, folder_title, folder_description, folder_parentfolder } =
 		children;
+
+	const tooltipId = useId();
 
 	// @ts-ignore
 	const lang = localeStore((state) => state.locale);
@@ -45,12 +48,12 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
 		<button
 			className={styles.edit__button}
 			onClick={() => handleClick()}
-			aria-label={t("edit-folder-title")}
+			aria-label={`${t("edit-folder-title")}: ${folder_title}`}
 			type="button"
-			id="edit__folder__button"
+			id={tooltipId}
 		>
 			<Tooltip
-				anchorSelect="#edit__folder__button"
+				anchorSelect={`#${CSS.escape(tooltipId)}`}
 				variant="info"
 				className={tooltipStyles.custom__tooltip}
 				content={t("edit-folder-title")}
@@ -59,7 +62,7 @@ const EditFolderButton = ({ children }: EditFolderProps) => {
 				width={24}
 				height={24}
 				src="/icons/edit-icon.svg"
-				alt="Edit icon"
+				alt=""
 				priority={true}
 			/>
 		</button>

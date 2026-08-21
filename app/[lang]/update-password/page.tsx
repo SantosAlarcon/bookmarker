@@ -2,7 +2,7 @@ import ChangePasswordComponent from "@/app/components/Auth/ChangePasswordCompone
 import styles from "@/styles/page.module.css";
 import { use } from "react";
 
-const RegisterPage = (props: { params: Promise<{ lang: string }> }) => {
+const UpdatePasswordPage = (props: { params: Promise<{ lang: string }> }) => {
     const params = use(props.params);
     const { lang } = params;
 
@@ -13,4 +13,4 @@ const RegisterPage = (props: { params: Promise<{ lang: string }> }) => {
     );
 };
 
-export default RegisterPage;
+export default UpdatePasswordPage;

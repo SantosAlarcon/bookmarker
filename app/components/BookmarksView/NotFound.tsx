@@ -7,7 +7,8 @@ const NotFound = async () => {
 	const { t } = await getT("common", { lng: locale });
 	return (
 		<>
-			<h1>{t("no-bookmarks-title")}</h1> {t("no-bookmarks-text")}
+			<h2>{t("no-bookmarks-title")}</h2>
+			<p>{t("no-bookmarks-text")}</p>
 		</>
 	);
 };

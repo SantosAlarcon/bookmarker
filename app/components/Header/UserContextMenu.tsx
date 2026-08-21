@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import "@/app/i18n/client";
 import { useT } from "next-i18next/client";
 import { localeStore } from "@/app/store/localeStore";
+import { contextMenuStore } from "@/app/store/contextMenuStore";
 
 export let handleUserContextMenu: Function | undefined = undefined;
 
@@ -18,6 +19,7 @@ const UserContextMenu = () => {
 	const supabase = createClient();
 	const router = useRouter();
 	const { t } = useT("common", { lng: lang });
+	const setIsOpen = contextMenuStore((state) => state.setIsOpen);
 
 	const { show } = useContextMenu({
 		id: "userContext",
@@ -41,7 +43,7 @@ const UserContextMenu = () => {
 				break;
 			}
 			default:
-				alert("Function not implemented yet.");
+				toast.info(t("not-implemented-yet"));
 		}
 	};
 
@@ -50,6 +52,7 @@ const UserContextMenu = () => {
 			id="userContext"
 			theme="dark"
 			role="menu"
+			onVisibilityChange={(isVisible) => setIsOpen(isVisible)}
 			style={{
 				marginTop: "2rem",
 				marginLeft: "-2rem",
@@ -65,7 +68,7 @@ const UserContextMenu = () => {
 					src="/icons/user.svg"
 					width={16}
 					height={16}
-					alt="User icon"
+					alt=""
 					style={{
 						marginRight: "1rem",
 					}}
@@ -86,7 +89,7 @@ const UserContextMenu = () => {
 					src="/icons/logout.svg"
 					width={16}
 					height={16}
-					alt="User icon"
+					alt=""
 					style={{
 						marginRight: "1rem",
 						filter: "invert(1)",

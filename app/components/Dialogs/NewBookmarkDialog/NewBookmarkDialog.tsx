@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { localeStore } from "@/app/store/localeStore";
 import type { BookmarkFolder } from "@/app/types/types";
@@ -9,6 +9,7 @@ import { createClient } from "@/app/utils/supabase/client";
 import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders";
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
 import { validateURL } from "@/app/utils/validateURL";
+import AccessibleDialog from "@/components/Dialogs/AccessibleDialog/AccessibleDialog";
 import Spinner from "@/components/Spinner/Spinner";
 import { folderStore } from "@/store/folderStore";
 import { modalStore } from "@/store/modalStore";
@@ -27,13 +28,19 @@ const NewBookmarkDialog = ({ title }: Props) => {
 	const newBookmarkModal = modalStore((state) => state.newBookmarkModal);
 	const folderList = folderStore((state) => state.folderList);
 	const setFolderList = folderStore((state) => state.setFolderList);
-	const [newBookmark, setNewBookmark] = useState({
+	const [newBookmark, setNewBookmark] = useState<{
+		title: string;
+		url: string;
+		parentFolder: string | null;
+	}>({
 		title: "",
 		url: "",
 		parentFolder: null,
 	});
 	const [loading, setLoading] = useState<boolean>(false);
-	const dialogRef = useRef<null | HTMLDialogElement>(null);
+	const [urlError, setUrlError] = useState<string | null>(null);
+
+	const urlRef = useRef<HTMLInputElement>(null);
 
 	// @ts-ignore
 	const lang = localeStore((state) => state.locale);
@@ -51,160 +58,155 @@ const NewBookmarkDialog = ({ title }: Props) => {
 		getFolderList();
 	}, [setFolderList]);
 
-	useEffect(() => {
-		if (newBookmarkModal) {
-			dialogRef.current?.showModal();
-		} else {
-			dialogRef.current?.close();
-		}
-	}, [newBookmarkModal]);
-
-	const closeDialog = async () => {
-		dialogRef.current?.close();
+	const closeDialog = () => {
 		hideNewBookmarkDialog();
 		setNewBookmark({
 			title: "",
 			url: "",
 			parentFolder: null,
 		});
+		setUrlError(null);
 	};
 
-	/* This function implements the logic for creating a new bookmark */
-	const createBookmark = async () => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 		if (!validateURL(newBookmark.url)) {
-			alert(
-				"URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.",
-			);
-		} else {
-			setLoading(true);
-			await createNewBookmark(newBookmark);
-			await updateBookmarkList();
-			//router.refresh()
-			closeDialog();
-			setLoading(false);
-			toast.success(t("new-bookmark-success"));
+			setUrlError(t("invalid-url-error"));
+			urlRef.current?.focus();
+			return;
 		}
+		setUrlError(null);
+		setLoading(true);
+		await createNewBookmark(newBookmark);
+		await updateBookmarkList();
+		closeDialog();
+		setLoading(false);
+		toast.success(t("new-bookmark-success"));
 	};
 
-	const dialog: React.JSX.Element | null = newBookmarkModal ? (
-		<dialog
-			ref={dialogRef}
-			className={styles.new__bookmark__dialog__container}
+	return (
+		<AccessibleDialog
+			isOpen={newBookmarkModal === true}
 			onClose={closeDialog}
-			aria-modal="true"
+			className={styles.new__bookmark__dialog__container}
+			titleId="new-bookmark-dialog-title"
 		>
 			<div className={styles.new__bookmark__dialog__title}>
 				<Image
 					width={24}
 					height={24}
 					src="/icons/add-bookmark-icon.svg"
-					alt="Add bookmark icon"
+					alt=""
 					className={styles.new__bookmark__dialog__icon}
 				/>
-				<h4 className={styles.new__bookmark__dialog__title__text}>{title}</h4>
+				<h2
+					id="new-bookmark-dialog-title"
+					className={styles.new__bookmark__dialog__title__text}
+				>
+					{title}
+				</h2>
 			</div>
 			<div className={styles.new__bookmark__dialog__content}>
-				<form className={styles.new__bookmark__dialog__form}>
+				<form
+					className={styles.new__bookmark__dialog__form}
+					onSubmit={handleSubmit}
+				>
 					<label
-						htmlFor="title"
+						htmlFor="new-bookmark-title-input"
 						className={styles.new__bookmark__dialog__form__label}
 					>
 						{t("title")}
 						<input
+							id="new-bookmark-title-input"
 							type="text"
 							name="title"
 							placeholder={t("bookmark-title-placeholder")}
-							aria-label={t("title")}
-							onChange={() =>
+							onChange={(e) =>
 								setNewBookmark({
 									...newBookmark,
-									// @ts-ignore
-									title: event.target.value,
+									title: e.target.value,
 								})
 							}
 							required
 							aria-required={true}
+							autoFocus={true}
 						/>
 					</label>
 					<label
-						htmlFor="url"
+						htmlFor="new-bookmark-url-input"
 						className={styles.new__bookmark__dialog__form__label}
 					>
 						URL
 						<input
+							id="new-bookmark-url-input"
+							ref={urlRef}
 							type="url"
 							name="url"
 							placeholder={t("bookmark-url-placeholder")}
-							aria-label={t("url")}
-							onChange={() =>
+							onChange={(e) =>
 								setNewBookmark({
 									...newBookmark,
-									// @ts-ignore
-									url: event.target.value,
+									url: e.target.value,
 								})
 							}
 							required
 							aria-required={true}
+							aria-invalid={urlError !== null}
+							aria-describedby={
+								urlError !== null ? "new-bookmark-url-error" : undefined
+							}
 						/>
 					</label>
+					{urlError !== null && (
+						<p
+							id="new-bookmark-url-error"
+							role="alert"
+							className={styles.new__bookmark__dialog__form__error}
+						>
+							{urlError}
+						</p>
+					)}
 					<label
-						htmlFor="parentFolder"
+						htmlFor="new-bookmark-parent-folder"
 						className={styles.new__bookmark__dialog__form__label}
 					>
 						{t("parent-folder")}
 						<select
+							id="new-bookmark-parent-folder"
 							name="parentFolder"
 							className={styles.new__bookmark__dialog__form__select}
-							aria-label={t("parent-folder")}
-							onChange={() =>
+							defaultValue="null"
+							onChange={(e) =>
 								setNewBookmark({
 									...newBookmark,
-									// @ts-ignore
-									parentFolder: event.target.value,
+									parentFolder: e.target.value,
 								})
 							}
 						>
-							<option
-								defaultValue="null"
-								value="null"
-								aria-label={t("no-parent-folder")}
-							>
-								{t("no-parent-folder")}
-							</option>
+							<option value="null">{t("no-parent-folder")}</option>
 							{folderList?.map((folder: BookmarkFolder) => (
-								<option
-									key={folder.folder_id}
-									value={folder.folder_id}
-									aria-label={folder.folder_title}
-								>
+								<option key={folder.folder_id} value={folder.folder_id}>
 									{folder.folder_title}
 								</option>
 							))}
 						</select>
 					</label>
+					<div className={styles.new__bookmark__dialog__buttons}>
+						<button
+							type="submit"
+							disabled={loading}
+							aria-busy={loading}
+						>
+							{loading ? <Spinner /> : t("create")}
+						</button>
+						<button type="button" onClick={() => closeDialog()}>
+							{t("close")}
+						</button>
+					</div>
 				</form>
 			</div>
-			<div className={styles.new__bookmark__dialog__buttons}>
-				<button
-					disabled={!(newBookmark.title && newBookmark.url)}
-					type="button"
-					aria-label={t("create")}
-					onClick={() => createBookmark()}
-				>
-					{loading ? <Spinner /> : t("create")}
-				</button>
-				<button
-					type="button"
-					onClick={() => closeDialog()}
-					aria-label={t("close")}
-				>
-					{t("close")}
-				</button>
-			</div>
-		</dialog>
-	) : null;
-
-	return dialog;
+		</AccessibleDialog>
+	);
 };
 
 export default NewBookmarkDialog;

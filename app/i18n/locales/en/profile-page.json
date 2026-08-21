@@ -6,5 +6,8 @@
     "verified-by-email": "Verified by email:",
     "creation-date": "Creation date:",
     "last-login-date": "Last login:",
-    "back-to-home-button": "Back to home"
+    "back-to-home-button": "Back to home",
+    "verified": "Verified",
+    "not-verified": "Not verified",
+    "loading": "Loading..."
 }

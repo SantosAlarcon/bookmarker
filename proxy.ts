@@ -18,6 +18,7 @@ export const config = {
 		"/auth/register",
 		"/api/auth/callback",
 		"/reset-password",
+		"/update-password",
 		"/profile",
 		"/prueba2",
 	],

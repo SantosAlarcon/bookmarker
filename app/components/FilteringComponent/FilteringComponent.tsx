@@ -36,22 +36,22 @@ const FilteringComponent = () => {
 	}, [fetched]);
 
 	return isFetched ? (
-		<div className={styles.filtering__container}>
+		<search className={styles.filtering__container}>
 			<input
-				initial={{ width: 0 }}
-				animate={{ width: "revert-layer" }}
-				exit={{ width: 0 }}
-				transition={{ duration: 0.5 }}
-				type="text"
+				type="search"
 				placeholder={t("filter")}
 				aria-label={t("filter")}
-				role="search"
 				// @ts-ignore
 				ref={filterRef}
 				// @ts-ignore
 				onChange={() => setFilter(filterRef.current.value)}
 			/>
-			<button type="button" id="search-tooltip">
+			<button
+				type="button"
+				id="search-tooltip"
+				tabIndex={-1}
+				aria-hidden="true"
+			>
 				<Tooltip
 					anchorSelect="#search-tooltip"
 					place="bottom"
@@ -63,13 +63,16 @@ const FilteringComponent = () => {
 					width={32}
 					height={32}
 					src="/icons/search-icon.svg"
-					alt="Search icon"
+					alt=""
 					className={styles.filtering__container__icon}
 				/>
 			</button>
-		</div>
+		</search>
 	) : (
-		<span className={styles.filtering__container__skeleton} />
+		<span
+			className={styles.filtering__container__skeleton}
+			aria-hidden="true"
+		/>
 	);
 };
 

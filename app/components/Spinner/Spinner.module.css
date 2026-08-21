@@ -1,3 +1,7 @@
+.lds__spinner__wrapper {
+    display: inline-block;
+}
+
 .lds__spinner {
     display: inline-block;
     position: relative;

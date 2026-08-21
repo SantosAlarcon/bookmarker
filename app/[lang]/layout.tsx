@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import i18nConfig from "@/next-i18next.config";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
+import { getT } from "next-i18next/server";
 import Providers from "../components/providers";
 
 export async function generateStaticParams() {
@@ -25,6 +26,8 @@ export default async function RootLayout(props: {
 	const { lang } = await props.params;
 
 	const { children } = props;
+
+	const { t } = await getT("common", { lng: lang });
 
 	return (
 		<html lang={lang} suppressHydrationWarning={true}>
@@ -65,6 +68,9 @@ export default async function RootLayout(props: {
 				<meta property="og:site_name" content="Bookmarker" />
 			</head>
 			<body>
+				<a href="#main-content" className="skip-link">
+					{t("skip-to-main-content")}
+				</a>
 				<Providers>{children}</Providers>
 			</body>
 		</html>

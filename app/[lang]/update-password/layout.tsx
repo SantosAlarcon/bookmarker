@@ -1,7 +1,7 @@
-import { Barlow } from "next/font/google";
-import { Toaster } from "sonner";
 import { initTranslations } from "@/app/i18n";
+import { Barlow } from "next/font/google";
 import type { ReactNode } from "react";
+import { Toaster } from "sonner";
 
 const barlow = Barlow({
     subsets: ["latin"],
@@ -10,16 +10,16 @@ const barlow = Barlow({
 
 // @ts-ignore
 export const generateMetadata = async (props: { params }) => {
-    const {lang} = await props.params;
+    const { lang } = await props.params;
 
-    const { t } = await initTranslations(lang, ["register-page"]);
+    const { t } = await initTranslations(lang, ["change-password-page"]);
 
     return {
         title: t("title"),
     };
 };
 
-export default function AuthLayout({
+export default function UpdatePasswordLayout({
     children,
 }: {
     children: ReactNode;

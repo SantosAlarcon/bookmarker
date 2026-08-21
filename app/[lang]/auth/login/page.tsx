@@ -11,7 +11,7 @@ const LoginPage = (props: { params: Promise<{ lang: string }> }) => {
     const { lang } = params;
 
     return (
-        <main className={styles.main}>
+        <main id="main-content" className={styles.main}>
             <LoginComponent lang={lang} />
         </main>
     );

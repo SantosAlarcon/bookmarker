@@ -90,7 +90,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                     <Image
                         width={10}
                         height={10}
-                        alt="Marker"
+                        alt=""
                         src="/icons/triangle.svg"
                         className={styles.bookmark__folder__mark__icon}
                         style={
@@ -103,7 +103,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                     <Image
                         width={24}
                         height={24}
-                        alt="Folder icon"
+                        alt=""
                         src="/icons/folder-open.svg"
                         priority={true}
                     />
@@ -111,7 +111,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                     <Image
                         width={24}
                         height={24}
-                        alt="Folder icon"
+                        alt=""
                         src="/icons/folder.svg"
                         priority={true}
                     />
@@ -120,11 +120,12 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                     className={styles.bookmark__folder__title}
                     title={props.children.folder_description}
                     onClick={handleExpand}
-                    aria-label={props.children.folder_title}
+                    aria-expanded={expanded}
+                    aria-controls={`folder-children-${props.children.folder_id}`}
                 >
-                    <h4 className={styles.bookmark__folder__title__text}>
+                    <span className={styles.bookmark__folder__title__text}>
                         {props.children.folder_title}
-                    </h4>
+                    </span>
                 </button>
                 <EditFolderButton>{props.children}</EditFolderButton>
                 <RemoveFolderButton>{props.children}</RemoveFolderButton>
@@ -132,6 +133,7 @@ const BookmarkFolderComponent = (props: BFCProps) => {
 
             {children.length > 0 && (
                 <motion.ul
+                    id={`folder-children-${props.children.folder_id}`}
                     className={styles.bookmark__folder__links}
                     ref={collapsibleRef}
                     initial="hidden"

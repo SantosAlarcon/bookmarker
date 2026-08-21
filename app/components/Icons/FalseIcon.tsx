@@ -7,7 +7,7 @@ const FalseIcon = () => {
             src="/icons/false-icon.svg"
             width={24}
             height={24}
-            alt="False icon"
+            alt=""
             priority
         />
     );

@@ -4,14 +4,13 @@ import Image from "next/image";
 import styles from "./ChangePasswordComponent.module.scss";
 import "@/styles/globals.css";
 import Spinner from "@/components/Spinner/Spinner";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import "@/app/i18n/client";
 import { updatePassword } from "@/app/utils/supabase/updatePassword";
 
 interface FormData {
-    email: string;
     password: string;
     confirmPassword: string;
     loading: boolean;
@@ -20,50 +19,46 @@ interface FormData {
 const ChangePasswordComponent = ({ lang }: { lang: string }) => {
     // @ts-ignore
     const { t } = useTranslation("change-password-page", { lng: lang });
+    const passwordRef = useRef<HTMLInputElement>(null);
     const [formData, setFormData] = useState<FormData>({
-        email: "",
         password: "",
         confirmPassword: "",
         loading: false,
     });
+    const [error, setError] = useState<string | null>(null);
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        setError(null);
 
-        // Check if both passwords match
         if (formData.password !== formData.confirmPassword) {
-            toast.error(t("passwords-dont-match"));
+            setError(t("passwords-dont-match"));
             return;
         }
 
         setFormData({ ...formData, loading: true });
-        await updatePassword(formData.email, formData.password)
-            .then(() => {
-                // These lines will execute if the change password is successful
-                toast.success(t("toast-success"));
-            })
-            .catch((error) => {
-                // If it fails to change password, it shows an toast error
-                toast.error(error);
+        try {
+            await updatePassword(formData.password);
+            toast.success(t("toast-success"));
+            setFormData({
+                password: "",
+                confirmPassword: "",
+                loading: false,
             });
-
-        setFormData({ ...formData, loading: false });
-
-        // Reset the form
-        setFormData({
-            email: "",
-            password: "",
-            confirmPassword: "",
-            loading: false,
-        });
+        } catch (err) {
+            toast.error(err instanceof Error ? err.message : t("toast-error"));
+            setError(t("toast-error"));
+            setFormData((prev) => ({ ...prev, loading: false }));
+            passwordRef.current?.focus();
+        }
     };
 
     return (
-        <main className={styles.change__password__page__container}>
+        <div className={styles.change__password__page__container}>
             <div className={styles.change__password__page__logo}>
                 <Image
                     src="/BookmarkerLogo.svg"
-                    alt="logo"
+                    alt="Bookmarker"
                     width={450}
                     height={150}
                     priority={true}
@@ -73,12 +68,12 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                 <Image
                     className={styles.change__password__page__image}
                     src="/BookmarkerMockup.webp"
-                    alt="Mockup"
+                    alt=""
                     width={1225}
                     height={749}
                 />
                 <div className={styles.change__password__page__box}>
-                    <h1 className={styles.change__password__page__title} role="heading">
+                    <h1 className={styles.change__password__page__title}>
                         {t("title")}
                     </h1>
                     <div className={styles.change__password__page__text}>
@@ -98,28 +93,6 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                         >
                             <label
                                 className={styles.change__password__page__label}
-                                htmlFor="email"
-                            >
-                                {t("email-label")}
-                            </label>
-                            <input
-                                type="email"
-								aria-label={t("email-label")}
-                                id="email"
-                                onChange={(e) =>
-                                    setFormData({
-                                        ...formData,
-                                        email: e.target.value,
-                                    })
-                                }
-                                required={true}
-								aria-required={true}
-                                placeholder={t("email-placeholder")}
-                                value={formData.email}
-                            />
-
-                            <label
-                                className={styles.change__password__page__label}
                                 htmlFor="password"
                             >
                                 {t("password-label")}
@@ -127,7 +100,9 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                             <input
                                 type="password"
                                 id="password"
-								aria-label={t("password-label")}
+                                name="password"
+                                autoComplete="new-password"
+                                ref={passwordRef}
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
@@ -135,9 +110,15 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                                     })
                                 }
                                 required={true}
-								aria-required={true}
+                                aria-required={true}
                                 placeholder={t("password-placeholder")}
                                 value={formData.password}
+                                aria-invalid={error !== null}
+                                aria-describedby={
+                                    error !== null
+                                        ? "change-password-error"
+                                        : undefined
+                                }
                             />
                             <label
                                 className={styles.change__password__page__label}
@@ -148,7 +129,8 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                             <input
                                 type="password"
                                 id="confirm-password"
-								aria-label={t("confirm-password-label")}
+                                name="confirm-password"
+                                autoComplete="new-password"
                                 onChange={(e) =>
                                     setFormData({
                                         ...formData,
@@ -156,16 +138,32 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                                     })
                                 }
                                 required={true}
-								aria-required={true}
+                                aria-required={true}
                                 placeholder={t("confirm-password-placeholder")}
                                 value={formData.confirmPassword}
+                                aria-invalid={error !== null}
+                                aria-describedby={
+                                    error !== null
+                                        ? "change-password-error"
+                                        : undefined
+                                }
                             />
+                            {error !== null && (
+                                <p
+                                    id="change-password-error"
+                                    role="alert"
+                                    className={styles.change__password__page__error}
+                                >
+                                    {error}
+                                </p>
+                            )}
                             <button
                                 className={
                                     styles.change__password__page__social__button
                                 }
                                 type="submit"
-								aria-label={t("change-password-button")}
+                                disabled={formData.loading}
+                                aria-busy={formData.loading}
                             >
                                 {formData.loading ? (
                                     <Spinner />
@@ -177,7 +175,7 @@ const ChangePasswordComponent = ({ lang }: { lang: string }) => {
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     );
 };
 

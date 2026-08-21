@@ -1,10 +1,11 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { type FormEvent, useState } from "react";
 import { toast } from "sonner";
 import type { BookmarkFolder } from "@/app/types/types";
 import { createNewFolder } from "@/app/utils/supabase/folders/createNewFolder";
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
+import AccessibleDialog from "@/components/Dialogs/AccessibleDialog/AccessibleDialog";
 import Spinner from "@/components/Spinner/Spinner";
 import { folderStore } from "@/store/folderStore";
 import { modalStore } from "@/store/modalStore";
@@ -23,28 +24,22 @@ const NewFolderDialog = ({ title }: Props) => {
 
 	const folderList = folderStore((state) => state.folderList);
 
-	const [newFolder, setNewFolder] = useState({
+	const [newFolder, setNewFolder] = useState<{
+		title: string;
+		description: string;
+		parentFolder: string | null;
+	}>({
 		title: "",
 		description: "",
 		parentFolder: null,
 	});
 	const [loading, setLoading] = useState<boolean>(false);
-	const dialogRef = useRef<null | HTMLDialogElement>(null);
 
 	// @ts-ignore
 	const lang = localeStore((state) => state.locale);
 	const { t } = useT("common", { lng: lang });
 
-	useEffect(() => {
-		if (showNewFolderDialog) {
-			dialogRef.current?.showModal();
-		} else {
-			dialogRef.current?.close();
-		}
-	}, [showNewFolderDialog]);
-
-	const closeDialog = async () => {
-		dialogRef.current?.close();
+	const closeDialog = () => {
 		hideNewFolderDialog();
 		setNewFolder({
 			title: "",
@@ -53,8 +48,8 @@ const NewFolderDialog = ({ title }: Props) => {
 		});
 	};
 
-	/* THis function implements the logic to create a folder and close the dialog. */
-	const createFolder = async () => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 		setLoading(true);
 		await createNewFolder(newFolder);
 		await updateBookmarkList();
@@ -63,60 +58,67 @@ const NewFolderDialog = ({ title }: Props) => {
 		toast.success(t("new-folder-success"));
 	};
 
-	const dialog: React.JSX.Element | null = showNewFolderDialog ? (
-		<dialog
-			ref={dialogRef}
-			className={styles.new__folder__dialog__container}
+	return (
+		<AccessibleDialog
+			isOpen={showNewFolderDialog === true}
 			onClose={closeDialog}
-			aria-modal="true"
+			className={styles.new__folder__dialog__container}
+			titleId="new-folder-dialog-title"
 		>
 			<div className={styles.new__folder__dialog__title}>
 				<Image
 					width={24}
 					height={24}
 					src="/icons/add-folder-icon.svg"
-					alt="Add folder icon"
+					alt=""
 				/>
-				<h4 className={styles.new__folder__dialog__title__text}>{title}</h4>
+				<h2
+					id="new-folder-dialog-title"
+					className={styles.new__folder__dialog__title__text}
+				>
+					{title}
+				</h2>
 			</div>
 			<div className={styles.new__folder__dialog__content}>
-				<form className={styles.new__folder__dialog__form}>
+				<form
+					className={styles.new__folder__dialog__form}
+					onSubmit={handleSubmit}
+				>
 					<label
-						htmlFor="title"
+						htmlFor="new-folder-title-input"
 						className={styles.new__folder__dialog__form__label}
 					>
 						{t("title")}
 						<input
+							id="new-folder-title-input"
 							type="text"
 							name="title"
 							placeholder={t("folder-title-placeholder")}
-							aria-label={t("title")}
-							onChange={() =>
+							onChange={(e) =>
 								setNewFolder({
 									...newFolder,
-									// @ts-ignore
-									title: event.target.value,
+									title: e.target.value,
 								})
 							}
 							required
 							aria-required={true}
+							autoFocus={true}
 						/>
 					</label>
 					<label
-						htmlFor="description"
+						htmlFor="new-folder-description-input"
 						className={styles.new__folder__dialog__form__label}
 					>
 						{t("description")}
 						<input
+							id="new-folder-description-input"
 							type="text"
 							name="description"
 							placeholder={t("folder-description-placeholder")}
-							aria-label={t("description")}
-							onChange={() =>
+							onChange={(e) =>
 								setNewFolder({
 									...newFolder,
-									// @ts-ignore
-									description: event.target.value,
+									description: e.target.value,
 								})
 							}
 							required
@@ -124,59 +126,46 @@ const NewFolderDialog = ({ title }: Props) => {
 						/>
 					</label>
 					<label
-						htmlFor="parentFolder"
+						htmlFor="new-folder-parent-folder"
 						className={styles.new__folder__dialog__form__label}
 					>
 						{t("parent-folder")}
 						<select
+							id="new-folder-parent-folder"
 							name="parentFolder"
-							className={styles.new__folder__dialog__form__parent__folder}
-							aria-label={t("parent-folder")}
-							onChange={() =>
+							className={styles.new__folder__dialog__parent__folder}
+							defaultValue="null"
+							onChange={(e) =>
 								setNewFolder({
 									...newFolder,
-									// @ts-ignore
-									parentFolder: event.target.value,
+									parentFolder: e.target.value,
 								})
 							}
 						>
-							<option defaultValue="null" aria-label={t("no-parent-folder")}>
-								{t("no-parent-folder")}
-							</option>
+							<option value="null">{t("no-parent-folder")}</option>
 							{folderList.map((folder: BookmarkFolder) => (
-								<option
-									key={folder.folder_id}
-									value={folder.folder_id}
-									aria-label={folder.folder_title}
-								>
+								<option key={folder.folder_id} value={folder.folder_id}>
 									{folder.folder_title}
 								</option>
 							))}
 						</select>
 					</label>
+					<div className={styles.new__folder__dialog__buttons}>
+						<button
+							type="submit"
+							disabled={loading}
+							aria-busy={loading}
+						>
+							{loading ? <Spinner /> : t("create")}
+						</button>
+						<button type="button" onClick={() => closeDialog()}>
+							{t("close")}
+						</button>
+					</div>
 				</form>
 			</div>
-			<div className={styles.new__folder__dialog__buttons}>
-				<button
-					disabled={!(newFolder.title && newFolder.description)}
-					onClick={() => createFolder()}
-					type="button"
-					aria-label={t("create")}
-				>
-					{loading ? <Spinner /> : t("create")}
-				</button>
-				<button
-					type="button"
-					onClick={() => closeDialog()}
-					aria-label={t("close")}
-				>
-					{t("close")}
-				</button>
-			</div>
-		</dialog>
-	) : null;
-
-	return dialog;
+		</AccessibleDialog>
+	);
 };
 
 export default NewFolderDialog;

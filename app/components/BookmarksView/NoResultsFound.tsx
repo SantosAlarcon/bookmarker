@@ -6,7 +6,7 @@ const NoResultsFound = () => {
 	// @ts-ignore
 	const { locale } = localeStore.getState();
 	const { t } = useT("common", { lng: locale });
-	return <h3>{t("no-results-found")}</h3>;
+	return <p>{t("no-results-found")}</p>;
 };
 
 export default NoResultsFound;

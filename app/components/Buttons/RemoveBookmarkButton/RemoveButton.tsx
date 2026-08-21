@@ -1,6 +1,7 @@
 "use client";
 import { modalStore } from "@/store/modalStore";
 import Image from "next/image";
+import { useId } from "react";
 import { Tooltip } from "react-tooltip";
 import styles from "./RemoveButton.module.scss";
 import "react-tooltip/dist/react-tooltip.css";
@@ -23,6 +24,8 @@ const RemoveButton = ({ children }: RemoveProps) => {
     const setDeleteProps = modalStore((state) => state.setDeleteProps);
     const { bookmark_id, bookmark_title } = children;
 
+    const tooltipId = useId();
+
     // @ts-ignore
     const lang = localeStore((state) => state.locale);
     const { t } = useTranslation("common", { lng: lang });
@@ -36,12 +39,12 @@ const RemoveButton = ({ children }: RemoveProps) => {
         <button
             className={styles.remove__button}
             onClick={handleClick}
-            aria-label={t("delete-bookmark")}
+            aria-label={`${t("delete-bookmark")}: ${bookmark_title}`}
             type="button"
-            id="remove__bookmark__button"
+            id={tooltipId}
         >
             <Tooltip
-                anchorSelect="#remove__bookmark__button"
+                anchorSelect={`#${CSS.escape(tooltipId)}`}
                 place="top"
                 content={t("delete-bookmark")}
                 variant="info"
@@ -51,7 +54,7 @@ const RemoveButton = ({ children }: RemoveProps) => {
                 width={24}
                 height={24}
                 src="/icons/trash-icon.svg"
-                alt="Trash icon"
+                alt=""
                 priority
             />
         </button>

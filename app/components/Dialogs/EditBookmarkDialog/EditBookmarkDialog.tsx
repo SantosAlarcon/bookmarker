@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { localeStore } from "@/app/store/localeStore";
 import type { BookmarkFolder } from "@/app/types/types";
@@ -9,6 +9,7 @@ import { createClient } from "@/app/utils/supabase/client";
 import { getAllFolders } from "@/app/utils/supabase/folders/getAllFolders";
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
 import { validateURL } from "@/app/utils/validateURL";
+import AccessibleDialog from "@/components/Dialogs/AccessibleDialog/AccessibleDialog";
 import Spinner from "@/components/Spinner/Spinner";
 import { folderStore } from "@/store/folderStore";
 import { modalStore } from "@/store/modalStore";
@@ -41,22 +42,14 @@ const EditBookmarkDialog = ({ title }: Props) => {
 		parentFolder: editBookmarkData.parentFolder,
 	});
 	const [loading, setLoading] = useState<boolean>(false);
+	const [urlError, setUrlError] = useState<string | null>(null);
 
-	const dialogRef = useRef<null | HTMLDialogElement>(null);
+	const urlRef = useRef<HTMLInputElement>(null);
 
 	// @ts-ignore
 	const lang = localeStore((state) => state.locale);
 	const { t } = useT("common", { lng: lang });
 
-	useEffect(() => {
-		if (editBookmarkModal) {
-			dialogRef.current?.showModal();
-		} else {
-			dialogRef.current?.close();
-		}
-	}, [editBookmarkModal]);
-
-	/* It rerenders when the bookmark list is updated */
 	useEffect(() => {
 		const getFolderList = async () => {
 			const supabase = createClient();
@@ -79,156 +72,160 @@ const EditBookmarkDialog = ({ title }: Props) => {
 		});
 	}, [editBookmarkData]);
 
-	const closeDialog = async () => {
-		dialogRef.current?.close();
+	const closeDialog = () => {
 		hideEditBookmarkDialog();
 		setUpdatedBookmark({
 			title: "",
 			url: "",
 			parentFolder: null,
 		});
+		setUrlError(null);
 	};
 
-	const editBookmark = async () => {
-		if (validateURL(updatedBookmark.url)) {
-			setLoading(true);
-			await updateBookmark(editBookmarkData.id, updatedBookmark);
-			await updateBookmarkList();
-			closeDialog();
-			setLoading(false);
-			//router.refresh()
-			toast.success(t("edit-bookmark-success"));
-		} else {
-			alert(
-				"URL format is incorrect!\nEnter an URL starting with 'http://' or 'https://'.",
-			);
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		if (!validateURL(updatedBookmark.url)) {
+			setUrlError(t("invalid-url-error"));
+			urlRef.current?.focus();
+			return;
 		}
+		setUrlError(null);
+		setLoading(true);
+		await updateBookmark(editBookmarkData.id, updatedBookmark);
+		await updateBookmarkList();
+		closeDialog();
+		setLoading(false);
+		toast.success(t("edit-bookmark-success"));
 	};
 
-	const dialog: React.JSX.Element | null =
-		editBookmarkModal === true ? (
-			<dialog
-				ref={dialogRef}
-				className={styles.edit__bookmark__dialog__container}
-				onClose={closeDialog}
-				aria-modal="true"
-			>
-				<div className={styles.edit__bookmark__dialog__title}>
-					<Image
-						src="/icons/edit-icon.svg"
-						alt="Edit bookmark icon"
-						width={16}
-						height={16}
-					/>
-					<h4 className={styles.edit__bookmark__dialog__title__text}>
-						{title}
-					</h4>
-				</div>
-				<div className={styles.edit__bookmark__dialog__content}>
-					<form className={styles.edit__bookmark__dialog__form}>
-						<label
-							htmlFor="title"
-							className={styles.edit__bookmark__dialog__form__label}
+	return (
+		<AccessibleDialog
+			isOpen={editBookmarkModal === true}
+			onClose={closeDialog}
+			className={styles.edit__bookmark__dialog__container}
+			titleId="edit-bookmark-dialog-title"
+		>
+			<div className={styles.edit__bookmark__dialog__title}>
+				<Image
+					src="/icons/edit-icon.svg"
+					alt=""
+					width={16}
+					height={16}
+				/>
+				<h2
+					id="edit-bookmark-dialog-title"
+					className={styles.edit__bookmark__dialog__title__text}
+				>
+					{title}
+				</h2>
+			</div>
+			<div className={styles.edit__bookmark__dialog__content}>
+				<form
+					className={styles.edit__bookmark__dialog__form}
+					onSubmit={handleSubmit}
+				>
+					<label
+						htmlFor="edit-bookmark-title-input"
+						className={styles.edit__bookmark__dialog__form__label}
+					>
+						{t("title")}
+						<input
+							id="edit-bookmark-title-input"
+							type="text"
+							name="title"
+							placeholder={t("bookmark-title-placeholder")}
+							onChange={(e) =>
+								setUpdatedBookmark({
+									...updatedBookmark,
+									title: e.target.value,
+								})
+							}
+							value={updatedBookmark.title}
+							required
+							aria-required={true}
+							autoFocus={true}
+						/>
+					</label>
+					<label
+						htmlFor="edit-bookmark-url-input"
+						className={styles.edit__bookmark__dialog__form__label}
+					>
+						URL
+						<input
+							id="edit-bookmark-url-input"
+							ref={urlRef}
+							type="url"
+							name="url"
+							placeholder={t("bookmark-url-placeholder")}
+							onChange={(e) =>
+								setUpdatedBookmark({
+									...updatedBookmark,
+									url: e.target.value,
+								})
+							}
+							value={updatedBookmark.url}
+							required
+							aria-required={true}
+							aria-invalid={urlError !== null}
+							aria-describedby={
+								urlError !== null ? "edit-bookmark-url-error" : undefined
+							}
+						/>
+					</label>
+					{urlError !== null && (
+						<p
+							id="edit-bookmark-url-error"
+							role="alert"
+							className={styles.edit__bookmark__dialog__form__error}
 						>
-							{t("title")}
-							<input
-								type="text"
-								name="title"
-								placeholder={t("bookmark-title-placeholder")}
-								aria-label={t("title")}
-								onChange={() =>
-									setUpdatedBookmark({
-										...updatedBookmark,
-										// @ts-ignore
-										title: event.target.value,
-									})
-								}
-								value={updatedBookmark.title}
-								required
-								aria-required={true}
-							/>
-						</label>
-						<label
-							htmlFor="url"
-							className={styles.edit__bookmark__dialog__form__label}
+							{urlError}
+						</p>
+					)}
+					<label
+						htmlFor="edit-bookmark-parent-folder"
+						className={styles.edit__bookmark__dialog__form__label}
+					>
+						{t("parent-folder")}
+						<select
+							id="edit-bookmark-parent-folder"
+							name="parentFolder"
+							className={styles.edit__bookmark__dialog__form__select}
+							defaultValue={
+								editBookmarkData.parentFolder
+									? editBookmarkData.parentFolder
+									: "null"
+							}
+							onChange={(e) =>
+								setUpdatedBookmark({
+									...updatedBookmark,
+									parentFolder: e.target.value,
+								})
+							}
 						>
-							URL
-							<input
-								type="url"
-								name="url"
-								placeholder={t("bookmark-url-placeholder")}
-								onChange={() =>
-									setUpdatedBookmark({
-										...updatedBookmark,
-										// @ts-ignore
-										url: event.target.value,
-									})
-								}
-								value={updatedBookmark.url}
-								aria-label={t("url")}
-								required
-								aria-required={true}
-							/>
-						</label>
-						<label
-							htmlFor="parentFolder"
-							className={styles.edit__bookmark__dialog__form__label}
-						>
-							{t("parent-folder")}
-							<select
-								name="parentFolder"
-								className={styles.edit__bookmark__dialog__form__select}
-								// @ts-ignore
-								defaultValue={
-									editBookmarkData.parentFolder
-										? editBookmarkData.parentFolder
-										: null
-								}
-								onChange={() =>
-									setUpdatedBookmark({
-										...updatedBookmark,
-										// @ts-ignore
-										parentFolder: event.target.value,
-									})
-								}
-							>
-								<option value="null" aria-label={t("no-parent-folder")}>
-									{t("no-parent-folder")}
+							<option value="null">{t("no-parent-folder")}</option>
+							{folderList?.map((folder: BookmarkFolder) => (
+								<option key={folder.folder_id} value={folder.folder_id}>
+									{folder.folder_title}
 								</option>
-								{folderList?.map((folder: BookmarkFolder) => (
-									<option
-										key={folder.folder_id}
-										value={folder.folder_id}
-										aria-label={folder.folder_title}
-									>
-										{folder.folder_title}
-									</option>
-								))}
-							</select>
-						</label>
-					</form>
-				</div>
-				<div className={styles.edit__bookmark__dialog__buttons}>
-					<button
-						type="button"
-						aria-label={t("update")}
-						disabled={!(updatedBookmark.title && updatedBookmark.url)}
-						onClick={() => editBookmark()}
-					>
-						{loading ? <Spinner /> : t("update")}
-					</button>
-					<button
-						type="button"
-						onClick={() => closeDialog()}
-						aria-label={t("close")}
-					>
-						{t("close")}
-					</button>
-				</div>
-			</dialog>
-		) : null;
-
-	return dialog;
+							))}
+						</select>
+					</label>
+					<div className={styles.edit__bookmark__dialog__buttons}>
+						<button
+							type="submit"
+							disabled={loading}
+							aria-busy={loading}
+						>
+							{loading ? <Spinner /> : t("update")}
+						</button>
+						<button type="button" onClick={() => closeDialog()}>
+							{t("close")}
+						</button>
+					</div>
+				</form>
+			</div>
+		</AccessibleDialog>
+	);
 };
 
 export default EditBookmarkDialog;

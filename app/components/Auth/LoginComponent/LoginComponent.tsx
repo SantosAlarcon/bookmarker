@@ -3,10 +3,9 @@
 import Image from "next/image";
 import styles from "./LoginComponent.module.scss";
 import "@/styles/globals.css";
-import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { loginWithEmail } from "@/app/utils/supabase/loginWithEmail";
@@ -20,40 +19,39 @@ interface FormData {
 }
 
 const LoginComponent = ({ lang }: { lang: string }) => {
-	const router: AppRouterInstance = useRouter();
+	const router = useRouter();
 	const { t } = useTranslation("login-page", { lng: lang });
+	const emailRef = useRef<HTMLInputElement>(null);
 
 	const [formData, setFormData] = useState<FormData>({
 		email: "",
 		password: "",
 		loading: false,
 	});
+	const [error, setError] = useState<string | null>(null);
 
-	const handleSubmit = (event: FormEvent) => {
+	const handleSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 		setFormData({ ...formData, loading: true });
-		loginWithEmail(formData.email, formData.password)
-			.then(() => {
-				toast.success(t("login-success"));
-				router.prefetch("/");
-				router.push("/");
-			})
-			.catch(() => {
-				toast.error(t("login-error"));
-			});
-
-		setFormData({ ...formData, loading: false });
-
-		// Reset the form
-		setFormData({ email: "", password: "", loading: false });
+		setError(null);
+		try {
+			await loginWithEmail(formData.email, formData.password);
+			toast.success(t("login-success"));
+			router.prefetch("/");
+			router.push("/");
+		} catch {
+			setError(t("login-error"));
+			setFormData((prev) => ({ ...prev, loading: false }));
+			emailRef.current?.focus();
+		}
 	};
 
 	return (
-		<main className={styles.login__page__container}>
+		<div className={styles.login__page__container}>
 			<div className={styles.login__page__logo}>
 				<Image
 					src="/BookmarkerLogo.svg"
-					alt="logo"
+					alt="Bookmarker"
 					width={450}
 					height={150}
 					priority={true}
@@ -63,7 +61,7 @@ const LoginComponent = ({ lang }: { lang: string }) => {
 				<Image
 					className={styles.login__page__image}
 					src="/BookmarkerMockup.webp"
-					alt="mockup"
+					alt=""
 					width={1225}
 					height={749}
 					loading="eager"
@@ -80,11 +78,10 @@ const LoginComponent = ({ lang }: { lang: string }) => {
 								type="submit"
 								className={styles.login__page__social__button}
 								disabled={formData.loading}
-								aria-label={t("sign-with-google")}
 							>
 								<Image
 									src="/social/google.svg"
-									alt="Google Logo"
+									alt=""
 									width={20}
 									height={20}
 									priority={true}
@@ -100,11 +97,10 @@ const LoginComponent = ({ lang }: { lang: string }) => {
 								type="submit"
 								className={styles.login__page__social__button}
 								disabled={formData.loading}
-								aria-label={t("sign-with-github")}
 							>
 								<Image
 									src="/social/github.svg"
-									alt="GitHub Logo"
+									alt=""
 									width={20}
 									height={20}
 									priority={true}
@@ -120,11 +116,10 @@ const LoginComponent = ({ lang }: { lang: string }) => {
 								type="submit"
 								className={styles.login__page__social__button}
 								disabled={formData.loading}
-								aria-label={t("sign-with-facebook")}
 							>
 								<Image
 									src="/social/facebook.svg"
-									alt="Facebook Logo"
+									alt=""
 									width={20}
 									height={20}
 									priority={true}
@@ -141,7 +136,9 @@ const LoginComponent = ({ lang }: { lang: string }) => {
 							<input
 								type="email"
 								id="email"
-								aria-label={t("email-label")}
+								name="email"
+								autoComplete="email"
+								ref={emailRef}
 								onChange={(e) =>
 									setFormData({
 										...formData,
@@ -152,12 +149,17 @@ const LoginComponent = ({ lang }: { lang: string }) => {
 								aria-required={true}
 								placeholder={t("email-label")}
 								value={formData.email}
+								aria-invalid={error !== null}
+								aria-describedby={
+									error !== null ? "login-error" : undefined
+								}
 							/>
 							<label htmlFor="password">{t("password-label")}</label>
 							<input
 								type="password"
 								id="password"
-								aria-label={t("password-label")}
+								name="password"
+								autoComplete="current-password"
 								onChange={(e) =>
 									setFormData({
 										...formData,
@@ -168,19 +170,28 @@ const LoginComponent = ({ lang }: { lang: string }) => {
 								aria-required={true}
 								placeholder={t("password-label")}
 								value={formData.password}
+								aria-invalid={error !== null}
+								aria-describedby={
+									error !== null ? "login-error" : undefined
+								}
 							/>
+							{error !== null && (
+								<p id="login-error" role="alert" className={styles.login__page__error}>
+									{error}
+								</p>
+							)}
 							<button
 								className={styles.login__page__social__button}
 								type="submit"
-								aria-label={t("sign-with-email")}
 								disabled={formData.loading}
+								aria-busy={formData.loading}
 							>
 								{formData.loading ? (
 									<Spinner />
 								) : (
 									<Image
 										src="/social/email.svg"
-										alt="Email Logo"
+										alt=""
 										width={20}
 										height={20}
 										priority={true}
@@ -190,23 +201,15 @@ const LoginComponent = ({ lang }: { lang: string }) => {
 							</button>
 						</form>
 					</div>
-					<Link
-						href="/auth/register"
-						className={styles.login__page__link}
-						aria-label={t("register-link")}
-					>
+					<Link href="/auth/register" className={styles.login__page__link}>
 						{t("register-text")} <b>{t("register-link")}</b>
 					</Link>
-					<Link
-						href="/reset-password"
-						className={styles.login__page__link}
-						aria-label={t("reset-password-link")}
-					>
+					<Link href="/reset-password" className={styles.login__page__link}>
 						{t("reset-password-text")} <b>{t("reset-password-link")}</b>
 					</Link>
 				</div>
 			</div>
-		</main>
+		</div>
 	);
 };
 

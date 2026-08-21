@@ -1,10 +1,11 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { deleteBookmark } from "@/app/utils/supabase/bookmarks/deleteBookmark";
 import deleteFolder from "@/app/utils/supabase/folders/deleteFolder";
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
+import AccessibleDialog from "@/components/Dialogs/AccessibleDialog/AccessibleDialog";
 import Spinner from "@/components/Spinner/Spinner";
 import { modalStore } from "@/store/modalStore";
 import styles from "./ConfirmDeleteDialog.module.scss";
@@ -17,7 +18,6 @@ type Props = {
 };
 
 const ConfirmDeleteDialog = ({ title }: Props) => {
-	const dialogRef = useRef<null | HTMLDialogElement>(null);
 	const confirmDeleteModal = modalStore((state) => state.deleteConfirmModal);
 	const closeDeleteModal = modalStore((state) => state.hideDeleteConfirmModal);
 	const deleteProps = modalStore((state) => state.deleteProps);
@@ -27,99 +27,96 @@ const ConfirmDeleteDialog = ({ title }: Props) => {
 	const lang = localeStore((state) => state.locale);
 	const { t } = useT("common", { lng: lang });
 
-	useEffect(() => {
-		if (confirmDeleteModal === true) {
-			dialogRef.current?.showModal();
-		} else {
-			dialogRef.current?.close();
-		}
-	}, [confirmDeleteModal]);
-
-	const closeDialog = async () => {
+	const closeDialog = () => {
 		closeDeleteModal();
-		dialogRef.current?.close();
 	};
 
-	/* This function implements deletion logic and closes the medal. Use the ID of the item to delete it */
 	const confirmDeletion = async () => {
+		if (deleteProps.type !== "bookmark" && deleteProps.type !== "folder") {
+			return;
+		}
 		setLoading(true);
-		switch (deleteProps.type) {
-			case "bookmark": {
-				await deleteBookmark(deleteProps.id);
-				break;
-			}
-			case "folder": {
-				await deleteFolder(deleteProps.id);
-				break;
-			}
+		if (deleteProps.type === "bookmark") {
+			await deleteBookmark(deleteProps.id);
+		} else {
+			await deleteFolder(deleteProps.id);
 		}
 
 		await updateBookmarkList();
 		closeDialog();
 		setLoading(false);
-		//router.refresh()
 		toast.success(`${t("deletion-success")}: ${deleteProps?.title}`);
+		requestAnimationFrame(() => {
+			if (document.activeElement === document.body) {
+				document.getElementById("bookmarks-list")?.focus();
+			}
+		});
 	};
 
-	const dialog: React.JSX.Element | null =
-		confirmDeleteModal === true ? (
-			<dialog
-				ref={dialogRef}
-				className={styles.confirm__delete__dialog__container}
-				onClose={closeDialog}
-				aria-modal="true"
+	return (
+		<AccessibleDialog
+			isOpen={confirmDeleteModal === true}
+			onClose={closeDialog}
+			className={styles.confirm__delete__dialog__container}
+			titleId="confirm-delete-title"
+			descriptionId="confirm-delete-desc"
+		>
+			<div className={styles.confirm__delete__dialog__title}>
+				<Image
+					src="/icons/trash-icon.svg"
+					alt=""
+					width={16}
+					height={16}
+				/>
+				<h2
+					id="confirm-delete-title"
+					className={styles.confirm__delete__dialog__title__text}
+				>
+					{title}
+				</h2>
+			</div>
+			<div
+				id="confirm-delete-desc"
+				className={styles.confirm__delete__dialog__content}
 			>
-				<div className={styles.confirm__delete__dialog__title}>
-					<Image
-						src="/icons/trash-icon.svg"
-						alt="Trash icon"
-						width={16}
-						height={16}
-					/>
-					<h4 className={styles.confirm__delete__dialog__title__text}>
-						{title}
-					</h4>
-				</div>
-				<div className={styles.confirm__delete__dialog__content}>
-					{deleteProps?.type === "folder" ? (
-						<p className={styles.confirm__delete__dialog__content__text}>
-							<span className={styles.confirm__delete__dialog__danger__text}>
-								{t("warning")}
-							</span>
-							: {t("all-the-children-inside")}{" "}
-							<span className={styles.confirm__delete__dialog__danger__text}>
-								{t("will")}
-							</span>{" "}
-							{t("be-deleted")}.<br />
-							{t("confirm-folder-deletion-text")} <b>{deleteProps?.title}</b>?
-						</p>
-					) : (
-						<p className={styles.confirm__delete__dialog__content__text}>
-							{t("confirm-deletion-text")} <b>{deleteProps?.title}</b>?
-						</p>
-					)}
-				</div>
-				<div className={styles.confirm__delete__dialog__buttons}>
-					<button
-						type="button"
-						className={styles.confirm__delete__dialog__buttons__delete}
-						onClick={() => confirmDeletion()}
-						aria-label={t("delete")}
-					>
-						{loading ? <Spinner /> : t("delete")}
-					</button>
-					<button
-						type="button"
-						onClick={() => closeDialog()}
-						aria-label={t("close")}
-					>
-						{t("close")}
-					</button>
-				</div>
-			</dialog>
-		) : null;
-
-	return dialog;
+				{deleteProps?.type === "folder" ? (
+					<p className={styles.confirm__delete__dialog__content__text}>
+						<span className={styles.confirm__delete__dialog__danger__text}>
+							{t("warning")}
+						</span>
+						: {t("all-the-children-inside")}{" "}
+						<span className={styles.confirm__delete__dialog__danger__text}>
+							{t("will")}
+						</span>{" "}
+						{t("be-deleted")}.<br />
+						{t("confirm-folder-deletion-text")} <b>{deleteProps?.title}</b>?
+					</p>
+				) : (
+					<p className={styles.confirm__delete__dialog__content__text}>
+						{t("confirm-deletion-text")} <b>{deleteProps?.title}</b>?
+					</p>
+				)}
+			</div>
+			<div className={styles.confirm__delete__dialog__buttons}>
+				<button
+					type="button"
+					className={styles.confirm__delete__dialog__buttons__delete}
+					onClick={() => confirmDeletion()}
+					disabled={loading}
+					aria-busy={loading}
+				>
+					{loading ? <Spinner /> : t("delete")}
+				</button>
+				<button
+					type="button"
+					onClick={() => closeDialog()}
+					autoFocus={true}
+				>
+					{t("close")}
+				</button>
+			</div>
+		</AccessibleDialog>
+	);
 };
 
 export default ConfirmDeleteDialog;

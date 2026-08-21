@@ -6,5 +6,8 @@
     "verified-by-email": "Verificado por correo electrónico:",
     "creation-date": "Fecha de creación:",
     "last-login-date": "Ultimo inicio de sesión:",
-    "back-to-home-button": "Volver al inicio"
+    "back-to-home-button": "Volver al inicio",
+    "verified": "Verificado",
+    "not-verified": "No verificado",
+    "loading": "Cargando..."
 }

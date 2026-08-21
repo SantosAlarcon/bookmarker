@@ -17,9 +17,9 @@ const ResetPasswordPage = async (props: {
     }
 
     return (
-        <main className={styles.main}>
+        <div className={styles.main}>
             <ResetPassword lang={lang} />
-        </main>
+        </div>
     );
 };
 

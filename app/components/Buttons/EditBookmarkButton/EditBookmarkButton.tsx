@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { useId } from "react";
 import styles from "./EditButton.module.scss";
 import { modalStore } from "@/store/modalStore";
 import { Tooltip } from "react-tooltip";
@@ -28,6 +29,8 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
     const { bookmark_id, bookmark_title, bookmark_url, bookmark_parentfolder } =
         children;
 
+    const tooltipId = useId();
+
     const handleClick = () => {
         modifyEditBookmarkData(
             bookmark_id,
@@ -46,12 +49,12 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
         <button
             className={styles.edit__button}
             onClick={handleClick}
-            aria-label={t("edit-bookmark-title")}
+            aria-label={`${t("edit-bookmark-title")}: ${bookmark_title}`}
             type="button"
-            id="edit__bookmark"
+            id={tooltipId}
         >
             <Tooltip
-                anchorSelect="#edit__bookmark"
+                anchorSelect={`#${CSS.escape(tooltipId)}`}
                 variant="info"
                 content={t("edit-bookmark-title")}
                 className={tooltipStyles.custom__tooltip}
@@ -60,7 +63,7 @@ const EditBookmarkButton = ({ children }: EditBookmarkProps) => {
                 width={24}
                 height={24}
                 src="/icons/edit-icon.svg"
-                alt="Edit icon"
+                alt=""
                 priority={true}
             />
         </button>

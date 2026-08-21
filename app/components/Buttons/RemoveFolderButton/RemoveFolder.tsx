@@ -8,6 +8,7 @@ import { useT } from "next-i18next/client";
 import tooltipStyles from "@/styles/tooltip.module.css";
 import "@/app/i18n/client";
 import { localeStore } from "@/app/store/localeStore";
+import { useId } from "react";
 
 interface RemoveProps {
 	children: {
@@ -23,6 +24,8 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
 	const setDeleteProps = modalStore((state) => state.setDeleteProps);
 	const { folder_id, folder_title } = children;
 
+	const tooltipId = useId();
+
 	// @ts-ignore
 	const lang = localeStore((state) => state.locale);
 	const { t } = useT("common", { lng: lang });
@@ -35,13 +38,13 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
 	return (
 		<button
 			className={styles.remove__button}
-			aria-label={t("delete-folder")}
+			aria-label={`${t("delete-folder")}: ${folder_title}`}
 			onClick={handleClick}
 			type="button"
-			id="remove__folder__button"
+			id={tooltipId}
 		>
 			<Tooltip
-				anchorSelect="#remove__folder__button"
+				anchorSelect={`#${CSS.escape(tooltipId)}`}
 				place="top"
 				content={t("delete-folder")}
 				variant="info"
@@ -51,7 +54,7 @@ const RemoveFolderButton = ({ children }: RemoveProps) => {
 				width={24}
 				height={24}
 				src="/icons/trash-icon.svg"
-				alt="Trash icon"
+				alt=""
 				priority={true}
 			/>
 		</button>

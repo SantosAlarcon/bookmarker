@@ -6,5 +6,8 @@
     "verified-by-email": "Verificat per correu electrònic:",
     "creation-date": "Data de creació:",
     "last-login-date": "Últim inici de sessió:",
-    "back-to-home-button": "Tornar a l'inici"
+    "back-to-home-button": "Tornar a l'inici",
+    "verified": "Verificat",
+    "not-verified": "No verificat",
+    "loading": "Carregant..."
 }

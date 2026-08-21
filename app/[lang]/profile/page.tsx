@@ -25,13 +25,17 @@ async function ProfilePage(props: { params: Promise<{ lang: string }> }) {
     const userMetadata: UserMetadata | undefined = user?.user_metadata;
 
     return (
-        <main className={styles.profile__page__container}>
+        <main id="main-content" className={styles.profile__page__container}>
             <h1 className={styles.profile__page__title}>{t("title")}</h1>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div role="status">{t("loading")}</div>}>
                 <div className={styles.profile__page__avatar}>
                     <Image
                         className={styles.profile__page__avatar__img}
-                        alt=""
+                        alt={
+                            userMetadata?.full_name
+                                ? `${userMetadata.full_name} profile photo`
+                                : "Profile photo"
+                        }
                         src={userMetadata?.picture}
                         width="96"
                         height="96"
@@ -39,7 +43,7 @@ async function ProfilePage(props: { params: Promise<{ lang: string }> }) {
                     />
                 </div>
             </Suspense>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div role="status">{t("loading")}</div>}>
                 <div className={styles.profile__page__data__grid}>
                     <span
                         className={
@@ -82,9 +86,19 @@ async function ProfilePage(props: { params: Promise<{ lang: string }> }) {
                         }
                     >
                         {userMetadata?.email_verified ? (
-                            <TrueIcon />
+                            <>
+                                <TrueIcon />
+                                <span className="visually-hidden">
+                                    {t("verified")}
+                                </span>
+                            </>
                         ) : (
-                            <FalseIcon />
+                            <>
+                                <FalseIcon />
+                                <span className="visually-hidden">
+                                    {t("not-verified")}
+                                </span>
+                            </>
                         )}
                     </span>
                     <span

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Tooltip } from "react-tooltip";
 import { Toaster } from "sonner";
 import { modalStore } from "@/store/modalStore";
@@ -23,8 +23,6 @@ const Header = ({ lang }: { lang: string }) => {
 
 	const { t } = useT(["common", "header"], { lng: lang });
 
-	const router = useRouter();
-
 	const handleNewBookmark = () => {
 		showNewBookmarkModal();
 	};
@@ -40,16 +38,20 @@ const Header = ({ lang }: { lang: string }) => {
 			<UserContextMenu />
 			<header className={styles.header__container}>
 				<nav className={styles.header__upper}>
-					<div className={styles.header__logo} onClick={() => router.push("/")}>
+					<Link
+						href="/"
+						className={styles.header__logo}
+						aria-label="Bookmarker"
+					>
 						<Image
 							src="/BookmarkerLogo.svg"
 							width="128"
 							height="128"
-							alt="Logo"
+							alt=""
 							priority={true}
 							className={styles.header__logo_img}
 						/>
-					</div>
+					</Link>
 					<div className={styles.header__links}>
 						<div className={styles.header__links__new__bookmark}>
 							<button
@@ -71,7 +73,7 @@ const Header = ({ lang }: { lang: string }) => {
 									height={32}
 									src="/icons/add-bookmark-icon.svg"
 									className={tooltipStyles.header__links__icon}
-									alt="New bookmark icon"
+									alt=""
 									priority={true}
 								/>
 							</button>
@@ -96,7 +98,7 @@ const Header = ({ lang }: { lang: string }) => {
 									height={32}
 									src="/icons/add-folder-icon.svg"
 									className={tooltipStyles.header__links__icon}
-									alt="New folder icon"
+									alt=""
 									priority={true}
 								/>
 							</button>

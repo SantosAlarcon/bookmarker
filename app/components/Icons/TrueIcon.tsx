@@ -7,7 +7,7 @@ const TrueIcon = () => {
             src="/icons/true-icon.svg"
             width={24}
             height={24}
-            alt="True icon"
+            alt=""
             priority
         />
     );

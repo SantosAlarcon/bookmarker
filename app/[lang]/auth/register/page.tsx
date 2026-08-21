@@ -9,7 +9,7 @@ const RegisterPage = (props: { params: Promise<{ lang: string }> }) => {
 
     return (
         <AuthLayout>
-            <main className={styles.main}>
+            <main id="main-content" className={styles.main}>
                 <RegisterComponent lang={lang} />
             </main>
         </AuthLayout>

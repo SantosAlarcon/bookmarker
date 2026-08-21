@@ -1,6 +1,6 @@
 .new__folder__dialog {
   &__container {
-    width: 765px;
+    width: min(765px, calc(100vw - 2rem));
     padding: 1rem;
     margin: 0 auto;
     border-radius: 1rem;

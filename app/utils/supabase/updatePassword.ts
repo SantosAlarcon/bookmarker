@@ -2,8 +2,11 @@
 
 import { createClient } from "./server";
 
-export const updatePassword = async (email: string, password: string) => {
+export const updatePassword = async (password: string) => {
     const supabase = await createClient();
 
-    await supabase.auth.updateUser({ email, password });
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) {
+        throw new Error(error.message);
+    }
 };

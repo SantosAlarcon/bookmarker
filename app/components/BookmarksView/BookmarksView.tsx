@@ -78,21 +78,41 @@ const BookmarksView = () => {
 			<EditFolderDialog title={t("edit-folder-title")} />
 			<ConfirmDeleteDialog title={t("delete-item")} />
 
-			<main className={styles.bookmarks__view__container}>
+			<main
+				id="main-content"
+				className={styles.bookmarks__view__container}
+			>
+				<p role="status" className="visually-hidden">
+					{filter ? t("results-found", { count: filteredList.length }) : ""}
+				</p>
 				{filter && filteredList.length === 0 && (
-					<div className={styles.bookmarks__view__paragraph}>
+					<div
+						className={styles.bookmarks__view__paragraph}
+						role="status"
+					>
 						<NoResultsFound />
 					</div>
 				)}
 				{loading ? (
 					// If not bookmarks are loaded, it shows skeleton component
-					Array.from({ length: 10 }).map((_, i) => <BookmarkSkeleton key={i} />)
+					<div
+						role="status"
+						aria-label={t("loading-bookmarks")}
+						aria-busy="true"
+					>
+						{Array.from({ length: 10 }).map((_, i) => (
+							<BookmarkSkeleton key={i} />
+						))}
+					</div>
 				) : // If there are, it renders the folders and bookmarks
 					bookmarksList.length > 0 ? (
 						// First render the root folders and its children
 						<motion.ul
 							layout
 							initial="false"
+							id="bookmarks-list"
+							tabIndex={-1}
+							role="list"
 							className={styles.bookmarks__view__list}
 						>
 							{filteredList?.map(

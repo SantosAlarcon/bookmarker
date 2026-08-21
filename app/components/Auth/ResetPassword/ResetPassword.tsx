@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { type FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import Spinner from "@/components/Spinner/Spinner";
@@ -16,6 +16,8 @@ const ResetPassword = ({ lang }: { lang: string }) => {
 	const [email, setEmail] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>(false);
 	const [hydrated, setHydrated] = useState<boolean>(false);
+	const [error, setError] = useState<string | null>(null);
+	const emailRef = useRef<HTMLInputElement>(null);
 	const { t } = useTranslation("reset-password", { lng: lang });
 
 	useEffect(() => {
@@ -25,17 +27,19 @@ const ResetPassword = ({ lang }: { lang: string }) => {
 	async function handleResetPassword(email: string, event: FormEvent) {
 		event.preventDefault();
 		setLoading(true);
+		setError(null);
 		const { error } = await supabase.auth.resetPasswordForEmail(email, {
 			redirectTo: `${window.location.origin}/api/auth/update-password`,
 		});
 
 		if (error) {
-			//console.error("ERROR: ", error);
+			setError(t("error"));
+			emailRef.current?.focus();
 		} else {
 			toast.info(t("toast-success"));
+			setEmail("");
 		}
 		setLoading(false);
-		setEmail("");
 	}
 
 	if (!hydrated) return null;
@@ -45,7 +49,7 @@ const ResetPassword = ({ lang }: { lang: string }) => {
 			<Image
 				className={styles.reset__password__logo}
 				src="/BookmarkerLogo.svg"
-				alt="Bookmarker logo"
+				alt="Bookmarker"
 				width="450"
 				height="150"
 				priority={true}
@@ -53,7 +57,7 @@ const ResetPassword = ({ lang }: { lang: string }) => {
 			<div className={styles.reset__password__inner}>
 				<Image
 					src="/BookmarkerMockup.webp"
-					alt="Mockup"
+					alt=""
 					width="1225"
 					height="749"
 					className={styles.reset__password__image}
@@ -81,16 +85,27 @@ const ResetPassword = ({ lang }: { lang: string }) => {
 							type="email"
 							required={true}
 							aria-required={true}
-							aria-label={t("email-label")}
+							aria-invalid={error !== null}
+							aria-describedby={error !== null ? "reset-error" : undefined}
+							autoComplete="email"
+							ref={emailRef}
 							value={email}
 							// @ts-ignore
 							onChange={() => setEmail(event.target.value)}
 						/>
+						{error !== null && (
+							<p
+								id="reset-error"
+								role="alert"
+								className={styles.reset__password__error}
+							>
+								{error}
+							</p>
+						)}
 						<button
-							aria-label={t("reset-password-button")}
 							className={styles.reset__password__button}
 							type="submit"
-							disabled={!email}
+							aria-busy={loading}
 						>
 							{loading ? <Spinner /> : t("reset-password-button")}
 						</button>
@@ -98,7 +113,6 @@ const ResetPassword = ({ lang }: { lang: string }) => {
 					<div className={styles.reset__password__links}>
 						{t("remember-password-text")}
 						<Link
-							aria-label={t("remember-password-link")}
 							href="/auth/login"
 							className={styles.reset__password__link}
 						>

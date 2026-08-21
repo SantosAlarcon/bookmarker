@@ -21,7 +21,7 @@ type ModalState = {
     deleteProps: {
         id: string;
         title: string;
-        type: "bookmark" | "folder";
+        type: "bookmark" | "folder" | "";
     };
 };
 

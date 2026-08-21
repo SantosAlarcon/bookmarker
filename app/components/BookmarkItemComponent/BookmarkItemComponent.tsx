@@ -3,6 +3,9 @@ import styles from "./BookmarkItemComponent.module.scss";
 import Image from "next/image";
 import RemoveBookmarkButton from "../Buttons/RemoveBookmarkButton/RemoveButton";
 import EditBookmarkButton from "../Buttons/EditBookmarkButton/EditBookmarkButton";
+import { localeStore } from "@/app/store/localeStore";
+import "@/app/i18n/client";
+import { useT } from "next-i18next/client";
 
 interface BICProps {
     children: {
@@ -15,11 +18,15 @@ interface BICProps {
 }
 
 const BookmarkItemComponent = (props: BICProps) => {
+    // @ts-ignore
+    const lang = localeStore((state) => state.locale);
+    const { t } = useT("common", { lng: lang });
+
     return (
         <div className={styles.bookmark__item__container}>
             {props?.children.bookmark_favicon ? (
                 <img
-                    alt="Favicon"
+                    alt=""
                     src={props.children.bookmark_favicon}
                     className={styles.bookmark__item__favicon}
                     loading="eager"
@@ -28,7 +35,7 @@ const BookmarkItemComponent = (props: BICProps) => {
                 <Image
                     width={16}
                     height={16}
-                    alt="Bookmark icon"
+                    alt=""
                     src="/icons/bookmark.svg"
                     priority={true}
                 />
@@ -37,11 +44,14 @@ const BookmarkItemComponent = (props: BICProps) => {
                 className={styles.bookmark__item__link}
                 href={`${props.children.bookmark_url}`}
                 target="_blank"
-                aria-label={props.children.bookmark_title}
             >
                 <div className={styles.bookmark__item__title}>
                     <h4 className={styles.bookmark__item__title__text}>
                         {props.children.bookmark_title}
+                        <span className="visually-hidden">
+                            {" "}
+                            ({t("opens-in-new-tab")})
+                        </span>
                     </h4>
                 </div>
             </Link>

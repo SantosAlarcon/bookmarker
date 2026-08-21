@@ -1,6 +1,6 @@
 .edit__bookmark__dialog {
   &__container {
-    width: 765px;
+    width: min(765px, calc(100vw - 2rem));
     padding: 1rem;
     margin: 0 auto;
     border-radius: 1rem;
@@ -146,6 +146,16 @@
       &:focus {
         box-shadow: 0 0 0 0.15rem light-dark(#000, #fff);
       }
+    }
+  }
+
+  &__error {
+    color: #d93025;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+
+    @media (prefers-color-scheme: dark) {
+      color: #ff8a80;
     }
   }
 }

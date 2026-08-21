@@ -1,9 +1,8 @@
 export const validateURL = (url: string) => {
-    const regex =
-        "(http|https)://((www.)?(.[a-zA-Z0-9-]+)(/[a-zA-Z0-9-_\\?\\.\\+=&%]+)*)";
-
-    if (url.match(regex)) {
-        return true;
+    try {
+        const parsed = new URL(url);
+        return parsed.protocol === "http:" || parsed.protocol === "https:";
+    } catch {
+        return false;
     }
-    return false;
 };

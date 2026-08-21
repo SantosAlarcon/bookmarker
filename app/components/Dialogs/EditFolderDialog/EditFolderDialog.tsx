@@ -1,11 +1,12 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { localeStore } from "@/app/store/localeStore";
 import type { BookmarkFolder } from "@/app/types/types";
 import updateFolder from "@/app/utils/supabase/folders/updateFolder";
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
+import AccessibleDialog from "@/components/Dialogs/AccessibleDialog/AccessibleDialog";
 import Spinner from "@/components/Spinner/Spinner";
 import { folderStore } from "@/store/folderStore";
 import { modalStore } from "@/store/modalStore";
@@ -34,16 +35,6 @@ const EditFolderDialog = ({ title }: Props) => {
 	const lang = localeStore((state) => state.locale);
 	const { t } = useT("common", { lng: lang });
 
-	const dialogRef = useRef<null | HTMLDialogElement>(null);
-
-	useEffect(() => {
-		if (editFolderModal) {
-			dialogRef.current?.showModal();
-		} else {
-			dialogRef.current?.close();
-		}
-	}, [editFolderModal]);
-
 	useEffect(() => {
 		setUpdatedFolder({
 			title: editFolderData.title,
@@ -52,8 +43,7 @@ const EditFolderDialog = ({ title }: Props) => {
 		});
 	}, [editFolderData]);
 
-	const closeDialog = async () => {
-		dialogRef.current?.close();
+	const closeDialog = () => {
 		hideEditFolderDialog();
 		setUpdatedFolder({
 			title: "",
@@ -62,136 +52,128 @@ const EditFolderDialog = ({ title }: Props) => {
 		});
 	};
 
-	/* This function implements the logic to modify folder metadata */
-	const editFolder = async () => {
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 		setLoading(true);
 		await updateFolder(editFolderData.id, updatedFolder);
 		await updateBookmarkList();
-		//router.refresh()
 		closeDialog();
 		setLoading(false);
 		toast.success(t("edit-folder-success"));
 	};
 
-	const dialog: React.JSX.Element | null = editFolderModal ? (
-		<dialog
-			ref={dialogRef}
-			className={styles.edit__folder__dialog__container}
+	return (
+		<AccessibleDialog
+			isOpen={editFolderModal === true}
 			onClose={closeDialog}
-			aria-modal="true"
+			className={styles.edit__folder__dialog__container}
+			titleId="edit-folder-dialog-title"
 		>
 			<div className={styles.edit__folder__dialog__title}>
 				<Image
 					src="/icons/edit-icon.svg"
-					alt="Edit icon"
+					alt=""
 					width={16}
 					height={16}
 				/>
-				<h4 className={styles.edit__folder__dialog__title__text}>{title}</h4>
+				<h2
+					id="edit-folder-dialog-title"
+					className={styles.edit__folder__dialog__title__text}
+				>
+					{title}
+				</h2>
 			</div>
 			<div className={styles.edit__folder__dialog__content}>
-				<form className={styles.edit__folder__dialog__form}>
+				<form
+					className={styles.edit__folder__dialog__form}
+					onSubmit={handleSubmit}
+				>
 					<label
-						htmlFor="title"
+						htmlFor="edit-folder-title-input"
 						className={styles.edit__folder__dialog__form__label}
 					>
 						{t("title")}
 						<input
+							id="edit-folder-title-input"
 							type="text"
 							name="title"
 							placeholder={t("folder-title-placeholder")}
 							value={updatedFolder.title}
-							aria-label={t("title")}
-							onChange={() =>
+							onChange={(e) =>
 								setUpdatedFolder({
 									...updatedFolder,
-									// @ts-ignore
-									title: event.target.value,
+									title: e.target.value,
 								})
 							}
 							required
 							aria-required={true}
+							autoFocus={true}
 						/>
 					</label>
 					<label
-						htmlFor="description"
+						htmlFor="edit-folder-description-input"
 						className={styles.edit__folder__dialog__form__label}
 					>
 						{t("description")}
 						<input
+							id="edit-folder-description-input"
 							type="text"
 							name="description"
 							placeholder={t("folder-description-placeholder")}
 							value={updatedFolder.description}
-							aria-label={t("description")}
-							onChange={() =>
+							onChange={(e) =>
 								setUpdatedFolder({
 									...updatedFolder,
-									// @ts-ignore
-									description: event.target.value,
+									description: e.target.value,
 								})
 							}
-							required
-							aria-required={true}
 						/>
 					</label>
 					<label
-						htmlFor="parentFolder"
+						htmlFor="edit-folder-parent-folder"
 						className={styles.edit__folder__dialog__form__label}
 					>
 						{t("parent-folder")}
 						<select
+							id="edit-folder-parent-folder"
 							name="parentFolder"
 							className={styles.edit__folder__dialog__form__select}
-							// @ts-ignore
 							defaultValue={
-								editFolderData.parentFolder ? editFolderData.parentFolder : null
+								editFolderData.parentFolder
+									? editFolderData.parentFolder
+									: "null"
 							}
-							onChange={() =>
+							onChange={(e) =>
 								setUpdatedFolder({
 									...updatedFolder,
-									// @ts-ignore
-									parentFolder: event.target.value,
+									parentFolder: e.target.value,
 								})
 							}
 						>
-							<option value="null" aria-label={t("no-parent-folder")}>
-								{t("no-parent-folder")}
-							</option>
+							<option value="null">{t("no-parent-folder")}</option>
 							{folderList?.map((folder: BookmarkFolder) => (
-								<option
-									key={folder.folder_id}
-									value={folder.folder_id}
-									aria-label={folder.folder_title}
-								>
+								<option key={folder.folder_id} value={folder.folder_id}>
 									{folder.folder_title}
 								</option>
 							))}
 						</select>
 					</label>
+					<div className={styles.edit__folder__dialog__buttons}>
+						<button
+							type="submit"
+							disabled={loading || !updatedFolder.title}
+							aria-busy={loading}
+						>
+							{loading ? <Spinner /> : t("update")}
+						</button>
+						<button type="button" onClick={() => closeDialog()}>
+							{t("close")}
+						</button>
+					</div>
 				</form>
 			</div>
-			<div className={styles.edit__folder__dialog__buttons}>
-				<button
-					type="button"
-					disabled={!(updatedFolder.title && updatedFolder.description)}
-					onClick={() => editFolder()}
-					aria-label={t("update")}
-				>
-					{loading ? <Spinner /> : t("update")}
-				</button>
-				<button
-					type="button"
-					onClick={() => closeDialog()}
-					aria-label={t("close")}
-				>
-					{t("close")}
-				</button>
-			</div>
-		</dialog>
-	) : null;
-
-	return dialog;
+		</AccessibleDialog>
+	);
 };
 
 export default EditFolderDialog;
