@@ -13,6 +13,7 @@ const nextConfig: NextConfig = {
 		silenceDeprecations: ["legacy-js-api"],
 	},
 	experimental: {
+		useTypeScriptCli: true,
 		staleTimes: {
 			dynamic: 60,
 			static: 60,
