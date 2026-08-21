@@ -11,14 +11,18 @@ export async function createNewBookmark(bookmark: BookmarkProps) {
     const supabase = createClient();
     const {
         data: { user },
+        error: userError,
     } = await supabase.auth.getUser();
+    if (userError || !user) {
+        throw new Error("User not authenticated");
+    }
     const { data, error } = await supabase.from("bookmarks").insert({
         bookmark_id: crypto.randomUUID(),
         bookmark_title: bookmark.title,
         bookmark_url: bookmark.url,
         bookmark_favicon: await getFavicon(bookmark.url),
         bookmark_parentfolder: bookmark.parentFolder,
-        bookmark_user_id: user?.id,
+        bookmark_user_id: user.id,
     });
     if (error) {
         throw new Error(error.message);

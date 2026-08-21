@@ -1,7 +1,5 @@
 import getFavicon from "@/app/utils/getFavicon";
 import { createClient } from "@/app/utils/supabase/client";
-import type { BookmarkItem } from "@/app/types/types";
-import type { SupabaseClient } from "@supabase/supabase-js";
 
 interface updateInfo {
     title: string;
@@ -10,25 +8,25 @@ interface updateInfo {
 }
 
 const updateBookmark = async (id: string, bookmark: updateInfo) => {
-    const supabase: SupabaseClient = createClient();
+    const supabase = createClient();
     const {
         data: { user },
+        error: userError,
     } = await supabase.auth.getUser();
-
-    const updatedBookmark: BookmarkItem = {
-        bookmark_id: id,
-        bookmark_title: bookmark.title,
-        bookmark_url: bookmark.url,
-        bookmark_favicon: await getFavicon(bookmark.url),
-        bookmark_parentfolder: bookmark.parentFolder,
-        // @ts-ignore
-        bookmark_user_id: user?.id,
-    };
+    if (userError || !user) {
+        throw new Error("User not authenticated");
+    }
 
     const { error } = await supabase
         .from("bookmarks")
-        .update(updatedBookmark)
-        .eq("bookmark_id", id);
+        .update({
+            bookmark_title: bookmark.title,
+            bookmark_url: bookmark.url,
+            bookmark_favicon: await getFavicon(bookmark.url),
+            bookmark_parentfolder: bookmark.parentFolder,
+        })
+        .eq("bookmark_id", id)
+        .eq("bookmark_user_id", user.id);
     if (error) console.error(error);
 };
 

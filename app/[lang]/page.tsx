@@ -13,14 +13,19 @@ async function Home(props: { params: Promise<{ lang: string }> }) {
 
 	const supabase = await createClient();
 
+	// getUser() validates the JWT with Supabase — never trust getSession() alone for auth checks
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+
+	// It only renders the main page if there is no verified session
+	if (!user) {
+		return redirect("/auth/login");
+	}
+
 	const {
 		data: { session },
 	} = await supabase.auth.getSession();
-
-	// It only renders the main page if there is no session
-	if (!session) {
-		return redirect("/auth/login");
-	}
 
 	return (
 		<div className={styles.main}>

@@ -6,14 +6,15 @@ export async function GET(request: NextRequest) {
 	const code = requestUrl.searchParams.get("code");
 
 	if (code) {
-		const supabase = createClient();
-		(await supabase).auth.exchangeCodeForSession(code);
+		const supabase = await createClient();
+		const { error } = await supabase.auth.exchangeCodeForSession(code);
 
-		return NextResponse.redirect(`${requestUrl.origin}/update-password`);
+		if (!error) {
+			return NextResponse.redirect(
+				`${requestUrl.origin}/update-password`,
+			);
+		}
 	}
-
-	// eslint-disable-next-line no-console
-	//console.error("ERROR: Invalid auth code or no auth code found");
 
 	return NextResponse.redirect(`${requestUrl.origin}/auth/login`);
 }

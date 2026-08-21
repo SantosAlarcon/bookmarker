@@ -12,5 +12,15 @@ export async function GET(req: NextRequest) {
         return Response.json({ message: "No session found" }, { status: 400 });
     }
 
-    return Response.json(session, { status: 200 });
+    // Only expose safe user fields — never tokens
+    return Response.json(
+        {
+            user: {
+                id: session.user.id,
+                email: session.user.email,
+                metadata: session.user.user_metadata,
+            },
+        },
+        { status: 200 },
+    );
 }
