@@ -1,10 +1,14 @@
-import { localeStore } from "@/app/store/localeStore";
-import { getT } from "next-i18next/server";
+"use client";
 
-const NotFound = async () => {
+import { localeStore } from "@/app/store/localeStore";
+import "@/app/i18n/client";
+import { useT } from "next-i18next/client";
+
+const NotFound = () => {
 	// @ts-ignore
-	const { locale } = localeStore.getState();
-	const { t } = await getT("common", { lng: locale });
+	const lang = localeStore((state) => state.locale);
+	const { t } = useT("common", { lng: lang });
+
 	return (
 		<>
 			<h2>{t("no-bookmarks-title")}</h2>

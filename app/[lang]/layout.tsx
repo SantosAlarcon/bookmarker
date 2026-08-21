@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import i18nConfig from "@/next-i18next.config";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
-import { getT } from "next-i18next/server";
+import { initTranslations } from "@/app/i18n";
 import Providers from "../components/providers";
 
 export async function generateStaticParams() {
@@ -27,7 +27,7 @@ export default async function RootLayout(props: {
 
 	const { children } = props;
 
-	const { t } = await getT("common", { lng: lang });
+	const { t } = await initTranslations(lang, ["common"]);
 
 	return (
 		<html lang={lang} suppressHydrationWarning={true}>
