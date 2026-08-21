@@ -1,30 +1,16 @@
 import { bookmarksStore } from "@/store/bookmarksStore";
-import getRootBookmarks from "./supabase/bookmarks/getRootBookmarks";
-import { getRootFolders } from "./supabase/folders/getRootFolders";
-import { updateFolderList } from "./updateFolderList";
+import { folderStore } from "@/store/folderStore";
 import getAllBookmarks from "./supabase/bookmarks/getAllBookmarks";
 import { getAllFolders } from "./supabase/folders/getAllFolders";
 import { authStore } from "../store/authStore";
 
-// This function fetches all bookmarks and folders from a user associated with the session user ID.
+// Fetches every folder and bookmark once, then derives the rest client-side.
+// Root lists are a subset of the full lists, so nothing else needs fetching.
 export const updateBookmarkList = async () => {
-    const updateBookmarksList = bookmarksStore.getState().setBookmarksList;
-    const updateAllBookmarksList =
-        bookmarksStore.getState().setAllBookmarksList;
+    const setBookmarksList = bookmarksStore.getState().setBookmarksList;
+    const setAllBookmarksList = bookmarksStore.getState().setAllBookmarksList;
+    const setFolderList = folderStore.getState().setFolderList;
     const { session } = authStore.getState();
-
-    // const supabase = await createClient();
-    // const {
-    //     data: { session },
-    // } = await supabase.auth.getSession();
-
-    // Get the folders and bookmarks that don't belong to any parent
-    const [rootFolders, rootBookmarks] = await Promise.all([
-        // @ts-ignore
-        getRootFolders(session?.user.id),
-        // @ts-ignore
-        getRootBookmarks(session?.user.id),
-    ]);
 
     const [allFolders, allBookmarks] = await Promise.all([
         // @ts-ignore
@@ -33,16 +19,19 @@ export const updateBookmarkList = async () => {
         getAllBookmarks(session?.user.id),
     ]);
 
-    // If the above variables are not null, the bookmark list is updated
-    if (rootFolders && rootBookmarks) {
-        updateBookmarksList([...rootFolders, ...rootBookmarks]);
+    if (!allFolders || !allBookmarks) {
+        return;
     }
 
-    if (allFolders && allBookmarks) {
-        updateAllBookmarksList([...allFolders, ...allBookmarks]);
-    }
+    // Root items are the ones without a parent folder
+    const rootFolders = allFolders.filter(
+        (folder) => !folder.folder_parentfolder,
+    );
+    const rootBookmarks = allBookmarks.filter(
+        (bookmark) => !bookmark.bookmark_parentfolder,
+    );
 
-    // Also updates de folder list of its store. It is useful when listing the updated list of folders.
-    // @ts-ignore
-    await updateFolderList(session?.user.id);
+    setBookmarksList([...rootFolders, ...rootBookmarks]);
+    setAllBookmarksList([...allFolders, ...allBookmarks]);
+    setFolderList(allFolders);
 };

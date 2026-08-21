@@ -24,7 +24,6 @@ export const initTranslations = async (
         ns: namespaces,
         defaultNS: namespaces[0],
         fallbackNS: i18NextConfig.fallbackNS,
-        preload: i18NextConfig.i18n.locales,
         load: "all",
     });
 

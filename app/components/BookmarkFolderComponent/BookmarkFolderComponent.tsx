@@ -1,10 +1,8 @@
 import type { BookmarkFolder, BookmarkItem } from "@/app/types/types";
-import getChildrenBookmarks from "@/app/utils/supabase/bookmarks/getChildrenBookmarks";
-import { getChildrenFolders } from "@/app/utils/supabase/folders/getChildrenFolders";
 import { bookmarksStore } from "@/store/bookmarksStore";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import BookmarkItemComponent from "../BookmarkItemComponent/BookmarkItemComponent";
 import EditFolderButton from "../Buttons/EditFolderButton/EditFolderButton";
 import RemoveFolderButton from "../Buttons/RemoveFolderButton/RemoveFolder";
@@ -19,69 +17,43 @@ interface BFCProps {
     };
 }
 
-const BookmarkFolderComponent = (props: BFCProps) => {
-    const bookmarkList = bookmarksStore((state) => state.bookmarksList);
+// Hoisted so the object reference is stable across renders
+const variants = {
+    hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
+    show: {
+        height: "auto",
+        padding: 0,
+        paddingLeft: "2rem",
+    },
+};
 
-    const collapsibleRef = useRef<HTMLUListElement>(null);
+const BookmarkFolderComponent = (props: BFCProps) => {
+    const allItems = bookmarksStore((state) => state.allBookmarksList);
 
     const [expanded, setExpanded] = useState(false);
-    const [children, setChildren] = useState([]);
 
-    const variants = {
-        hidden: { height: 0, padding: 0, paddingLeft: "2rem" },
-        show: {
-            height: "auto",
-            padding: 0,
-            paddingLeft: "2rem",
-        },
-    };
+    // Children are derived from the store — no per-folder queries.
+    // The store already holds every folder and bookmark of the user.
+    const children = useMemo<(BookmarkFolder & BookmarkItem)[]>(() => {
+        // @ts-ignore
+        const childFolders = allItems.filter(
+            // @ts-ignore
+            (item: BookmarkFolder) =>
+                item.folder_parentfolder === props.children.folder_id,
+        );
+        // @ts-ignore
+        const childBookmarks = allItems.filter(
+            // @ts-ignore
+            (item: BookmarkItem) =>
+                item.bookmark_parentfolder === props.children.folder_id,
+        );
+        return [...childFolders, ...childBookmarks] as (BookmarkFolder &
+            BookmarkItem)[];
+    }, [allItems, props.children.folder_id]);
 
     const handleExpand = () => {
         setExpanded(!expanded);
     };
-
-    // Get the children bookmarks and folders
-    useEffect(() => {
-        const getChildren = async () => {
-            // Get the children folders and bookmarks
-            const [childrenFolders, childrenBookmarks] = await Promise.all([
-                getChildrenFolders(props.children.folder_id),
-                getChildrenBookmarks(props.children.folder_id),
-            ]);
-            let childrenList = [];
-
-            // If there any child folders, it renders them first and then the children bookmarks
-            if (childrenFolders.length > 0) {
-                // First we need to assign the children folder list to the children list
-                childrenList = childrenFolders;
-
-                // Iterates every folder
-                // @ts-ignore
-                childrenList.map((folder: BookmarkFolder) => {
-                    // Iterates every child bookmark
-                    // @ts-ignore
-                    childrenBookmarks.map((bookmark: BookmarkItem) => {
-                        // If the bookmark belongs to this parent folder, it pushes to the children array
-                        if (
-                            bookmark.bookmark_parentfolder === folder.folder_id
-                        ) {
-                            // @ts-ignore
-                            folder.folder_children.push(bookmark);
-                        }
-                    });
-                });
-
-                // After rendering the children folder, render the children bookmarks
-                // @ts-ignore
-                setChildren([...childrenList, ...childrenBookmarks]);
-            } else {
-                // @ts-ignore
-                // The children bookmarks are set in the children where there is any children folder
-                setChildren(childrenBookmarks);
-            }
-        };
-        getChildren();
-    }, [bookmarkList, props.children.folder_id]);
 
     return (
         <div className={styles.bookmark__folder__container}>
@@ -96,7 +68,6 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                         style={
                             expanded ? { rotate: "90deg" } : { rotate: "0deg" }
                         }
-                        priority={true}
                     />
                 )}
                 {expanded ? (
@@ -105,7 +76,6 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                         height={24}
                         alt=""
                         src="/icons/folder-open.svg"
-                        priority={true}
                     />
                 ) : (
                     <Image
@@ -113,7 +83,6 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                         height={24}
                         alt=""
                         src="/icons/folder.svg"
-                        priority={true}
                     />
                 )}
                 <button
@@ -135,11 +104,9 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                 <motion.ul
                     id={`folder-children-${props.children.folder_id}`}
                     className={styles.bookmark__folder__links}
-                    ref={collapsibleRef}
                     initial="hidden"
                     animate={expanded ? "show" : "hidden"}
                     inert={expanded ? false : true}
-                    layout
                     variants={variants}
                     transition={{ duration: 0.3, type: "tween" }}
                 >
@@ -154,7 +121,6 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                                     className={
                                         styles.bookmark__folder__links__link
                                     }
-                                    exit={{ scale: 0 }}
                                 >
                                     <BookmarkFolderComponent
                                         key={child.folder_id}
@@ -170,7 +136,6 @@ const BookmarkFolderComponent = (props: BFCProps) => {
                                     className={
                                         styles.bookmark__folder__links__link
                                     }
-                                    exit={{ scale: 0 }}
                                 >
                                     <BookmarkItemComponent
                                         key={child.bookmark_id}

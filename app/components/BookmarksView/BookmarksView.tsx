@@ -2,7 +2,7 @@
 import type { Session } from "@supabase/supabase-js";
 import { motion } from "framer-motion";
 import { useT } from "next-i18next/client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { localeStore } from "@/app/store/localeStore";
 import type { BookmarkFolder, BookmarkItem } from "@/app/types/types";
 import { updateBookmarkList } from "@/app/utils/updateBookmarkList";
@@ -18,6 +18,9 @@ import EditFolderDialog from "../Dialogs/EditFolderDialog/EditFolderDialog";
 import styles from "./BookmarksView.module.scss";
 import NoResultsFound from "./NoResultsFound";
 import NotFound from "./NotFound";
+
+// Capped stagger: the whole list is visible after ~0.4s no matter its size
+const enterDelay = (index: number) => Math.min(index * 0.05, 0.4);
 
 const BookmarksView = () => {
 	// Get the locale from its store
@@ -42,7 +45,19 @@ const BookmarksView = () => {
 	// Get and set the loading state
 	const [loading, setLoading] = useState<boolean>(true);
 
-	const [filteredList, setFilteredList] = useState([...bookmarksList]);
+	// Derived during render instead of synced through an effect
+	const filteredList = useMemo(() => {
+		if (!filter) {
+			return bookmarksList;
+		}
+		// @ts-ignore
+		return allBookmarksList.filter(
+			// @ts-ignore
+			(item: BookmarkItem & BookmarkFolder) =>
+				item.bookmark_title?.toLowerCase().includes(filter) ||
+				item.folder_title?.toLowerCase().includes(filter),
+		);
+	}, [filter, bookmarksList, allBookmarksList]);
 
 	// Get the root folders so that can be rendered first
 	useEffect(() => {
@@ -54,23 +69,6 @@ const BookmarksView = () => {
 
 		getRootItems();
 	}, [session]);
-
-	// This will trigger when the filter updates
-	useEffect(() => {
-		if (filter === "" || filter === undefined) {
-			setFilteredList([...bookmarksList]);
-		} else {
-			// @ts-ignore
-			setFilteredList(
-				[...allBookmarksList].filter(
-					// @ts-ignore
-					(item: BookmarkItem & BookmarkFolder) =>
-						item.bookmark_title?.toLowerCase().includes(filter) ||
-						item.folder_title?.toLowerCase().includes(filter),
-				),
-			);
-		}
-	}, [filter, bookmarksList]);
 
 	return (
 		<>
@@ -108,7 +106,6 @@ const BookmarksView = () => {
 					bookmarksList.length > 0 ? (
 						// First render the root folders and its children
 						<motion.ul
-							layout
 							initial="false"
 							id="bookmarks-list"
 							tabIndex={-1}
@@ -126,8 +123,9 @@ const BookmarksView = () => {
 											<motion.li
 												initial={{ opacity: 0 }}
 												animate={{ opacity: 1 }}
-												exit={{ scale: 0 }}
-												transition={{ delay: 0.1 * index }}
+												transition={{
+													delay: enterDelay(index),
+												}}
 												key={item.folder_id}
 											>
 												<BookmarkFolderComponent key={item.folder_id}>
@@ -140,8 +138,9 @@ const BookmarksView = () => {
 											<motion.li
 												initial={{ opacity: 0 }}
 												animate={{ opacity: 1 }}
-												exit={{ scale: 0 }}
-												transition={{ delay: 0.1 * index }}
+												transition={{
+													delay: enterDelay(index),
+												}}
 												key={item.bookmark_id}
 											>
 												<BookmarkItemComponent key={item.bookmark_id}>

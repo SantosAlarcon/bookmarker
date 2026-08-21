@@ -26,4 +26,12 @@
     text-align: center;
     line-height: 2.5rem;
   }
+
+  &__list {
+    // Skips rendering off-screen items so long lists stay cheap
+    & > li {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 3rem;
+    }
+  }
 }

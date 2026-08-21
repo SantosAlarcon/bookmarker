@@ -15,8 +15,6 @@ const i18NextConfig = {
         "reset-password",
         "profile-page",
     ],
-    load: "all",
-    preload: ["en", "es", "ca"],
 };
 
 export const getI18nSettings = (lang: string, ns: string | string[]) => {

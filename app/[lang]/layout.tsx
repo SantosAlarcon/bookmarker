@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import i18nConfig from "@/next-i18next.config";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
+import { Barlow } from "next/font/google";
 import { initTranslations } from "@/app/i18n";
 import Providers from "../components/providers";
 
@@ -19,6 +20,14 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+// Self-hosted at build time — no render-blocking request to Google Fonts
+const barlow = Barlow({
+	subsets: ["latin"],
+	weight: ["500", "600", "700", "800", "900"],
+	display: "swap",
+	variable: "--font-barlow",
+});
+
 export default async function RootLayout(props: {
 	params: Promise<{ lang: string }>;
 	children: ReactNode;
@@ -30,18 +39,12 @@ export default async function RootLayout(props: {
 	const { t } = await initTranslations(lang, ["common"]);
 
 	return (
-		<html lang={lang} suppressHydrationWarning={true}>
+		<html
+			lang={lang}
+			className={barlow.variable}
+			suppressHydrationWarning={true}
+		>
 			<head>
-				<link rel="preconnect" href="https://fonts.googleapis.com" />
-				<link
-					rel="preconnect"
-					href="https://fonts.gstatic.com"
-					crossOrigin="anonymous"
-				/>
-				<link
-					href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800;900&display=swap"
-					rel="stylesheet"
-				/>
 				<link rel="shortcut icon" href="/favicon.svg" />
 				{/* <link rel="manifest" href="/manifest.json" /> */}
 				<meta
